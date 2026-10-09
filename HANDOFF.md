@@ -60,6 +60,7 @@ Branch: `main` · remote: https://github.com/TheRealLaksh/Portfolio-V1.git
 
 ### Last 15 commits
 
+- `e40a824` 2026-10-09 19:46 Point link-preview tags at live Netlify URL and new og-image
 - `e2944d6` 2026-10-09 19:45 Add og-image.png: hero screenshot for link previews
 - `5009317` 2025-12-14 16:46 Update script.js
 - `face3fe` 2025-12-03 14:16 ai bot
@@ -74,16 +75,13 @@ Branch: `main` · remote: https://github.com/TheRealLaksh/Portfolio-V1.git
 - `5c7d9ad` 2025-11-20 16:59 Fix Netlify path issue
 - `f50252e` 2025-11-20 16:56 Fix Netlify path issue
 - `84ad03a` 2025-11-20 16:54 Fix Netlify path issue
-- `01b2a34` 2025-11-20 16:49 Fix Netlify path issue
 
 ### Uncommitted changes at refresh time
 
 ```
-A  HANDOFF.md
-M  index.html
-?? .claude/
-?? .githooks/
-?? CLAUDE.md
-?? scripts/
+A  .claude/settings.json
+A  .githooks/pre-commit
+A  CLAUDE.md
+A  scripts/handoff.mjs
 ```
 <!-- handoff:auto:end -->
