@@ -38,6 +38,7 @@ Migrating off the expired lakshp.live. URLs (meta tags, `/resume` redirect, resu
 - Laksh chose small commits, pushed after each (every push to `main` goes live on Vercel). Session of 8 Oct 2026.
 
 ## Session log (newest first)
+- 2026-10-11: added `vercel.json` with an SPA rewrite on `main` (same file as on `feat/skyline-world`) so deep links like `/booking` stop returning 404 on Vercel. When merging the redesign branch expect an add/add conflict on `vercel.json`; keep `main`'s version (it gains the short-link redirects).
 - 2026-10-09: removed `Shopping-demo` from `REPO_NAMES` in `src/hooks/useGitHub.js` (the repo is now private, so the GitHub API would 404 for it).
 - 2026-10-09: replaced `public/og-image.jpg` with a hero crop captured while the headline reads "a Web Developer" (the first version showed "a Passionate Learner").
 - 2026-10-09: added `public/signature/icon-{linkedin,github,instagram}.png` for the new Gmail signature (logo removed from the signature at Laksh's request).
@@ -50,12 +51,13 @@ Migrating off the expired lakshp.live. URLs (meta tags, `/resume` redirect, resu
 <!-- handoff:auto:start -->
 ## Auto: repo state
 
-_Refreshed 9 Oct 2026, 1:40 pm IST by `scripts/handoff.mjs` (runs on every commit). Don't edit inside this block._
+_Refreshed 11 Oct 2026, 9:58 pm IST by `scripts/handoff.mjs` (runs on every commit). Don't edit inside this block._
 
 Branch: `main` · remote: https://github.com/TheRealLaksh/Portfolio-V2.git
 
 ### Last 15 commits
 
+- `5b18fc7` 2026-10-09 13:40 Drop the private Shopping-demo repo from the GitHub project list
 - `afa14ab` 2026-10-09 13:15 Use the Web Developer hero frame for og-image
 - `21ba901` 2026-10-09 13:04 Add social icons for the email signature
 - `8966bdf` 2026-10-09 01:07 Add the missing og-image for link previews
@@ -70,12 +72,11 @@ Branch: `main` · remote: https://github.com/TheRealLaksh/Portfolio-V2.git
 - `2b018d6` 2026-01-25 07:25 fixes
 - `32713d4` 2026-01-25 07:21 mobile layout fix
 - `463e602` 2026-01-21 09:00 Update 08-Contact.jsx
-- `4f5d709` 2026-01-21 08:40 redirect
 
 ### Uncommitted changes at refresh time
 
 ```
 M  HANDOFF.md
-M  src/hooks/useGitHub.js
+A  vercel.json
 ```
 <!-- handoff:auto:end -->
