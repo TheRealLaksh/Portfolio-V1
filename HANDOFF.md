@@ -38,6 +38,8 @@ Migrating off the expired lakshp.live. URLs (meta tags, `/resume` redirect, resu
 - Laksh chose small commits, pushed after each (every push to `main` goes live on Vercel). Session of 8 Oct 2026.
 
 ## Session log (newest first)
+- 2026-10-11: Vercel Web Analytics enabled for `portfolio-v2-llp` (Hobby: 50,000 events/month, 30 days of history, no cookies) and its script added to `index.html` (no npm package, so `package-lock.json` is untouched). View it at Vercel → portfolio-v2-llp → Analytics. The service worker ignores the POSTs it sends. Not enabled on the other Vercel projects (profiley, music, calibridge).
+- 2026-10-11: Google Search Console domain property `lakshpradhwani.com` verified with a TXT record in Cloudflare (`google-site-verification=...` on the root; never delete it or verification is lost) and `https://lakshpradhwani.com/sitemap.xml` submitted. Search Console showed "Couldn't fetch" right after submission (common for new properties, the file returns 200); recheck in a day. Bing Webmaster not done (needs a Microsoft sign-in).
 - 2026-10-11: added `public/robots.txt` (allow all, points at the sitemap) and `public/sitemap.xml` (home page only; add routes here if more public pages appear) ahead of Google Search Console and Bing Webmaster verification.
 - 2026-10-11: short links in `vercel.json` (temporary 302 redirects so targets can change): `/resume` and `/cv` to https://profiley.lakshpradhwani.com/laksh, `/github`, `/linkedin`, `/instagram` (laksh.pradhwani). This also settles the open question about `/resume` on Vercel. `/book` is not added yet (no booking page exists).
 - 2026-10-11: added `vercel.json` with an SPA rewrite on `main` (same file as on `feat/skyline-world`) so deep links like `/booking` stop returning 404 on Vercel. When merging the redesign branch expect an add/add conflict on `vercel.json`; keep `main`'s version (it gains the short-link redirects).
@@ -53,12 +55,13 @@ Migrating off the expired lakshp.live. URLs (meta tags, `/resume` redirect, resu
 <!-- handoff:auto:start -->
 ## Auto: repo state
 
-_Refreshed 11 Oct 2026, 9:59 pm IST by `scripts/handoff.mjs` (runs on every commit). Don't edit inside this block._
+_Refreshed 11 Oct 2026, 10:04 pm IST by `scripts/handoff.mjs` (runs on every commit). Don't edit inside this block._
 
 Branch: `main` · remote: https://github.com/TheRealLaksh/Portfolio-V2.git
 
 ### Last 15 commits
 
+- `e9ebc94` 2026-10-11 21:59 Add robots.txt and a sitemap for search engines
 - `743c2a7` 2026-10-11 21:59 Add short links for resume, GitHub, LinkedIn and Instagram
 - `bc27341` 2026-10-11 21:58 Add an SPA rewrite so deep links work on Vercel
 - `5b18fc7` 2026-10-09 13:40 Drop the private Shopping-demo repo from the GitHub project list
@@ -73,13 +76,11 @@ Branch: `main` · remote: https://github.com/TheRealLaksh/Portfolio-V2.git
 - `76936c9` 2026-02-01 17:41 update
 - `45e3901` 2026-01-25 07:46 fixes
 - `080e1b9` 2026-01-25 07:38 fix
-- `2b018d6` 2026-01-25 07:25 fixes
 
 ### Uncommitted changes at refresh time
 
 ```
 M  HANDOFF.md
-A  public/robots.txt
-A  public/sitemap.xml
+M  index.html
 ```
 <!-- handoff:auto:end -->
