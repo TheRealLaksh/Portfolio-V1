@@ -45,7 +45,7 @@ const SocialSidebar = () => {
       </a>
 
       {/* Instagram */}
-      <a href="https://www.instagram.com/_.lakshp/" target="_blank" rel="noopener noreferrer" aria-label="Instagram"
+      <a href="https://www.instagram.com/laksh.pradhwani/" target="_blank" rel="noopener noreferrer" aria-label="Instagram"
         className="group relative flex items-center justify-start w-10 hover:w-32 h-10 rounded-full overflow-hidden transition-all duration-500 ease-out bg-transparent border border-transparent hover:bg-slate-800 hover:border-slate-700 hover:shadow-lg hover:shadow-pink-900/20">
         <div
           className="absolute inset-0 w-full h-full bg-pink-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300">

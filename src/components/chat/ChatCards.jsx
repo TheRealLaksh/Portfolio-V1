@@ -60,7 +60,7 @@ export const ContactCard = () => {
             <div className="flex gap-2">
                 <a href="https://github.com/TheRealLaksh" target="_blank" rel="noreferrer" className="social-btn text-slate-400 hover:text-white transition-colors"><FiGithub size={16} /></a>
                 <a href="https://linkedin.com/in/laksh-pradhwani" target="_blank" rel="noreferrer" className="social-btn text-slate-400 hover:text-blue-400 transition-colors"><FiLinkedin size={16} /></a>
-                <a href="https://www.instagram.com/_.lakshp/" target="_blank" rel="noreferrer" className="social-btn text-slate-400 hover:text-pink-400 transition-colors"><FiInstagram size={16} /></a>
+                <a href="https://www.instagram.com/laksh.pradhwani/" target="_blank" rel="noreferrer" className="social-btn text-slate-400 hover:text-pink-400 transition-colors"><FiInstagram size={16} /></a>
             </div>
           </div>
 
