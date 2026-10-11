@@ -38,6 +38,7 @@ Migrating off the expired lakshp.live. URLs (meta tags, `/resume` redirect, resu
 - Laksh chose small commits, pushed after each (every push to `main` goes live on Vercel). Session of 8 Oct 2026.
 
 ## Session log (newest first)
+- 2026-10-11: `index.html` head cleaned up for search: title "Laksh Pradhwani | Full-Stack Web Developer in Varanasi" (54 chars), meta description (149 chars), canonical to the home page, robots with `max-image-preview:large`, `og:site_name`/`og:locale`/image size and alt, Twitter tags switched from `property` to `name`, og/twitter titles now match the page title (they said "Software Engineer"), and the favicon links fixed (the icon was declared as SVG but is a PNG; added the 192px icon, since Google wants favicon sizes in multiples of 48). The canonical is static, so every route (for example `/booking`) names the home page as canonical.
 - 2026-10-11: Instagram links in `01-Hero.jsx`, `SocialSidebar.jsx` and `ChatCards.jsx` now point to the current handle `laksh.pradhwani` (they still used the old `_.lakshp`), matching the `/instagram` short link.
 - 2026-10-11: Vercel Web Analytics enabled for `portfolio-v2-llp` (Hobby: 50,000 events/month, 30 days of history, no cookies) and its script added to `index.html` (no npm package, so `package-lock.json` is untouched). View it at Vercel → portfolio-v2-llp → Analytics. The service worker ignores the POSTs it sends. Not enabled on the other Vercel projects (profiley, music, calibridge).
 - 2026-10-11: Google Search Console domain property `lakshpradhwani.com` verified with a TXT record in Cloudflare (`google-site-verification=...` on the root; never delete it or verification is lost) and `https://lakshpradhwani.com/sitemap.xml` submitted. Search Console showed "Couldn't fetch" right after submission (common for new properties, the file returns 200); recheck in a day. Bing Webmaster not done (needs a Microsoft sign-in).
@@ -56,12 +57,13 @@ Migrating off the expired lakshp.live. URLs (meta tags, `/resume` redirect, resu
 <!-- handoff:auto:start -->
 ## Auto: repo state
 
-_Refreshed 11 Oct 2026, 10:06 pm IST by `scripts/handoff.mjs` (runs on every commit). Don't edit inside this block._
+_Refreshed 11 Oct 2026, 10:24 pm IST by `scripts/handoff.mjs` (runs on every commit). Don't edit inside this block._
 
 Branch: `main` · remote: https://github.com/TheRealLaksh/Portfolio-V2.git
 
 ### Last 15 commits
 
+- `61ff030` 2026-10-11 22:06 Point Instagram links at the current handle
 - `dfc5db1` 2026-10-11 22:04 Add Vercel Web Analytics
 - `e9ebc94` 2026-10-11 21:59 Add robots.txt and a sitemap for search engines
 - `743c2a7` 2026-10-11 21:59 Add short links for resume, GitHub, LinkedIn and Instagram
@@ -76,14 +78,11 @@ Branch: `main` · remote: https://github.com/TheRealLaksh/Portfolio-V2.git
 - `b2507a1` 2026-10-08 23:57 Add HANDOFF.md and handoff hooks
 - `8355d36` 2026-05-19 12:59 Update chatbot hook endpoint linkage
 - `76936c9` 2026-02-01 17:41 update
-- `45e3901` 2026-01-25 07:46 fixes
 
 ### Uncommitted changes at refresh time
 
 ```
 M  HANDOFF.md
-M  src/components/chat/ChatCards.jsx
-M  src/components/layout/SocialSidebar.jsx
-M  src/components/sections/01-Hero.jsx
+M  index.html
 ```
 <!-- handoff:auto:end -->
