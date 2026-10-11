@@ -38,6 +38,7 @@ Migrating off the expired lakshp.live. URLs (meta tags, `/resume` redirect, resu
 - Laksh chose small commits, pushed after each (every push to `main` goes live on Vercel). Session of 8 Oct 2026.
 
 ## Session log (newest first)
+- 2026-10-11: added a `<noscript>` block to `index.html` with a plain-HTML summary (name, one-line description, GitHub, LinkedIn, Instagram, work@ email) for crawlers and browsers without JavaScript. It sits beside `#root`, not inside it, so React is unaffected. Keep it in step with the hero text.
 - 2026-10-11: added schema.org JSON-LD to the `<head>` of `index.html` (one `@graph`: `WebSite`, `ProfilePage`, `ImageObject`, `Person`). Person has name, jobTitle "Full-Stack Web Developer", description, public email `work@lakshpradhwani.com`, city-level address (Varanasi, Uttar Pradesh, IN), `sameAs` (LinkedIn, GitHub, Instagram laksh.pradhwani), `knowsAbout` and `makesOffer` for the three services shown in the Services section. The image is `public/me.webp`, byte-identical to the About photo (`src/assets/images/laksh.pradhwani.webp`). Deliberately left out: date of birth, family, school names, phone, street address, and the employers/education that are only on LinkedIn (ShiftsDeal, Masters' Union): add them only once the page itself shows them, because Google ignores markup that doesn't match visible content. Keep `dateModified` current when the content changes. Validate with https://validator.schema.org/ and https://search.google.com/test/rich-results.
 - 2026-10-11: `index.html` head cleaned up for search: title "Laksh Pradhwani | Full-Stack Web Developer in Varanasi" (54 chars), meta description (149 chars), canonical to the home page, robots with `max-image-preview:large`, `og:site_name`/`og:locale`/image size and alt, Twitter tags switched from `property` to `name`, og/twitter titles now match the page title (they said "Software Engineer"), and the favicon links fixed (the icon was declared as SVG but is a PNG; added the 192px icon, since Google wants favicon sizes in multiples of 48). The canonical is static, so every route (for example `/booking`) names the home page as canonical.
 - 2026-10-11: Instagram links in `01-Hero.jsx`, `SocialSidebar.jsx` and `ChatCards.jsx` now point to the current handle `laksh.pradhwani` (they still used the old `_.lakshp`), matching the `/instagram` short link.
@@ -58,12 +59,14 @@ Migrating off the expired lakshp.live. URLs (meta tags, `/resume` redirect, resu
 <!-- handoff:auto:start -->
 ## Auto: repo state
 
-_Refreshed 11 Oct 2026, 10:24 pm IST by `scripts/handoff.mjs` (runs on every commit). Don't edit inside this block._
+_Refreshed 11 Oct 2026, 10:26 pm IST by `scripts/handoff.mjs` (runs on every commit). Don't edit inside this block._
 
 Branch: `main` · remote: https://github.com/TheRealLaksh/Portfolio-V2.git
 
 ### Last 15 commits
 
+- `69d9cc1` 2026-10-11 22:25 Add Person structured data so Google can connect the site to Laksh
+- `07ab900` 2026-10-11 22:24 Tidy page metadata for search results
 - `61ff030` 2026-10-11 22:06 Point Instagram links at the current handle
 - `dfc5db1` 2026-10-11 22:04 Add Vercel Web Analytics
 - `e9ebc94` 2026-10-11 21:59 Add robots.txt and a sitemap for search engines
@@ -77,8 +80,6 @@ Branch: `main` · remote: https://github.com/TheRealLaksh/Portfolio-V2.git
 - `2d7b824` 2026-10-09 00:32 Use work@lakshpradhwani.com as the contact address
 - `f536175` 2026-10-08 23:58 Point site URLs at lakshpradhwani.com
 - `b2507a1` 2026-10-08 23:57 Add HANDOFF.md and handoff hooks
-- `8355d36` 2026-05-19 12:59 Update chatbot hook endpoint linkage
-- `76936c9` 2026-02-01 17:41 update
 
 ### Uncommitted changes at refresh time
 
