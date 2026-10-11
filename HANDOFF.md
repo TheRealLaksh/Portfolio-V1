@@ -38,6 +38,7 @@ Migrating off the expired lakshp.live. URLs (meta tags, `/resume` redirect, resu
 - Laksh chose small commits, pushed after each (every push to `main` goes live on Vercel). Session of 8 Oct 2026.
 
 ## Session log (newest first)
+- 2026-10-11: added `public/robots.txt` (allow all, points at the sitemap) and `public/sitemap.xml` (home page only; add routes here if more public pages appear) ahead of Google Search Console and Bing Webmaster verification.
 - 2026-10-11: short links in `vercel.json` (temporary 302 redirects so targets can change): `/resume` and `/cv` to https://profiley.lakshpradhwani.com/laksh, `/github`, `/linkedin`, `/instagram` (laksh.pradhwani). This also settles the open question about `/resume` on Vercel. `/book` is not added yet (no booking page exists).
 - 2026-10-11: added `vercel.json` with an SPA rewrite on `main` (same file as on `feat/skyline-world`) so deep links like `/booking` stop returning 404 on Vercel. When merging the redesign branch expect an add/add conflict on `vercel.json`; keep `main`'s version (it gains the short-link redirects).
 - 2026-10-09: removed `Shopping-demo` from `REPO_NAMES` in `src/hooks/useGitHub.js` (the repo is now private, so the GitHub API would 404 for it).
@@ -58,6 +59,7 @@ Branch: `main` · remote: https://github.com/TheRealLaksh/Portfolio-V2.git
 
 ### Last 15 commits
 
+- `743c2a7` 2026-10-11 21:59 Add short links for resume, GitHub, LinkedIn and Instagram
 - `bc27341` 2026-10-11 21:58 Add an SPA rewrite so deep links work on Vercel
 - `5b18fc7` 2026-10-09 13:40 Drop the private Shopping-demo repo from the GitHub project list
 - `afa14ab` 2026-10-09 13:15 Use the Web Developer hero frame for og-image
@@ -72,12 +74,12 @@ Branch: `main` · remote: https://github.com/TheRealLaksh/Portfolio-V2.git
 - `45e3901` 2026-01-25 07:46 fixes
 - `080e1b9` 2026-01-25 07:38 fix
 - `2b018d6` 2026-01-25 07:25 fixes
-- `32713d4` 2026-01-25 07:21 mobile layout fix
 
 ### Uncommitted changes at refresh time
 
 ```
 M  HANDOFF.md
-M  vercel.json
+A  public/robots.txt
+A  public/sitemap.xml
 ```
 <!-- handoff:auto:end -->
