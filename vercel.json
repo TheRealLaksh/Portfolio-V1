@@ -1,3 +1,10 @@
 {
+  "redirects": [
+    { "source": "/resume", "destination": "https://profiley.lakshpradhwani.com/laksh", "permanent": false },
+    { "source": "/cv", "destination": "https://profiley.lakshpradhwani.com/laksh", "permanent": false },
+    { "source": "/github", "destination": "https://github.com/TheRealLaksh", "permanent": false },
+    { "source": "/linkedin", "destination": "https://www.linkedin.com/in/laksh-pradhwani", "permanent": false },
+    { "source": "/instagram", "destination": "https://www.instagram.com/laksh.pradhwani", "permanent": false }
+  ],
   "rewrites": [{ "source": "/(.*)", "destination": "/index.html" }]
 }

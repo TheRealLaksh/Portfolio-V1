@@ -12,7 +12,7 @@ Laksh Pradhwani's personal developer portfolio (v2): React + Vite single-page ap
 
 ## Stack, run, deploy
 React, Vite, Tailwind, Framer Motion, React Three Fiber, Lenis, AOS, react-router.
-`npm run dev` / `npm run build` / `npm run lint`. Deploy = push to `main`. `netlify.toml` is a leftover (only holds the `/resume` redirect); `autocommit.sh` is an old helper loop, not used by the hooks.
+`npm run dev` / `npm run build` / `npm run lint`. Deploy = push to `main`. Short links (`/resume`, `/cv`, `/github`, `/linkedin`, `/instagram`) live in `vercel.json`. `netlify.toml` is a leftover (only holds the old `/resume` redirect); `autocommit.sh` is an old helper loop, not used by the hooks.
 
 ## Code map
 - `index.html`: meta, og/twitter tags
@@ -38,6 +38,7 @@ Migrating off the expired lakshp.live. URLs (meta tags, `/resume` redirect, resu
 - Laksh chose small commits, pushed after each (every push to `main` goes live on Vercel). Session of 8 Oct 2026.
 
 ## Session log (newest first)
+- 2026-10-11: short links in `vercel.json` (temporary 302 redirects so targets can change): `/resume` and `/cv` to https://profiley.lakshpradhwani.com/laksh, `/github`, `/linkedin`, `/instagram` (laksh.pradhwani). This also settles the open question about `/resume` on Vercel. `/book` is not added yet (no booking page exists).
 - 2026-10-11: added `vercel.json` with an SPA rewrite on `main` (same file as on `feat/skyline-world`) so deep links like `/booking` stop returning 404 on Vercel. When merging the redesign branch expect an add/add conflict on `vercel.json`; keep `main`'s version (it gains the short-link redirects).
 - 2026-10-09: removed `Shopping-demo` from `REPO_NAMES` in `src/hooks/useGitHub.js` (the repo is now private, so the GitHub API would 404 for it).
 - 2026-10-09: replaced `public/og-image.jpg` with a hero crop captured while the headline reads "a Web Developer" (the first version showed "a Passionate Learner").
@@ -51,12 +52,13 @@ Migrating off the expired lakshp.live. URLs (meta tags, `/resume` redirect, resu
 <!-- handoff:auto:start -->
 ## Auto: repo state
 
-_Refreshed 11 Oct 2026, 9:58 pm IST by `scripts/handoff.mjs` (runs on every commit). Don't edit inside this block._
+_Refreshed 11 Oct 2026, 9:59 pm IST by `scripts/handoff.mjs` (runs on every commit). Don't edit inside this block._
 
 Branch: `main` · remote: https://github.com/TheRealLaksh/Portfolio-V2.git
 
 ### Last 15 commits
 
+- `bc27341` 2026-10-11 21:58 Add an SPA rewrite so deep links work on Vercel
 - `5b18fc7` 2026-10-09 13:40 Drop the private Shopping-demo repo from the GitHub project list
 - `afa14ab` 2026-10-09 13:15 Use the Web Developer hero frame for og-image
 - `21ba901` 2026-10-09 13:04 Add social icons for the email signature
@@ -71,12 +73,11 @@ Branch: `main` · remote: https://github.com/TheRealLaksh/Portfolio-V2.git
 - `080e1b9` 2026-01-25 07:38 fix
 - `2b018d6` 2026-01-25 07:25 fixes
 - `32713d4` 2026-01-25 07:21 mobile layout fix
-- `463e602` 2026-01-21 09:00 Update 08-Contact.jsx
 
 ### Uncommitted changes at refresh time
 
 ```
 M  HANDOFF.md
-A  vercel.json
+M  vercel.json
 ```
 <!-- handoff:auto:end -->
