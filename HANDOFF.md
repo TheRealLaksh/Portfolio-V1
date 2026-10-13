@@ -60,12 +60,13 @@ Migrating off the expired lakshp.live. URLs (meta tags, `/resume` redirect, resu
 <!-- handoff:auto:start -->
 ## Auto: repo state
 
-_Refreshed 11 Oct 2026, 10:30 pm IST by `scripts/handoff.mjs` (runs on every commit). Don't edit inside this block._
+_Refreshed 13 Oct 2026, 7:21 pm IST by `scripts/handoff.mjs` (runs on every commit). Don't edit inside this block._
 
-Branch: `main` · remote: https://github.com/TheRealLaksh/Portfolio-V2.git
+Branch: `feat/hire-page` · remote: https://github.com/TheRealLaksh/Portfolio-V2.git
 
 ### Last 15 commits
 
+- `68cb93d` 2026-10-11 22:30 Record the structured data validation results in HANDOFF
 - `78b9a38` 2026-10-11 22:26 Add a plain-HTML fallback for crawlers and no-JS browsers
 - `69d9cc1` 2026-10-11 22:25 Add Person structured data so Google can connect the site to Laksh
 - `07ab900` 2026-10-11 22:24 Tidy page metadata for search results
@@ -80,11 +81,12 @@ Branch: `main` · remote: https://github.com/TheRealLaksh/Portfolio-V2.git
 - `8966bdf` 2026-10-09 01:07 Add the missing og-image for link previews
 - `4c1deb1` 2026-10-09 00:59 Host the LP logo for the email signature
 - `2d7b824` 2026-10-09 00:32 Use work@lakshpradhwani.com as the contact address
-- `f536175` 2026-10-08 23:58 Point site URLs at lakshpradhwani.com
 
 ### Uncommitted changes at refresh time
 
 ```
-M  HANDOFF.md
+M  src/components/sections/07-Services.jsx
+A  src/components/ui/PackageCard.jsx
+A  src/data/packages.js
 ```
 <!-- handoff:auto:end -->
