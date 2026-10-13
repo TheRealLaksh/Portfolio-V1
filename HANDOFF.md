@@ -23,12 +23,12 @@ React, Vite, Tailwind, Framer Motion, React Three Fiber, Lenis, AOS, react-route
 - `public/signature/`: images used in Laksh's Gmail signatures, hosted at https://lakshpradhwani.com/signature/<file>. `icon-linkedin.png`, `icon-github.png`, `icon-instagram.png` (36x36, white Simple Icons glyph on black circle) are the live signature icons. `lp-logo.png` is no longer in the signature but is kept because older sent emails reference it. Do not move or delete these or the signature images break.
 
 ## Status
-**Hire page in progress on branch `feat/hire-page` (off `main`, not merged, so the live site is unchanged).** `/hire` is a client-facing page: intro with WhatsApp and email actions, the three packages, recent work (Profiley, Helios, Calibridge), a three-step "how it starts", the stack, and a closing call to action. The packages live in one file, `src/data/packages.js` (also holds `CONTACT`, `whatsappLink`, `mailLink`, `featuredWork`, `stack`), and are shown by the shared `src/components/ui/PackageCard.jsx` on both `/hire` and the homepage Services section. Prices are starting prices in rupees: Business Website + CMS 30,000, AI Features + Automation 55,000, Custom Web App 75,000, matching LinkedIn's Services page and the Google Business Profile (starter 15,000, multi-page 30,000, custom 75,000). Keep all four in step. The old `/booking` page was a demo (made-up slots, fake "Booking Confirmed!", dollar prices); it is gone and `/booking` and `/bookings` redirect to `/hire`.
+**Hire page is LIVE at https://lakshpradhwani.com/hire (merged to `main` and deployed 13 Oct 2026, commit `b03f2c5`).** The redesign branch `feat/skyline-world` is still separate and unmerged. `/hire` is a client-facing page: intro with WhatsApp and email actions, the three packages, recent work (Profiley, Helios, Calibridge), a three-step "how it starts", the stack, and a closing call to action. The packages live in one file, `src/data/packages.js` (also holds `CONTACT`, `whatsappLink`, `mailLink`, `featuredWork`, `stack`), and are shown by the shared `src/components/ui/PackageCard.jsx` on both `/hire` and the homepage Services section. Prices are starting prices in rupees: Business Website + CMS 30,000, AI Features + Automation 55,000, Custom Web App 75,000, matching LinkedIn's Services page and the Google Business Profile (starter 15,000, multi-page 30,000, custom 75,000). Keep all four in step. The old `/booking` page was a demo (made-up slots, fake "Booking Confirmed!", dollar prices); it is gone and `/booking` and `/bookings` redirect to `/hire`.
 
 Migrating off the expired lakshp.live. URLs (meta tags, `/resume` redirect, resume link) now use lakshpradhwani.com. The contact address is now `work@lakshpradhwani.com` (Cloudflare Email Routing forwards it to Laksh's Gmail). Remaining: the resume PDF. `npm run build` was not run: `node_modules` is not installed in this folder (run `npm ci` first).
 
 ## Next steps
-0. Hire page: add a real booking link once Laksh creates a Google Calendar appointment schedule (put it in `CONTACT` and add a "Book a call" button on `/hire`); add two case studies; merge `feat/hire-page` into `main` when Laksh approves (a push to `main` deploys to production).
+0. Hire page: add a real booking link once Laksh creates a Google Calendar appointment schedule (put it in `CONTACT` and add a "Book a call" button on `/hire`); add two case studies. When `feat/skyline-world` is merged later, expect conflicts in `src/App.jsx` (routes), `src/components/sections/07-Services.jsx`, `Navbar.jsx`, `MobileNavbar.jsx`, `index.html` and `vercel.json`: keep the Hire page, the `/hire` route and the shared `packages.js` data.
 1. Regenerate `src/assets/resume/laksh.pradhwani.resume.pdf`: it contains the link `https://www.lakshp.live/` (export again from Profiley once its default portfolio link is updated).
 2. Optionally replace `public/og-image.jpg` with a designed 1200x630 image (the current one is a cropped screenshot of the hero).
 
@@ -42,6 +42,7 @@ Migrating off the expired lakshp.live. URLs (meta tags, `/resume` redirect, resu
 - Laksh chose small commits, pushed after each (every push to `main` goes live on Vercel). Session of 8 Oct 2026.
 
 ## Session log (newest first)
+- 2026-10-13: merged `feat/hire-page` into `main` (fast-forward, `68cb93d` to `b03f2c5`) at Laksh's request and pushed; Vercel production deployment `dpl_7XLB3b1kuUwhHttt1oZQGLRHZ5YF`. Checked live with Playwright: `/hire` returns 200 with title "Hire Laksh Pradhwani | Websites, admin panels and AI features", the new prices show on `/hire` and on the homepage Services section (old prices gone), `/booking` redirects to `/hire`, and the sitemap lists `/hire`. Still to do after this: re-run the Schema Markup Validator and Rich Results Test on the live page, and ask Google Search Console to index `/hire`.
 - 2026-10-13: added a "Hire me" link (handshake icon, sky accent, after a divider) to `Navbar.jsx` and `MobileNavbar.jsx`; it highlights on `/hire`. Checked in a browser: tapping it works on desktop and on a 390 px phone, `/booking` redirects to `/hire`, and the nav's Home link from `/hire` returns to the home page.
 - 2026-10-13: `PackageCard` inner wrapper is now a flex column so the action buttons sit at the same height in all three columns (they did not on the old Services section either, because the wrapper was a plain block). Verified: button tops equal at 1440 px.
 - 2026-10-13: `index.html` JSON-LD `makesOffer` now names the same three services as the page (Business Website + CMS, AI Features + Automation, Custom Web App) instead of Digital Identity / Business Growth / Custom System; no prices in the markup. JSON parses; `dateModified` set to 2026-10-13. Re-run the Schema Markup Validator and Rich Results Test after this reaches `main`.
@@ -68,12 +69,13 @@ Migrating off the expired lakshp.live. URLs (meta tags, `/resume` redirect, resu
 <!-- handoff:auto:start -->
 ## Auto: repo state
 
-_Refreshed 13 Oct 2026, 7:27 pm IST by `scripts/handoff.mjs` (runs on every commit). Don't edit inside this block._
+_Refreshed 13 Oct 2026, 7:32 pm IST by `scripts/handoff.mjs` (runs on every commit). Don't edit inside this block._
 
-Branch: `feat/hire-page` · remote: https://github.com/TheRealLaksh/Portfolio-V2.git
+Branch: `main` · remote: https://github.com/TheRealLaksh/Portfolio-V2.git
 
 ### Last 15 commits
 
+- `b03f2c5` 2026-10-13 19:27 Add a Hire me link to the desktop and mobile navigation
 - `5c2e5d5` 2026-10-13 19:27 Line up the action buttons on the package cards
 - `1e0317b` 2026-10-13 19:25 Name the new packages in the structured data
 - `1305170` 2026-10-13 19:24 Add a Hire page and retire the demo booking page
@@ -88,13 +90,10 @@ Branch: `feat/hire-page` · remote: https://github.com/TheRealLaksh/Portfolio-V2
 - `743c2a7` 2026-10-11 21:59 Add short links for resume, GitHub, LinkedIn and Instagram
 - `bc27341` 2026-10-11 21:58 Add an SPA rewrite so deep links work on Vercel
 - `5b18fc7` 2026-10-09 13:40 Drop the private Shopping-demo repo from the GitHub project list
-- `afa14ab` 2026-10-09 13:15 Use the Web Developer hero frame for og-image
 
 ### Uncommitted changes at refresh time
 
 ```
 M  HANDOFF.md
-M  src/components/layout/MobileNavbar.jsx
-M  src/components/layout/Navbar.jsx
 ```
 <!-- handoff:auto:end -->
