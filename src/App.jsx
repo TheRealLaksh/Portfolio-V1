@@ -6,7 +6,7 @@ import AOS from 'aos';
 import 'aos/dist/aos.css';
 
 import Home from './pages/Home';
-import Booking from './components/sections/Booking';
+import Hire from './pages/Hire';
 
 function App() {
   const location = useLocation();
@@ -50,8 +50,10 @@ function App() {
       <Layout>
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/booking" element={<Booking />} />
-          <Route path="/bookings" element={<Navigate to="/booking" replace />} />
+          <Route path="/hire" element={<Hire />} />
+          {/* The old /booking page was a demo with made-up slots; send visitors to the real page. */}
+          <Route path="/booking" element={<Navigate to="/hire" replace />} />
+          <Route path="/bookings" element={<Navigate to="/hire" replace />} />
 
           <Route path="*" element={<Navigate to="/" replace />} />
           

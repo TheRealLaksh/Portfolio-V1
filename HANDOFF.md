@@ -23,13 +23,17 @@ React, Vite, Tailwind, Framer Motion, React Three Fiber, Lenis, AOS, react-route
 - `public/signature/`: images used in Laksh's Gmail signatures, hosted at https://lakshpradhwani.com/signature/<file>. `icon-linkedin.png`, `icon-github.png`, `icon-instagram.png` (36x36, white Simple Icons glyph on black circle) are the live signature icons. `lp-logo.png` is no longer in the signature but is kept because older sent emails reference it. Do not move or delete these or the signature images break.
 
 ## Status
+**Hire page in progress on branch `feat/hire-page` (off `main`, not merged, so the live site is unchanged).** `/hire` is a client-facing page: intro with WhatsApp and email actions, the three packages, recent work (Profiley, Helios, Calibridge), a three-step "how it starts", the stack, and a closing call to action. The packages live in one file, `src/data/packages.js` (also holds `CONTACT`, `whatsappLink`, `mailLink`, `featuredWork`, `stack`), and are shown by the shared `src/components/ui/PackageCard.jsx` on both `/hire` and the homepage Services section. Prices are starting prices in rupees: Business Website + CMS 30,000, AI Features + Automation 55,000, Custom Web App 75,000, matching LinkedIn's Services page and the Google Business Profile (starter 15,000, multi-page 30,000, custom 75,000). Keep all four in step. The old `/booking` page was a demo (made-up slots, fake "Booking Confirmed!", dollar prices); it is gone and `/booking` and `/bookings` redirect to `/hire`.
+
 Migrating off the expired lakshp.live. URLs (meta tags, `/resume` redirect, resume link) now use lakshpradhwani.com. The contact address is now `work@lakshpradhwani.com` (Cloudflare Email Routing forwards it to Laksh's Gmail). Remaining: the resume PDF. `npm run build` was not run: `node_modules` is not installed in this folder (run `npm ci` first).
 
 ## Next steps
+0. Hire page: add a real booking link once Laksh creates a Google Calendar appointment schedule (put it in `CONTACT` and add a "Book a call" button on `/hire`); add two case studies; merge `feat/hire-page` into `main` when Laksh approves (a push to `main` deploys to production).
 1. Regenerate `src/assets/resume/laksh.pradhwani.resume.pdf`: it contains the link `https://www.lakshp.live/` (export again from Profiley once its default portfolio link is updated).
 2. Optionally replace `public/og-image.jpg` with a designed 1200x630 image (the current one is a cropped screenshot of the hero).
 
 ## Open questions / waiting on
+- Location: LinkedIn, Google Business Profile and `/hire` now say Delhi NCR, but `index.html` (title, descriptions, JSON-LD address, noscript), the hero and the footer still say Varanasi. Needs Laksh's decision before changing the site-wide text.
 - Mail forwarding is verified: test mails to work@ and me@ showed "Forwarded" in Cloudflare's activity log on 9 Oct 2026.
 
 ## Decisions not to undo
@@ -38,6 +42,7 @@ Migrating off the expired lakshp.live. URLs (meta tags, `/resume` redirect, resu
 - Laksh chose small commits, pushed after each (every push to `main` goes live on Vercel). Session of 8 Oct 2026.
 
 ## Session log (newest first)
+- 2026-10-13: built `/hire` (`src/pages/Hire.jsx`) on branch `feat/hire-page`: sets its own tab title and description, `usePageMeta`; WhatsApp link prefilled per package (`wa.me/918433364186`); added `/hire` to `public/sitemap.xml`; deleted `src/components/sections/Booking.jsx` (demo) and redirected `/booking`, `/bookings` to `/hire`. Moved the packages into `src/data/packages.js` with the new prices and a reusable `PackageCard`; the homepage Services section now uses them (the old Rs 3,499 / 8,999 / 17,999 packages, the MOST POPULAR badge and the free-maintenance promises are gone) and links to `/hire`. Checked with Playwright at 1440 and 390 px: no sideways scroll; the only failed request is Vercel's analytics script, which exists only on Vercel. `npm install --no-package-lock` in the worktree `..\Portfolio-V2-hire`.
 - 2026-10-11: validated the live markup: Schema Markup Validator 0 errors / 0 warnings; Google Rich Results Test "Profile page: 1 valid item detected" (item "Laksh Pradhwani", crawled 11 Oct 22:27 IST); Search Console URL Inspection says the home page is indexed, and "Request indexing" was submitted so Google re-crawls the new markup. The sitemap still said "Couldn't fetch" (files return 200 to a Googlebot user agent; normal for a new sitemap, recheck). Google decides what to show: structured data does not guarantee a knowledge panel or any rich result.
 - 2026-10-11: added a `<noscript>` block to `index.html` with a plain-HTML summary (name, one-line description, GitHub, LinkedIn, Instagram, work@ email) for crawlers and browsers without JavaScript. It sits beside `#root`, not inside it, so React is unaffected. Keep it in step with the hero text.
 - 2026-10-11: added schema.org JSON-LD to the `<head>` of `index.html` (one `@graph`: `WebSite`, `ProfilePage`, `ImageObject`, `Person`). Person has name, jobTitle "Full-Stack Web Developer", description, public email `work@lakshpradhwani.com`, city-level address (Varanasi, Uttar Pradesh, IN), `sameAs` (LinkedIn, GitHub, Instagram laksh.pradhwani), `knowsAbout` and `makesOffer` for the three services shown in the Services section. The image is `public/me.webp`, byte-identical to the About photo (`src/assets/images/laksh.pradhwani.webp`). Deliberately left out: date of birth, family, school names, phone, street address, and the employers/education that are only on LinkedIn (ShiftsDeal, Masters' Union): add them only once the page itself shows them, because Google ignores markup that doesn't match visible content. Keep `dateModified` current when the content changes. Validate with https://validator.schema.org/ and https://search.google.com/test/rich-results.
@@ -60,12 +65,13 @@ Migrating off the expired lakshp.live. URLs (meta tags, `/resume` redirect, resu
 <!-- handoff:auto:start -->
 ## Auto: repo state
 
-_Refreshed 13 Oct 2026, 7:21 pm IST by `scripts/handoff.mjs` (runs on every commit). Don't edit inside this block._
+_Refreshed 13 Oct 2026, 7:24 pm IST by `scripts/handoff.mjs` (runs on every commit). Don't edit inside this block._
 
 Branch: `feat/hire-page` · remote: https://github.com/TheRealLaksh/Portfolio-V2.git
 
 ### Last 15 commits
 
+- `8f7b1ec` 2026-10-13 19:21 Share one set of packages between the homepage and a coming Hire page
 - `68cb93d` 2026-10-11 22:30 Record the structured data validation results in HANDOFF
 - `78b9a38` 2026-10-11 22:26 Add a plain-HTML fallback for crawlers and no-JS browsers
 - `69d9cc1` 2026-10-11 22:25 Add Person structured data so Google can connect the site to Laksh
@@ -80,13 +86,14 @@ Branch: `feat/hire-page` · remote: https://github.com/TheRealLaksh/Portfolio-V2
 - `21ba901` 2026-10-09 13:04 Add social icons for the email signature
 - `8966bdf` 2026-10-09 01:07 Add the missing og-image for link previews
 - `4c1deb1` 2026-10-09 00:59 Host the LP logo for the email signature
-- `2d7b824` 2026-10-09 00:32 Use work@lakshpradhwani.com as the contact address
 
 ### Uncommitted changes at refresh time
 
 ```
-M  src/components/sections/07-Services.jsx
-A  src/components/ui/PackageCard.jsx
-A  src/data/packages.js
+M  HANDOFF.md
+M  public/sitemap.xml
+M  src/App.jsx
+D  src/components/sections/Booking.jsx
+A  src/pages/Hire.jsx
 ```
 <!-- handoff:auto:end -->
