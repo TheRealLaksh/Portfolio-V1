@@ -25,7 +25,7 @@ const SpotlightCard = ({ children, className = '', spotlightColor }) => {
         className="pointer-events-none absolute -inset-px opacity-0 transition duration-300 group-hover:opacity-100"
         style={{ background }}
       />
-      <div className="relative h-full">{children}</div>
+      <div className="relative flex h-full flex-col">{children}</div>
     </div>
   );
 };

@@ -42,6 +42,7 @@ Migrating off the expired lakshp.live. URLs (meta tags, `/resume` redirect, resu
 - Laksh chose small commits, pushed after each (every push to `main` goes live on Vercel). Session of 8 Oct 2026.
 
 ## Session log (newest first)
+- 2026-10-13: `PackageCard` inner wrapper is now a flex column so the action buttons sit at the same height in all three columns (they did not on the old Services section either, because the wrapper was a plain block). Verified: button tops equal at 1440 px.
 - 2026-10-13: `index.html` JSON-LD `makesOffer` now names the same three services as the page (Business Website + CMS, AI Features + Automation, Custom Web App) instead of Digital Identity / Business Growth / Custom System; no prices in the markup. JSON parses; `dateModified` set to 2026-10-13. Re-run the Schema Markup Validator and Rich Results Test after this reaches `main`.
 - 2026-10-13: built `/hire` (`src/pages/Hire.jsx`) on branch `feat/hire-page`: sets its own tab title and description, `usePageMeta`; WhatsApp link prefilled per package (`wa.me/918433364186`); added `/hire` to `public/sitemap.xml`; deleted `src/components/sections/Booking.jsx` (demo) and redirected `/booking`, `/bookings` to `/hire`. Moved the packages into `src/data/packages.js` with the new prices and a reusable `PackageCard`; the homepage Services section now uses them (the old Rs 3,499 / 8,999 / 17,999 packages, the MOST POPULAR badge and the free-maintenance promises are gone) and links to `/hire`. Checked with Playwright at 1440 and 390 px: no sideways scroll; the only failed request is Vercel's analytics script, which exists only on Vercel. `npm install --no-package-lock` in the worktree `..\Portfolio-V2-hire`.
 - 2026-10-11: validated the live markup: Schema Markup Validator 0 errors / 0 warnings; Google Rich Results Test "Profile page: 1 valid item detected" (item "Laksh Pradhwani", crawled 11 Oct 22:27 IST); Search Console URL Inspection says the home page is indexed, and "Request indexing" was submitted so Google re-crawls the new markup. The sitemap still said "Couldn't fetch" (files return 200 to a Googlebot user agent; normal for a new sitemap, recheck). Google decides what to show: structured data does not guarantee a knowledge panel or any rich result.
@@ -66,12 +67,13 @@ Migrating off the expired lakshp.live. URLs (meta tags, `/resume` redirect, resu
 <!-- handoff:auto:start -->
 ## Auto: repo state
 
-_Refreshed 13 Oct 2026, 7:25 pm IST by `scripts/handoff.mjs` (runs on every commit). Don't edit inside this block._
+_Refreshed 13 Oct 2026, 7:27 pm IST by `scripts/handoff.mjs` (runs on every commit). Don't edit inside this block._
 
 Branch: `feat/hire-page` · remote: https://github.com/TheRealLaksh/Portfolio-V2.git
 
 ### Last 15 commits
 
+- `1e0317b` 2026-10-13 19:25 Name the new packages in the structured data
 - `1305170` 2026-10-13 19:24 Add a Hire page and retire the demo booking page
 - `8f7b1ec` 2026-10-13 19:21 Share one set of packages between the homepage and a coming Hire page
 - `68cb93d` 2026-10-11 22:30 Record the structured data validation results in HANDOFF
@@ -86,12 +88,13 @@ Branch: `feat/hire-page` · remote: https://github.com/TheRealLaksh/Portfolio-V2
 - `5b18fc7` 2026-10-09 13:40 Drop the private Shopping-demo repo from the GitHub project list
 - `afa14ab` 2026-10-09 13:15 Use the Web Developer hero frame for og-image
 - `21ba901` 2026-10-09 13:04 Add social icons for the email signature
-- `8966bdf` 2026-10-09 01:07 Add the missing og-image for link previews
 
 ### Uncommitted changes at refresh time
 
 ```
 M  HANDOFF.md
-M  index.html
+ M src/components/layout/MobileNavbar.jsx
+ M src/components/layout/Navbar.jsx
+M  src/components/ui/PackageCard.jsx
 ```
 <!-- handoff:auto:end -->
