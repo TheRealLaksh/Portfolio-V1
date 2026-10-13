@@ -42,6 +42,7 @@ Migrating off the expired lakshp.live. URLs (meta tags, `/resume` redirect, resu
 - Laksh chose small commits, pushed after each (every push to `main` goes live on Vercel). Session of 8 Oct 2026.
 
 ## Session log (newest first)
+- 2026-10-13: added a "Hire me" link (handshake icon, sky accent, after a divider) to `Navbar.jsx` and `MobileNavbar.jsx`; it highlights on `/hire`. Checked in a browser: tapping it works on desktop and on a 390 px phone, `/booking` redirects to `/hire`, and the nav's Home link from `/hire` returns to the home page.
 - 2026-10-13: `PackageCard` inner wrapper is now a flex column so the action buttons sit at the same height in all three columns (they did not on the old Services section either, because the wrapper was a plain block). Verified: button tops equal at 1440 px.
 - 2026-10-13: `index.html` JSON-LD `makesOffer` now names the same three services as the page (Business Website + CMS, AI Features + Automation, Custom Web App) instead of Digital Identity / Business Growth / Custom System; no prices in the markup. JSON parses; `dateModified` set to 2026-10-13. Re-run the Schema Markup Validator and Rich Results Test after this reaches `main`.
 - 2026-10-13: built `/hire` (`src/pages/Hire.jsx`) on branch `feat/hire-page`: sets its own tab title and description, `usePageMeta`; WhatsApp link prefilled per package (`wa.me/918433364186`); added `/hire` to `public/sitemap.xml`; deleted `src/components/sections/Booking.jsx` (demo) and redirected `/booking`, `/bookings` to `/hire`. Moved the packages into `src/data/packages.js` with the new prices and a reusable `PackageCard`; the homepage Services section now uses them (the old Rs 3,499 / 8,999 / 17,999 packages, the MOST POPULAR badge and the free-maintenance promises are gone) and links to `/hire`. Checked with Playwright at 1440 and 390 px: no sideways scroll; the only failed request is Vercel's analytics script, which exists only on Vercel. `npm install --no-package-lock` in the worktree `..\Portfolio-V2-hire`.
@@ -73,6 +74,7 @@ Branch: `feat/hire-page` · remote: https://github.com/TheRealLaksh/Portfolio-V2
 
 ### Last 15 commits
 
+- `5c2e5d5` 2026-10-13 19:27 Line up the action buttons on the package cards
 - `1e0317b` 2026-10-13 19:25 Name the new packages in the structured data
 - `1305170` 2026-10-13 19:24 Add a Hire page and retire the demo booking page
 - `8f7b1ec` 2026-10-13 19:21 Share one set of packages between the homepage and a coming Hire page
@@ -87,14 +89,12 @@ Branch: `feat/hire-page` · remote: https://github.com/TheRealLaksh/Portfolio-V2
 - `bc27341` 2026-10-11 21:58 Add an SPA rewrite so deep links work on Vercel
 - `5b18fc7` 2026-10-09 13:40 Drop the private Shopping-demo repo from the GitHub project list
 - `afa14ab` 2026-10-09 13:15 Use the Web Developer hero frame for og-image
-- `21ba901` 2026-10-09 13:04 Add social icons for the email signature
 
 ### Uncommitted changes at refresh time
 
 ```
 M  HANDOFF.md
- M src/components/layout/MobileNavbar.jsx
- M src/components/layout/Navbar.jsx
-M  src/components/ui/PackageCard.jsx
+M  src/components/layout/MobileNavbar.jsx
+M  src/components/layout/Navbar.jsx
 ```
 <!-- handoff:auto:end -->

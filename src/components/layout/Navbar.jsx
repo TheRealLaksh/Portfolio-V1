@@ -5,7 +5,8 @@ import { cn } from '../../utils/cn';
 import { triggerWarp } from '../../utils/triggerWarp';
 import { triggerHaptic } from '../../utils/triggerHaptic';
 import { useLenis } from '@studio-freight/react-lenis';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { PiHandshake } from 'react-icons/pi';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 const Navbar = () => {
   const navIds = ['home', 'about', 'experience', 'skills', 'projects', 'resume', 'services', 'contact'];
@@ -15,6 +16,7 @@ const Navbar = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const isHomePage = location.pathname === '/';
+  const isHirePage = location.pathname === '/hire';
 
   const scrollToSection = (e, id) => {
     e.preventDefault();
@@ -105,6 +107,31 @@ const Navbar = () => {
         <FiMail className="w-5 h-5" />
         <span className={getTextClass('contact')}>Contact</span>
       </a>
+
+      <div className="mx-1 h-6 w-[1px] bg-white/10 shrink-0 block"></div>
+
+      <Link
+        to="/hire"
+        onClick={triggerHaptic}
+        className={cn(
+          "relative flex items-center justify-center rounded-xl px-4 py-3 text-base font-medium transition-all duration-300 shrink-0 group",
+          isHirePage
+            ? "bg-sky-500/20 text-sky-300 shadow-[0_0_15px_rgba(14,165,233,0.25)]"
+            : "text-sky-400 hover:bg-sky-500/10 hover:text-sky-300"
+        )}
+      >
+        <PiHandshake className="w-5 h-5" />
+        <span
+          className={cn(
+            "overflow-hidden transition-all duration-300 ease-in-out block",
+            isHirePage
+              ? "w-auto opacity-100 ml-2"
+              : "w-0 opacity-0 group-hover:w-auto group-hover:opacity-100 group-hover:ml-2"
+          )}
+        >
+          Hire me
+        </span>
+      </Link>
 
     </nav>
   );

@@ -4,7 +4,8 @@ import useScrollSpy from '../../hooks/useScrollSpy';
 import { cn } from '../../utils/cn';
 import { triggerWarp } from '../../utils/triggerWarp';
 import { triggerHaptic } from '../../utils/triggerHaptic';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { PiHandshake } from 'react-icons/pi';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 const MobileNavbar = () => {
   const [isVisible, setIsVisible] = useState(true);
@@ -17,6 +18,7 @@ const MobileNavbar = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const isHomePage = location.pathname === '/';
+  const isHirePage = location.pathname === '/hire';
 
   useEffect(() => {
     const handleScroll = () => {
@@ -120,6 +122,20 @@ const MobileNavbar = () => {
       <a href="#contact" onClick={(e) => scrollToSection(e, 'contact')} className={getLinkClass('contact')}>
         <FiMail className="w-4 h-4" />
       </a>
+
+      <Link
+        to="/hire"
+        onClick={triggerHaptic}
+        aria-label="Hire me"
+        className={cn(
+          "relative flex items-center justify-center rounded-full px-3 py-2 text-sm font-medium transition-all duration-300 shrink-0",
+          isHirePage
+            ? "bg-sky-500/20 text-sky-300 shadow-[0_0_15px_rgba(14,165,233,0.25)] scale-110"
+            : "text-sky-400 active:scale-95"
+        )}
+      >
+        <PiHandshake className="w-4 h-4" />
+      </Link>
 
       {deferredPrompt && (
         <button onClick={handleInstallClick} className="relative flex items-center rounded-full px-3 py-2 text-green-400 bg-green-500/10 border border-green-500/30 active:scale-95 transition-all">
