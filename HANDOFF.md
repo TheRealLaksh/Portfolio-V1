@@ -42,6 +42,7 @@ Migrating off the expired lakshp.live. URLs (meta tags, `/resume` redirect, resu
 - Laksh chose small commits, pushed after each (every push to `main` goes live on Vercel). Session of 8 Oct 2026.
 
 ## Session log (newest first)
+- 2026-10-14: Fix 6 (preloader). A visitor landing on /hire first sat through the home page's 'INITIALIZING SYSTEM' preloader (about 4 s of black screen). `Layout.jsx` now only starts the preloader on `/` and not when the device asks for reduced motion; /hire shows its content in about 0.3 s. Decision: the preloader stays as the home page's intro.
 - 2026-10-14: Fix 5 (sidebar overlap). The fixed social sidebar (x 32 to 72) sat on top of the WhatsApp button and body text on /hire below about 1250 px wide (iPad, small laptops). It now shows from the xl breakpoint (1280 px) up, where it clears the content column; below that the footer and the closing call to action already carry the same links. Same change applies to the home page.
 - 2026-10-14: Fix 4 (chat teaser). On phones the 'Ask AI Laksh!' bubble is fixed at the top right and never left, so it covered the location chip, package buttons and the closing call to action. It now shows after 3 s, disappears after 12 s, and appears once per browser session (sessionStorage, wrapped in try/catch). Chat controls (open/close, expand, send, dismiss, input) got aria-labels.
 - 2026-10-14: Fix 3 (mobile nav). The Hire me icon sat past the right edge of the bottom pill on a 390 px phone (clipped) and off-screen on 320 px. Icons are tighter (px-2.5, gap-0.5) so all nine fit from 360 px up; on narrower phones the pill scrolls and now brings the current page's icon into view. Every icon link has an aria-label and the current section/page gets aria-current; footer social icons have names too (LinkedIn link now uses www).
@@ -74,12 +75,13 @@ Migrating off the expired lakshp.live. URLs (meta tags, `/resume` redirect, resu
 <!-- handoff:auto:start -->
 ## Auto: repo state
 
-_Refreshed 14 Oct 2026, 10:05 am IST by `scripts/handoff.mjs` (runs on every commit). Don't edit inside this block._
+_Refreshed 14 Oct 2026, 10:06 am IST by `scripts/handoff.mjs` (runs on every commit). Don't edit inside this block._
 
 Branch: `main` · remote: https://github.com/TheRealLaksh/Portfolio-V2.git
 
 ### Last 15 commits
 
+- `4d038d4` 2026-10-14 10:05 Hide the social sidebar where it overlaps the page content
 - `7ac7e03` 2026-10-14 10:04 Stop the chat teaser from covering the page on phones
 - `f4e9e1e` 2026-10-14 10:04 Keep the Hire me icon visible in the mobile nav and name the icon links
 - `a46055f` 2026-10-14 10:02 Make section links work from /hire and on direct #links
@@ -94,13 +96,11 @@ Branch: `main` · remote: https://github.com/TheRealLaksh/Portfolio-V2.git
 - `78b9a38` 2026-10-11 22:26 Add a plain-HTML fallback for crawlers and no-JS browsers
 - `69d9cc1` 2026-10-11 22:25 Add Person structured data so Google can connect the site to Laksh
 - `07ab900` 2026-10-11 22:24 Tidy page metadata for search results
-- `61ff030` 2026-10-11 22:06 Point Instagram links at the current handle
 
 ### Uncommitted changes at refresh time
 
 ```
 M  HANDOFF.md
- M src/components/layout/Layout.jsx
-M  src/components/layout/SocialSidebar.jsx
+M  src/components/layout/Layout.jsx
 ```
 <!-- handoff:auto:end -->

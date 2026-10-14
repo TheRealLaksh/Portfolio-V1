@@ -1,5 +1,6 @@
 import React, { useState, Suspense } from 'react'; 
 import { motion, AnimatePresence } from 'framer-motion';
+import { useLocation } from 'react-router-dom';
 import Preloader from '../ui/Preloader';
 import Navbar from './Navbar';
 import MobileNavbar from './MobileNavbar';
@@ -18,7 +19,13 @@ const LoadingSpinner = () => (
 );
 
 const Layout = ({ children }) => {
-  const [loading, setLoading] = useState(true);
+  // The preloader is the home page's intro. A visitor who lands on /hire (a client with a
+  // question, usually from LinkedIn or WhatsApp) should not wait on it, nor should anyone who
+  // asked their device for reduced motion.
+  const { pathname } = useLocation();
+  const [loading, setLoading] = useState(
+    () => pathname === '/' && !window.matchMedia('(prefers-reduced-motion: reduce)').matches,
+  );
 
   return (
     // FIX: Changed overflow-hidden to overflow-x-hidden to prevent vertical scroll locking
