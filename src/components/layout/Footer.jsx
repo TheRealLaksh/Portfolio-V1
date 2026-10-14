@@ -262,7 +262,7 @@ const Footer = () => {
           <p>© {new Date().getFullYear()} Laksh Pradhwani. All Rights Reserved.</p>
 
           <div className="flex items-center gap-2 bg-[#0a0a0b] px-3 py-1.5 rounded-full border border-white/10 shadow-inner shadow-white/5">
-            <span>Built with</span>
+            <span className="text-slate-400">Built with</span>
             <span className="text-sky-400 font-medium">React</span>
             <span className="w-1 h-1 rounded-full bg-slate-700"></span>
             <span className="text-purple-400 font-medium">Tailwind</span>

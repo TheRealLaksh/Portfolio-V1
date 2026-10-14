@@ -72,7 +72,7 @@ const Hire = () => {
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={triggerHaptic}
-                className="inline-flex items-center justify-center gap-2 rounded-xl bg-sky-600 px-6 py-3.5 font-semibold text-white shadow-lg shadow-sky-900/30 transition-all hover:bg-sky-500 active:scale-95"
+                className="inline-flex items-center justify-center gap-2 rounded-xl bg-sky-700 px-6 py-3.5 font-semibold text-white shadow-lg shadow-sky-900/30 transition-all hover:bg-sky-600 active:scale-95"
               >
                 <PiWhatsappLogo className="h-5 w-5" aria-hidden="true" />
                 Message me on WhatsApp
@@ -139,7 +139,7 @@ const Hire = () => {
                   <div className="mb-4 flex items-start justify-between gap-4">
                     <div>
                       <h3 className="text-xl font-bold text-white">{work.name}</h3>
-                      <p className="mt-1 text-xs uppercase tracking-wider text-slate-500">{work.kind}</p>
+                      <p className="mt-1 text-xs uppercase tracking-wider text-slate-400">{work.kind}</p>
                     </div>
                     <PiArrowUpRightBold
                       className="h-5 w-5 shrink-0 text-slate-500 transition-colors group-hover:text-sky-400"
@@ -211,7 +211,7 @@ const Hire = () => {
                   target="_blank"
                   rel="noopener noreferrer"
                   onClick={triggerHaptic}
-                  className="inline-flex items-center gap-2 rounded-xl bg-sky-600 px-6 py-3.5 font-semibold text-white shadow-lg shadow-sky-900/30 transition-all hover:bg-sky-500 active:scale-95"
+                  className="inline-flex items-center gap-2 rounded-xl bg-sky-700 px-6 py-3.5 font-semibold text-white shadow-lg shadow-sky-900/30 transition-all hover:bg-sky-600 active:scale-95"
                 >
                   <PiWhatsappLogo className="h-5 w-5" aria-hidden="true" />
                   WhatsApp
@@ -225,7 +225,7 @@ const Hire = () => {
                   {CONTACT.email}
                 </a>
               </div>
-              <div className="mt-8 flex items-center justify-center gap-6 text-sm text-slate-500">
+              <div className="mt-8 flex items-center justify-center gap-6 text-sm text-slate-400">
                 <a
                   href={CONTACT.linkedin}
                   target="_blank"

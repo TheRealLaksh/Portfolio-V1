@@ -43,7 +43,7 @@ export const PackageCard = ({ pkg, href, onClick, external = false, label }) => 
 
     <div className="relative z-10 mb-6 border-b border-slate-800 pb-6">
       <div className="flex items-baseline gap-2">
-        <span className="text-xs uppercase tracking-wider text-slate-500">from</span>
+        <span className="text-xs uppercase tracking-wider text-slate-400">from</span>
         <span className="text-3xl font-bold text-white">{pkg.price}</span>
       </div>
       <p className="mt-3 text-sm leading-relaxed text-slate-400">{pkg.description}</p>

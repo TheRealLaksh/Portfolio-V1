@@ -42,6 +42,7 @@ Migrating off the expired lakshp.live. URLs (meta tags, `/resume` redirect, resu
 - Laksh chose small commits, pushed after each (every push to `main` goes live on Vercel). Session of 8 Oct 2026.
 
 ## Session log (newest first)
+- 2026-10-14: Fix 8 (contrast, axe-core). White text on the sky-600 WhatsApp buttons was 4.09:1 (needs 4.5): buttons on /hire are now sky-700 (hover sky-600). Small grey labels (the 'from' price label, project kinds, LinkedIn/GitHub links, 'Built with') moved from slate-500/600 to slate-400. axe-core on the local build now reports 0 violations on desktop; at 390 px it only lists a moderate 'skip-link' heuristic about the mobile nav anchors.
 - 2026-10-14: Fix 7 (reduced motion). Nothing respected `prefers-reduced-motion`: the three package buttons spin a huge gradient layer forever, dots ping, Reveal slides in. Added a global reduced-motion block in `src/index.css`, `<MotionConfig reducedMotion="user">` in `main.jsx`, and Lenis `smoothWheel` off in `App.jsx` when the device asks for it. Checked: animation 0.01 ms with it on, still 2 s infinite with it off; content still appears.
 - 2026-10-14: Fix 6 (preloader). A visitor landing on /hire first sat through the home page's 'INITIALIZING SYSTEM' preloader (about 4 s of black screen). `Layout.jsx` now only starts the preloader on `/` and not when the device asks for reduced motion; /hire shows its content in about 0.3 s. Decision: the preloader stays as the home page's intro.
 - 2026-10-14: Fix 5 (sidebar overlap). The fixed social sidebar (x 32 to 72) sat on top of the WhatsApp button and body text on /hire below about 1250 px wide (iPad, small laptops). It now shows from the xl breakpoint (1280 px) up, where it clears the content column; below that the footer and the closing call to action already carry the same links. Same change applies to the home page.
@@ -76,12 +77,13 @@ Migrating off the expired lakshp.live. URLs (meta tags, `/resume` redirect, resu
 <!-- handoff:auto:start -->
 ## Auto: repo state
 
-_Refreshed 14 Oct 2026, 10:07 am IST by `scripts/handoff.mjs` (runs on every commit). Don't edit inside this block._
+_Refreshed 14 Oct 2026, 10:09 am IST by `scripts/handoff.mjs` (runs on every commit). Don't edit inside this block._
 
 Branch: `main` · remote: https://github.com/TheRealLaksh/Portfolio-V2.git
 
 ### Last 15 commits
 
+- `be7cceb` 2026-10-14 10:07 Respect the reduced-motion setting
 - `0a0d812` 2026-10-14 10:06 Skip the preloader on /hire and for reduced-motion visitors
 - `4d038d4` 2026-10-14 10:05 Hide the social sidebar where it overlaps the page content
 - `7ac7e03` 2026-10-14 10:04 Stop the chat teaser from covering the page on phones
@@ -96,14 +98,18 @@ Branch: `main` · remote: https://github.com/TheRealLaksh/Portfolio-V2.git
 - `8f7b1ec` 2026-10-13 19:21 Share one set of packages between the homepage and a coming Hire page
 - `68cb93d` 2026-10-11 22:30 Record the structured data validation results in HANDOFF
 - `78b9a38` 2026-10-11 22:26 Add a plain-HTML fallback for crawlers and no-JS browsers
-- `69d9cc1` 2026-10-11 22:25 Add Person structured data so Google can connect the site to Laksh
 
 ### Uncommitted changes at refresh time
 
 ```
 M  HANDOFF.md
-M  src/App.jsx
-M  src/index.css
-M  src/main.jsx
+ M src/components/chat/ChatWidget.jsx
+M  src/components/layout/Footer.jsx
+ M src/components/layout/Layout.jsx
+ M src/components/layout/MobileNavbar.jsx
+ M src/components/layout/Navbar.jsx
+ M src/components/layout/SocialSidebar.jsx
+M  src/components/ui/PackageCard.jsx
+M  src/pages/Hire.jsx
 ```
 <!-- handoff:auto:end -->
