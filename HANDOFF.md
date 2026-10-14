@@ -42,6 +42,7 @@ Migrating off the expired lakshp.live. URLs (meta tags, `/resume` redirect, resu
 - Laksh chose small commits, pushed after each (every push to `main` goes live on Vercel). Session of 8 Oct 2026.
 
 ## Session log (newest first)
+- 2026-10-14: Fix 5 (sidebar overlap). The fixed social sidebar (x 32 to 72) sat on top of the WhatsApp button and body text on /hire below about 1250 px wide (iPad, small laptops). It now shows from the xl breakpoint (1280 px) up, where it clears the content column; below that the footer and the closing call to action already carry the same links. Same change applies to the home page.
 - 2026-10-14: Fix 4 (chat teaser). On phones the 'Ask AI Laksh!' bubble is fixed at the top right and never left, so it covered the location chip, package buttons and the closing call to action. It now shows after 3 s, disappears after 12 s, and appears once per browser session (sessionStorage, wrapped in try/catch). Chat controls (open/close, expand, send, dismiss, input) got aria-labels.
 - 2026-10-14: Fix 3 (mobile nav). The Hire me icon sat past the right edge of the bottom pill on a 390 px phone (clipped) and off-screen on 320 px. Icons are tighter (px-2.5, gap-0.5) so all nine fit from 360 px up; on narrower phones the pill scrolls and now brings the current page's icon into view. Every icon link has an aria-label and the current section/page gets aria-current; footer social icons have names too (LinkedIn link now uses www).
 - 2026-10-14: Fix 2 (section navigation). Footer Quick Links did nothing on /hire (plain #anchors), a direct visit to /#services stayed at the top, and the chat's Services and Projects chips did nothing on /hire. Now one hook `src/hooks/useSectionNav.js` (go to a home section from anywhere) is used by Navbar, MobileNavbar, Footer and ChatWidget, and `src/components/layout/ScrollManager.jsx` (inside ReactLenis) owns scroll-after-navigation: top when there is no hash, otherwise waits for the element, scrolls, and corrects once. Home.jsx and App.jsx no longer scroll on their own. /hire sections have ids (`packages`, `work`, `how-it-starts`, `contact`) so /hire#packages works; on /hire the chat's Services chip scrolls to the packages. Footer has a Hire me link. Verified on a local build with Playwright.
@@ -73,12 +74,13 @@ Migrating off the expired lakshp.live. URLs (meta tags, `/resume` redirect, resu
 <!-- handoff:auto:start -->
 ## Auto: repo state
 
-_Refreshed 14 Oct 2026, 10:04 am IST by `scripts/handoff.mjs` (runs on every commit). Don't edit inside this block._
+_Refreshed 14 Oct 2026, 10:05 am IST by `scripts/handoff.mjs` (runs on every commit). Don't edit inside this block._
 
 Branch: `main` · remote: https://github.com/TheRealLaksh/Portfolio-V2.git
 
 ### Last 15 commits
 
+- `7ac7e03` 2026-10-14 10:04 Stop the chat teaser from covering the page on phones
 - `f4e9e1e` 2026-10-14 10:04 Keep the Hire me icon visible in the mobile nav and name the icon links
 - `a46055f` 2026-10-14 10:02 Make section links work from /hire and on direct #links
 - `ac238ef` 2026-10-14 09:56 Give /hire its own title, canonical and link-preview tags
@@ -93,12 +95,12 @@ Branch: `main` · remote: https://github.com/TheRealLaksh/Portfolio-V2.git
 - `69d9cc1` 2026-10-11 22:25 Add Person structured data so Google can connect the site to Laksh
 - `07ab900` 2026-10-11 22:24 Tidy page metadata for search results
 - `61ff030` 2026-10-11 22:06 Point Instagram links at the current handle
-- `dfc5db1` 2026-10-11 22:04 Add Vercel Web Analytics
 
 ### Uncommitted changes at refresh time
 
 ```
 M  HANDOFF.md
-M  src/components/chat/ChatWidget.jsx
+ M src/components/layout/Layout.jsx
+M  src/components/layout/SocialSidebar.jsx
 ```
 <!-- handoff:auto:end -->

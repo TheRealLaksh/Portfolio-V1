@@ -2,7 +2,7 @@ import React from 'react';
 
 const SocialSidebar = () => {
   return (
-    <div className="fixed bottom-10 left-8 z-50 hidden md:flex flex-col items-start gap-3">
+    <div className="fixed bottom-10 left-8 z-50 hidden xl:flex flex-col items-start gap-3">
 
       {/* GitHub */}
       <a href="https://github.com/TheRealLaksh" target="_blank" rel="noopener noreferrer" aria-label="GitHub"
