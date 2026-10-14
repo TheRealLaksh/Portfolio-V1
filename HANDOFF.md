@@ -25,15 +25,18 @@ React, Vite, Tailwind, Framer Motion, React Three Fiber, Lenis, AOS, react-route
 ## Status
 **Hire page is LIVE at https://lakshpradhwani.com/hire (merged to `main` and deployed 13 Oct 2026, commit `b03f2c5`).** The redesign branch `feat/skyline-world` is still separate and unmerged. `/hire` is a client-facing page: intro with WhatsApp and email actions, the three packages, recent work (Profiley, Helios, Calibridge), a three-step "how it starts", the stack, and a closing call to action. The packages live in one file, `src/data/packages.js` (also holds `CONTACT`, `whatsappLink`, `mailLink`, `featuredWork`, `stack`), and are shown by the shared `src/components/ui/PackageCard.jsx` on both `/hire` and the homepage Services section. Prices are starting prices in rupees: Business Website + CMS 30,000, AI Features + Automation 55,000, Custom Web App 75,000, matching LinkedIn's Services page and the Google Business Profile (starter 15,000, multi-page 30,000, custom 75,000). Keep all four in step. The old `/booking` page was a demo (made-up slots, fake "Booking Confirmed!", dollar prices); it is gone and `/booking` and `/bookings` redirect to `/hire`.
 
+**14 Oct 2026 bug-fix pass on /hire (nine fixes, all live and re-tested on production with Playwright + axe-core):** own head/canonical/link-preview tags, section links from /hire, direct `/#hash` links, mobile Hire me icon, chat teaser, sidebar overlap, preloader skipped off-home, reduced motion, contrast and keyboard/landmark fixes. Details in the session log.
+
 Migrating off the expired lakshp.live. URLs (meta tags, `/resume` redirect, resume link) now use lakshpradhwani.com. The contact address is now `work@lakshpradhwani.com` (Cloudflare Email Routing forwards it to Laksh's Gmail). Remaining: the resume PDF. `npm run build` was not run: `node_modules` is not installed in this folder (run `npm ci` first).
 
 ## Next steps
+00. After the 14 Oct fixes: in Search Console use URL Inspection on `https://lakshpradhwani.com/hire` and Request indexing (it was canonicalised to the home page until today); re-run the Rich Results Test on it; refresh the LinkedIn preview with the Post Inspector (https://www.linkedin.com/post-inspector/) and re-share the link in WhatsApp to see the new card. Optionally give `/hire` its own 1200x630 OG image (`og-image.jpg` is the home hero crop).
 0. Hire page: add a real booking link once Laksh creates a Google Calendar appointment schedule (put it in `CONTACT` and add a "Book a call" button on `/hire`); add two case studies. When `feat/skyline-world` is merged later, expect conflicts in `src/App.jsx` (routes), `src/components/sections/07-Services.jsx`, `Navbar.jsx`, `MobileNavbar.jsx`, `index.html` and `vercel.json`: keep the Hire page, the `/hire` route and the shared `packages.js` data.
 1. Regenerate `src/assets/resume/laksh.pradhwani.resume.pdf`: it contains the link `https://www.lakshp.live/` (export again from Profiley once its default portfolio link is updated).
 2. Optionally replace `public/og-image.jpg` with a designed 1200x630 image (the current one is a cropped screenshot of the hero).
 
 ## Open questions / waiting on
-- Location: LinkedIn, Google Business Profile and `/hire` now say Delhi NCR, but `index.html` (title, descriptions, JSON-LD address, noscript), the hero and the footer still say Varanasi. Needs Laksh's decision before changing the site-wide text.
+- Location: the footer (every page, including /hire), `index.html`, the hero and the JSON-LD still say Varanasi while /hire says Delhi NCR: a visible mismatch on the page itself. LinkedIn, Google Business Profile and `/hire` now say Delhi NCR, but `index.html` (title, descriptions, JSON-LD address, noscript), the hero and the footer still say Varanasi. Needs Laksh's decision before changing the site-wide text.
 - Mail forwarding is verified: test mails to work@ and me@ showed "Forwarded" in Cloudflare's activity log on 9 Oct 2026.
 
 ## Decisions not to undo
@@ -42,6 +45,7 @@ Migrating off the expired lakshp.live. URLs (meta tags, `/resume` redirect, resu
 - Laksh chose small commits, pushed after each (every push to `main` goes live on Vercel). Session of 8 Oct 2026.
 
 ## Session log (newest first)
+- 2026-10-14: Production check after the nine fixes: `curl` shows /hire with its own title and canonical and the home page unchanged; Playwright on the live site (nav, footer, direct hash, chat chip, mobile nav at 390/360/320 px, teaser gone after 12 s, sidebar clear at 1024/1280, no preloader on /hire, home still has it) all pass; axe-core 0 violations on desktop. Still open: Varanasi vs Delhi NCR wording, a real booking link, case studies.
 - 2026-10-14: Fix 9 (structure for keyboard and screen readers). Chat teaser was a role=button wrapping a second button (nested interactive); it is now a text button plus a separate dismiss button. Added a 'Skip to content' link (first Tab stop, jumps to `main#main-content`), the social sidebar is an `aside` with a label, the 3D background is aria-hidden, and nav links use real `/#section` hrefs.
 - 2026-10-14: Fix 8 (contrast, axe-core). White text on the sky-600 WhatsApp buttons was 4.09:1 (needs 4.5): buttons on /hire are now sky-700 (hover sky-600). Small grey labels (the 'from' price label, project kinds, LinkedIn/GitHub links, 'Built with') moved from slate-500/600 to slate-400. axe-core on the local build now reports 0 violations on desktop; at 390 px it only lists a moderate 'skip-link' heuristic about the mobile nav anchors.
 - 2026-10-14: Fix 7 (reduced motion). Nothing respected `prefers-reduced-motion`: the three package buttons spin a huge gradient layer forever, dots ping, Reveal slides in. Added a global reduced-motion block in `src/index.css`, `<MotionConfig reducedMotion="user">` in `main.jsx`, and Lenis `smoothWheel` off in `App.jsx` when the device asks for it. Checked: animation 0.01 ms with it on, still 2 s infinite with it off; content still appears.
@@ -78,12 +82,13 @@ Migrating off the expired lakshp.live. URLs (meta tags, `/resume` redirect, resu
 <!-- handoff:auto:start -->
 ## Auto: repo state
 
-_Refreshed 14 Oct 2026, 10:09 am IST by `scripts/handoff.mjs` (runs on every commit). Don't edit inside this block._
+_Refreshed 14 Oct 2026, 10:15 am IST by `scripts/handoff.mjs` (runs on every commit). Don't edit inside this block._
 
 Branch: `main` · remote: https://github.com/TheRealLaksh/Portfolio-V2.git
 
 ### Last 15 commits
 
+- `5582902` 2026-10-14 10:09 Add a skip link and fix nested controls and landmarks
 - `00b0a9b` 2026-10-14 10:09 Raise text contrast on the Hire page to WCAG AA
 - `be7cceb` 2026-10-14 10:07 Respect the reduced-motion setting
 - `0a0d812` 2026-10-14 10:06 Skip the preloader on /hire and for reduced-motion visitors
@@ -98,16 +103,10 @@ Branch: `main` · remote: https://github.com/TheRealLaksh/Portfolio-V2.git
 - `1e0317b` 2026-10-13 19:25 Name the new packages in the structured data
 - `1305170` 2026-10-13 19:24 Add a Hire page and retire the demo booking page
 - `8f7b1ec` 2026-10-13 19:21 Share one set of packages between the homepage and a coming Hire page
-- `68cb93d` 2026-10-11 22:30 Record the structured data validation results in HANDOFF
 
 ### Uncommitted changes at refresh time
 
 ```
 M  HANDOFF.md
-M  src/components/chat/ChatWidget.jsx
-M  src/components/layout/Layout.jsx
-M  src/components/layout/MobileNavbar.jsx
-M  src/components/layout/Navbar.jsx
-M  src/components/layout/SocialSidebar.jsx
 ```
 <!-- handoff:auto:end -->
