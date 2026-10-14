@@ -73,9 +73,19 @@ const ChatWidget = () => {
   const messagesEndRef = useRef(null);
 
   // --- EVENT LISTENERS & EFFECTS ---
+  // The "Ask AI Laksh!" teaser appears once per visit and goes away by itself. On a phone it sits
+  // over the page content, so it must not stay there (it used to cover buttons and headings).
   useEffect(() => {
-    const timer = setTimeout(() => { if (!isOpen) setShowNotification(true); }, 3000);
-    return () => clearTimeout(timer);
+    let alreadySeen = false;
+    try { alreadySeen = sessionStorage.getItem('chat-teaser-seen') === '1'; } catch { /* storage blocked */ }
+    if (alreadySeen) return undefined;
+
+    const show = setTimeout(() => {
+      setShowNotification(true);
+      try { sessionStorage.setItem('chat-teaser-seen', '1'); } catch { /* storage blocked */ }
+    }, 3000);
+    const hide = setTimeout(() => setShowNotification(false), 12000);
+    return () => { clearTimeout(show); clearTimeout(hide); };
   }, []);
 
   useEffect(() => {
@@ -173,7 +183,7 @@ const ChatWidget = () => {
                 "relative bg-slate-900/90 backdrop-blur-xl text-white rounded-2xl border border-sky-500/30 shadow-[0_0_30px_-10px_rgba(14,165,233,0.4)]",
                 "p-3 md:px-6 md:py-4" // Smaller padding on mobile
             )}>
-              <button onClick={(e) => { e.stopPropagation(); setShowNotification(false); }} className="absolute -top-2 -left-2 bg-slate-800 rounded-full p-1 border border-white/10"><FiX size={12} /></button>
+              <button onClick={(e) => { e.stopPropagation(); setShowNotification(false); }} aria-label="Dismiss" className="absolute -top-2 -left-2 bg-slate-800 rounded-full p-1 border border-white/10"><FiX size={12} /></button>
               <div className="flex items-center gap-2 mb-1">
                 <span className="flex h-2.5 w-2.5 relative"><span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-75"></span><span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-sky-500"></span></span>
                 <p className="font-bold text-sm md:text-base">Ask AI Laksh!</p>
@@ -212,9 +222,9 @@ const ChatWidget = () => {
                   <p className="text-[10px] text-slate-400 font-medium ml-4 tracking-wider">Online and Ready - v2.0.4</p>
                 </div>
                 <div className="flex gap-2">
-                  <button onClick={() => setIsExpanded(!isExpanded)} className="text-slate-400 hover:text-white p-2 hidden md:block">{isExpanded ? <FiMinimize2 /> : <FiMaximize2 />}</button>
+                  <button onClick={() => setIsExpanded(!isExpanded)} aria-label={isExpanded ? 'Shrink chat' : 'Expand chat'} className="text-slate-400 hover:text-white p-2 hidden md:block">{isExpanded ? <FiMinimize2 /> : <FiMaximize2 />}</button>
                   <button onClick={clearChat} className="text-[10px] text-slate-400 border border-white/10 px-3 py-1 rounded-full hover:bg-white/5">Reset</button>
-                  <button onClick={() => setIsOpen(false)} className="md:hidden text-slate-400 p-2"><FiX size={20} /></button>
+                  <button onClick={() => setIsOpen(false)} aria-label="Close chat" className="md:hidden text-slate-400 p-2"><FiX size={20} /></button>
                 </div>
               </div>
 
@@ -265,12 +275,12 @@ const ChatWidget = () => {
                         <input
                           type="text"
                           className="relative w-full rounded-full border border-white/10 bg-slate-900/90 pl-5 pr-12 py-3.5 text-sm text-white outline-none focus:border-sky-500/50 transition-all placeholder:text-slate-500 shadow-inner"
-                          placeholder="Ask AI anything..."
+                          aria-label="Message to AI Laksh" placeholder="Ask AI anything..."
                           value={inputValue}
                           onChange={(e) => setInputValue(e.target.value)}
                           onKeyDown={handleKeyDown}
                         />
-                        <button onClick={handleSend} disabled={isLoading || !inputValue.trim()} className="absolute right-2 top-2 p-2 bg-sky-600 hover:bg-sky-500 rounded-full text-white transition-all disabled:opacity-0 disabled:scale-75 shadow-lg active:scale-90"><FiSend size={14} /></button>
+                        <button onClick={handleSend} aria-label="Send message" disabled={isLoading || !inputValue.trim()} className="absolute right-2 top-2 p-2 bg-sky-600 hover:bg-sky-500 rounded-full text-white transition-all disabled:opacity-0 disabled:scale-75 shadow-lg active:scale-90"><FiSend size={14} /></button>
                       </div>
                     </div>
                   </>
@@ -283,6 +293,8 @@ const ChatWidget = () => {
 
       <button 
         onClick={() => { triggerHaptic(); setIsOpen(!isOpen); }} 
+        aria-label={isOpen ? 'Close AI assistant' : 'Open AI assistant'}
+        aria-expanded={isOpen}
         className={cn(
             "fixed z-[60] group flex items-center justify-center transition-all duration-500 ease-out rounded-full",
             // Mobile Styles: Top Right, Small, no text expansion
