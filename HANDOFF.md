@@ -45,6 +45,7 @@ Migrating off the expired lakshp.live. URLs (meta tags, `/resume` redirect, resu
 - Laksh chose small commits, pushed after each (every push to `main` goes live on Vercel). Session of 8 Oct 2026.
 
 ## Session log (newest first)
+- 2026-10-14: About section terminal card now says Freelance Full-Stack Developer and adds the Masters' Union line; the location radar says Delhi NCR (Delhi coordinates). Footer, Contact, hero, `index.html`, `routeMeta.js` and JSON-LD still say Varanasi: site-wide change still waiting on Laksh.
 - 2026-10-14: About section bio (`02-About.jsx`) rewritten with current facts: freelance full-stack developer in Delhi NCR, B.Tech Data Science & AI at Masters' Union, four production apps at Unified Mentor (Helios, Calibridge), link to `/hire`; 'high school student' and 'seeking' wording removed. ShiftsDeal left out of the text on purpose (same call as the LinkedIn About). Plaksha/Outskill kept from the original text (not in the vault, confirm).
 - 2026-10-14: Production check after the nine fixes: `curl` shows /hire with its own title and canonical and the home page unchanged; Playwright on the live site (nav, footer, direct hash, chat chip, mobile nav at 390/360/320 px, teaser gone after 12 s, sidebar clear at 1024/1280, no preloader on /hire, home still has it) all pass; axe-core 0 violations on desktop. Still open: Varanasi vs Delhi NCR wording, a real booking link, case studies.
 - 2026-10-14: Fix 9 (structure for keyboard and screen readers). Chat teaser was a role=button wrapping a second button (nested interactive); it is now a text button plus a separate dismiss button. Added a 'Skip to content' link (first Tab stop, jumps to `main#main-content`), the social sidebar is an `aside` with a label, the 3D background is aria-hidden, and nav links use real `/#section` hrefs.
@@ -83,12 +84,13 @@ Migrating off the expired lakshp.live. URLs (meta tags, `/resume` redirect, resu
 <!-- handoff:auto:start -->
 ## Auto: repo state
 
-_Refreshed 14 Oct 2026, 12:13 pm IST by `scripts/handoff.mjs` (runs on every commit). Don't edit inside this block._
+_Refreshed 14 Oct 2026, 12:14 pm IST by `scripts/handoff.mjs` (runs on every commit). Don't edit inside this block._
 
 Branch: `main` · remote: https://github.com/TheRealLaksh/Portfolio-V2.git
 
 ### Last 15 commits
 
+- `8d1b7b9` 2026-10-14 12:13 Update the About bio with current role, study and freelance work
 - `7400fc0` 2026-10-14 10:15 Record the Hire page bug-fix pass in HANDOFF
 - `5582902` 2026-10-14 10:09 Add a skip link and fix nested controls and landmarks
 - `00b0a9b` 2026-10-14 10:09 Raise text contrast on the Hire page to WCAG AA
@@ -103,7 +105,6 @@ Branch: `main` · remote: https://github.com/TheRealLaksh/Portfolio-V2.git
 - `b03f2c5` 2026-10-13 19:27 Add a Hire me link to the desktop and mobile navigation
 - `5c2e5d5` 2026-10-13 19:27 Line up the action buttons on the package cards
 - `1e0317b` 2026-10-13 19:25 Name the new packages in the structured data
-- `1305170` 2026-10-13 19:24 Add a Hire page and retire the demo booking page
 
 ### Uncommitted changes at refresh time
 

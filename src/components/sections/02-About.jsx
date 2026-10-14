@@ -12,7 +12,8 @@ import { triggerHaptic } from '../../utils/triggerHaptic';
 const TerminalBio = () => {
   const [text, setText] = useState('');
   const fullText = `const laksh = {
-  role: "Full Stack Developer",
+  role: "Freelance Full-Stack Developer",
+  studying: "B.Tech Data Science & AI, Masters' Union",
   passion: "Building Digital Universes",
   arsenal: ["CSS", "HTML", "JS", "React", "Node.js", "Python", "Kali-Linux", "AI/ML"],
   mission: "To engineer the future."
@@ -68,8 +69,8 @@ const LocationRadar = () => {
         <div className="w-3 h-3 bg-emerald-400 rounded-full shadow-[0_0_10px_#34d399] animate-pulse relative z-10"></div>
         
         <div className="absolute -top-12 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-all duration-300 pointer-events-none whitespace-nowrap bg-black/80 backdrop-blur-md px-3 py-1 rounded text-xs text-emerald-400 border border-emerald-500/30 shadow-xl">
-           <FiMapPin className="inline mr-1" /> Varanasi, India
-           <div className="text-[9px] text-slate-500 font-mono mt-0.5">LAT: 25.3176° N | LNG: 82.9739° E</div>
+           <FiMapPin className="inline mr-1" /> Delhi NCR, India
+           <div className="text-[9px] text-slate-500 font-mono mt-0.5">LAT: 28.6139° N | LNG: 77.2090° E</div>
         </div>
       </div>
       <p className="text-center text-[10px] font-mono text-emerald-500/60 mt-4 tracking-widest">SYSTEM ONLINE</p>
