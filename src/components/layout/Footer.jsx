@@ -146,13 +146,13 @@ const Footer = () => {
             <h3 className="text-white font-semibold mb-4 md:block hidden">Connect</h3>
 
             <div className="flex items-center gap-6 mb-6">
-              <a href="https://github.com/TheRealLaksh" target="_blank" rel="noopener noreferrer" className="text-slate-400 hover:text-white transition-colors">
+              <a href="https://github.com/TheRealLaksh" target="_blank" rel="noopener noreferrer" aria-label="GitHub" className="text-slate-400 hover:text-white transition-colors">
                 <FiGithub size={22} />
               </a>
-              <a href="https://linkedin.com/in/laksh-pradhwani" target="_blank" rel="noopener noreferrer" className="text-slate-400 hover:text-blue-400 transition-colors">
+              <a href="https://www.linkedin.com/in/laksh-pradhwani" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" className="text-slate-400 hover:text-blue-400 transition-colors">
                 <FiLinkedin size={22} />
               </a>
-              <a href="mailto:work@lakshpradhwani.com" className="text-slate-400 hover:text-rose-400 transition-colors">
+              <a href="mailto:work@lakshpradhwani.com" aria-label="Email" className="text-slate-400 hover:text-rose-400 transition-colors">
                 <FiMail size={22} />
               </a>
             </div>

@@ -42,6 +42,7 @@ Migrating off the expired lakshp.live. URLs (meta tags, `/resume` redirect, resu
 - Laksh chose small commits, pushed after each (every push to `main` goes live on Vercel). Session of 8 Oct 2026.
 
 ## Session log (newest first)
+- 2026-10-14: Fix 3 (mobile nav). The Hire me icon sat past the right edge of the bottom pill on a 390 px phone (clipped) and off-screen on 320 px. Icons are tighter (px-2.5, gap-0.5) so all nine fit from 360 px up; on narrower phones the pill scrolls and now brings the current page's icon into view. Every icon link has an aria-label and the current section/page gets aria-current; footer social icons have names too (LinkedIn link now uses www).
 - 2026-10-14: Fix 2 (section navigation). Footer Quick Links did nothing on /hire (plain #anchors), a direct visit to /#services stayed at the top, and the chat's Services and Projects chips did nothing on /hire. Now one hook `src/hooks/useSectionNav.js` (go to a home section from anywhere) is used by Navbar, MobileNavbar, Footer and ChatWidget, and `src/components/layout/ScrollManager.jsx` (inside ReactLenis) owns scroll-after-navigation: top when there is no hash, otherwise waits for the element, scrolls, and corrects once. Home.jsx and App.jsx no longer scroll on their own. /hire sections have ids (`packages`, `work`, `how-it-starts`, `contact`) so /hire#packages works; on /hire the chat's Services chip scrolls to the packages. Footer has a Hire me link. Verified on a local build with Playwright.
 - 2026-10-14: /hire bug-fix pass (live site tested with Playwright at 1440/1024/800/768/390/360/320 px). Fix 1: `/hire` was served with the HOME page's head (canonical pointed at `/`, og/twitter tags said Varanasi), so Google could treat it as a duplicate and link previews were wrong. Now `vite.config.js` has a `hire-static-html` plugin that writes `dist/hire/index.html` (own title, description, canonical, og/twitter, WebPage + BreadcrumbList JSON-LD, no-JS text) from `src/data/routeMeta.js`; `vercel.json` rewrites `/hire` to it; `src/hooks/usePageMeta.js` applies the same values at runtime and restores the HOME values on exit. After deploy: re-check with `curl https://lakshpradhwani.com/hire`, then re-run the Rich Results Test and ask Search Console to re-index `/hire`.
 - 2026-10-13: merged `feat/hire-page` into `main` (fast-forward, `68cb93d` to `b03f2c5`) at Laksh's request and pushed; Vercel production deployment `dpl_7XLB3b1kuUwhHttt1oZQGLRHZ5YF`. Checked live with Playwright: `/hire` returns 200 with title "Hire Laksh Pradhwani | Websites, admin panels and AI features", the new prices show on `/hire` and on the homepage Services section (old prices gone), `/booking` redirects to `/hire`, and the sitemap lists `/hire`. Still to do after this: re-run the Schema Markup Validator and Rich Results Test on the live page, and ask Google Search Console to index `/hire`.
@@ -71,12 +72,13 @@ Migrating off the expired lakshp.live. URLs (meta tags, `/resume` redirect, resu
 <!-- handoff:auto:start -->
 ## Auto: repo state
 
-_Refreshed 14 Oct 2026, 10:02 am IST by `scripts/handoff.mjs` (runs on every commit). Don't edit inside this block._
+_Refreshed 14 Oct 2026, 10:04 am IST by `scripts/handoff.mjs` (runs on every commit). Don't edit inside this block._
 
 Branch: `main` · remote: https://github.com/TheRealLaksh/Portfolio-V2.git
 
 ### Last 15 commits
 
+- `a46055f` 2026-10-14 10:02 Make section links work from /hire and on direct #links
 - `ac238ef` 2026-10-14 09:56 Give /hire its own title, canonical and link-preview tags
 - `8c6f3cf` 2026-10-13 19:32 Record that the Hire page is live
 - `b03f2c5` 2026-10-13 19:27 Add a Hire me link to the desktop and mobile navigation
@@ -91,20 +93,13 @@ Branch: `main` · remote: https://github.com/TheRealLaksh/Portfolio-V2.git
 - `61ff030` 2026-10-11 22:06 Point Instagram links at the current handle
 - `dfc5db1` 2026-10-11 22:04 Add Vercel Web Analytics
 - `e9ebc94` 2026-10-11 21:59 Add robots.txt and a sitemap for search engines
-- `743c2a7` 2026-10-11 21:59 Add short links for resume, GitHub, LinkedIn and Instagram
 
 ### Uncommitted changes at refresh time
 
 ```
 M  HANDOFF.md
-M  src/App.jsx
-M  src/components/chat/ChatWidget.jsx
+ M src/components/chat/ChatWidget.jsx
 M  src/components/layout/Footer.jsx
 M  src/components/layout/MobileNavbar.jsx
-M  src/components/layout/Navbar.jsx
-A  src/components/layout/ScrollManager.jsx
-A  src/hooks/useSectionNav.js
-M  src/pages/Hire.jsx
-M  src/pages/Home.jsx
 ```
 <!-- handoff:auto:end -->
