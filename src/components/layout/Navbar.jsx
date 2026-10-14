@@ -43,44 +43,44 @@ const Navbar = () => {
       "top-6 opacity-100 translate-y-0"
     )}>
       
-      <a href="#home" onClick={(e) => scrollToSection(e, 'home')} className={getLinkClass('home')}>
+      <a href="/#home" onClick={(e) => scrollToSection(e, 'home')} className={getLinkClass('home')}>
         <FiHome className="w-5 h-5" />
         <span className={getTextClass('home')}>Home</span>
       </a>
 
-      <a href="#about" onClick={(e) => scrollToSection(e, 'about')} className={getLinkClass('about')}>
+      <a href="/#about" onClick={(e) => scrollToSection(e, 'about')} className={getLinkClass('about')}>
         <FiUser className="w-5 h-5" />
         <span className={getTextClass('about')}>About</span>
       </a>
 
-      <a href="#experience" onClick={(e) => scrollToSection(e, 'experience')} className={getLinkClass('experience')}>
+      <a href="/#experience" onClick={(e) => scrollToSection(e, 'experience')} className={getLinkClass('experience')}>
         <FiBriefcase className="w-5 h-5" />
         <span className={getTextClass('experience')}>Work</span>
       </a>
 
-      <a href="#skills" onClick={(e) => scrollToSection(e, 'skills')} className={getLinkClass('skills')}>
+      <a href="/#skills" onClick={(e) => scrollToSection(e, 'skills')} className={getLinkClass('skills')}>
         <FiCpu className="w-5 h-5" />
         <span className={getTextClass('skills')}>Skills</span>
       </a>
 
-      <a href="#projects" onClick={(e) => scrollToSection(e, 'projects')} className={getLinkClass('projects')}>
+      <a href="/#projects" onClick={(e) => scrollToSection(e, 'projects')} className={getLinkClass('projects')}>
         <FiCode className="w-5 h-5" />
         <span className={getTextClass('projects')}>Projects</span>
       </a>
 
       <div className="mx-1 h-6 w-[1px] bg-white/10 shrink-0 block"></div>
 
-      <a href="#resume" onClick={(e) => scrollToSection(e, 'resume')} className={getLinkClass('resume')}>
+      <a href="/#resume" onClick={(e) => scrollToSection(e, 'resume')} className={getLinkClass('resume')}>
         <FiFileText className="w-5 h-5" />
         <span className={getTextClass('resume')}>Resume</span>
       </a>
 
-      <a href="#services" onClick={(e) => scrollToSection(e, 'services')} className={getLinkClass('services')}>
+      <a href="/#services" onClick={(e) => scrollToSection(e, 'services')} className={getLinkClass('services')}>
         <FiPackage className="w-5 h-5" />
         <span className={getTextClass('services')}>Services</span>
       </a>
 
-      <a href="#contact" onClick={(e) => scrollToSection(e, 'contact')} className={getLinkClass('contact')}>
+      <a href="/#contact" onClick={(e) => scrollToSection(e, 'contact')} className={getLinkClass('contact')}>
         <FiMail className="w-5 h-5" />
         <span className={getTextClass('contact')}>Contact</span>
       </a>

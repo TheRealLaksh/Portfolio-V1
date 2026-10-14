@@ -37,6 +37,7 @@ const Layout = ({ children }) => {
       {!loading && (
          <motion.div 
             className="fixed inset-0 z-0"
+            aria-hidden="true"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 2, ease: "easeOut" }}
@@ -49,6 +50,19 @@ const Layout = ({ children }) => {
 
       {!loading && (
         <>
+          <a
+            href="#main-content"
+            onClick={(e) => {
+              e.preventDefault();
+              const main = document.getElementById('main-content');
+              main?.focus({ preventScroll: true });
+              main?.scrollIntoView({ behavior: 'auto' });
+            }}
+            className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-lg focus:bg-sky-700 focus:px-4 focus:py-2 focus:text-white"
+          >
+            Skip to content
+          </a>
+
           {/* Render Desktop Navigation */}
           <Navbar />
           
@@ -58,7 +72,9 @@ const Layout = ({ children }) => {
           <SocialSidebar />
           
           <motion.main 
-            className="relative z-10 flex flex-col items-center w-full"
+            id="main-content"
+            tabIndex={-1}
+            className="relative z-10 flex flex-col items-center w-full outline-none"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 1, delay: 0.5 }}

@@ -170,26 +170,26 @@ const ChatWidget = () => {
             exit={{ opacity: 0, scale: 0.9 }}
             className={cn(
                 // Mobile: Top Right, Small
-                "fixed z-50 cursor-pointer top-[60px] right-3 w-[200px]",
+                "fixed z-50 top-[60px] right-3 w-[200px]",
                 // Desktop: Bottom Right, Normal
                 "md:bottom-[85px] md:right-6 md:top-auto md:w-auto md:max-w-[280px]"
             )}
-            onClick={() => setIsOpen(true)}
-            role="button"
-            tabIndex={0}
-            onKeyDown={(e) => { if (e.key === 'Enter') setIsOpen(true); }}
           >
-            <div className={cn(
-                "relative bg-slate-900/90 backdrop-blur-xl text-white rounded-2xl border border-sky-500/30 shadow-[0_0_30px_-10px_rgba(14,165,233,0.4)]",
+            <button
+              type="button"
+              onClick={() => setIsOpen(true)}
+              className={cn(
+                "block w-full text-left relative bg-slate-900/90 backdrop-blur-xl text-white rounded-2xl border border-sky-500/30 shadow-[0_0_30px_-10px_rgba(14,165,233,0.4)]",
                 "p-3 md:px-6 md:py-4" // Smaller padding on mobile
-            )}>
-              <button onClick={(e) => { e.stopPropagation(); setShowNotification(false); }} aria-label="Dismiss" className="absolute -top-2 -left-2 bg-slate-800 rounded-full p-1 border border-white/10"><FiX size={12} /></button>
-              <div className="flex items-center gap-2 mb-1">
+              )}
+            >
+              <span className="flex items-center gap-2 mb-1">
                 <span className="flex h-2.5 w-2.5 relative"><span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-75"></span><span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-sky-500"></span></span>
-                <p className="font-bold text-sm md:text-base">Ask AI Laksh!</p>
-              </div>
-              <p className="text-xs md:text-sm text-slate-300">Curious about my work? I can answer questions instantly.</p>
-            </div>
+                <span className="font-bold text-sm md:text-base">Ask AI Laksh!</span>
+              </span>
+              <span className="block text-xs md:text-sm text-slate-300">Curious about my work? I can answer questions instantly.</span>
+            </button>
+            <button onClick={() => setShowNotification(false)} aria-label="Dismiss" className="absolute -top-2 -left-2 bg-slate-800 rounded-full p-1 border border-white/10"><FiX size={12} /></button>
           </motion.div>
         )}
       </AnimatePresence>

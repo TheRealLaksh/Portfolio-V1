@@ -84,35 +84,35 @@ const MobileNavbar = () => {
       !isVisible && "translate-y-[200%] opacity-0"
     )}>
       
-      <a href="#home" onClick={(e) => scrollToSection(e, 'home')} aria-label="Home" aria-current={activeSection === 'home' ? 'location' : undefined} className={getLinkClass('home')}>
+      <a href="/#home" onClick={(e) => scrollToSection(e, 'home')} aria-label="Home" aria-current={activeSection === 'home' ? 'location' : undefined} className={getLinkClass('home')}>
         <FiHome className="w-4 h-4" />
       </a>
 
-      <a href="#about" onClick={(e) => scrollToSection(e, 'about')} aria-label="About" aria-current={activeSection === 'about' ? 'location' : undefined} className={getLinkClass('about')}>
+      <a href="/#about" onClick={(e) => scrollToSection(e, 'about')} aria-label="About" aria-current={activeSection === 'about' ? 'location' : undefined} className={getLinkClass('about')}>
         <FiUser className="w-4 h-4" />
       </a>
 
-      <a href="#experience" onClick={(e) => scrollToSection(e, 'experience')} aria-label="Work" aria-current={activeSection === 'experience' ? 'location' : undefined} className={getLinkClass('experience')}>
+      <a href="/#experience" onClick={(e) => scrollToSection(e, 'experience')} aria-label="Work" aria-current={activeSection === 'experience' ? 'location' : undefined} className={getLinkClass('experience')}>
         <FiBriefcase className="w-4 h-4" />
       </a>
 
-      <a href="#skills" onClick={(e) => scrollToSection(e, 'skills')} aria-label="Skills" aria-current={activeSection === 'skills' ? 'location' : undefined} className={getLinkClass('skills')}>
+      <a href="/#skills" onClick={(e) => scrollToSection(e, 'skills')} aria-label="Skills" aria-current={activeSection === 'skills' ? 'location' : undefined} className={getLinkClass('skills')}>
         <FiCpu className="w-4 h-4" />
       </a>
 
-      <a href="#projects" onClick={(e) => scrollToSection(e, 'projects')} aria-label="Projects" aria-current={activeSection === 'projects' ? 'location' : undefined} className={getLinkClass('projects')}>
+      <a href="/#projects" onClick={(e) => scrollToSection(e, 'projects')} aria-label="Projects" aria-current={activeSection === 'projects' ? 'location' : undefined} className={getLinkClass('projects')}>
         <FiCode className="w-4 h-4" />
       </a>
 
-      <a href="#resume" onClick={(e) => scrollToSection(e, 'resume')} aria-label="Resume" aria-current={activeSection === 'resume' ? 'location' : undefined} className={getLinkClass('resume')}>
+      <a href="/#resume" onClick={(e) => scrollToSection(e, 'resume')} aria-label="Resume" aria-current={activeSection === 'resume' ? 'location' : undefined} className={getLinkClass('resume')}>
         <FiFileText className="w-4 h-4" />
       </a>
 
-      <a href="#services" onClick={(e) => scrollToSection(e, 'services')} aria-label="Services" aria-current={activeSection === 'services' ? 'location' : undefined} className={getLinkClass('services')}>
+      <a href="/#services" onClick={(e) => scrollToSection(e, 'services')} aria-label="Services" aria-current={activeSection === 'services' ? 'location' : undefined} className={getLinkClass('services')}>
         <FiPackage className="w-4 h-4" />
       </a>
 
-      <a href="#contact" onClick={(e) => scrollToSection(e, 'contact')} aria-label="Contact" aria-current={activeSection === 'contact' ? 'location' : undefined} className={getLinkClass('contact')}>
+      <a href="/#contact" onClick={(e) => scrollToSection(e, 'contact')} aria-label="Contact" aria-current={activeSection === 'contact' ? 'location' : undefined} className={getLinkClass('contact')}>
         <FiMail className="w-4 h-4" />
       </a>
 
