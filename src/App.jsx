@@ -27,7 +27,12 @@ function App() {
     });
   }, []);
 
+  const prefersReducedMotion =
+    typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
   const lenisOptions = {
+    // Inertia scrolling is motion too: switch it off for visitors who asked for less of it.
+    smoothWheel: !prefersReducedMotion,
     lerp: 0.07,
     duration: 1.2,
     smoothTouch: false,
