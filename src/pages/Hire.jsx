@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import {
   PiWhatsappLogo,
   PiEnvelopeSimple,
@@ -11,6 +11,8 @@ import { TextReveal } from '../components/ui/TextReveal';
 import { Reveal } from '../components/ui/Reveal';
 import { PackageCard } from '../components/ui/PackageCard';
 import { triggerHaptic } from '../utils/triggerHaptic';
+import { usePageMeta } from '../hooks/usePageMeta';
+import { HIRE_META } from '../data/routeMeta';
 import {
   CONTACT,
   packages,
@@ -19,32 +21,6 @@ import {
   whatsappLink,
   mailLink,
 } from '../data/packages';
-
-const TITLE = 'Hire Laksh Pradhwani | Websites, admin panels and AI features';
-const DESCRIPTION =
-  'Freelance full-stack developer in Delhi NCR. Business websites with a CMS from Rs 30,000, AI features and automation from Rs 55,000, custom web apps from Rs 75,000.';
-
-// Set the tab title and description for this route, then put them back on the way out.
-const usePageMeta = (title, description) => {
-  useEffect(() => {
-    const previousTitle = document.title;
-    let tag = document.querySelector('meta[name="description"]');
-    const created = !tag;
-    if (!tag) {
-      tag = document.createElement('meta');
-      tag.setAttribute('name', 'description');
-      document.head.appendChild(tag);
-    }
-    const previousDescription = tag.getAttribute('content');
-    document.title = title;
-    tag.setAttribute('content', description);
-    return () => {
-      document.title = previousTitle;
-      if (created) tag.remove();
-      else tag.setAttribute('content', previousDescription || '');
-    };
-  }, [title, description]);
-};
 
 const steps = [
   {
@@ -65,7 +41,7 @@ const steps = [
 ];
 
 const Hire = () => {
-  usePageMeta(TITLE, DESCRIPTION);
+  usePageMeta(HIRE_META);
 
   return (
     <div className="relative z-10 w-full pt-28 pb-24 sm:pt-36">

@@ -6,5 +6,8 @@
     { "source": "/linkedin", "destination": "https://www.linkedin.com/in/laksh-pradhwani", "permanent": false },
     { "source": "/instagram", "destination": "https://www.instagram.com/laksh.pradhwani", "permanent": false }
   ],
-  "rewrites": [{ "source": "/(.*)", "destination": "/index.html" }]
+  "rewrites": [
+    { "source": "/hire", "destination": "/hire/index.html" },
+    { "source": "/(.*)", "destination": "/index.html" }
+  ]
 }

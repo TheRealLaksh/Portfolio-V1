@@ -42,6 +42,7 @@ Migrating off the expired lakshp.live. URLs (meta tags, `/resume` redirect, resu
 - Laksh chose small commits, pushed after each (every push to `main` goes live on Vercel). Session of 8 Oct 2026.
 
 ## Session log (newest first)
+- 2026-10-14: /hire bug-fix pass (live site tested with Playwright at 1440/1024/800/768/390/360/320 px). Fix 1: `/hire` was served with the HOME page's head (canonical pointed at `/`, og/twitter tags said Varanasi), so Google could treat it as a duplicate and link previews were wrong. Now `vite.config.js` has a `hire-static-html` plugin that writes `dist/hire/index.html` (own title, description, canonical, og/twitter, WebPage + BreadcrumbList JSON-LD, no-JS text) from `src/data/routeMeta.js`; `vercel.json` rewrites `/hire` to it; `src/hooks/usePageMeta.js` applies the same values at runtime and restores the HOME values on exit. After deploy: re-check with `curl https://lakshpradhwani.com/hire`, then re-run the Rich Results Test and ask Search Console to re-index `/hire`.
 - 2026-10-13: merged `feat/hire-page` into `main` (fast-forward, `68cb93d` to `b03f2c5`) at Laksh's request and pushed; Vercel production deployment `dpl_7XLB3b1kuUwhHttt1oZQGLRHZ5YF`. Checked live with Playwright: `/hire` returns 200 with title "Hire Laksh Pradhwani | Websites, admin panels and AI features", the new prices show on `/hire` and on the homepage Services section (old prices gone), `/booking` redirects to `/hire`, and the sitemap lists `/hire`. Still to do after this: re-run the Schema Markup Validator and Rich Results Test on the live page, and ask Google Search Console to index `/hire`.
 - 2026-10-13: added a "Hire me" link (handshake icon, sky accent, after a divider) to `Navbar.jsx` and `MobileNavbar.jsx`; it highlights on `/hire`. Checked in a browser: tapping it works on desktop and on a 390 px phone, `/booking` redirects to `/hire`, and the nav's Home link from `/hire` returns to the home page.
 - 2026-10-13: `PackageCard` inner wrapper is now a flex column so the action buttons sit at the same height in all three columns (they did not on the old Services section either, because the wrapper was a plain block). Verified: button tops equal at 1440 px.
@@ -69,12 +70,13 @@ Migrating off the expired lakshp.live. URLs (meta tags, `/resume` redirect, resu
 <!-- handoff:auto:start -->
 ## Auto: repo state
 
-_Refreshed 13 Oct 2026, 7:32 pm IST by `scripts/handoff.mjs` (runs on every commit). Don't edit inside this block._
+_Refreshed 14 Oct 2026, 9:56 am IST by `scripts/handoff.mjs` (runs on every commit). Don't edit inside this block._
 
 Branch: `main` · remote: https://github.com/TheRealLaksh/Portfolio-V2.git
 
 ### Last 15 commits
 
+- `8c6f3cf` 2026-10-13 19:32 Record that the Hire page is live
 - `b03f2c5` 2026-10-13 19:27 Add a Hire me link to the desktop and mobile navigation
 - `5c2e5d5` 2026-10-13 19:27 Line up the action buttons on the package cards
 - `1e0317b` 2026-10-13 19:25 Name the new packages in the structured data
@@ -89,11 +91,15 @@ Branch: `main` · remote: https://github.com/TheRealLaksh/Portfolio-V2.git
 - `e9ebc94` 2026-10-11 21:59 Add robots.txt and a sitemap for search engines
 - `743c2a7` 2026-10-11 21:59 Add short links for resume, GitHub, LinkedIn and Instagram
 - `bc27341` 2026-10-11 21:58 Add an SPA rewrite so deep links work on Vercel
-- `5b18fc7` 2026-10-09 13:40 Drop the private Shopping-demo repo from the GitHub project list
 
 ### Uncommitted changes at refresh time
 
 ```
 M  HANDOFF.md
+A  src/data/routeMeta.js
+A  src/hooks/usePageMeta.js
+M  src/pages/Hire.jsx
+M  vercel.json
+M  vite.config.js
 ```
 <!-- handoff:auto:end -->
