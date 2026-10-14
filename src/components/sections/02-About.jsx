@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Tilt from 'react-parallax-tilt';
 import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
 import { FiMapPin, FiCpu } from 'react-icons/fi';
 import profileImg from '../../assets/images/laksh.pradhwani.webp';
 import { TextReveal } from '../ui/TextReveal';
@@ -167,17 +168,21 @@ const About = () => {
             <div className="text-slate-300 text-lg leading-relaxed space-y-6 font-light">
                 <TextReveal>
                   <p>
-                    I’m an aspiring <strong className="text-sky-400">AI/ML Engineer</strong> and high
-                    school student who moved from a simple “Hello, World!” to building <strong className="text-white">full-stack applications</strong> and real, functional
-                    products. My work with the <strong className="text-white">MERN stack</strong>,
+                    I’m a freelance <strong className="text-sky-400">full-stack developer</strong> based
+                    in Delhi NCR and a B.Tech <strong className="text-white">Data Science &amp; AI</strong> student
+                    at Masters’ Union. I moved from a simple “Hello, World!” to building <strong className="text-white">full-stack applications</strong> and real, functional
+                    products, and now I build company websites with admin panels, booking and payment
+                    flows, and AI features for clients. My work with the <strong className="text-white">MERN stack</strong>,
                     combined with internships at Unified Mentor, MoreYeahs, and Hotel Kavana, has
-                    taught me how to turn ideas into practical, scalable digital solutions.
+                    taught me how to turn ideas into practical, scalable digital solutions. At Unified
+                    Mentor I shipped four production apps in one internship, including Helios and
+                    Calibridge, both live today.
                   </p>
                 </TextReveal>
                 
                 <TextReveal>
                   <p>
-                    My interest in <strong className="text-white">artificial intelligence</strong> has
+                    I’m growing into an <strong className="text-sky-400">AI/ML Engineer</strong>. My interest in <strong className="text-white">artificial intelligence</strong> has
                     grown through programs at IIT Madras, Plaksha University, and Outskill, where I
                     explored neural networks, data science pipelines, automation workflows, and the
                     impact of responsible AI. Along the way, I’ve earned recognition through <strong className="text-white">hackathons</strong>, robotics events, and national-level
@@ -188,10 +193,12 @@ const About = () => {
 
                 <TextReveal>
                   <p>
-                    Outside academics, I stay involved in open-source projects, experiment with new
-                    technologies, and keep expanding my capabilities. I’m continuously building,
-                    learning, and improving—focused on growing into a skilled engineer and open to
-                    meaningful <strong className="text-white">internship opportunities</strong> that
+                    Outside college and client work, I stay involved in open-source projects,
+                    experiment with new technologies, and keep expanding my capabilities. I’m
+                    continuously building, learning, and improving, and I take on a few projects at a
+                    time so each one gets proper attention. Have a project in mind? See
+                    how <Link to="/hire" className="text-sky-400 underline underline-offset-4 hover:text-sky-300">I can help</Link>.
+                    I’m also open to meaningful <strong className="text-white">internship opportunities</strong> that
                     push me further.
                   </p>
                 </TextReveal>
