@@ -90,7 +90,7 @@ const Hire = () => {
         </header>
 
         {/* ---------- Packages ---------- */}
-        <section className="mt-24 sm:mt-32" aria-labelledby="packages-heading">
+        <section id="packages" className="mt-24 scroll-mt-28 sm:mt-32" aria-labelledby="packages-heading">
           <Reveal>
             <h2 id="packages-heading" className="text-3xl font-bold text-white md:text-4xl">
               What I can build for you
@@ -117,7 +117,7 @@ const Hire = () => {
         </section>
 
         {/* ---------- Recent work ---------- */}
-        <section className="mt-24 sm:mt-32" aria-labelledby="work-heading">
+        <section id="work" className="mt-24 scroll-mt-28 sm:mt-32" aria-labelledby="work-heading">
           <Reveal>
             <h2 id="work-heading" className="text-3xl font-bold text-white md:text-4xl">
               Recent work
@@ -157,7 +157,7 @@ const Hire = () => {
         </section>
 
         {/* ---------- How it works ---------- */}
-        <section className="mt-24 sm:mt-32" aria-labelledby="how-heading">
+        <section id="how-it-starts" className="mt-24 scroll-mt-28 sm:mt-32" aria-labelledby="how-heading">
           <Reveal>
             <h2 id="how-heading" className="text-3xl font-bold text-white md:text-4xl">
               How it starts
@@ -196,7 +196,7 @@ const Hire = () => {
         </section>
 
         {/* ---------- Closing call to action ---------- */}
-        <section className="mt-24 sm:mt-32" aria-labelledby="cta-heading">
+        <section id="contact" className="mt-24 scroll-mt-28 sm:mt-32" aria-labelledby="cta-heading">
           <Reveal>
             <div className="rounded-3xl border border-slate-800 bg-slate-950/60 p-8 text-center backdrop-blur-xl sm:p-12">
               <h2 id="cta-heading" className="text-3xl font-bold text-white md:text-4xl">

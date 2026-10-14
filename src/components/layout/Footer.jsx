@@ -1,9 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { FiGithub, FiLinkedin, FiMail } from 'react-icons/fi';
+import { Link } from 'react-router-dom';
 import useSpotify from '../../hooks/useSpotify';
+import useSectionNav from '../../hooks/useSectionNav';
 
 const Footer = () => {
   const { song } = useSpotify();
+  const goToSection = useSectionNav();
   const [time, setTime] = useState(new Date());
   
   // Refs for animation control
@@ -118,11 +121,23 @@ const Footer = () => {
             <ul className="space-y-3 text-sm text-slate-400">
               {['Home', 'About', 'Skills', 'Experience', 'Projects', 'Resume', 'Services', 'Contact'].map((link) => (
                 <li key={link}>
-                  <a href={`#${link.toLowerCase()}`} className="hover:text-sky-400 transition-colors">
+                  <a
+                    href={`/#${link.toLowerCase()}`}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      goToSection(link.toLowerCase());
+                    }}
+                    className="hover:text-sky-400 transition-colors"
+                  >
                     {link === 'Experience' ? 'Work' : link}
                   </a>
                 </li>
               ))}
+              <li>
+                <Link to="/hire" className="text-sky-400 hover:text-sky-300 transition-colors">
+                  Hire me
+                </Link>
+              </li>
             </ul>
           </div>
 

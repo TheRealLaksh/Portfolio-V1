@@ -4,46 +4,23 @@ import useScrollSpy from '../../hooks/useScrollSpy';
 import { cn } from '../../utils/cn';
 import { triggerWarp } from '../../utils/triggerWarp';
 import { triggerHaptic } from '../../utils/triggerHaptic';
-import { useLenis } from '@studio-freight/react-lenis';
+import useSectionNav from '../../hooks/useSectionNav';
 import { PiHandshake } from 'react-icons/pi';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 const Navbar = () => {
   const navIds = ['home', 'about', 'experience', 'skills', 'projects', 'resume', 'services', 'contact'];
   const activeSection = useScrollSpy(navIds);
-  const lenis = useLenis();
-  
+  const goToSection = useSectionNav();
+
   const location = useLocation();
-  const navigate = useNavigate();
-  const isHomePage = location.pathname === '/';
   const isHirePage = location.pathname === '/hire';
 
   const scrollToSection = (e, id) => {
     e.preventDefault();
     triggerHaptic();
     triggerWarp();
-
-    if (!isHomePage) {
-        navigate(`/#${id}`);
-        setTimeout(() => {
-             const element = document.getElementById(id);
-             if (element) element.scrollIntoView({ behavior: 'auto' });
-        }, 100);
-        return;
-    }
-    
-    if (lenis) {
-      lenis.scrollTo(`#${id}`, {
-        offset: -50,
-        duration: 1.5,
-        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t))
-      });
-    } else {
-      const element = document.getElementById(id);
-      if (element) {
-        element.scrollIntoView({ behavior: 'auto' });
-      }
-    }
+    goToSection(id);
   };
 
   const getLinkClass = (id) => cn(

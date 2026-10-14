@@ -4,7 +4,9 @@ import {
   FiMessageSquare, FiX, FiSend, FiBriefcase,
   FiFileText, FiMail, FiMinimize2, FiMaximize2, FiPackage
 } from 'react-icons/fi';
+import { useLocation } from 'react-router-dom';
 import { cn } from '../../utils/cn';
+import useSectionNav from '../../hooks/useSectionNav';
 import { triggerHaptic } from '../../utils/triggerHaptic';
 import resumeFile from '../../assets/resume/laksh.pradhwani.resume.pdf';
 
@@ -55,6 +57,17 @@ const ChatWidget = () => {
   const [hasBooted, setHasBooted] = useState(false);
   const [inputValue, setInputValue] = useState('');
 
+  const goToSection = useSectionNav();
+  const { pathname } = useLocation();
+
+  // The Services chip means "show me what you offer": on /hire that is the packages on this page,
+  // anywhere else it is the Services section on the home page.
+  const showServices = () => {
+    const packages = pathname === '/hire' ? document.getElementById('packages') : null;
+    if (packages) packages.scrollIntoView({ behavior: 'smooth' });
+    else goToSection('services', { native: true });
+  };
+
   // Custom Hook Logic
   const { chatMessages, isLoading, sendMessage, clearChat, addMessage } = useChat();
   const messagesEndRef = useRef(null);
@@ -94,11 +107,8 @@ const ChatWidget = () => {
       // Small delay to let user read the "Navigating..." message
       setTimeout(() => {
         setIsOpen(false);
-        const servicesSection = document.getElementById('services');
-        if (servicesSection) {
-          servicesSection.scrollIntoView({ behavior: 'smooth' });
-          triggerHaptic();
-        }
+        showServices();
+        triggerHaptic();
       }, 1200);
     }
   }, [chatMessages]);
@@ -120,11 +130,11 @@ const ChatWidget = () => {
   const handleQuickAction = (action) => {
     if (action === 'projects') {
       setIsOpen(false);
-      document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' });
+      goToSection('projects', { native: true });
     }
     if (action === 'services') {
       setIsOpen(false);
-      document.getElementById('services')?.scrollIntoView({ behavior: 'smooth' });
+      showServices();
     }
     if (action === 'resume') {
 

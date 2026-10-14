@@ -1,7 +1,8 @@
 import React, { useEffect } from 'react';
 import { ReactLenis } from '@studio-freight/react-lenis';
-import { Routes, Route, useLocation, Navigate } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import Layout from './components/layout/Layout';
+import ScrollManager from './components/layout/ScrollManager';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 
@@ -9,8 +10,6 @@ import Home from './pages/Home';
 import Hire from './pages/Hire';
 
 function App() {
-  const location = useLocation();
-
   useEffect(() => {
     // FIX: PREVENT BROWSER FROM RESTORING SCROLL POSITION
     if ('scrollRestoration' in history) {
@@ -28,16 +27,6 @@ function App() {
     });
   }, []);
 
-  useEffect(() => {
-    // Scroll to top on route change
-    window.scrollTo(0, 0);
-    
-    // Fix for AOS not refreshing immediately after route change
-    setTimeout(() => {
-      AOS.refresh();
-    }, 100);
-  }, [location]);
-
   const lenisOptions = {
     lerp: 0.07,
     duration: 1.2,
@@ -47,6 +36,8 @@ function App() {
 
   return (
     <ReactLenis root options={lenisOptions}>
+      {/* Scrolls to the top or to a #section after every navigation */}
+      <ScrollManager />
       <Layout>
         <Routes>
           <Route path="/" element={<Home />} />

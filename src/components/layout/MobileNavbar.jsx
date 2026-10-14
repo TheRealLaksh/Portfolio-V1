@@ -5,7 +5,8 @@ import { cn } from '../../utils/cn';
 import { triggerWarp } from '../../utils/triggerWarp';
 import { triggerHaptic } from '../../utils/triggerHaptic';
 import { PiHandshake } from 'react-icons/pi';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
+import useSectionNav from '../../hooks/useSectionNav';
 
 const MobileNavbar = () => {
   const [isVisible, setIsVisible] = useState(true);
@@ -15,9 +16,8 @@ const MobileNavbar = () => {
   const navIds = ['home', 'about', 'experience', 'skills', 'projects', 'resume', 'services', 'contact'];
   const activeSection = useScrollSpy(navIds);
   
+  const goToSection = useSectionNav();
   const location = useLocation();
-  const navigate = useNavigate();
-  const isHomePage = location.pathname === '/';
   const isHirePage = location.pathname === '/hire';
 
   useEffect(() => {
@@ -61,20 +61,7 @@ const MobileNavbar = () => {
     e.preventDefault();
     triggerHaptic();
     triggerWarp();
-
-    if (!isHomePage) {
-        navigate(`/#${id}`);
-        setTimeout(() => {
-             const element = document.getElementById(id);
-             if (element) element.scrollIntoView({ behavior: 'auto' });
-        }, 100);
-        return;
-    }
-    
-    const element = document.getElementById(id);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-    }
+    goToSection(id, { native: true });
   };
 
   const getLinkClass = (id) => cn(

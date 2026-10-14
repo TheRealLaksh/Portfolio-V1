@@ -1,6 +1,4 @@
-import React, { useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
-import { useLenis } from '@studio-freight/react-lenis';
+import React from 'react';
 
 // Import all sections EXCEPT Booking
 import Hero from '../components/sections/01-Hero';
@@ -13,26 +11,6 @@ import Services from '../components/sections/07-Services';
 import Contact from '../components/sections/08-Contact';
 
 const Home = () => {
-  const location = useLocation();
-  const lenis = useLenis();
-
-  // Handle scrolling to sections if redirected or on load
-  useEffect(() => {
-    if (lenis) {
-      if (location.hash) {
-        // If there is a hash (e.g. #contact), scroll there
-        const targetId = location.hash;
-        setTimeout(() => {
-          lenis.scrollTo(targetId, { offset: -30 });
-        }, 100);
-      } else {
-        // FIX: If NO hash, force scroll to top immediately to prevent "Services" jump
-        lenis.scrollTo(0, { immediate: true });
-        window.scrollTo(0, 0);
-      }
-    }
-  }, [location, lenis]);
-
   return (
     <>
       <Hero />
