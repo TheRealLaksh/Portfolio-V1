@@ -1,6 +1,6 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { PLACES, ME } from './data';
-import { clamp, ss, range, useScrollFrame, prefersReducedMotion } from './hooks';
+import { clamp, ss, range, useTrack, useScrub } from './hooks';
 import {
   VB, pct, SkyLayer, CloudLayer, KitesLayer, FarLayer, HillLeftLayer, HillRightLayer, GhatLayer, RiverLayer,
   MUArt, ShiftsDealArt, InternsArt, BestowArt, RangeArt, TablaArt, MeArt, ForegroundLeft, ForegroundRight, ForegroundBottom, Birds,
@@ -49,6 +49,23 @@ const LAYERS = [
   { id: 'me', d: 0.95, art: <MeArt />, place: 'me' },
   { id: 'fgB', d: 1, fg: true, art: <ForegroundBottom /> },
 ];
+
+// A bank of overlapping puffs (circles), so the paper rises behind real-looking clouds. Original shapes.
+function CloudBank({ seed, front = false }) {
+  const puffs = useMemo(() => {
+    let a = seed;
+    const r = () => { a = (a * 16807) % 2147483647; return (a - 1) / 2147483646; };
+    return Array.from({ length: 22 }, (_, i) => ({ x: -40 + i * 78 + r() * 40, y: 150 - r() * (front ? 70 : 100), r: 70 + r() * (front ? 70 : 90) }));
+  }, [seed, front]);
+  return (
+    <svg viewBox="0 0 1600 520" preserveAspectRatio="none" focusable="false">
+      <g className={front ? 'cb-f' : 'cb-b'}>
+        {puffs.map((c, i) => <circle key={i} cx={c.x} cy={c.y + 120} r={c.r} />)}
+        <rect x="-60" y="260" width="1720" height="300" />
+      </g>
+    </svg>
+  );
+}
 
 function Pin({ p, focusId, onPick, hint }) {
   const pl = PLACES[p.id];
@@ -123,13 +140,16 @@ export default function Hero({ music, onMusic, goJourney }) {
   const scene = useRef(null);
   const copy = useRef(null);
   const cue = useRef(null);
-  const veil = useRef(null);
+  const cloudA = useRef(null);
+  const cloudB = useRef(null);
+  const haze = useRef(null);
+  const scrub = useScrub();
   const layers = useRef({});
   const geo = useRef({ SW: 0, SH: 0, ox: 0, oy: 0, vw: 0, vh: 0 });
   const [focusId, setFocus] = useState(null);
   const [ready, setReady] = useState(false);
   const pan = useRef({ ax: 0.52, drag: null });
-  const reduced = useRef(prefersReducedMotion());
+  const reduced = useRef(!scrub);
 
   const layout = useCallback(() => {
     const st = stage.current;
@@ -177,38 +197,50 @@ export default function Hero({ music, onMusic, goJourney }) {
 
   useEffect(() => { applyFocus(focusId); }, [focusId, applyFocus]);
 
-  // Scroll: fly into the valley. Layers grow around the focal point by depth; foreground flies out.
-  const frame = useCallback((y, vh) => {
+  // Scroll: fly into the valley. `p` is eased, so the camera glides. Every layer grows around the focal point
+  // by depth (far hills barely move, near art rushes at you), the foreground flies past and fades, the pins
+  // let go, and cloud banks rise ahead of the paper that slides up over the valley.
+  const frame = useCallback((p, dt, vh) => {
     const v = valley.current;
     if (!v) return;
-    const top = v.offsetTop;
-    const total = Math.max(1, v.offsetHeight - vh);
-    const p = clamp((y - top) / total);
-    const e = reduced.current ? 0 : ss(p);
+    const e = ss(range(p, 0, 0.92));
     Object.entries(layers.current).forEach(([, el]) => {
       if (!el) return;
       const d = +el.dataset.d;
       const fg = el.dataset.fg === '1';
-      const s = 1 + e * (0.1 + d * 1.15);
-      el.style.transform = `scale(${s})`;
-      if (fg) el.style.opacity = String(1 - range(p, 0.2, 0.55));
+      const s = 1 + e * (0.08 + Math.pow(d, 1.15) * 1.9);
+      const ty = e * d * d * vh * 0.1;
+      el.style.transform = `translate3d(0,${ty.toFixed(1)}px,0) scale(${s.toFixed(4)})`;
+      if (fg) el.style.opacity = String(1 - range(p, 0.16, 0.46));
     });
+    const c = range(p, 0.02, 0.3);
     if (copy.current) {
-      copy.current.style.transform = `translate3d(0,${-p * 160}px,0)`;
-      copy.current.style.opacity = String(1 - range(p, 0.04, 0.26));
+      copy.current.style.transform = `translate3d(0,${(-c * vh * 0.34).toFixed(1)}px,0)`;
+      copy.current.style.opacity = String(1 - c * 1.15);
     }
-    if (cue.current) cue.current.style.opacity = String(1 - range(p, 0, 0.08));
-    if (veil.current) {
-      const q = range(p, 0.72, 1);
-      veil.current.style.transform = `translate3d(0,${(1 - ss(q)) * 108}%,0)`;
+    if (cue.current) cue.current.style.opacity = String(1 - range(p, 0, 0.05));
+    if (haze.current) haze.current.style.opacity = String(range(p, 0.25, 0.75));
+    const story = document.getElementById('story');
+    if (story && cloudA.current && cloudB.current) {
+      const top = story.getBoundingClientRect().top;
+      const on = top < vh * 1.05 && top > -vh * 0.4;
+      cloudA.current.style.opacity = on ? '1' : '0';
+      cloudB.current.style.opacity = on ? '1' : '0';
+      if (on) {
+        const q = 1 - clamp(top / vh);
+        cloudA.current.style.transform = `translate3d(${(-q * 90).toFixed(1)}px,${(top - vh * 0.3).toFixed(1)}px,0) scale(${(1 + q * 0.12).toFixed(3)})`;
+        cloudB.current.style.transform = `translate3d(${(q * 120).toFixed(1)}px,${(top - vh * 0.1).toFixed(1)}px,0) scale(${(1.06 + q * 0.16).toFixed(3)})`;
+      }
     }
+    const st = stage.current;
+    if (st) st.classList.toggle('flying', p > 0.02);
     if (p > 0.02 && focusRef.current) setFocus(null);
   }, []);
 
   const focusRef = useRef(null);
   focusRef.current = focusId;
 
-  useScrollFrame(frame);
+  useTrack(valley, frame, { damp: 6, enabled: scrub });
 
   useEffect(() => {
     layout();
@@ -325,10 +357,9 @@ export default function Hero({ music, onMusic, goJourney }) {
 
         <div className="night" aria-hidden="true"><i /></div>
         <div className="shade" aria-hidden="true" />
-        <div className="veil" ref={veil} aria-hidden="true">
-          <svg viewBox="0 0 1600 140" preserveAspectRatio="none"><path d="M0 140 V60 C 40 20 90 20 130 52 C 170 0 250 0 290 50 C 340 14 410 14 450 54 C 500 6 580 6 620 50 C 670 16 740 16 780 54 C 830 4 910 4 950 50 C 1000 14 1070 14 1110 54 C 1160 2 1240 2 1280 50 C 1330 16 1400 16 1440 54 C 1490 10 1560 14 1600 46 V140Z" /></svg>
-          <div className="veil-fill" />
-        </div>
+        <div className="haze" ref={haze} aria-hidden="true" />
+        <div className="cloudbank cb-a" ref={cloudA} aria-hidden="true"><CloudBank seed={3} /></div>
+        <div className="cloudbank cb-b" ref={cloudB} aria-hidden="true"><CloudBank seed={11} front /></div>
       </div>
     </section>
   );

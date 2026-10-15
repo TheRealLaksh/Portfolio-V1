@@ -1,0 +1,30 @@
+/* Scroll-driven storytelling layer. Everything pinned lives under .w-scrub (wide screens, motion allowed);
+   .w-flat (under 900px or reduced motion) keeps normal stacked sections. CSS defaults show the finished state. */
+
+.w-root { --torn: url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 1200 44%27 preserveAspectRatio=%27none%27%3E%3Cpath d=%27M0 44 L0 10 L11 15 L24 24 L29 17 L34 19 L40 23 L51 24 L57 24 L62 20 L67 14 L80 18 L91 9 L100 24 L107 24 L115 22 L121 23 L129 22 L140 21 L152 17 L159 17 L165 22 L177 25 L189 8 L195 16 L205 21 L216 27 L222 23 L232 17 L244 21 L250 18 L262 15 L267 18 L279 18 L289 20 L299 9 L311 30 L320 13 L331 21 L337 18 L350 10 L361 18 L372 24 L383 16 L389 13 L397 32 L404 6 L411 19 L421 25 L434 24 L439 26 L452 20 L463 26 L474 8 L482 15 L492 15 L497 22 L503 23 L508 12 L519 14 L529 21 L535 21 L547 18 L553 29 L563 21 L570 17 L583 25 L596 26 L609 26 L615 18 L628 16 L638 22 L651 19 L659 26 L667 20 L675 21 L685 14 L694 17 L704 25 L714 19 L720 13 L732 12 L744 23 L749 24 L759 15 L765 26 L773 16 L784 19 L790 25 L801 25 L807 16 L814 24 L826 16 L838 19 L845 16 L850 29 L856 16 L867 17 L875 12 L884 26 L894 19 L901 29 L911 24 L924 22 L931 22 L944 20 L951 26 L958 21 L964 19 L977 21 L983 14 L991 7 L997 22 L1002 15 L1014 22 L1027 14 L1039 26 L1051 17 L1064 18 L1077 17 L1089 9 L1100 15 L1108 17 L1117 26 L1124 24 L1134 34 L1141 17 L1147 21 L1154 17 L1161 22 L1172 12 L1182 29 L1192 23 L1200 10 L1200 44 Z%27/%3E%3C/svg%3E"); }
+
+/* ---------- hero: fly-through, clouds, paper rising over the valley ---------- */
+.w-root.w-scrub .valley { height: 300vh; }
+.w-root.w-flat .valley { height: 100vh; height: 100svh; }
+.w-root .stage.flying .pin, .w-root .stage.flying .hot { opacity: 0; pointer-events: none; }
+.w-root .haze { position: absolute; inset: 0; z-index: 6; pointer-events: none; opacity: 0; background: linear-gradient(180deg, transparent 25%, color-mix(in srgb, var(--paper) 60%, transparent)); }
+.w-root .cloudbank { position: absolute; left: -4%; top: 0; width: 108%; height: 56vh; z-index: 29; pointer-events: none; opacity: 0; transform: translate3d(0, 110vh, 0); will-change: transform; }
+.w-root .cloudbank svg { display: block; width: 100%; height: 100%; }
+.w-root .cb-b { fill: var(--cloud-foot); opacity: .9; }
+.w-root .cb-f { fill: var(--cloud-foot); }
+.w-root .cloudbank.cb-a svg { filter: drop-shadow(0 -14px 22px rgba(255, 255, 255, .25)); }
+.w-root .cloudbank.cb-b svg { filter: drop-shadow(0 -10px 18px rgba(20, 30, 70, .12)); }
+.w-root.w-flat .cloudbank, .w-root.w-flat .haze { display: none; }
+
+/* ---------- story: the paper slides up over the valley, then pins ---------- */
+.w-root .story { background: var(--paper); }
+.w-root.w-scrub .story { margin-top: -100vh; z-index: 8; height: 250vh; min-height: 0; padding: 0; display: block; }
+.w-root.w-scrub .story::before, .w-root .story::before { content: ""; position: absolute; z-index: 2; left: 0; right: 0; top: 0; height: 56px; transform: translateY(-99%); background: var(--paper); -webkit-mask: var(--torn) 0 0 / 1200px 56px repeat-x; mask: var(--torn) 0 0 / 1200px 56px repeat-x; filter: none; }
+.w-root.w-scrub .story-pin { position: sticky; top: 0; height: 100vh; height: 100svh; display: grid; align-content: center; overflow: hidden; }
+.w-root.w-scrub .story .kicker[data-rv], .w-root.w-scrub .story .tell[data-rv] { opacity: 1; transform: none; transition: none; }
+.w-root.w-scrub .story .tell-box { will-change: transform, opacity; transform-origin: 50% 50%; }
+.w-root.w-scrub .story .hl { background-size: calc(var(--hp, 0) * 100%) 100%; transition: none; }
+.w-root .story .doodles { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; pointer-events: none; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+.w-root.w-flat .story .doodles { display: none; }
+.w-root.w-scrub .story .sticky { opacity: 0; transform: rotate(var(--r, 0deg)) scale(.4) translateY(46px); transition: opacity .3s, transform .75s var(--spring); }
+.w-root.w-scrub .story .sticky.in { opacity: 1; transform: rotate(var(--r, 0deg)); }

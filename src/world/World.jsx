@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { useReveal, useTheme } from './hooks';
+import { useReveal, useTheme, useScrubMode, ScrubCtx } from './hooks';
 import { startMusic, stopMusic } from './audio';
 import { countVisit } from './api';
 import Bar from './Bar';
@@ -16,14 +16,16 @@ import Wall from './Wall';
 import Hello from './Hello';
 import './world.css';
 import './world2.css';
+import './world3.css';
 
 export default function World() {
   const root = useRef(null);
   const [theme, toggleTheme] = useTheme();
   const [music, setMusic] = useState(false);
   const [visitors, setVisitors] = useState(null);
+  const scrub = useScrubMode();
+  useReveal(root, scrub);
 
-  useReveal(root);
 
   useEffect(() => {
     document.title = 'Laksh Pradhwani | Full-Stack Developer';
@@ -42,10 +44,11 @@ export default function World() {
   }, []);
 
   return (
-    <div className="w-root" data-theme={theme} ref={root}>
+    <div className={`w-root ${scrub ? 'w-scrub' : 'w-flat'}`} data-theme={theme} ref={root}>
       <a className="skip" href="#story">Skip to content</a>
       <Bar theme={theme} onTheme={toggleTheme} visitors={visitors} music={music} onMusic={toggleMusic} />
-      <main>
+      <ScrubCtx.Provider value={scrub}>
+      <main key={scrub ? 's' : 'f'}>
         <Hero music={music} onMusic={toggleMusic} />
         <Story />
         <Journey />
@@ -58,6 +61,7 @@ export default function World() {
         <Wall />
         <Hello />
       </main>
+      </ScrubCtx.Provider>
     </div>
   );
 }

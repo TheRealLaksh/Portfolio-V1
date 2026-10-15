@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { createContext, useContext, useEffect, useRef, useState } from 'react';
 
 export const clamp = (v, a = 0, b = 1) => Math.min(b, Math.max(a, v));
 export const ss = (t) => t * t * (3 - 2 * t);
@@ -61,7 +61,7 @@ export function useScrollFrame(fn) {
 }
 
 // Adds .in to elements as they enter the viewport (one-time fade/slide reveals only).
-export function useReveal(rootRef) {
+export function useReveal(rootRef, remountKey) {
   useEffect(() => {
     const root = rootRef.current;
     if (!root) return undefined;
@@ -76,7 +76,7 @@ export function useReveal(rootRef) {
     );
     els.forEach((e) => io.observe(e));
     return () => io.disconnect();
-  }, [rootRef]);
+  }, [rootRef, remountKey]);
 }
 
 // Position of an element within a tall "track" section: 0 when its top reaches the viewport top,
@@ -86,3 +86,79 @@ export function trackProgress(el) {
   const total = Math.max(1, r.height - window.innerHeight);
   return clamp(-r.top / total);
 }
+
+// ---------- scroll-driven scenes (the storytelling layer) ----------
+
+// Pinned, scrubbed scenes only run on wide screens and when the visitor has not asked for less motion.
+// Everywhere else the same markup is a normal stacked page (CSS defaults show the finished state).
+export const scrubMode = () =>
+  typeof window !== 'undefined' && window.innerWidth >= 900 && !prefersReducedMotion();
+
+export function useScrubMode() {
+  const [on, setOn] = useState(scrubMode);
+  useEffect(() => {
+    const mqs = ['(min-width: 900px)', '(prefers-reduced-motion: reduce)'].map((q) => window.matchMedia(q));
+    const upd = () => setOn(scrubMode());
+    mqs.forEach((m) => m.addEventListener?.('change', upd));
+    return () => mqs.forEach((m) => m.removeEventListener?.('change', upd));
+  }, []);
+  return on;
+}
+
+// Progress of an element passing through the viewport (not pinned): 0 as its top enters the bottom
+// edge, 1 as its bottom leaves the top edge.
+export function passProgress(el) {
+  const r = el.getBoundingClientRect();
+  return clamp((window.innerHeight - r.top) / (r.height + window.innerHeight));
+}
+
+// Drives `fn(p, dt, vh)` from the scroll position of `ref`. `p` is eased toward the target, so the camera
+// glides instead of snapping. Runs outside React (no state), only while the target is moving or in view.
+//   mode 'track': ref is a tall section with a sticky stage (see trackProgress)
+//   mode 'pass':  ref just scrolls through (see passProgress)
+export function useTrack(ref, fn, { mode = 'track', damp = 9, enabled = true } = {}) {
+  const cb = useRef(fn);
+  cb.current = fn;
+  useEffect(() => {
+    const el = ref.current;
+    if (!el || !enabled) return undefined;
+    const get = mode === 'pass' ? passProgress : trackProgress;
+    let target = get(el);
+    let cur = target;
+    let raf = 0;
+    let last = 0;
+    let lastP = -1;
+    let first = true;
+    const tick = (t) => {
+      raf = 0;
+      const dt = Math.min(0.05, last ? (t - last) / 1000 : 0.016);
+      last = t;
+      const k = 1 - Math.exp(-dt * damp);
+      cur += (target - cur) * k;
+      if (Math.abs(target - cur) < 0.0004) cur = target;
+      if (cur !== lastP || first) { cb.current(cur, dt, window.innerHeight); lastP = cur; first = false; }
+      if (cur !== target) raf = requestAnimationFrame(tick);
+      else last = 0;
+    };
+    const wake = () => { if (!raf) raf = requestAnimationFrame(tick); };
+    const onScroll = () => { target = get(el); wake(); };
+    const onResize = () => { first = true; onScroll(); };
+    cb.current(cur, 0.016, window.innerHeight);
+    lastP = cur;
+    first = false;
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onResize);
+    return () => {
+      if (raf) cancelAnimationFrame(raf);
+      window.removeEventListener('scroll', onScroll);
+      window.removeEventListener('resize', onResize);
+    };
+  }, [ref, mode, damp, enabled]);
+}
+
+export const lerp = (a, b, t) => a + (b - a) * t;
+// Spring-ish overshoot for pop-ins.
+export const backOut = (t) => { const c = 1.70158; const x = t - 1; return 1 + (c + 1) * x * x * x + c * x * x; };
+
+export const ScrubCtx = createContext(false);
+export const useScrub = () => useContext(ScrubCtx);

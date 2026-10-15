@@ -95,12 +95,13 @@ A. Valley redesign (branch `feat/world-portfolio`): (1) give the wall and visito
 <!-- handoff:auto:start -->
 ## Auto: repo state
 
-_Refreshed 15 Oct 2026, 7:14 pm IST by `scripts/handoff.mjs` (runs on every commit). Don't edit inside this block._
+_Refreshed 15 Oct 2026, 7:17 pm IST by `scripts/handoff.mjs` (runs on every commit). Don't edit inside this block._
 
 Branch: `feat/world-portfolio` · remote: https://github.com/TheRealLaksh/Portfolio-V2.git
 
 ### Last 15 commits
 
+- `547fcbc` 2026-10-15 19:14 Make the journey scroll-driven: pinned stage, traveller walks the route as you scroll
 - `600c2f5` 2026-10-15 15:31 Link the websites section to the new booking page
 - `ca01fcc` 2026-10-15 15:31 Add a Topmate-style booking page at /book
 - `3d8ef26` 2026-10-15 15:27 Log the ShiftsDeal screenshot approval in HANDOFF
@@ -115,16 +116,14 @@ Branch: `feat/world-portfolio` · remote: https://github.com/TheRealLaksh/Portfo
 - `c88d590` 2026-10-15 14:51 Add the valley hero: SVG scene, scroll fly-in, places and nav bar
 - `d471855` 2026-10-15 14:51 Add valley portfolio data, hooks, generative music and icons
 - `09358a8` 2026-10-14 12:14 Show current role, study and Delhi NCR in the About cards
-- `8d1b7b9` 2026-10-14 12:13 Update the About bio with current role, study and freelance work
 
 ### Uncommitted changes at refresh time
 
 ```
-M  HANDOFF.md
-M  src/world/Journey.jsx
- M src/world/World.jsx
- M src/world/hooks.js
-M  src/world/world2.css
-?? src/world/world3.css
+M  src/world/Hero.jsx
+M  src/world/Story.jsx
+M  src/world/World.jsx
+M  src/world/hooks.js
+A  src/world/world3.css
 ```
 <!-- handoff:auto:end -->
