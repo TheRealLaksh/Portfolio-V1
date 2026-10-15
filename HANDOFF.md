@@ -44,6 +44,7 @@ A. Valley redesign (branch `feat/world-portfolio`): (1) give the wall and visito
 
 ## Decisions not to undo
 - Valley site (`src/world/`): scene art is hand-built SVG with CSS-variable palettes (day/night); never replace it with AI-generated images. Hero fly-in uses `position: sticky` and needs `html.world-on` (set in `World.jsx`) to clip instead of hide horizontal overflow. No word-by-word scroll-fill text; reveals are one-time. The generative music in `src/world/audio.js` is original (Web Audio), no samples. The wall stores the poster's email but never returns it from the API.
+- Valley journey (`Journey.jsx`): scroll-scrubbed on wide screens at Laksh's explicit request (15 Oct 2026); keep the reduced-motion and under-900 px fallback, native scroll only (no scroll locking, no ScrollTrigger).
 - Domain is lakshpradhwani.com (Hostinger, bought 8 Oct 2026). Do not reintroduce lakshp.live.
 - Public contact address is `work@lakshpradhwani.com`; `me@` is for personal use.
 - Laksh chose small commits, pushed after each (every push to `main` goes live on Vercel). Session of 8 Oct 2026.
@@ -51,6 +52,7 @@ A. Valley redesign (branch `feat/world-portfolio`): (1) give the wall and visito
 ## Session log (newest first)
 - 2026-10-15 (evening, 2): the valley's websites section (`Brand.jsx`) now also links to `/book` ("or book a call"), next to the `/hire` link.
 - 2026-10-15 (evening): built `/book` (route in `App.jsx`, `BOOK_META` in `routeMeta.js`, `Book.jsx`, `book.css`). Checked in the Browser pane: desktop 1280 and 390 px, day and night, no sideways scroll, the "What is included" toggle works (fixed `display:grid` overriding `hidden`), `npm run build` passes. `npx eslint` cannot run in this worktree (eslint 8 vs a flat config: `./config` export error), unrelated to this change.
+- 2026-10-15: the journey is now scroll-driven on wide screens (`src/world/Journey.jsx`, `.journey.scrub` block in `world2.css`): a 10-viewport-tall track with a sticky pinned stage (about 0.5 vh lead-in, 1 vh per stop); a rAF scroll listener (`useScrollFrame` + `trackProgress`) moves the traveller along the SVG path with `getPointAtLength` (eased between stops), draws the red route up to it and pans the map by writing DOM styles directly; React state only changes when the current stop does (card, dots). The Next stop button is gone there; dots, stop numbers and arrow keys scroll to that stop's position (Lenis `scrollTo`). Phones under 900 px and `prefers-reduced-motion` keep the old stacked layout with prev/next buttons (no pinning). Checked headless at 1280x720 day and night and 390x844, build passes, no sideways scroll, nav marks Journey. Laksh asked for this explicitly, despite the earlier no-scroll-scenes rule for other sites.
 - 2026-10-15: Laksh confirmed a ShiftsDeal screenshot may be shown; added `public/work/shiftsdeal.webp` (captured from the live site with the cookie banner rejected), so the ShiftsDeal card is no longer a placeholder.
 - 2026-10-15 (later): polish and QA on `feat/world-portfolio`. Fixed boats jumping to the top-left (a CSS animation transform replaces an SVG `transform` attribute: position on an outer `<g>`, animate an inner one), sticky-note and desk contrast, night clouds, pin collisions; windows only glow at night (no filters in day, which keeps scroll cheap). Added real screenshots in `public/work/` for Profiley, Helios and CaliBridge (ShiftsDeal keeps a placeholder until Laksh confirms it may be shown; the fan-made Stranger Things site was left out because its art is Netflix's). Headless Chromium: 180 fps scroll on the valley, music starts/stops, keyboard opens a place and Esc closes it, wall form validates and degrades when the API is missing, axe wcag2a/aa clean after the contrast fix, `/classic` and `/hire` still load. Preview deploys on every push (needs Vercel login); `/api/*` return 503 until the Redis store is added.
 - 2026-10-15: started the valley redesign on `feat/world-portfolio`: added `src/world/` (data, hooks, Web Audio music, hand-drawn SVG scene, hero with scroll fly-in and clickable places, nav bar with day/night and music, story, journey map, work cards, websites + packages, Profiley section, tool box, process, desk of movable things, guestbook wall, hotkey contact), `api/wall.js` + `api/visit.js` (Upstash REST), web fonts in `index.html`, and routes in `App.jsx` (`/` is the valley, `/classic` the old home). Checked with headless Chromium at 1280x720 and 390x844: sections render, no sideways scroll on mobile, place sheets and the journey/work dialogs open.
@@ -93,12 +95,13 @@ A. Valley redesign (branch `feat/world-portfolio`): (1) give the wall and visito
 <!-- handoff:auto:start -->
 ## Auto: repo state
 
-_Refreshed 15 Oct 2026, 3:31 pm IST by `scripts/handoff.mjs` (runs on every commit). Don't edit inside this block._
+_Refreshed 15 Oct 2026, 7:14 pm IST by `scripts/handoff.mjs` (runs on every commit). Don't edit inside this block._
 
 Branch: `feat/world-portfolio` · remote: https://github.com/TheRealLaksh/Portfolio-V2.git
 
 ### Last 15 commits
 
+- `600c2f5` 2026-10-15 15:31 Link the websites section to the new booking page
 - `ca01fcc` 2026-10-15 15:31 Add a Topmate-style booking page at /book
 - `3d8ef26` 2026-10-15 15:27 Log the ShiftsDeal screenshot approval in HANDOFF
 - `9099463` 2026-10-15 15:27 Show a real ShiftsDeal screenshot on its work card
@@ -113,12 +116,15 @@ Branch: `feat/world-portfolio` · remote: https://github.com/TheRealLaksh/Portfo
 - `d471855` 2026-10-15 14:51 Add valley portfolio data, hooks, generative music and icons
 - `09358a8` 2026-10-14 12:14 Show current role, study and Delhi NCR in the About cards
 - `8d1b7b9` 2026-10-14 12:13 Update the About bio with current role, study and freelance work
-- `7400fc0` 2026-10-14 10:15 Record the Hire page bug-fix pass in HANDOFF
 
 ### Uncommitted changes at refresh time
 
 ```
 M  HANDOFF.md
-M  src/world/Brand.jsx
+M  src/world/Journey.jsx
+ M src/world/World.jsx
+ M src/world/hooks.js
+M  src/world/world2.css
+?? src/world/world3.css
 ```
 <!-- handoff:auto:end -->

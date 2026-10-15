@@ -91,6 +91,22 @@
 .w-root .jtl button.done i { background: var(--rose-c); } .w-root .jtl button.on i { background: var(--sun-c); transform: scale(1.5); }
 .w-root .jtl .yr { font: 800 13px var(--sans); letter-spacing: .04em; min-width: 78px; }
 
+/* Scroll mode (wide screens, motion allowed): a tall track with the stage pinned inside it. Scroll
+   position drives the traveller, so transitions on the map are off. Phones and reduced motion keep
+   the stacked layout above. */
+.w-root .journey.scrub { height: calc(100vh * 10); height: calc(100svh * 10); padding-block: 0; }
+.w-root .journey.scrub .j-pin { --intro: 1; position: sticky; top: 0; height: 100vh; height: 100svh; overflow: hidden; }
+.w-root .journey.scrub .j-stage { position: absolute; inset: 66px 14px 12px; width: auto; height: auto; margin: 0; }
+.w-root .journey.scrub .j-head { position: absolute; z-index: 6; top: 84px; left: calc((100% - 380px) / 2); width: min(680px, calc(100% - 440px)); text-align: center; pointer-events: none; opacity: var(--intro); transform: translateX(-50%) translateY(calc((1 - var(--intro)) * -18px)); }
+.w-root .journey.scrub .j-head .wrap { width: auto; padding: 22px 30px 24px; border-radius: 26px; background: color-mix(in srgb, var(--paper) 90%, transparent); border: 2px solid var(--ink); box-shadow: var(--shadow); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); }
+.w-root .journey.scrub .sec-head h2 { font-size: clamp(30px, 3.4vw, 46px); margin-inline: auto; }
+.w-root .journey.scrub .sec-head > p:not(.kicker) { margin: 12px auto 0; }
+.w-root .journey.scrub .kicker { margin-bottom: 10px; }
+.w-root .journey.scrub .j-world, .w-root .journey.scrub .route, .w-root .journey.scrub .trav { transition: none; }
+.w-root .journey.scrub .j-world.zoomin { transition: transform .45s var(--ease); }
+.w-root .journey.scrub .mapctl { bottom: 72px; }
+.w-root .journey.scrub .jtl { left: 50%; top: auto; bottom: 72px; transform: translateX(-50%); }
+
 /* ---------- selected work ---------- */
 .w-root .work { background: var(--paper); }
 .w-root .deck { margin-top: 36px; }
