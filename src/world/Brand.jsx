@@ -28,7 +28,7 @@ export default function Brand() {
             </li>
           ))}
         </ul>
-        <p className="pk-more" data-rv><Link to="/hire">See every package and what is included <Icon n="arrow" size={16} /></Link></p>
+        <p className="pk-more" data-rv><Link to="/hire">See every package and what is included <Icon n="arrow" size={16} /></Link> <span className="pk-or">or</span> <Link to="/book">book a call <Icon n="arrow" size={16} /></Link></p>
 
         <p className="sites-k" data-rv>Sites I have built</p>
         <ul className="sites">
