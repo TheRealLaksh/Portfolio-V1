@@ -138,8 +138,8 @@ export const WORK = [
     tags: ['TypeScript', 'PWA'], link: 'https://calibridge.lakshpradhwani.com', note: '43 end-to-end tests' },
   { id: 'vaultara', n: 'Vaultara', k: 'Gov-tech document vault', c: '#E88A1F', d: 'Privacy-first storage for citizen documents, built on Firebase with encrypted storage and secure sharing.',
     tags: ['Firebase', 'Security'], link: 'https://github.com/TheRealLaksh/Vaultara-GovDoc', note: 'Open source' },
-  { id: 'stranger', n: 'Stranger Things 3D', k: 'Fan-made experience', c: '#E8505B', d: 'A cinematic Season 5 homepage with GSAP parallax and a Hawkins Lab archive library. Built for fun.',
-    tags: ['GSAP', 'HTML', 'CSS'], link: 'https://stranger-things-5.netlify.app', note: 'Just for fun' },
+  { id: 'mercatora', n: 'Mercatora', k: 'Mall management system', c: '#E8505B', d: 'An admin dashboard for managing shops and mall operations, built with vanilla JavaScript, Vite and Firebase.',
+    tags: ['JavaScript', 'Vite', 'Firebase'], link: 'https://github.com/TheRealLaksh/mercatora', note: 'Open source' },
 ];
 
 // Websites for other people. Only public or clearly his own; client work waits for permission.

@@ -89,12 +89,13 @@ A. Valley redesign (branch `feat/world-portfolio`): (1) give the wall and visito
 <!-- handoff:auto:start -->
 ## Auto: repo state
 
-_Refreshed 15 Oct 2026, 2:51 pm IST by `scripts/handoff.mjs` (runs on every commit). Don't edit inside this block._
+_Refreshed 15 Oct 2026, 2:53 pm IST by `scripts/handoff.mjs` (runs on every commit). Don't edit inside this block._
 
 Branch: `feat/world-portfolio` · remote: https://github.com/TheRealLaksh/Portfolio-V2.git
 
 ### Last 15 commits
 
+- `f563f17` 2026-10-15 14:51 Mount the valley at / and keep the old home at /classic
 - `0b94246` 2026-10-15 14:51 Add serverless endpoints for the guestbook wall and visitor counter
 - `2a7b35a` 2026-10-15 14:51 Add the valley sections: story, journey map, work, tools, desk, wall, contact
 - `c88d590` 2026-10-15 14:51 Add the valley hero: SVG scene, scroll fly-in, places and nav bar
@@ -109,12 +110,17 @@ Branch: `feat/world-portfolio` · remote: https://github.com/TheRealLaksh/Portfo
 - `4d038d4` 2026-10-14 10:05 Hide the social sidebar where it overlaps the page content
 - `7ac7e03` 2026-10-14 10:04 Stop the chat teaser from covering the page on phones
 - `f4e9e1e` 2026-10-14 10:04 Keep the Hire me icon visible in the mobile nav and name the icon links
-- `a46055f` 2026-10-14 10:02 Make section links work from /hire and on direct #links
 
 ### Uncommitted changes at refresh time
 
 ```
-M  index.html
-M  src/App.jsx
+A  public/work/calibridge.webp
+A  public/work/helios.webp
+A  public/work/profiley.webp
+ M src/world/Hero.jsx
+ M src/world/Story.jsx
+M  src/world/data.js
+ M src/world/world.css
+ M src/world/world2.css
 ```
 <!-- handoff:auto:end -->
