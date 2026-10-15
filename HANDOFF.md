@@ -43,6 +43,8 @@ A. Valley redesign (branch `feat/world-portfolio`): (0) Laksh to review the moti
 - Mail forwarding is verified: test mails to work@ and me@ showed "Forwarded" in Cloudflare's activity log on 9 Oct 2026.
 
 ## Decisions not to undo
+- No custom cursor (Laksh asked for it to go, 16 Oct 2026). Keep the native pointer.
+- The hero avatar must stand on the ghat steps above the river line (feet at scene y about 640), never in the water.
 - Scroll scenes run when `SCRUB_QUERY` matches (min 720 px wide, 420 px high, landscape, motion allowed). Do not raise it back to 900 px: laptops at 125-150% scaling are 850-1100 CSS px wide. Stacked-layout CSS must stay under `.w-flat`, never keyed to width alone.
 - Laksh allowed AI-painted scenes for the valley art on 16 Oct 2026 (reverses the earlier no-AI-images rule), but only after he has seen the motion pass; the only generator is Figma MCP `generate_image` (paid credits): ask before using it.
 - Valley site (`src/world/`): scene art is hand-built SVG with CSS-variable palettes (day/night). Laksh now allows AI-painted/rendered art (16 Oct 2026), and the hero figure is his own 3D avatar image (`public/me-avatar.webp`); still no copying James Chugh's art. Hero fly-in uses `position: sticky` and needs `html.world-on` (set in `World.jsx`) to clip instead of hide horizontal overflow. No word-by-word scroll-fill text; reveals are one-time. The generative music in `src/world/audio.js` is original (Web Audio), no samples. The wall stores the poster's email but never returns it from the API.
@@ -52,6 +54,7 @@ A. Valley redesign (branch `feat/world-portfolio`): (0) Laksh to review the moti
 - Laksh chose small commits, pushed after each (every push to `main` goes live on Vercel). Session of 8 Oct 2026.
 
 ## Session log (newest first)
+- 2026-10-16 (avatar fixes, after Laksh looked): removed the custom cursor ring (`motion.js`, `motion.css`; tilt, magnetic buttons, floaters and click confetti stay, confetti is skipped inside the hero stage and the sidekick). He was standing in the river: the river layer covers the ghat steps below about y 668, so his feet (and the three walkers) moved up to y 640 / 596-640 and his pin and hot zone moved up with him (`PINS.me` y 326, `HOT.me` y 340, `.me3d` top 38.2%). Click glitch: 3D transforms (perspective rotateX/rotateY) on the head forced layer repaints while the camera zoomed, and each reaction replaced the idle animation, so it jumped back when it ended. Now the head uses flat 2D transforms and every reaction plays on its own wrapper (`.a3-hop`, `.a3-nod`, `.a3-walk`) over the idle sway. Livelier idle: bigger sway, breathing and head sway, faster glances, and a random tilt / nod / look-up every 6-12 s (`idleGestures` in `avatarLife.js`). Traveller on the map is a little bigger.
 - 2026-10-16 (avatar): animated Laksh's 3D avatar (`public/me-avatar.webp`). `src/world/Avatar3D.jsx` + `avatar3d.css`: the one image is cut with clip-path into legs / torso / head (overlapping seams, so nothing opens up); CSS gives breathing, weight shift, a slow head sway and blinking (two skin-coloured lids), all sized in container units (cqw/cqh) so it works at any scale. `avatarLife.js`: `attachGaze` (head turns towards the pointer via `--lx`/`--ly`, wanders when idle) and `reactAvatar` (nod, hop, tilt, look up in turn; fired when he is clicked in the hero, which also opens his sheet). `MeArt` in `Scene.jsx` is now an HTML `.me3d` box (3D transforms need HTML) at the same ground spot. `Journey.jsx`: the map traveller is the avatar as an SVG `<image>` that waddles while the route moves and faces where he goes. `Sidekick.jsx`: small Laksh bottom-left on wide screens, walks in after the hero, one line per section (hidden in the journey, where he is the traveller), hops on arrival, reacts on click. Laksh chose: idle life, gaze, click reactions, calm style, sidekick through the page. Not possible with one still image: arm poses (wave, namaste), pupils following the cursor. `/lab/avatar` shows him big with a button per reaction. The older SVG figure (`Avatar.jsx`) is only used on that lab page now.
 - 2026-10-16: the hero figure (`MeArt` in `src/world/Scene.jsx`) is now Laksh's supplied 3D avatar (black hoodie, cargo pants, white sneakers) instead of the hand-drawn SVG `MeFigure`. Background removed with OpenCV GrabCut plus hand-drawn shoe polygons into `public/me-avatar.webp` (302x898, 28 KB, transparent); it is an SVG `<image>` at the same ground origin and height (about 296 units) with a soft shadow ellipse. Checked headless at 1440x810 day and night: standing on the deck at right, 'That's me' pin still sits above him; build passes. `Avatar.jsx` and `/lab/avatar` (old drawn looks) are left in place, unused by the hero. The small `me.webp` photo is still used in the nav pill, `/book`, the journey traveller and Life. Not done: a retina-size cut-out (source was 768x1024) and a wave/idle animation.
 - 2026-10-16: Laksh said the valley had "no animation" next to jameschugh.com. Cause found: the pinned scenes only ran at 900 px wide and up, so a 1280 px laptop at 150% display scaling (about 853 CSS px) got the flat stacked fallback. Scenes now run from 720 px wide in landscape with at least 420 px height (`SCRUB_QUERY` in `hooks.js`, used by `useScrubMode` and `Journey.jsx`); the stacked layout CSS in `world2.css` is scoped to `.w-flat`; the journey card slims down beside the map under 1000 px (`place()` in `Journey.jsx`, `@media (max-width: 1000px)` in `world2.css`); hero text scales with viewport height; the Work box fits short screens. Checked headless at 853x480. Motion pass (same day): `motion.css` (valley ambient life: ticking clock, chimney smoke, ghat walkers, water glints, jumping fish, drifting boats, hot-air balloon, flocks, pointer parallax per layer by depth, floating pins, night lighthouse beam, shooting stars, fireflies; journey map: flowing river, waves, sailing boats, birds, swaying trees, cloud shadows, bobbing traveller; idle motion and hover polish per section), `motion.js` (`useMotionKit`: card tilt, magnetic buttons, pointer ring, click confetti, `[data-par]` scroll drift; fine pointers only) and `Floaters.jsx` (sparkle/ring/squiggle decor per section, set names in `SETS`). All of it is off under reduced motion. Hero copy width now grows on very wide screens. Still open: nothing blocking; painted art waits for Laksh's go (Figma credits).
@@ -101,12 +104,13 @@ A. Valley redesign (branch `feat/world-portfolio`): (0) Laksh to review the moti
 <!-- handoff:auto:start -->
 ## Auto: repo state
 
-_Refreshed 16 Oct 2026, 1:00 am IST by `scripts/handoff.mjs` (runs on every commit). Don't edit inside this block._
+_Refreshed 16 Oct 2026, 1:07 am IST by `scripts/handoff.mjs` (runs on every commit). Don't edit inside this block._
 
 Branch: `feat/world-portfolio` · remote: https://github.com/TheRealLaksh/Portfolio-V2.git
 
 ### Last 15 commits
 
+- `21694b9` 2026-10-16 01:00 Avatar as the map traveller and a sidekick that walks the page with him
 - `3f2a783` 2026-10-16 01:00 Animate the 3D avatar: breathing, blinking, head follows the pointer, click reactions
 - `4820e98` 2026-10-16 00:41 Let the hero headline use the width on very wide screens; log the motion pass in HANDOFF
 - `bb24aa7` 2026-10-16 00:40 Journey map comes alive; idle motion and hover polish in every section
@@ -121,14 +125,19 @@ Branch: `feat/world-portfolio` · remote: https://github.com/TheRealLaksh/Portfo
 - `9ee7d3f` 2026-10-15 19:25 Scroll-driven Profiley section: highlights draw, resume builds itself, then every hat arrives
 - `97307d8` 2026-10-15 19:23 Scroll-driven Work (3D card box that opens) and Brand (pinned sideways carousel with progress bar)
 - `f9b50e1` 2026-10-15 19:17 Scroll storytelling foundation: eased scroll tracks, deeper hero fly-through with rising clouds, pinned story with drawn highlights
-- `547fcbc` 2026-10-15 19:14 Make the journey scroll-driven: pinned stage, traveller walks the route as you scroll
 
 ### Uncommitted changes at refresh time
 
 ```
+M  HANDOFF.md
+M  src/world/Avatar3D.jsx
+M  src/world/Hero.jsx
 M  src/world/Journey.jsx
-A  src/world/Sidekick.jsx
-M  src/world/World.jsx
+M  src/world/Scene.jsx
+M  src/world/Sidekick.jsx
+M  src/world/avatar3d.css
+M  src/world/avatarLife.js
 M  src/world/motion.css
+M  src/world/motion.js
 ```
 <!-- handoff:auto:end -->

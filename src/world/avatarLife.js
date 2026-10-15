@@ -16,7 +16,7 @@ export function attachGaze(el) {
   let wander = 0;
   const tick = (t) => {
     if (t - lastMove > 3500 && t > wander) {
-      wander = t + 1800 + Math.random() * 2800;
+      wander = t + 1200 + Math.random() * 2400;
       aim.x = (Math.random() * 2 - 1) * 0.7;
       aim.y = (Math.random() * 2 - 1) * 0.3;
     }
@@ -40,13 +40,15 @@ export function attachGaze(el) {
   return () => { window.removeEventListener('pointermove', onMove); cancelAnimationFrame(raf); };
 }
 
-const REACTIONS = [['nod', 1500], ['hop', 900], ['tilt', 2200], ['lookup', 2000], ['hop', 900]];
+const DURS = { nod: 1500, hop: 900, tilt: 2200, lookup: 2000 };
+const REACTIONS = ['nod', 'hop', 'tilt', 'lookup', 'hop'];
 let turn = 0;
 const timers = new WeakMap();
 
 export function reactAvatar(el, only) {
   if (!el || prefersReducedMotion()) return;
-  const [act, ms] = only ? [only, 1500] : REACTIONS[turn++ % REACTIONS.length];
+  const act = only || REACTIONS[turn++ % REACTIONS.length];
+  const ms = DURS[act] || 1500;
   clearTimeout(timers.get(el));
   el.removeAttribute('data-act');
   void el.getBoundingClientRect(); // restart the animation if the same act comes round again
@@ -57,4 +59,18 @@ export function reactAvatar(el, only) {
 // Walk (a waddle) for a while, or until told to stop.
 export function setWalking(el, on) {
   if (el) el.dataset.walk = on ? '1' : '0';
+}
+
+// Now and then, with nobody touching him, he tilts his head, nods or glances up.
+export function idleGestures(el) {
+  if (!el || prefersReducedMotion()) return () => {};
+  let t = 0;
+  const loop = () => {
+    t = setTimeout(() => {
+      if (document.visibilityState === 'visible' && !el.dataset.act && el.dataset.walk !== '1') reactAvatar(el, ['tilt', 'nod', 'lookup'][Math.floor(Math.random() * 3)]);
+      loop();
+    }, 5500 + Math.random() * 6500);
+  };
+  loop();
+  return () => clearTimeout(t);
 }

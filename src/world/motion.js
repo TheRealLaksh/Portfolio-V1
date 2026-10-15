@@ -4,14 +4,12 @@ import { prefersReducedMotion } from './hooks';
 // Pointer-driven polish for the whole page, all outside React (no state, no re-renders):
 //   - cards lean towards the pointer (springy, with a soft shine)
 //   - buttons are slightly magnetic
-//   - a soft ring follows the pointer and swells over things you can click
 //   - clicking a button or link pops a few paper confetti bits
 //   - [data-par] elements drift at their own speed as the page scrolls
 // Everything is skipped for touch screens (where it makes no sense) and for reduced motion.
 
 const TILT = '.bc, .nw-card, .wcard, .jcard';
 const MAG = '.btn-main, .btn-ghost, .nw-cta, .s-link, .nav .cta, .theme-btn, .pk-go, .mapctl button, .deck-nav button';
-const CLICKY = 'a, button, [role="button"], .stop, .hot, .sticky, .item, input, textarea, label';
 const CONFETTI = ['#E8505B', '#FFC93C', '#1FA6A0', '#8E7CFF', '#FF8A1F', '#3E8EDB'];
 
 export function useMotionKit(rootRef, remountKey) {
@@ -84,41 +82,10 @@ export function useMotionKit(rootRef, remountKey) {
       });
     }
 
-    // ---- the pointer ring ----
-    let ring = null;
-    if (fine) {
-      ring = document.createElement('div');
-      ring.className = 'm-ring';
-      ring.setAttribute('aria-hidden', 'true');
-      root.appendChild(ring);
-      let rx = -100;
-      let ry = -100;
-      let tx = -100;
-      let ty = -100;
-      let rr = 0;
-      const loop = () => {
-        rx += (tx - rx) * 0.2;
-        ry += (ty - ry) * 0.2;
-        ring.style.transform = `translate3d(${rx.toFixed(1)}px, ${ry.toFixed(1)}px, 0)`;
-        rr = requestAnimationFrame(loop);
-      };
-      on(window, 'pointermove', (e) => {
-        if (e.pointerType !== 'mouse') return;
-        tx = e.clientX; ty = e.clientY;
-        if (!rr) { rx = tx; ry = ty; ring.classList.add('on'); rr = requestAnimationFrame(loop); }
-        ring.classList.toggle('big', !!e.target.closest?.(CLICKY));
-      }, { passive: true });
-      on(document, 'pointerleave', () => ring.classList.remove('on'));
-      on(document, 'pointerenter', () => ring.classList.add('on'));
-      on(window, 'pointerdown', () => ring.classList.add('down'));
-      on(window, 'pointerup', () => ring.classList.remove('down'));
-      offs.push(() => { cancelAnimationFrame(rr); ring.remove(); });
-    }
-
     // ---- confetti on click ----
     on(root, 'click', (e) => {
       const hit = e.target.closest?.('a, button');
-      if (!hit || hit.closest('.nw-modal, .keys')) return;
+      if (!hit || hit.closest('.nw-modal, .keys, .stage, .sk')) return;
       const n = 8;
       for (let i = 0; i < n; i++) {
         const b = document.createElement('i');

@@ -264,7 +264,7 @@ export default function Journey() {
                 {/* the traveller */}
                 <g className="trav" ref={trav} data-walk="0" data-face="r" style={scrub ? undefined : { transform: `translate(${here[0]}px, ${here[1]}px)` }}>
                   <ellipse cx="0" cy="2" rx="15" ry="4.5" className="trav-sh" />
-                  <g className="trav-fig"><g className="trav-walk"><image href="/me-avatar.webp" x="-16.2" y="-96" width="32.4" height="96" preserveAspectRatio="xMidYMax meet" /></g></g>
+                  <g className="trav-fig"><g className="trav-walk"><image href="/me-avatar.webp" x="-19" y="-113" width="38" height="113" preserveAspectRatio="xMidYMax meet" /></g></g>
                 </g>
               </svg>
             </div>

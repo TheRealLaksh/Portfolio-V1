@@ -18,15 +18,21 @@ export default function Avatar3D({ className = '' }) {
     <div className={`a3 ${className}`} aria-hidden="true">
       <div className="a3-shadow" />
       <div className="a3-sway">
-        <div className="a3-part">{img(`inset(${pc(AV.legsTop, AV.h)} 0 0 0)`)}</div>
-        <div className="a3-up">
-          <div className="a3-part">{img(`inset(${pc(AV.torsoTop, AV.h)} 0 ${pc(AV.h - AV.waist, AV.h)} 0)`)}</div>
-          <div className="a3-head-follow">
-            <div className="a3-head-idle">
-              <div className="a3-part">
-                {img(`inset(0 0 ${pc(AV.h - AV.headBottom, AV.h)} 0)`)}
-                <i className="a3-lid l" />
-                <i className="a3-lid r" />
+        <div className="a3-walk">
+          <div className="a3-hop">
+            <div className="a3-part">{img(`inset(${pc(AV.legsTop, AV.h)} 0 0 0)`)}</div>
+            <div className="a3-up">
+              <div className="a3-part">{img(`inset(${pc(AV.torsoTop, AV.h)} 0 ${pc(AV.h - AV.waist, AV.h)} 0)`)}</div>
+              <div className="a3-head-follow">
+                <div className="a3-nod">
+                  <div className="a3-head-idle">
+                    <div className="a3-part">
+                      {img(`inset(0 0 ${pc(AV.h - AV.headBottom, AV.h)} 0)`)}
+                      <i className="a3-lid l" />
+                      <i className="a3-lid r" />
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>

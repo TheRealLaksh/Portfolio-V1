@@ -95,7 +95,7 @@
   100% { border-radius: 42% 58% 38% 62% / 60% 42% 58% 40%; transform: rotate(1deg) scale(1.03); }
 }
 
-/* ---------- the whole page: floaters, pointer ring, confetti ---------- */
+/* ---------- the whole page: floaters and confetti ---------- */
 /* a section is its own stacking context, so floaters (z-index -1) sit above its paper and below its content */
 .w-root section:not(.valley) { isolation: isolate; }
 .w-root .fls { position: absolute; inset: 0; pointer-events: none; z-index: -1; overflow: hidden; }
@@ -107,12 +107,7 @@
 @keyframes flBob { from { transform: translateY(-9px) rotate(-6deg); } to { transform: translateY(9px) rotate(8deg); } }
 @keyframes flSpin { to { transform: rotate(360deg); } }
 
-.w-root .m-ring { position: fixed; left: 0; top: 0; width: 34px; height: 34px; margin: -17px 0 0 -17px; border: 2px solid var(--ink); border-radius: 50%; pointer-events: none; z-index: 90; opacity: 0; transition: opacity .25s, width .3s var(--spring), height .3s var(--spring), margin .3s var(--spring), background .25s; }
-.w-root .m-ring.on { opacity: .45; }
-.w-root .m-ring.big { width: 60px; height: 60px; margin: -30px 0 0 -30px; background: color-mix(in srgb, var(--sun-c) 38%, transparent); opacity: .75; }
-.w-root .m-ring.down { width: 24px; height: 24px; margin: -12px 0 0 -12px; }
 .w-root .m-bit { position: fixed; z-index: 95; width: 8px; height: 8px; border-radius: 2px; pointer-events: none; }
-@media (hover: none), (pointer: coarse) { .w-root .m-ring { display: none; } }
 
 /* ---------- journey map ---------- */
 .w-root .m-flow { fill: none; stroke: rgba(255, 255, 255, .8); stroke-width: 3; stroke-linecap: round; stroke-dasharray: 7 26; animation: mFlow 3.2s linear infinite; }
@@ -228,7 +223,7 @@
   .w-root .clk-m, .w-root .clk-h, .w-root .smoke, .w-root .beam, .w-root .walker, .w-root .leg, .w-root .glint, .w-root .fish, .w-root .splash, .w-root .sailing,
   .w-root .balloon, .w-root .balloon-sway, .w-root .shoot, .w-root .fly, .w-root .birds, .w-root .pin b, .w-root .rq::before { animation: none; }
   .w-root .smoke, .w-root .fish, .w-root .splash, .w-root .shoot { opacity: 0; }
-  .w-root .fl-i, .w-root .m-ring, .w-root .m-bit, .w-root .m-flow, .w-root .m-wv, .w-root .m-sail, .w-root .m-boat, .w-root .m-flock, .w-root .m-bird, .w-root .m-shade, .w-root .m-tree circle, .w-root .trav-bob, .w-root .trav-sh, .w-root .trav-walk, .w-root .sticky, .w-root .kicker svg, .w-root .nw-pen, .w-root .box-tilt, .w-root .brand-row .bc, .w-root .rs-pdf, .w-root .hat, .w-root .gt-i, .w-root .tool-i, .w-root .pn, .w-root .pl-pen, .w-root .vn-disc, .w-root .tk-route i, .w-root .nw-ava, .w-root .key, .w-root .clouds-foot i, .w-root kbd { animation: none; }
-  .w-root .m-ring, .w-root .m-bit { display: none; }
+  .w-root .fl-i, .w-root .m-bit, .w-root .m-flow, .w-root .m-wv, .w-root .m-sail, .w-root .m-boat, .w-root .m-flock, .w-root .m-bird, .w-root .m-shade, .w-root .m-tree circle, .w-root .trav-bob, .w-root .trav-sh, .w-root .trav-walk, .w-root .sticky, .w-root .kicker svg, .w-root .nw-pen, .w-root .box-tilt, .w-root .brand-row .bc, .w-root .rs-pdf, .w-root .hat, .w-root .gt-i, .w-root .tool-i, .w-root .pn, .w-root .pl-pen, .w-root .vn-disc, .w-root .tk-route i, .w-root .nw-ava, .w-root .key, .w-root .clouds-foot i, .w-root kbd { animation: none; }
+  .w-root .m-bit { display: none; }
   .w-root .ly { translate: none; }
 }

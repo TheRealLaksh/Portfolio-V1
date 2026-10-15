@@ -8,19 +8,23 @@
 .a3-shadow { position: absolute; left: -10%; right: -10%; bottom: -1.2%; height: 3.4%; border-radius: 50%; background: radial-gradient(closest-side, rgba(27, 31, 59, .34), transparent); }
 
 /* weight shifts slowly from foot to foot */
-.a3-sway { position: absolute; inset: 0; transform-origin: 50% 98%; animation: a3Sway 8s ease-in-out infinite alternate; }
-@keyframes a3Sway { from { transform: rotate(-.5deg) translateX(-.4cqw); } to { transform: rotate(.5deg) translateX(.4cqw); } }
+.a3-sway, .a3-walk, .a3-hop, .a3-nod { position: absolute; inset: 0; }
+.a3-sway { transform-origin: 50% 98%; animation: a3Sway 6s ease-in-out infinite alternate; }
+@keyframes a3Sway { from { transform: rotate(-.9deg) translateX(-.8cqw); } to { transform: rotate(.9deg) translateX(.8cqw); } }
+.a3-walk, .a3-hop { transform-origin: 50% 98%; }
 
-/* breathing: the chest and head rise a hair around the waist */
-.a3-up { position: absolute; inset: 0; transform-origin: 50% 58.1%; perspective: 340cqw; animation: a3Breath 4.8s ease-in-out infinite; }
-@keyframes a3Breath { 0%, 100% { transform: scaleY(1) translateY(0); } 50% { transform: scaleY(1.011) translateY(-.15cqh); } }
+/* breathing: the chest and head rise around the waist */
+.a3-up { position: absolute; inset: 0; transform-origin: 50% 58.1%; animation: a3Breath 4.2s ease-in-out infinite; }
+@keyframes a3Breath { 0%, 100% { transform: scaleY(1) translateY(0); } 50% { transform: scaleY(1.017) translateY(-.22cqh); } }
 
-/* the head turns towards the pointer (set by avatarLife.js), keeps a slow idle sway, and tilts on reactions */
+/* the head turns towards the pointer (--lx, --ly from avatarLife.js), keeps a slow idle sway, tilts on reactions.
+   Flat 2D transforms only: 3D ones made the layer repaint while the camera zoomed in. */
 .a3-head-follow { position: absolute; inset: 0; transform-origin: 48% 15.6%;
-  transform: rotateZ(calc(var(--lx) * 3deg + var(--ht))) rotateY(calc(var(--lx) * 17deg)) rotateX(calc(var(--ly) * -8deg)) translateX(calc(var(--lx) * .7cqw));
-  transition: transform .45s ease-out; }
-.a3-head-idle { position: absolute; inset: 0; transform-origin: 48% 15.6%; animation: a3Head 6.4s ease-in-out infinite alternate; }
-@keyframes a3Head { from { transform: rotate(-.9deg); } 50% { transform: rotate(.3deg) translateY(-.08cqh); } to { transform: rotate(1deg); } }
+  transform: rotate(calc(var(--lx) * 2.8deg + var(--ht))) translate(calc(var(--lx) * 1cqw), calc(var(--ly) * .4cqh));
+  transition: transform .5s ease-out; }
+.a3-nod { transform-origin: 48% 15.6%; }
+.a3-head-idle { position: absolute; inset: 0; transform-origin: 48% 15.6%; animation: a3Head 5.2s ease-in-out infinite alternate; }
+@keyframes a3Head { from { transform: rotate(-1.6deg) translateY(0); } 50% { transform: rotate(.5deg) translateY(-.14cqh); } to { transform: rotate(1.7deg) translateY(0); } }
 
 /* blink: two lids the colour of his skin close over the eyes */
 .a3-lid { position: absolute; top: 8.4%; width: 7.4%; height: 1.2%; border-radius: 50%; transform: scaleY(0); transform-origin: 50% 0; animation: a3Blink 5.8s infinite; box-shadow: 0 0 .5cqw .2cqw var(--lc); background: var(--lc); border-bottom: .35cqw solid rgba(52, 26, 18, .55); }
@@ -28,30 +32,29 @@
 .a3-lid.r { left: 49.6%; --lc: #E7B696; }
 @keyframes a3Blink { 0%, 90%, 100% { transform: scaleY(0); } 92.5% { transform: scaleY(1); } 95% { transform: scaleY(0); } 97% { transform: scaleY(1); } 99% { transform: scaleY(0); } }
 
-/* ---- reactions (data-act) ---- */
-.a3[data-act="hop"] .a3-sway { animation: a3Hop .85s cubic-bezier(.3, .7, .4, 1); }
+/* ---- reactions (data-act): each plays on its own wrapper, so the idle motion carries on underneath ---- */
+.a3[data-act="hop"] .a3-hop { animation: a3Hop .9s cubic-bezier(.3, .7, .4, 1); }
 @keyframes a3Hop {
   0% { transform: scale(1.03, .96); } 28% { transform: translateY(-6cqh) scale(.99, 1.02); } 62% { transform: translateY(0) scale(1.03, .96); } 82% { transform: scale(.995, 1.005); } 100% { transform: none; }
 }
-.a3[data-act="nod"] .a3-head-idle { animation: a3Nod 1.5s ease-in-out; }
-@keyframes a3Nod { 0%, 100% { transform: rotateX(0); } 20%, 60% { transform: rotateX(14deg) translateY(.5cqh); } 40%, 80% { transform: rotateX(-2deg); } }
-.a3[data-act="tilt"] { --ht: -7deg; }
-.a3[data-act="lookup"] .a3-head-idle { animation: a3Up 2s ease-in-out; }
-@keyframes a3Up { 0%, 100% { transform: rotateX(0); } 30%, 70% { transform: rotateX(-12deg) rotateZ(3deg); } }
-.a3[data-act="hop"] .a3-lid, .a3[data-act="nod"] .a3-lid { animation-duration: 1.4s; }
+.a3[data-act="nod"] .a3-nod { animation: a3Nod 1.5s ease-in-out; }
+@keyframes a3Nod { 0%, 100% { transform: translateY(0); } 20%, 60% { transform: translateY(.8cqh) rotate(1deg); } 40%, 80% { transform: translateY(-.1cqh); } }
+.a3[data-act="tilt"] { --ht: -5deg; }
+.a3[data-act="lookup"] .a3-nod { animation: a3Up 2s ease-in-out; }
+@keyframes a3Up { 0%, 100% { transform: none; } 30%, 70% { transform: translateY(-.6cqh) rotate(2.5deg); } }
 
 /* ---- walking: a waddle, with a quick bob ---- */
-.a3[data-walk="1"] .a3-sway { animation: a3Waddle .62s ease-in-out infinite; }
+.a3[data-walk="1"] .a3-walk { animation: a3Waddle .62s ease-in-out infinite; }
 @keyframes a3Waddle { 0%, 100% { transform: rotate(-2.4deg) translateY(0); } 25% { transform: rotate(0) translateY(-1.4cqh); } 50% { transform: rotate(2.4deg) translateY(0); } 75% { transform: rotate(0) translateY(-1.4cqh); } }
 .a3[data-flip="1"] { transform: scaleX(-1); }
 
 /* ---- in the valley ---- */
-.me3d { position: absolute; left: 86.81%; top: 48.67%; width: 6.22%; height: 32.89%; pointer-events: none; }
+.me3d { position: absolute; left: 86.81%; top: 38.2%; width: 6.22%; height: 32.89%; pointer-events: none; }
 .w-root[data-theme="night"] .a3-img { filter: brightness(.8) saturate(.88); }
 .w-root[data-theme="night"] .a3-lid { filter: brightness(.8); }
 
 @media (prefers-reduced-motion: reduce) {
-  .a3-sway, .a3-up, .a3-head-idle, .a3-lid { animation: none !important; }
+  .a3-sway, .a3-up, .a3-head-idle, .a3-lid, .a3-walk, .a3-hop, .a3-nod { animation: none !important; }
   .a3-head-follow { transition: none; }
 }
 

@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useScrub } from './hooks';
 import Avatar3D from './Avatar3D';
-import { attachGaze, reactAvatar, setWalking } from './avatarLife';
+import { attachGaze, reactAvatar, setWalking, idleGestures } from './avatarLife';
 
 // A small Laksh who keeps you company down the page: he walks in from the left once you leave the hero, says one
 // line about the section you are in, hops when you move on, and nods or tilts when you click him. In the journey
@@ -49,7 +49,11 @@ export default function Sidekick() {
     return () => { cancelAnimationFrame(raf); window.removeEventListener('scroll', on); window.removeEventListener('resize', on); };
   }, [scrub]);
 
-  useEffect(() => attachGaze(root.current?.querySelector('.a3')), [scrub]);
+  useEffect(() => {
+    const a = root.current?.querySelector('.a3');
+    const offs = [attachGaze(a), idleGestures(a)];
+    return () => offs.forEach((f) => f());
+  }, [scrub]);
 
   // walk in when he appears or the section changes, then hop on arrival
   useEffect(() => {

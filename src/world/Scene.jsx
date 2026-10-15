@@ -224,9 +224,9 @@ export function GhatLayer() {
           </g>
         ))}
       </g>
-      <Walker x={1270} y={632} dx={250} dy={-14} c="#FF8A1F" dur={26} delay={0} />
-      <Walker x={1360} y={684} dx={210} dy={-12} c="#1FA6A0" dur={31} delay={-12} s={1.1} />
-      <Walker x={1330} y={738} dx={270} dy={-14} c="#8E7CFF" dur={36} delay={-20} s={1.15} />
+      <Walker x={1270} y={596} dx={250} dy={-12} c="#FF8A1F" dur={26} delay={0} />
+      <Walker x={1340} y={620} dx={210} dy={-10} c="#1FA6A0" dur={31} delay={-12} s={1.1} />
+      <Walker x={1262} y={640} dx={118} dy={-6} c="#8E7CFF" dur={24} delay={-9} s={1.15} />
     </S>
   );
 }

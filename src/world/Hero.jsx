@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { PLACES, ME } from './data';
 import { clamp, ss, range, useTrack, useScrub } from './hooks';
-import { attachGaze, reactAvatar } from './avatarLife';
+import { attachGaze, reactAvatar, idleGestures } from './avatarLife';
 import {
   VB, pct, SkyLayer, CloudLayer, KitesLayer, FarLayer, HillLeftLayer, HillRightLayer, GhatLayer, RiverLayer,
   MUArt, ShiftsDealArt, InternsArt, BestowArt, RangeArt, TablaArt, MeArt, ForegroundLeft, ForegroundRight, ForegroundBottom, Birds,
@@ -16,7 +16,7 @@ const PINS = [
   { id: 'interns', x: 1124, y: 92, tag: '2025', mark: '25' },
   { id: 'bestow', x: 1379, y: 130, tag: '2026', mark: 'B' },
   { id: 'range', x: 1205, y: 466, tag: 'AIR 54', mark: 'R' },
-  { id: 'me', x: 1396, y: 418, tag: null, mark: 'L', face: true },
+  { id: 'me', x: 1396, y: 326, tag: null, mark: 'L', face: true },
 ];
 
 // Clickable area per place (scene space): x, y, w, h.
@@ -26,7 +26,7 @@ const HOT = {
   interns: [1086, 100, 76, 372],
   bestow: [1272, 150, 214, 170],
   range: [1000, 480, 310, 160],
-  me: [1374, 430, 134, 310],
+  me: [1374, 340, 134, 310],
 };
 
 const hotStyle = ([x, y, w, h]) => ({ left: `${(x / VB.w) * 100}%`, top: `${(y / VB.h) * 100}%`, width: `${(w / VB.w) * 100}%`, height: `${(h / VB.h) * 100}%` });
@@ -199,7 +199,11 @@ export default function Hero({ music, onMusic, goJourney }) {
   }, []);
 
   // his head follows the pointer
-  useEffect(() => attachGaze(layers.current.me?.querySelector('.a3')), []);
+  useEffect(() => {
+    const a = layers.current.me?.querySelector('.a3');
+    const offs = [attachGaze(a), idleGestures(a)];
+    return () => offs.forEach((f) => f());
+  }, []);
 
   useEffect(() => { applyFocus(focusId); }, [focusId, applyFocus]);
 
