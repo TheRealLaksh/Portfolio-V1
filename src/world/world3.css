@@ -128,3 +128,29 @@
 .w-root .rs-sec span { display: block; height: 8px; border-radius: 6px; background: rgba(27, 31, 59, .16); width: calc(var(--w) * var(--f, 1)); }
 .w-root .rs-pdf { display: inline-flex; align-items: center; gap: 6px; margin: 0 14px 14px auto; float: right; font: 700 12.5px var(--sans); background: var(--acc); color: #fff; padding: 7px 12px; border-radius: 99px; transition: background .4s; }
 .w-root .rs-mock::after { content: ""; display: block; clear: both; }
+
+/* ---------- stack: the gift that opens ---------- */
+.w-root { --gift: #E8505B; --gift-hi: #F2707A; --gift-lid: #F0646E; --gift-in: #4E1A28; --ribbon: #FFC93C; }
+.w-root[data-theme="night"] { --gift: #B8404F; --gift-hi: #CC5461; --gift-lid: #C84A58; --gift-in: #2A0F1A; }
+.w-root.w-scrub .stack { padding: 0; }
+.w-root .stack-track { position: relative; height: 340vh; }
+.w-root .stack-pin { position: sticky; top: 0; height: 100vh; height: 100svh; overflow: hidden; background: radial-gradient(90% 70% at 50% 70%, color-mix(in srgb, var(--sun-c) 18%, var(--paper-2)) 0%, var(--paper-2) 70%); }
+.w-root .stack-head { padding-top: 84px; will-change: opacity; }
+.w-root .stack-head .sec-head h2 { font-size: clamp(28px, 3.6vw, 50px); }
+.w-root .stack-head .sec-head > p:not(.kicker) { margin-top: 8px; font-size: 16px; }
+.w-root .gift-stage { position: absolute; left: 50%; top: 70%; width: 0; height: 0; }
+.w-root .gs-gift { position: absolute; left: -150px; top: -100px; width: 300px; height: 270px; transform-origin: 50% 100%; will-change: transform; z-index: 3; }
+.w-root .gs-svg { display: block; overflow: visible; }
+.w-root .gs-lid { will-change: transform, opacity; }
+.w-root .gs-glow { opacity: 0; }
+.w-root .gs-beam { position: absolute; left: -200px; top: -440px; width: 400px; height: 440px; opacity: 0; pointer-events: none; background: linear-gradient(to top, rgba(255, 232, 150, .8), rgba(255, 232, 150, 0)); clip-path: polygon(34% 100%, 66% 100%, 100% 0, 0 0); z-index: 1; }
+.w-root .gs-cap { position: absolute; left: -110px; width: 220px; top: -86px; text-align: center; font: 700 24px var(--hand); color: var(--ink-2); z-index: 4; }
+.w-root .gs-ring { position: absolute; left: 0; top: 0; z-index: 2; }
+.w-root .gs-ring li { position: absolute; left: 0; top: 0; }
+.w-root .gt { position: absolute; left: -48px; top: -52px; width: 96px; height: 104px; display: grid; justify-items: center; align-content: center; gap: 8px; padding: 8px 4px; background: var(--card); border: 2px solid var(--ink); border-radius: 20px; will-change: transform, opacity; transition: box-shadow .3s, background .3s; }
+.w-root .gt:hover, .w-root .gt.on { box-shadow: 0 8px 0 var(--tc); background: color-mix(in srgb, var(--tc) 14%, var(--card)); z-index: 3; }
+.w-root .gt-i { width: 46px; height: 46px; border-radius: 14px; display: grid; place-items: center; background: var(--tc); color: #fff; font: 800 17px var(--sans); letter-spacing: -.02em; }
+.w-root .gt-n { font: 700 12.5px/1.1 var(--sans); text-align: center; }
+.w-root .gs-tip { position: absolute; z-index: 6; width: 290px; padding: 16px 18px; background: var(--card); border: 2px solid var(--ink); border-radius: 18px; box-shadow: 6px 6px 0 var(--tc, var(--ink)); opacity: 0; pointer-events: none; transform: translate(-50%, -50%) scale(.92); transition: opacity .2s, transform .35s var(--spring); }
+.w-root .gs-tip.in { opacity: 1; transform: translate(-50%, -50%); }
+.w-root .gs-tip p { font-size: 14.5px; line-height: 1.4; }
