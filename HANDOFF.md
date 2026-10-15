@@ -95,6 +95,7 @@ Branch: `feat/world-portfolio` · remote: https://github.com/TheRealLaksh/Portfo
 
 ### Last 15 commits
 
+- `0b94246` 2026-10-15 14:51 Add serverless endpoints for the guestbook wall and visitor counter
 - `2a7b35a` 2026-10-15 14:51 Add the valley sections: story, journey map, work, tools, desk, wall, contact
 - `c88d590` 2026-10-15 14:51 Add the valley hero: SVG scene, scroll fly-in, places and nav bar
 - `d471855` 2026-10-15 14:51 Add valley portfolio data, hooks, generative music and icons
@@ -109,15 +110,11 @@ Branch: `feat/world-portfolio` · remote: https://github.com/TheRealLaksh/Portfo
 - `7ac7e03` 2026-10-14 10:04 Stop the chat teaser from covering the page on phones
 - `f4e9e1e` 2026-10-14 10:04 Keep the Hire me icon visible in the mobile nav and name the icon links
 - `a46055f` 2026-10-14 10:02 Make section links work from /hire and on direct #links
-- `ac238ef` 2026-10-14 09:56 Give /hire its own title, canonical and link-preview tags
 
 ### Uncommitted changes at refresh time
 
 ```
-A  api/_redis.js
-A  api/visit.js
-A  api/wall.js
- M index.html
- M src/App.jsx
+M  index.html
+M  src/App.jsx
 ```
 <!-- handoff:auto:end -->

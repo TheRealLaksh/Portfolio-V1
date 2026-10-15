@@ -8,6 +8,7 @@ import 'aos/dist/aos.css';
 
 import Home from './pages/Home';
 import Hire from './pages/Hire';
+import World from './world/World';
 
 function App() {
   useEffect(() => {
@@ -43,18 +44,16 @@ function App() {
     <ReactLenis root options={lenisOptions}>
       {/* Scrolls to the top or to a #section after every navigation */}
       <ScrollManager />
-      <Layout>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/hire" element={<Hire />} />
-          {/* The old /booking page was a demo with made-up slots; send visitors to the real page. */}
-          <Route path="/booking" element={<Navigate to="/hire" replace />} />
-          <Route path="/bookings" element={<Navigate to="/hire" replace />} />
-
-          <Route path="*" element={<Navigate to="/" replace />} />
-          
-        </Routes>
-      </Layout>
+      <Routes>
+        {/* The valley portfolio has its own chrome (bar, nav), so it sits outside the classic Layout. */}
+        <Route path="/" element={<World />} />
+        <Route path="/classic" element={<Layout><Home /></Layout>} />
+        <Route path="/hire" element={<Layout><Hire /></Layout>} />
+        {/* The old /booking page was a demo with made-up slots; send visitors to the real page. */}
+        <Route path="/booking" element={<Navigate to="/hire" replace />} />
+        <Route path="/bookings" element={<Navigate to="/hire" replace />} />
+        <Route path="*" element={<Navigate to="/" replace />} />
+      </Routes>
     </ReactLenis>
   );
 }
