@@ -45,13 +45,14 @@ A. Valley redesign (branch `feat/world-portfolio`): (1) give the wall and visito
 ## Decisions not to undo
 - Scroll scenes run when `SCRUB_QUERY` matches (min 720 px wide, 420 px high, landscape, motion allowed). Do not raise it back to 900 px: laptops at 125-150% scaling are 850-1100 CSS px wide. Stacked-layout CSS must stay under `.w-flat`, never keyed to width alone.
 - Laksh allowed AI-painted scenes for the valley art on 16 Oct 2026 (reverses the earlier no-AI-images rule), but only after he has seen the motion pass; the only generator is Figma MCP `generate_image` (paid credits): ask before using it.
-- Valley site (`src/world/`): scene art is hand-built SVG with CSS-variable palettes (day/night); never replace it with AI-generated images. Hero fly-in uses `position: sticky` and needs `html.world-on` (set in `World.jsx`) to clip instead of hide horizontal overflow. No word-by-word scroll-fill text; reveals are one-time. The generative music in `src/world/audio.js` is original (Web Audio), no samples. The wall stores the poster's email but never returns it from the API.
+- Valley site (`src/world/`): scene art is hand-built SVG with CSS-variable palettes (day/night). Laksh now allows AI-painted/rendered art (16 Oct 2026), and the hero figure is his own 3D avatar image (`public/me-avatar.webp`); still no copying James Chugh's art. Hero fly-in uses `position: sticky` and needs `html.world-on` (set in `World.jsx`) to clip instead of hide horizontal overflow. No word-by-word scroll-fill text; reveals are one-time. The generative music in `src/world/audio.js` is original (Web Audio), no samples. The wall stores the poster's email but never returns it from the API.
 - Valley journey (`Journey.jsx`): scroll-scrubbed on wide screens at Laksh's explicit request (15 Oct 2026); keep the reduced-motion and under-900 px fallback, native scroll only (no scroll locking, no ScrollTrigger).
 - Domain is lakshpradhwani.com (Hostinger, bought 8 Oct 2026). Do not reintroduce lakshp.live.
 - Public contact address is `work@lakshpradhwani.com`; `me@` is for personal use.
 - Laksh chose small commits, pushed after each (every push to `main` goes live on Vercel). Session of 8 Oct 2026.
 
 ## Session log (newest first)
+- 2026-10-16: the hero figure (`MeArt` in `src/world/Scene.jsx`) is now Laksh's supplied 3D avatar (black hoodie, cargo pants, white sneakers) instead of the hand-drawn SVG `MeFigure`. Background removed with OpenCV GrabCut plus hand-drawn shoe polygons into `public/me-avatar.webp` (302x898, 28 KB, transparent); it is an SVG `<image>` at the same ground origin and height (about 296 units) with a soft shadow ellipse. Checked headless at 1440x810 day and night: standing on the deck at right, 'That's me' pin still sits above him; build passes. `Avatar.jsx` and `/lab/avatar` (old drawn looks) are left in place, unused by the hero. The small `me.webp` photo is still used in the nav pill, `/book`, the journey traveller and Life. Not done: a retina-size cut-out (source was 768x1024) and a wave/idle animation.
 - 2026-10-16: Laksh said the valley had "no animation" next to jameschugh.com. Cause found: the pinned scenes only ran at 900 px wide and up, so a 1280 px laptop at 150% display scaling (about 853 CSS px) got the flat stacked fallback. Scenes now run from 720 px wide in landscape with at least 420 px height (`SCRUB_QUERY` in `hooks.js`, used by `useScrubMode` and `Journey.jsx`); the stacked layout CSS in `world2.css` is scoped to `.w-flat`; the journey card slims down beside the map under 1000 px (`place()` in `Journey.jsx`, `@media (max-width: 1000px)` in `world2.css`); hero text scales with viewport height; the Work box fits short screens. Checked headless at 853x480. Motion pass (ambient life, hover and scroll polish) follows.
 - 2026-10-15 (night): removed the four "sites I have built" (Arun Medicals, About Varanasi, Artistry, Kalavrndam) at Laksh's request: deleted `SITES` from `src/world/data.js`, its cards from `Brand.jsx` (carousel and stacked layouts) and `Book.jsx`. The Web Wizards 2nd place milestone in the journey stays (it is an achievement, not a card). Dead `.sites`/`.st-dot`/`.bc-k`/`.bc.site` CSS in `world2.css`/`world3.css` left for later. Build passes.
 - 2026-10-15 (evening, 2): the valley's websites section (`Brand.jsx`) now also links to `/book` ("or book a call"), next to the `/hire` link.
@@ -99,12 +100,13 @@ A. Valley redesign (branch `feat/world-portfolio`): (1) give the wall and visito
 <!-- handoff:auto:start -->
 ## Auto: repo state
 
-_Refreshed 16 Oct 2026, 12:30 am IST by `scripts/handoff.mjs` (runs on every commit). Don't edit inside this block._
+_Refreshed 16 Oct 2026, 12:32 am IST by `scripts/handoff.mjs` (runs on every commit). Don't edit inside this block._
 
 Branch: `feat/world-portfolio` · remote: https://github.com/TheRealLaksh/Portfolio-V2.git
 
 ### Last 15 commits
 
+- `df0d7e3` 2026-10-16 00:30 Run the scroll scenes on laptop-sized windows (720 px and up), not only 900 px
 - `bebabfc` 2026-10-15 19:35 Redraw the avatar (three looks on /lab/avatar, painted look in the hero) and add light rays and grain to the hero
 - `0e47450` 2026-10-15 19:30 Scroll-driven Process line, cork board desk, wall rows and contact keys; fix Brand after the sites removal
 - `71bf850` 2026-10-15 19:27 Remove the four sites-I-have-built cards (Arun Medicals, About Varanasi, Artistry, Kalavrndam)
@@ -119,18 +121,12 @@ Branch: `feat/world-portfolio` · remote: https://github.com/TheRealLaksh/Portfo
 - `9099463` 2026-10-15 15:27 Show a real ShiftsDeal screenshot on its work card
 - `a5c5ad9` 2026-10-15 14:56 Record the valley QA pass in HANDOFF
 - `afb5018` 2026-10-15 14:56 Fix boats jumping out of place and raise note contrast
-- `2d8f4b2` 2026-10-15 14:53 Polish the valley: pin placement, night clouds, draggable notes, cheaper window glow
 
 ### Uncommitted changes at refresh time
 
 ```
 M  HANDOFF.md
-M  src/world/Journey.jsx
-M  src/world/Life.jsx
-M  src/world/Story.jsx
-M  src/world/Work.jsx
-M  src/world/hooks.js
-M  src/world/world.css
-M  src/world/world2.css
+A  public/me-avatar.webp
+M  src/world/Scene.jsx
 ```
 <!-- handoff:auto:end -->

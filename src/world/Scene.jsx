@@ -1,5 +1,4 @@
 import React from 'react';
-import { MeFigure } from './Avatar';
 
 // The valley: hand-drawn SVG layers in a 1600 x 900 space. Colours come from CSS variables
 // (see world.css), so day and night are one set of shapes with two palettes.
@@ -465,12 +464,14 @@ export function TablaArt({ playing }) {
   );
 }
 
-// Laksh: the drawing lives in Avatar.jsx (look 'a', painted). Other looks are compared at /lab/avatar.
-export function MeArt({ look = 'a' }) {
+// Laksh: the 3D avatar Laksh supplied (public/me-avatar.webp, background cut out, 302x898 px, feet at the bottom edge).
+// Local space matches the old drawing: origin on the ground between the feet, +y down, about 296 units tall.
+export function MeArt() {
   return (
     <S>
       <g className="me-fig" transform="translate(1432 732) scale(.98)">
-        <MeFigure look={look} id="hero" />
+        <ellipse cx="2" cy="8" rx="46" ry="7" fill="var(--ink)" opacity=".22" />
+        <image href="/me-avatar.webp" x="-44" y="-300" width="101.5" height="302" preserveAspectRatio="xMidYMax meet" />
       </g>
     </S>
   );
