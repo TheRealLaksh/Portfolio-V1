@@ -96,6 +96,7 @@ Branch: `feat/world-portfolio` · remote: https://github.com/TheRealLaksh/Portfo
 
 ### Last 15 commits
 
+- `afb5018` 2026-10-15 14:56 Fix boats jumping out of place and raise note contrast
 - `2d8f4b2` 2026-10-15 14:53 Polish the valley: pin placement, night clouds, draggable notes, cheaper window glow
 - `f588ec9` 2026-10-15 14:53 Use real screenshots for my own projects; add Mercatora
 - `f563f17` 2026-10-15 14:51 Mount the valley at / and keep the old home at /classic
@@ -110,13 +111,10 @@ Branch: `feat/world-portfolio` · remote: https://github.com/TheRealLaksh/Portfo
 - `00b0a9b` 2026-10-14 10:09 Raise text contrast on the Hire page to WCAG AA
 - `be7cceb` 2026-10-14 10:07 Respect the reduced-motion setting
 - `0a0d812` 2026-10-14 10:06 Skip the preloader on /hire and for reduced-motion visitors
-- `4d038d4` 2026-10-14 10:05 Hide the social sidebar where it overlaps the page content
 
 ### Uncommitted changes at refresh time
 
 ```
-M HANDOFF.md
-M  src/world/Scene.jsx
-M  src/world/world2.css
+M  HANDOFF.md
 ```
 <!-- handoff:auto:end -->
