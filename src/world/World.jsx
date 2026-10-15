@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useReveal, useTheme, useScrubMode, ScrubCtx } from './hooks';
+import { useMotionKit } from './motion';
 import { startMusic, stopMusic } from './audio';
 import { countVisit } from './api';
 import Bar from './Bar';
@@ -26,6 +27,7 @@ export default function World() {
   const [visitors, setVisitors] = useState(null);
   const scrub = useScrubMode();
   useReveal(root, scrub);
+  useMotionKit(root, scrub);
 
 
   useEffect(() => {

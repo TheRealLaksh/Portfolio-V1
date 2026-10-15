@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useRef } from 'react';
 import { PROCESS } from './data';
 import { range, ss, useTrack, useScrub } from './hooks';
 import Icon from './Icon';
+import Floaters from './Floaters';
 
 const TONES = ['var(--sun-c)', '#FFB7A5', '#B8E3DE', '#D9CCFF', '#FFD9A8'];
 
@@ -71,6 +72,7 @@ export default function Process() {
 
   return (
     <section className="process torn" id="process" aria-label="How I work" ref={sec}>
+      <Floaters set="process" />
       <div className="wrap">
         <div className="sec-head" data-rv>
           <p className="kicker"><Icon n="bulb" size={16} />How I work</p>

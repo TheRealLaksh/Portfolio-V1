@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import { OFF_CLOCK } from './data';
 import { range, ss, backOut, useTrack, useScrub } from './hooks';
 import Icon from './Icon';
+import Floaters from './Floaters';
 
 // Everything on the desk can be dragged (pointer events, so touch works too).
 function useDrag(deskRef) {
@@ -72,6 +73,7 @@ export default function Life({ music, onMusic }) {
   }, { mode: 'pass', enabled: scrub, damp: 9 });
   return (
     <section className="life torn" id="life" aria-label="Off the clock">
+      <Floaters set="life" />
       <div className="wrap">
         <div className="sec-head" data-rv>
           <p className="kicker"><Icon n="user" size={16} />Off the clock</p>

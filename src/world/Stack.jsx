@@ -2,6 +2,7 @@ import React, { useRef, useState } from 'react';
 import { STACK } from './data';
 import { clamp, range, ss, backOut, useTrack, useScrub } from './hooks';
 import Icon from './Icon';
+import Floaters from './Floaters';
 
 const mark = (n) => n.replace(/[^A-Za-z+]/g, '').slice(0, 2);
 
@@ -133,6 +134,7 @@ function Burst() {
   return (
     <div className="stack-track" ref={track} onMouseLeave={() => setSel(null)}>
       <div className="stack-pin" ref={ref}>
+        <Floaters set="stack" />
         <div className="wrap stack-head" ref={head}>
           <div className="sec-head" data-rv>
             <p className="kicker"><Icon n="gear" size={16} />My stack</p>
@@ -228,6 +230,7 @@ export default function Stack() {
   const scrub = useScrub();
   return (
     <section className="stack torn" id="stack" aria-label="My stack">
+      {!scrub && <Floaters set="stack" />}
       {scrub ? <Burst /> : <Toolbox />}
     </section>
   );

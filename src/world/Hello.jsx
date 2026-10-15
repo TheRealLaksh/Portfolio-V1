@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { ME, waLink } from './data';
 import { range, ss, backOut, useTrack, useScrub } from './hooks';
 import Icon from './Icon';
+import Floaters from './Floaters';
 
 const mailto = `mailto:${ME.email}?subject=${encodeURIComponent('Project enquiry')}`;
 const bookHref = ME.book || waLink("Hi Laksh, I'd like to book a quick call.");
@@ -73,6 +74,7 @@ export default function Hello() {
   return (
     <section className="hello" id="hello" aria-label="Contact" ref={sec}>
       <div className="hello-sky" aria-hidden="true" />
+      <Floaters set="hello" />
       <div className="wrap inner">
         <h2 ref={h2} {...(scrub ? {} : { 'data-rv': '' })}>Let&rsquo;s build something <span className="rq">people use.</span></h2>
         <p ref={sub} {...(scrub ? {} : { 'data-rv': '' })}>Open to projects with founders, startups and local businesses. I reply fast.</p>

@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { range, ss, useTrack, useScrub } from './hooks';
 import Icon from './Icon';
+import Floaters from './Floaters';
 import { fetchNotes, postNote } from './api';
 
 const TINTS = ['#FFE98A', '#FFD1C4', '#CFE7FF', '#D9CCFF', '#C9F0E4', '#FFD9A8'];
@@ -83,6 +84,7 @@ export default function Wall() {
 
   return (
     <section className="notes torn torn-bot" id="notes" aria-label="Notes wall" ref={sec}>
+      <Floaters set="wall" />
       <div className="wrap nw-head">
         <div className="sec-head" data-rv>
           <p className="kicker"><Icon n="chat" size={16} />The wall</p>

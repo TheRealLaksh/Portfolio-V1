@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { WORK } from './data';
 import { clamp, lerp, range, ss, backOut, useTrack, useScrub } from './hooks';
 import Icon from './Icon';
+import Floaters from './Floaters';
 
 function Mock({ c, name }) {
   // Placeholder artwork until a real screenshot is added to /public/work/<id>.webp.
@@ -107,6 +108,7 @@ function CardBox({ onOpen }) {
   return (
     <div className="box-track" ref={track}>
       <div className="box-stage" onPointerMove={onMove} onPointerLeave={onLeave}>
+        <Floaters set="work" />
         <div className="box-head sec-head" data-rv>
           <p className="kicker"><Icon n="layers" size={16} />Selected work</p>
           <h2>Things I built, <span className="hl b-sun">live and linkable.</span></h2>
@@ -218,6 +220,7 @@ export default function Work() {
   const scrub = useScrub();
   return (
     <section className="work" id="work" aria-label="Selected work">
+      {!scrub && <Floaters set="work" />}
       {scrub ? <CardBox onOpen={setOpen} /> : <Deck onOpen={setOpen} />}
       {open && <Case w={open} onClose={() => setOpen(null)} />}
     </section>

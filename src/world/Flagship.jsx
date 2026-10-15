@@ -1,6 +1,7 @@
 import React, { useRef } from 'react';
 import { range, ss, backOut, useTrack, useScrub } from './hooks';
 import Icon from './Icon';
+import Floaters from './Floaters';
 
 // "My own product": Profiley, the resume builder. Only facts that are true today.
 const HATS = [
@@ -109,6 +110,7 @@ export default function Flagship() {
     return (
       <section className="ll torn" id="profiley" aria-label="Profiley, my own product" ref={track}>
         <div className="ll-pin" ref={stage}>
+          <Floaters set="flag" />
           <div className="wrap ll-grid">
             <div className="ll-left">
               <div className="sec-head" data-rv>
@@ -133,6 +135,7 @@ export default function Flagship() {
 
   return (
     <section className="ll torn" id="profiley" aria-label="Profiley, my own product">
+      <Floaters set="flag" />
       <div className="wrap">
         <div className="sec-head" data-rv>
           <p className="kicker"><Icon n="file" size={16} />My own product</p>

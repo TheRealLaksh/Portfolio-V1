@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useRef } from 'react';
 import { NOTE_STICKIES } from './data';
 import { clamp, range, ss, useTrack, useScrub } from './hooks';
 import Icon from './Icon';
+import Floaters from './Floaters';
 
 // "How I got here". On wide screens the paragraph is pinned while scroll draws each marker highlight and a
 // hand-drawn doodle beside it, then pops the sticky notes in. No word-by-word fading: the text is always legible.
@@ -157,6 +158,7 @@ export default function Story() {
   return (
     <section className="story" id="story" aria-label="How I got here" ref={track}>
       <div className="story-pin">
+        <Floaters set="story" />
         <div className="wrap">
           <p className="kicker" data-rv><Icon n="star" size={16} />How I got here</p>
           <div className="tell-box" ref={box}>

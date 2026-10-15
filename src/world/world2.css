@@ -4,8 +4,8 @@
 .w-root [data-rv].in { opacity: 1; transform: none; }
 .w-root .sticky[data-rv] { transform: translateY(22px) rotate(var(--r, 0deg)) scale(.92); }
 .w-root .sticky[data-rv].in { transform: rotate(var(--r, 0deg)); }
-.w-root .wcard[data-rv] { transform: translateY(26px) rotate(var(--r, 0deg)); }
-.w-root .wcard[data-rv].in { transform: rotate(var(--r, 0deg)); }
+.w-root .wcard[data-rv] { transform: perspective(900px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)) translateY(26px) rotate(var(--r, 0deg)); }
+.w-root .wcard[data-rv].in { transform: perspective(900px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)) rotate(var(--r, 0deg)); }
 
 .w-root section:not(.valley) { position: relative; padding-block: clamp(72px, 11vw, 140px); background: var(--paper); }
 .w-root .torn { background: var(--paper-2); }
@@ -66,7 +66,7 @@
 .w-root .trav { transition: transform 1.1s var(--ease); }
 .w-root .trav-pin { fill: var(--rose-c); stroke: #fff; stroke-width: 3; } .w-root .trav-sh { fill: rgba(0, 0, 0, .2); }
 
-.w-root .jcard { position: absolute; z-index: 5; right: 22px; top: 50%; transform: translateY(-50%); width: min(340px, calc(100% - 44px)); background: var(--card); border: 2px solid var(--ink); border-radius: 22px; padding: 20px 22px 22px; box-shadow: 8px 8px 0 color-mix(in srgb, var(--ink) 85%, transparent); }
+.w-root .jcard { position: absolute; z-index: 5; right: 22px; top: 50%; transform: translateY(-50%) perspective(900px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)); width: min(340px, calc(100% - 44px)); background: var(--card); border: 2px solid var(--ink); border-radius: 22px; padding: 20px 22px 22px; box-shadow: 8px 8px 0 color-mix(in srgb, var(--ink) 85%, transparent); }
 .w-root .jc-in { animation: cardIn .6s var(--ease); }
 @keyframes cardIn { from { opacity: 0; transform: translateY(14px); } }
 .w-root .jc-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; }
@@ -127,7 +127,7 @@
 .w-root .deck-row { display: flex; gap: 22px; overflow-x: auto; scroll-snap-type: x mandatory; padding: 26px max(20px, calc((100vw - 1180px) / 2)) 40px; scrollbar-width: none; overscroll-behavior-x: contain; }
 .w-root .deck-row::-webkit-scrollbar { display: none; }
 .w-root .wcard { flex: 0 0 auto; width: min(300px, 78vw); scroll-snap-align: center; text-align: left; background: var(--card); border: 2px solid var(--ink); border-radius: 22px; padding: 12px 12px 16px; box-shadow: 8px 8px 0 var(--cc); position: relative; transition-property: opacity, transform, box-shadow; transition-duration: .8s, .8s, .3s; }
-.w-root .wcard:hover { transform: translateY(-8px) rotate(0deg); box-shadow: 12px 14px 0 var(--cc); }
+.w-root .wcard:hover { transform: perspective(900px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)) translateY(-8px) rotate(0deg); box-shadow: 12px 14px 0 var(--cc); }
 .w-root .wc-art { aspect-ratio: 4/3; border-radius: 14px; overflow: hidden; background: color-mix(in srgb, var(--cc) 25%, var(--paper-2)); border: 1.5px solid var(--ink); }
 .w-root .shot { width: 100%; height: 100%; object-fit: cover; object-position: top; }
 .w-root .wc-body { padding: 14px 6px 0; display: grid; gap: 2px; }
@@ -249,7 +249,7 @@
 .w-root .nw-rows:hover .nw-track { animation-play-state: paused; }
 @keyframes marq { to { transform: translateX(-50%); } }
 .w-root .nw-card { width: 280px; flex: none; background: var(--sc); color: #1B1F3B; border-radius: 6px; padding: 18px 18px 16px; box-shadow: 0 14px 20px -12px rgba(0, 0, 0, .35); }
-.w-root .nw-card:nth-child(odd) { transform: rotate(-1.2deg); } .w-root .nw-card:nth-child(even) { transform: rotate(1deg); }
+.w-root .nw-card:nth-child(odd) { transform: perspective(900px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)) rotate(-1.2deg); } .w-root .nw-card:nth-child(even) { transform: perspective(900px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)) rotate(1deg); }
 .w-root .nw-card header { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; } .w-root .nw-ava { width: 36px; height: 36px; border-radius: 50%; background: #fff; display: grid; place-items: center; font: 800 14px var(--sans); border: 2px solid #1B1F3B; }
 .w-root .nw-card b { font-size: 15px; display: block; line-height: 1.1; } .w-root .nw-card small { font-size: 12.5px; opacity: .65; } .w-root .nw-card p { font: 600 19px/1.2 var(--hand); }
 .w-root .nw-modal { position: fixed; inset: 0; z-index: 90; background: rgba(15, 15, 40, .55); backdrop-filter: blur(6px); display: grid; place-items: center; padding: 18px; overflow: auto; animation: fade .3s; }

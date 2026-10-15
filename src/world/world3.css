@@ -82,7 +82,7 @@
 .w-root .brand-top .pk-more { margin-top: 12px; font-size: 14.5px; }
 .w-root .brand-car { position: relative; min-height: 0; display: grid; align-items: center; overflow: visible; }
 .w-root .brand-row { display: flex; align-items: center; gap: 30px; width: max-content; padding: 24px max(40px, calc((100vw - 1180px) / 2)) 24px; will-change: transform; }
-.w-root .brand-row .bc { flex: none; width: 330px; transform: translateY(var(--dy, 0)) rotate(var(--tilt, 0deg)) scale(calc(.94 + .07 * var(--near, 0))); transition: box-shadow .3s; }
+.w-root .brand-row .bc { flex: none; width: 330px; transform: perspective(900px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)) translateY(var(--dy, 0)) rotate(var(--tilt, 0deg)) scale(calc(.94 + .07 * var(--near, 0))); transition: box-shadow .3s; }
 .w-root .brand-row .bc.pk { min-height: 270px; }
 .w-root .bc-k { flex: none; font: 700 26px var(--hand); color: var(--ink-2); writing-mode: vertical-rl; transform: rotate(180deg); letter-spacing: .04em; }
 .w-root .bc.site { display: grid; gap: 10px; }

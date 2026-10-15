@@ -4,6 +4,7 @@ import { ME, waLink } from './data';
 import { packages, whatsappLink } from '../data/packages';
 import { clamp, range, ss, useTrack, useScrub } from './hooks';
 import Icon from './Icon';
+import Floaters from './Floaters';
 
 const PK_TONES = ['var(--teal-c)', 'var(--lilac-c)', 'var(--saffron)'];
 
@@ -79,6 +80,7 @@ export default function Brand() {
       <section className="brand-sec torn" id="brand" aria-label="Websites and services">
         <div className="brand-track" ref={track} onFocus={onFocus}>
           <div className="brand-pin">
+            <Floaters set="brand" />
             <div className="wrap brand-top" ref={head}>
               {headBlock}
               <p className="pk-more"><Link to="/hire">See every package and what is included <Icon n="arrow" size={16} /></Link> <span className="pk-or">or</span> <Link to="/book">book a call <Icon n="arrow" size={16} /></Link></p>
@@ -110,6 +112,7 @@ export default function Brand() {
 
   return (
     <section className="brand-sec torn" id="brand" aria-label="Websites and services">
+      <Floaters set="brand" />
       <div className="wrap">
         {headBlock}
 
