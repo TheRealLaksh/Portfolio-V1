@@ -106,6 +106,20 @@
 .w-root .journey.scrub .j-world.zoomin { transition: transform .45s var(--ease); }
 .w-root .journey.scrub .mapctl { bottom: 72px; }
 .w-root .journey.scrub .jtl { left: 50%; top: auto; bottom: 72px; transform: translateX(-50%); }
+/* narrower than the map-plus-card layout (about 1000 px): a slimmer card keeps its place beside the map */
+@media (max-width: 1000px) {
+  .w-root .journey.scrub .jcard { right: 12px; width: 268px; padding: 14px 16px 16px; border-radius: 18px; box-shadow: 5px 5px 0 color-mix(in srgb, var(--ink) 85%, transparent); }
+  .w-root .journey.scrub .jcard h3 { font-size: 22px; }
+  .w-root .journey.scrub .jc-role { font-size: 14px; margin: 3px 0 8px; }
+  .w-root .journey.scrub .jcard p:not(.jc-role) { font-size: 13.5px; line-height: 1.4; }
+  .w-root .journey.scrub .jc-ic { width: 32px; height: 32px; }
+  .w-root .journey.scrub .j-head { left: calc((100% - 300px) / 2); width: min(560px, calc(100% - 340px)); top: 72px; }
+  .w-root .journey.scrub .j-head .wrap { padding: 14px 18px 16px; }
+  .w-root .journey.scrub .sec-head h2 { font-size: clamp(24px, 3.6vw, 34px); }
+  .w-root .journey.scrub .sec-head > p:not(.kicker) { font-size: 14px; margin-top: 8px; }
+  .w-root .journey.scrub .jtl { left: calc((100% - 300px) / 2); bottom: 70px; }
+  .w-root .journey.scrub .mapctl { bottom: 112px; left: 12px; }
+}
 
 /* ---------- selected work ---------- */
 .w-root .work { background: var(--paper); }
@@ -274,25 +288,30 @@
 
 
 /* ---------- small screens ---------- */
+/* Chrome that is too wide for any narrow window (bar, nav, sheet, dialogs). */
 @media (max-width: 899px) {
   .w-root { font-size: 16px; }
   .w-root .logo .lt { display: none; } .w-root .logo { padding-right: 5px; }
   .w-root .theme-btn .tl, .w-root .vc .vc-w, .w-root .np-t { display: none; } .w-root .theme-btn, .w-root .np { padding: 9px 10px; }
   .w-root .nav a { padding: 9px 10px; font-size: 0; gap: 0; } .w-root .nav a.on, .w-root .nav .cta { font-size: 13px; gap: 6px; } .w-root .nav .cta { padding-inline: 12px; } .w-root .nav .sep { display: none; }
-  .w-root .valley { height: 300vh; }
-  .w-root .hero-copy { top: calc(max(64px, env(safe-area-inset-top)) + 20px); } .w-root .sky-plane { top: 30%; }
   .w-root .sheet { left: 12px !important; right: 12px !important; top: auto; bottom: 84px; max-height: 56svh; width: auto; --sx: 0; transform: translateY(24px) scale(.98); } .w-root .sheet.open { transform: none; }
   .w-root .pin .hint { display: none; }
-  .w-root .sticky { position: relative; display: inline-block; margin: 14px 10px 0 0; right: auto !important; left: auto !important; top: auto !important; bottom: auto !important; width: 170px; }
-  .w-root .tell-box { display: block; }
-  .w-root .j-stage { height: auto; display: grid; gap: 14px; margin-top: 24px; } .w-root .j-frame { position: relative; height: 66vw; min-height: 250px; }
-  .w-root .jcard { position: relative; right: auto; top: auto; transform: none; width: 100%; box-shadow: 5px 5px 0 var(--ink); } .w-root .jcar, .w-root .mapctl, .w-root .jtl { position: relative; left: auto; bottom: auto; top: auto; transform: none; } .w-root .jcar { justify-self: center; } .w-root .mapctl { display: none; } .w-root .jtl { justify-self: center; }
-  .w-root .ll-end { grid-template-columns: 1fr; gap: 10px; } .w-root .ll-roles li { grid-template-columns: auto 1fr; } .w-root .ll-roles li span { grid-column: 2; }
   .w-root .cs-sheet { grid-template-columns: 1fr; } .w-root .cs-art { border-right: 0; border-bottom: 2px solid var(--ink); min-height: 200px; max-height: 240px; }
-  .w-root .desk { min-height: 0; display: flex; flex-wrap: wrap; gap: 26px 18px; padding: 30px 16px 76px; justify-content: center; border-style: none; background: none; }
-  .w-root .item { position: relative; left: auto !important; top: auto !important; touch-action: auto; cursor: default; } .w-root .about { width: min(330px, 100%); } .w-root .ticket { width: min(430px, 100%); } .w-root .vinyl { margin-bottom: 20px; }
-  .w-root .nw-two { grid-template-columns: 1fr; }
   .w-root .kw { width: 130px; } .w-root .key { width: 84px; height: 84px; }
+}
+/* The stacked layout (portrait phones and tablets, reduced motion): sections are plain blocks. The pinned
+   scenes run from 720 px wide in landscape, so these must not follow the width alone. */
+@media (max-width: 899px) {
+  .w-root.w-flat .valley { height: 300vh; }
+  .w-root.w-flat .hero-copy { top: calc(max(64px, env(safe-area-inset-top)) + 20px); } .w-root.w-flat .sky-plane { top: 30%; }
+  .w-root.w-flat .sticky { position: relative; display: inline-block; margin: 14px 10px 0 0; right: auto !important; left: auto !important; top: auto !important; bottom: auto !important; width: 170px; }
+  .w-root.w-flat .tell-box { display: block; }
+  .w-root.w-flat .j-stage { height: auto; display: grid; gap: 14px; margin-top: 24px; } .w-root.w-flat .j-frame { position: relative; height: 66vw; min-height: 250px; }
+  .w-root.w-flat .jcard { position: relative; right: auto; top: auto; transform: none; width: 100%; box-shadow: 5px 5px 0 var(--ink); } .w-root.w-flat .jcar, .w-root.w-flat .mapctl, .w-root.w-flat .jtl { position: relative; left: auto; bottom: auto; top: auto; transform: none; } .w-root.w-flat .jcar { justify-self: center; } .w-root.w-flat .mapctl { display: none; } .w-root.w-flat .jtl { justify-self: center; }
+  .w-root.w-flat .ll-end { grid-template-columns: 1fr; gap: 10px; } .w-root.w-flat .ll-roles li { grid-template-columns: auto 1fr; } .w-root.w-flat .ll-roles li span { grid-column: 2; }
+  .w-root.w-flat .desk { min-height: 0; display: flex; flex-wrap: wrap; gap: 26px 18px; padding: 30px 16px 76px; justify-content: center; border-style: none; background: none; }
+  .w-root.w-flat .item { position: relative; left: auto !important; top: auto !important; touch-action: auto; cursor: default; } .w-root.w-flat .about { width: min(330px, 100%); } .w-root.w-flat .ticket { width: min(430px, 100%); } .w-root.w-flat .vinyl { margin-bottom: 20px; }
+  .w-root.w-flat .nw-two { grid-template-columns: 1fr; }
 }
 @media (hover: none) { .w-root .keys-hint { display: none; } }
 @media (prefers-reduced-motion: reduce) {

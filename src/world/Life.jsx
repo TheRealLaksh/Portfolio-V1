@@ -13,7 +13,7 @@ function useDrag(deskRef) {
     const down = (e) => {
       const it = e.target.closest('.item');
       if (!it || e.target.closest('a, button')) return;
-      if (window.innerWidth < 900) return;
+      if (window.innerWidth < 720) return;
       const r = it.getBoundingClientRect();
       cur = { it, dx: e.clientX - r.left, dy: e.clientY - r.top, base: desk.getBoundingClientRect() };
       it.classList.add('drag');

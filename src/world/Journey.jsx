@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { useLenis } from '@studio-freight/react-lenis';
 import { JOURNEY } from './data';
-import { clamp, range, ss, trackProgress, useScrollFrame } from './hooks';
+import { clamp, range, ss, trackProgress, useScrollFrame, SCRUB_QUERY } from './hooks';
 import Icon from './Icon';
 
 // Stop positions on a 1200 x 720 map. The path is a smooth curve through them (Catmull-Rom).
@@ -49,7 +49,7 @@ function MapArt() {
 // The map is 1200 x 720 and is fitted to the frame; on wide screens the card takes the right 380 px.
 // Returns the transform that shows `target` (map coordinates) at zoom `k`.
 function place(w, h, k, target) {
-  const avail = w > 900 ? w - 380 : w;
+  const avail = w > 1000 ? w - 380 : w >= 720 ? w - 300 : w;
   const s = Math.min(avail / 1200, h / 720) * k;
   const mw = 1200 * s;
   const mh = 720 * s;
@@ -69,7 +69,6 @@ const LEAD = 0.5;
 const INTRO_END = 0.3; // before this the card shows the intro, after it stop 1
 
 // Phones and visitors who ask for less motion get the stacked layout with buttons instead.
-const SCRUB_QUERY = '(min-width: 900px) and (prefers-reduced-motion: no-preference)';
 const canScrub = () => typeof window !== 'undefined' && window.matchMedia(SCRUB_QUERY).matches;
 
 export default function Journey() {

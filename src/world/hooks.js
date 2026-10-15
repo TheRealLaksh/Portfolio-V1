@@ -89,18 +89,21 @@ export function trackProgress(el) {
 
 // ---------- scroll-driven scenes (the storytelling layer) ----------
 
-// Pinned, scrubbed scenes only run on wide screens and when the visitor has not asked for less motion.
-// Everywhere else the same markup is a normal stacked page (CSS defaults show the finished state).
+// Pinned, scrubbed scenes run on landscape screens that are big enough and when the visitor has not asked
+// for less motion. A 1280 px laptop at 150% display scaling is only about 853 CSS px wide, so the bar is
+// 720 px, not the old 900 px. Everywhere else the same markup is a normal stacked page (CSS defaults show
+// the finished state).
+export const SCRUB_QUERY = '(min-width: 720px) and (min-height: 420px) and (orientation: landscape) and (prefers-reduced-motion: no-preference)';
 export const scrubMode = () =>
-  typeof window !== 'undefined' && window.innerWidth >= 900 && !prefersReducedMotion();
+  typeof window !== 'undefined' && window.matchMedia(SCRUB_QUERY).matches;
 
 export function useScrubMode() {
   const [on, setOn] = useState(scrubMode);
   useEffect(() => {
-    const mqs = ['(min-width: 900px)', '(prefers-reduced-motion: reduce)'].map((q) => window.matchMedia(q));
-    const upd = () => setOn(scrubMode());
-    mqs.forEach((m) => m.addEventListener?.('change', upd));
-    return () => mqs.forEach((m) => m.removeEventListener?.('change', upd));
+    const mq = window.matchMedia(SCRUB_QUERY);
+    const upd = () => setOn(mq.matches);
+    mq.addEventListener?.('change', upd);
+    return () => mq.removeEventListener?.('change', upd);
   }, []);
   return on;
 }

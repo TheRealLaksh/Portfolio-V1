@@ -129,7 +129,7 @@ export default function Story() {
     let z = 5;
     const down = (e) => {
       const el = e.target.closest('.sticky');
-      if (!el || window.innerWidth < 900) return;
+      if (!el || window.innerWidth < 720) return;
       cur = { el, x: e.clientX, y: e.clientY, tx: parseFloat(el.dataset.tx || 0), ty: parseFloat(el.dataset.ty || 0) };
       el.style.zIndex = String(++z);
       el.setPointerCapture?.(e.pointerId);
