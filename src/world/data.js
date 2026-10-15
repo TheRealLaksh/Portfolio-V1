@@ -85,8 +85,7 @@ export const PLACES = {
     story: [],
     fun: [
       ['School', '#E8505B', [
-        ['Chinmaya International Residential School', 'Coimbatore, 2019 to 2024. House Captain, MUNs, Round Square.'],
-        ['Class X: 87.8%', '94% in Maths, my strongest subject.'],
+        ['Chinmaya International Residential School', 'Coimbatore, 2019 to 2024. House Captain and Model UN.'],
         ['Sunbeam School, Varanasi', 'PCM and Computer Science, 2024 to 2026.'],
       ]],
       ['Work', '#1FA6A0', [
@@ -95,7 +94,7 @@ export const PLACES = {
         ['Four internships in 2025', 'Django, full-stack apps, IIT Madras and a hotel network.'],
       ]],
       ['Off the clock', '#8E7CFF', [
-        ['Model UN', 'CHEMUN, IIMUN, TISB and the G20 MUN press corps.'],
+        ['Model UN', 'CHEMUN, IIMUN and TISB.'],
         ['Badminton', 'District level, and I still play.'],
         ['Reading about business', 'Part of why I chose Masters\' Union.'],
       ]],
@@ -109,20 +108,20 @@ export const PLACES = {
 // The nine stops on the journey map, 2019 to now.
 export const JOURNEY = [
   { y: '2019', t: 'Coimbatore', r: 'Chinmaya International Residential School', icon: 'cap',
-    p: 'Five years in a residential school: House Captain, a Round Square committee seat and Model UNs from CHEMUN to the G20 press corps.' },
+    p: 'Five years in a residential school: House Captain and Model UNs from CHEMUN to IIMUN and TISB.' },
   { y: '2024', t: 'Back to Varanasi', r: 'Sunbeam School, Lahartara', icon: 'home',
-    p: 'Class X at 87.8% with 94% in Maths. Then PCM and Computer Science, and the first real lines of code.' },
+    p: 'Back home for PCM and Computer Science, and the first real lines of code.' },
   // The ranks are from the 2024-25 season (Laksh, 16 Oct 2026). The range sheet points at this stop (PLACES.range.journey = 2).
   { y: '2024 – 25', t: 'On the range', r: 'Nationals, 10 m air pistol', icon: 'target',
     p: 'Early mornings on the range led to the U-17 nationals: state rank 34 and all-India rank 54. I have left shooting for now.' },
   { y: 'Jun 2025', t: 'Hotel Kavana', r: 'IT infrastructure intern', icon: 'bed',
     p: 'Twenty days on site: hotel management systems, POS integrations, networks and a little workflow automation.' },
-  { y: 'Jul 2025', t: 'First portfolio', r: 'GitHub opens, Web Wizards 2nd place', icon: 'code',
-    p: 'Opened my GitHub, shipped Portfolio V1, and took second place at Web Wizards with a site about Varanasi.' },
+  { y: 'Jul 2025', t: 'First portfolio', r: 'GitHub opens, Portfolio V1 ships', icon: 'code',
+    p: 'Opened my GitHub and shipped Portfolio V1.' },
   { y: 'Aug 2025', t: 'Internship season', r: 'MoreYeahs, IIT Madras, Unified Mentor', icon: 'gear',
     p: 'A Django gig platform, an eight-week AI programme with IIT Madras, then four production apps at Unified Mentor.' },
-  { y: 'Dec 2025', t: 'Building in public', r: 'Profiley, Vaultara, Mercatora', icon: 'bulb',
-    p: 'A resume builder, a privacy-first document vault and a mall management system, plus the first version of this site.' },
+  { y: 'Dec 2025', t: 'Building in public', r: 'Profiley, CaliBridge', icon: 'bulb',
+    p: 'A resume builder and an offline-first calendar, built in the open, plus the first version of this site.' },
   { y: 'Jan 2026', t: "Masters' Union", r: 'UG, Data Science & AI', icon: 'book',
     p: 'Got into the UG Data Science and AI programme at Masters\' Union, class of 2030.' },
   { y: 'Aug 2026', t: 'ShiftsDeal and Bestow', r: 'Tech Head, plus freelance', icon: 'rocket',
