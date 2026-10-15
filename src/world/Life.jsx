@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import { OFF_CLOCK } from './data';
+import { SONG } from './audio';
 import { range, ss, backOut, useTrack, useScrub } from './hooks';
 import Icon from './Icon';
 import Floaters from './Floaters';
@@ -108,7 +109,7 @@ export default function Life({ music, onMusic }) {
           </Polaroid>
 
           <button type="button" className={`item vinyl p5 ${music ? 'on' : ''}`} onClick={onMusic} aria-pressed={music} aria-label={music ? 'Pause the music' : 'Play some music'} style={{ ['--r']: '-3deg' }}>
-            <span className="vn-sleeve"><b>On repeat</b><small>{music ? 'playing now' : 'drone + plucks'}</small></span>
+            <span className="vn-sleeve"><b>On repeat</b><small>{music ? 'playing now' : `${SONG.title}, ${SONG.artist}`}</small></span>
             <span className="vn-disc"><i /></span>
             <span className="vn-cap">music is life</span>
           </button>

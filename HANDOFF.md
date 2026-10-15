@@ -49,13 +49,14 @@ A. Valley redesign (branch `feat/world-portfolio`): (0) Laksh to review the moti
 - The hero avatar must stand on the ghat steps above the river line (feet at scene y about 640), never in the water.
 - Scroll scenes run when `SCRUB_QUERY` matches (min 720 px wide, 420 px high, landscape, motion allowed). Do not raise it back to 900 px: laptops at 125-150% scaling are 850-1100 CSS px wide. Stacked-layout CSS must stay under `.w-flat`, never keyed to width alone.
 - Laksh allowed AI-painted scenes for the valley art on 16 Oct 2026 (reverses the earlier no-AI-images rule), but only after he has seen the motion pass; the only generator is Figma MCP `generate_image` (paid credits): ask before using it.
-- Valley site (`src/world/`): scene art is hand-built SVG with CSS-variable palettes (day/night). Laksh now allows AI-painted/rendered art (16 Oct 2026), and the hero figure is his own 3D avatar image (`public/me-avatar.webp`); still no copying James Chugh's art. Hero fly-in uses `position: sticky` and needs `html.world-on` (set in `World.jsx`) to clip instead of hide horizontal overflow. No word-by-word scroll-fill text; reveals are one-time. The generative music in `src/world/audio.js` is original (Web Audio), no samples. The wall stores the poster's email but never returns it from the API.
+- Valley site (`src/world/`): scene art is hand-built SVG with CSS-variable palettes (day/night). Laksh now allows AI-painted/rendered art (16 Oct 2026), and the hero figure is his own 3D avatar image (`public/me-avatar.webp`); still no copying James Chugh's art. Hero fly-in uses `position: sticky` and needs `html.world-on` (set in `World.jsx`) to clip instead of hide horizontal overflow. No word-by-word scroll-fill text; reveals are one-time. "Play some music" plays Bruno Mars - That's What I Like (Laksh's request, 16 Oct 2026) through Spotify's official embedded player (`src/world/audio.js`, track `0KKkJNfGyhkQ5aFogxQAPU`, hidden controller, no audio hosted here): the whole song for visitors signed in to Spotify, a 30-second preview for everyone else, then the page's own generative Web Audio piece (drone + plucks, no samples) takes over; the same piece plays if Spotify cannot load. YouTube was tried first and is closed: the official video and every re-upload tested (7) return error 150, embedding disabled. The wall stores the poster's email but never returns it from the API.
 - Valley journey (`Journey.jsx`): scroll-scrubbed on wide screens at Laksh's explicit request (15 Oct 2026); keep the reduced-motion and under-900 px fallback, native scroll only (no scroll locking, no ScrollTrigger).
 - Domain is lakshpradhwani.com (Hostinger, bought 8 Oct 2026). Do not reintroduce lakshp.live.
 - Public contact address is `work@lakshpradhwani.com`; `me@` is for personal use.
 - Laksh chose small commits, pushed after each (every push to `main` goes live on Vercel). Session of 8 Oct 2026.
 
 ## Session log (newest first)
+- 2026-10-16 (music + app phone): the "Play some music" pin, the nav pill and the Life desk now play/label That's What I Like by Bruno Mars (Spotify embed, see Decisions; headless check: controller reached "playing", 30 s preview as a logged-out browser; not checked: a signed-in Spotify browser, Safari/iOS autoplay, phones). Pill and desk sleeve show "That's What I Like · Bruno Mars". The "Building the app" phone sprite is now hidden until the ShiftsDeal place is selected (layer `.app-ly.show` in `world.css`, driven by `focusId === 'shiftsdeal'` in `Hero.jsx`; its label is a non-clickable tag); checked in the focused view at 1440x810 that the phone is inside the frame.
 - 2026-10-16 (hero content pass, section by section, started with the hero valley): Masters' Union sheet no longer mentions the scholarship (UG Data Science & AI, class of 2030, Term 1; journey stop says "Got into..."). ShiftsDeal is reframed: joined 1 Aug 2026 as an intern (video, social media, cold calls), became Tech Head, "took over a basic first version and built it out" (bookings + Razorpay, owner dashboard + admin panel, AI-assisted search/checks, email campaigns with automation and tests), "Right now I am building the ShiftsDeal app". The "80%/from scratch/solo" wording and the database free-tier line are gone (Supabase stays in the Tools list only). Internships card now lists ShiftsDeal and Bestow (Aug 2026 to now) plus the four 2025 internships (Solomon Bharat left out on purpose). Bestow: "Intern and freelance developer", agency facts from bestow.in (founded 2009, Vadodara/Ahmedabad, offices in Rajkot and Gurgaon; directories say 2008, confirm if it matters), no client names, no fees. Shooting is a past mention: range hut stays with a "Past" pin, ranks dated 2024-25 season, journey stop moved after "Back to Varanasi" (so `PLACES.range.journey = 2` now points at the right stop), shooter wording removed from the hero sub-line and About chip. Tabla removed everywhere: the hero meadow sprite is now a laptop and coffee on the rug (`LaptopArt`, still the music switch), the music has no tabla beats (drone + plucks only, `audio.js`), Life/About/off-the-clock lines changed. New in the hero: a small phone sprite with a "Building the app" pin beside the ShiftsDeal building (`AppPhoneArt`, `APP_AT` in `Hero.jsx`, opens the ShiftsDeal sheet); hero sub-line is now "Full-stack developer, 18. Tech Head at ShiftsDeal, studying Data Science & AI at Masters' Union." Checked headless at 1440x810 (day) and the three sheets; build passes. Not checked: mobile widths and night for the new phone/laptop, other sections' copy (Journey and Work cards were only touched where the facts changed).
 - 2026-10-16 (painted valley): Laksh approved AI-painted art and Figma credits. 16 images generated with Figma MCP `generate_image` (model `gemini-3.1-flash-lite-image`, plan `team::1569607447911221327`), keyed on magenta and saved as `public/art/*.webp` (about 0.9 MB total); recipe, prompts and processing scripts in `scripts/art/`. `src/world/Painted.jsx` + `painted.css` lay the art out in the old 1600 x 900 scene space (sky day/night cross-fade, drifting clouds, hazy skyline, the valley, five place sprites with night window glows, foliage corners, SVG boats/glints/fish/walkers/diyas kept on top); `Hero.jsx` has `PAINTED = true` (set false for the old SVG valley), new `LAYERS_PAINTED`, pins and hot zones re-laid for the painting (MU and ShiftsDeal on the left hill, tower and Bestow cottage on the right hill, avatar on the ghat steps at about (1260, 470) as a mid-ground layer d .3, the range hut and tabla on the foreground meadow bottom-left). The headline moved to the open sky in the middle (centred at 53% on wide screens, left on phones). Kites and the balloon are not used in the painted scene (flat vector art clashed). Night is the same paintings through a CSS filter plus the painted night sky. Checked headless at 1280x720, 853x480, 1920x1080 and 390x844, day and night, click-to-focus on every place.
 - 2026-10-16 (avatar fixes, after Laksh looked): removed the custom cursor ring (`motion.js`, `motion.css`; tilt, magnetic buttons, floaters and click confetti stay, confetti is skipped inside the hero stage and the sidekick). He was standing in the river: the river layer covers the ghat steps below about y 668, so his feet (and the three walkers) moved up to y 640 / 596-640 and his pin and hot zone moved up with him (`PINS.me` y 326, `HOT.me` y 340, `.me3d` top 38.2%). Click glitch: 3D transforms (perspective rotateX/rotateY) on the head forced layer repaints while the camera zoomed, and each reaction replaced the idle animation, so it jumped back when it ended. Now the head uses flat 2D transforms and every reaction plays on its own wrapper (`.a3-hop`, `.a3-nod`, `.a3-walk`) over the idle sway. Livelier idle: bigger sway, breathing and head sway, faster glances, and a random tilt / nod / look-up every 6-12 s (`idleGestures` in `avatarLife.js`). Traveller on the map is a little bigger.
@@ -108,12 +109,13 @@ A. Valley redesign (branch `feat/world-portfolio`): (0) Laksh to review the moti
 <!-- handoff:auto:start -->
 ## Auto: repo state
 
-_Refreshed 16 Oct 2026, 1:39 am IST by `scripts/handoff.mjs` (runs on every commit). Don't edit inside this block._
+_Refreshed 16 Oct 2026, 1:50 am IST by `scripts/handoff.mjs` (runs on every commit). Don't edit inside this block._
 
 Branch: `feat/world-portfolio` · remote: https://github.com/TheRealLaksh/Portfolio-V2.git
 
 ### Last 15 commits
 
+- `16b6990` 2026-10-16 01:39 Remove tabla; add laptop on rug, ShiftsDeal app phone and new hero sub-line
 - `457adb9` 2026-10-16 01:39 Update hero place content: no scholarship, ShiftsDeal reframed, Bestow and internships, shooting as a past mention
 - `4bc6604` 2026-10-16 01:22 Lay the painted valley into the hero: layers, pins, centred headline, night filter
 - `539dcd6` 2026-10-16 01:22 Painted valley art: skies, valley, skyline, clouds, buildings and foliage (WEBP)
@@ -128,15 +130,15 @@ Branch: `feat/world-portfolio` · remote: https://github.com/TheRealLaksh/Portfo
 - `df0d7e3` 2026-10-16 00:30 Run the scroll scenes on laptop-sized windows (720 px and up), not only 900 px
 - `bebabfc` 2026-10-15 19:35 Redraw the avatar (three looks on /lab/avatar, painted look in the hero) and add light rays and grain to the hero
 - `0e47450` 2026-10-15 19:30 Scroll-driven Process line, cork board desk, wall rows and contact keys; fix Brand after the sites removal
-- `71bf850` 2026-10-15 19:27 Remove the four sites-I-have-built cards (Arun Medicals, About Varanasi, Artistry, Kalavrndam)
 
 ### Uncommitted changes at refresh time
 
 ```
-M  src/world/Hero.jsx
+M  HANDOFF.md
+M  src/world/Bar.jsx
+ M src/world/Hero.jsx
 M  src/world/Life.jsx
-M  src/world/Scene.jsx
 M  src/world/audio.js
-M  src/world/world.css
+ M src/world/world.css
 ```
 <!-- handoff:auto:end -->

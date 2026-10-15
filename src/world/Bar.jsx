@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useLenis } from '@studio-freight/react-lenis';
 import { ME } from './data';
+import { SONG } from './audio';
 
 const NAV = [
   ['top', 'Home', <path key="a" d="M3 11l9-8 9 8v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z" />],
@@ -58,7 +59,7 @@ export default function Bar({ theme, onTheme, visitors, music, onMusic }) {
       {music && (
         <button type="button" className="np" onClick={onMusic} aria-label="Pause music">
           <span className="np-d" aria-hidden="true" />
-          <span className="np-t">Music on the hill</span>
+          <span className="np-t">{SONG.title} · {SONG.artist}</span>
           <span className="np-b" aria-hidden="true"><i /><i /></span>
         </button>
       )}
