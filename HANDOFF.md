@@ -95,6 +95,7 @@ Branch: `feat/world-portfolio` · remote: https://github.com/TheRealLaksh/Portfo
 
 ### Last 15 commits
 
+- `c88d590` 2026-10-15 14:51 Add the valley hero: SVG scene, scroll fly-in, places and nav bar
 - `d471855` 2026-10-15 14:51 Add valley portfolio data, hooks, generative music and icons
 - `09358a8` 2026-10-14 12:14 Show current role, study and Delhi NCR in the About cards
 - `8d1b7b9` 2026-10-14 12:13 Update the About bio with current role, study and freelance work
@@ -109,29 +110,24 @@ Branch: `feat/world-portfolio` · remote: https://github.com/TheRealLaksh/Portfo
 - `a46055f` 2026-10-14 10:02 Make section links work from /hire and on direct #links
 - `ac238ef` 2026-10-14 09:56 Give /hire its own title, canonical and link-preview tags
 - `8c6f3cf` 2026-10-13 19:32 Record that the Hire page is live
-- `b03f2c5` 2026-10-13 19:27 Add a Hire me link to the desktop and mobile navigation
 
 ### Uncommitted changes at refresh time
 
 ```
 M index.html
  M src/App.jsx
-A  src/world/Bar.jsx
-A  src/world/Hero.jsx
-A  src/world/Scene.jsx
-A  src/world/world.css
+A  src/world/Brand.jsx
+A  src/world/Flagship.jsx
+A  src/world/Hello.jsx
+A  src/world/Journey.jsx
+A  src/world/Life.jsx
+A  src/world/Process.jsx
+A  src/world/Stack.jsx
+A  src/world/Story.jsx
+A  src/world/Wall.jsx
+A  src/world/Work.jsx
+A  src/world/World.jsx
+A  src/world/world2.css
 ?? api/
-?? src/world/Brand.jsx
-?? src/world/Flagship.jsx
-?? src/world/Hello.jsx
-?? src/world/Journey.jsx
-?? src/world/Life.jsx
-?? src/world/Process.jsx
-?? src/world/Stack.jsx
-?? src/world/Story.jsx
-?? src/world/Wall.jsx
-?? src/world/Work.jsx
-?? src/world/World.jsx
-?? src/world/world2.css
 ```
 <!-- handoff:auto:end -->
