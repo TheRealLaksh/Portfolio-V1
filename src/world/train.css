@@ -1,0 +1,107 @@
+/* The journey as a train line. Layers are plain divs moved with transforms, so scrolling stays on the compositor. */
+
+.w-root .tn .j-frame { background: #9CC9EE; }
+.w-root .tn .j-sky { position: absolute; inset: 0; overflow: hidden; background: linear-gradient(#6FBDF0, #CDEBF8); }
+.w-root .tn .sk-sun { position: absolute; left: 0; top: 0; width: 120px; height: 120px; will-change: transform; }
+.w-root .tn .sk-sun i { display: block; width: 100%; height: 100%; border-radius: 50%; background: radial-gradient(circle, #FFF6C4 0 26%, #FFD25E 28% 46%, rgba(255, 210, 94, .35) 48% 60%, rgba(255, 210, 94, 0) 70%); }
+.w-root .tn .sk-moon { position: absolute; left: 0; top: 0; width: 84px; height: 84px; opacity: 0; will-change: transform; }
+.w-root .tn .sk-moon i { display: block; width: 100%; height: 100%; border-radius: 50%; background: radial-gradient(circle at 36% 34%, #FFFDF2, #F3E8C6 70%); box-shadow: 0 0 40px 10px rgba(255, 244, 200, .35); }
+.w-root .tn .sk-stars { position: absolute; inset: 0; opacity: 0; }
+.w-root .tn .sk-stars i { position: absolute; border-radius: 50%; background: #fff; animation: tnTwinkle 3.2s ease-in-out infinite; }
+@keyframes tnTwinkle { 50% { opacity: .25; } }
+.w-root .tn .sk-cloud { position: absolute; opacity: calc(1 - var(--dark, 0) * 1.4); animation: tnCloud 120s linear infinite; }
+@keyframes tnCloud { from { transform: translateX(-30vw); } to { transform: translateX(110vw); } }
+
+.w-root .tn .j-cam { position: absolute; left: 0; top: 0; transform-origin: 0 0; pointer-events: none; }
+.w-root .tn .lay { position: absolute; left: 0; top: 0; will-change: transform; }
+.w-root .tn .lay svg { display: block; }
+.w-root .tn .j-trail { position: absolute; top: 575px; width: 1px; height: 6px; background: var(--rose-c); transform-origin: 0 0; transform: scaleX(0); border-radius: 0 3px 3px 0; }
+.w-root .tn .j-dark { position: absolute; inset: 0; pointer-events: none; }
+.w-root .tn .j-train { position: absolute; top: 0; width: 1200px; height: 720px; pointer-events: none; }
+.w-root .tn .j-train svg { display: block; overflow: visible; }
+
+/* text on the art */
+.w-root .tn svg text { font-family: var(--sans); font-weight: 800; }
+.w-root .tn .tn-num { font-size: 21px; fill: #1B1F3B; }
+.w-root .tn .tn-yr { font-size: 13px; fill: #FFF4DC; letter-spacing: .04em; }
+.w-root .tn .tn-yr.lg { font-size: 19px; fill: #FFC93C; }
+.w-root .tn .tn-yr.sm { font-size: 11px; fill: #FFF4DC; letter-spacing: .12em; }
+.w-root .tn .tn-code { font-size: 46px; font-family: ui-monospace, Consolas, monospace; }
+.w-root .tn .tn-code.sm { font-size: 34px; } .w-root .tn .tn-code.xs { font-size: 24px; }
+.w-root .tn .tn-sign { font-size: 26px; fill: #FFC93C; letter-spacing: .06em; }
+.w-root .tn .tn-sign.sm { font-size: 22px; fill: #fff; letter-spacing: .02em; }
+.w-root .tn .tn-frieze { font-size: 17px; fill: #1B1F3B; letter-spacing: .2em; }
+.w-root .tn .tn-bar { font-size: 12px; fill: #565A7A; letter-spacing: .06em; }
+.w-root .tn .tn-hand { font: 700 28px var(--hand); fill: #FFF4DC; stroke: #1B1F3B; stroke-width: 6px; paint-order: stroke; }
+
+/* stations build as the train arrives; the first thing in each stays put */
+.w-root .tn .prop { transform-box: fill-box; transform-origin: 50% 100%; transform: scale(.15); opacity: 0; transition: transform .75s var(--spring) var(--d, 0s), opacity .35s ease var(--d, 0s); }
+.w-root .tn .prop.prop-x { transform-origin: 0 50%; transform: scaleX(0); }
+.w-root .tn .st.built .prop, .w-root .tn .prop.stay { transform: none; opacity: 1; }
+
+/* small life in the scenery */
+.w-root .tn .hand, .w-root .tn .gear { transform-box: fill-box; transform-origin: center; animation: tnSpin 12s linear infinite; }
+.w-root .tn .gear.rev { animation-direction: reverse; }
+@keyframes tnSpin { to { transform: rotate(360deg); } }
+.w-root .tn .flag { transform-box: fill-box; transform-origin: 0 50%; animation: tnFlag 2.2s ease-in-out infinite alternate; }
+@keyframes tnFlag { from { transform: scaleX(.86) skewY(-5deg); } to { transform: scaleX(1) skewY(5deg); } }
+.w-root .tn .diya, .w-root .tn .led, .w-root .tn .commit { animation: tnPulse 2s ease-in-out infinite; animation-delay: var(--w, 0s); transform-box: fill-box; transform-origin: center; }
+@keyframes tnPulse { 50% { transform: scale(1.35); opacity: .7; } }
+.w-root .tn .twinkle { animation: tnPulse 1.8s ease-in-out infinite; animation-delay: var(--w, 0s); transform-box: fill-box; transform-origin: center; }
+.w-root .tn .floaty { animation: tnFloat 3.6s ease-in-out infinite alternate; animation-delay: var(--w, 0s); }
+@keyframes tnFloat { from { translate: 0 -5px; } to { translate: 0 6px; } }
+.w-root .tn .toss { animation: tnToss 3.2s ease-in-out infinite; animation-delay: var(--w, 0s); }
+@keyframes tnToss { 0%, 100% { translate: 0 8px; rotate: -3deg; } 50% { translate: 0 -16px; rotate: 4deg; } }
+.w-root .tn .boat { animation: tnFloat 3s ease-in-out infinite alternate; }
+.w-root .tn .bell { transform-box: fill-box; transform-origin: 50% 0; animation: tnBell 2.4s ease-in-out infinite; }
+@keyframes tnBell { 0%, 70%, 100% { rotate: 0deg; } 78% { rotate: 7deg; } 88% { rotate: -6deg; } }
+.w-root .tn .wifi .w1, .w-root .tn .wifi .w2, .w-root .tn .wifi .w3 { animation: tnWifi 1.8s ease-in-out infinite; }
+.w-root .tn .wifi .w2 { animation-delay: .25s; } .w-root .tn .wifi .w3 { animation-delay: .5s; }
+@keyframes tnWifi { 0%, 100% { opacity: .25; } 40% { opacity: 1; } }
+.w-root .tn .rocket { animation: tnFloat 2.6s ease-in-out infinite alternate; }
+.w-root .tn .flame { transform-box: fill-box; transform-origin: 50% 0; animation: tnFlame .18s ease-in-out infinite alternate; }
+@keyframes tnFlame { from { transform: scaleY(.8); } to { transform: scaleY(1.25); } }
+.w-root .tn .glow { transform-box: fill-box; transform-origin: center; animation: tnGlow 2.4s ease-in-out infinite; }
+@keyframes tnGlow { 50% { transform: scale(1.18); opacity: .4; } }
+.w-root .tn .cursor { animation: tnBlink 1s steps(2) infinite; }
+@keyframes tnBlink { 50% { opacity: 0; } }
+.w-root .tn .st.built .arrow { animation: tnThud .5s var(--spring) .9s both; transform-box: fill-box; transform-origin: 0 100%; }
+@keyframes tnThud { from { transform: translate(14px, -10px) scale(1.4); opacity: 0; } }
+.w-root .tn .riv path { animation: tnWave 3.4s ease-in-out infinite alternate; }
+@keyframes tnWave { from { translate: -6px 0; } to { translate: 8px 0; } }
+
+/* the train */
+.w-root .tn .wheel { transform-box: fill-box; transform-origin: center; animation: tnSpin .55s linear infinite; animation-play-state: paused; }
+.w-root .tn .j-train[data-walk="1"] .wheel { animation-play-state: running; }
+.w-root .tn .j-train[data-walk="1"] .tr-body { animation: tnBob .3s ease-in-out infinite alternate; }
+@keyframes tnBob { from { translate: 0 0; } to { translate: 0 -1.6px; } }
+.w-root .tn .pf { transform-box: fill-box; transform-origin: center; opacity: 0; animation: tnPuff 2.8s linear infinite; }
+.w-root .tn .pf.p2 { animation-delay: .93s; } .w-root .tn .pf.p3 { animation-delay: 1.86s; }
+@keyframes tnPuff { 0% { transform: translate(0, 0) scale(.5); opacity: .85; } 100% { transform: translate(-70px, -80px) scale(2.2); opacity: 0; } }
+.w-root .tn .beam { opacity: calc(var(--dark, 0) * 1.6); }
+
+/* passport strip */
+.w-root .tn .jtl ol { gap: 4px; }
+.w-root .tn .jtl button { width: 30px; height: 30px; }
+.w-root .tn .jtl .stp { width: 26px; height: 26px; border-radius: 50%; display: grid; place-items: center; border: 2px dashed color-mix(in srgb, var(--ink) 40%, transparent); color: transparent; transition: transform .4s var(--spring), background .3s, border-color .3s; }
+.w-root .tn .jtl button:hover .stp { border-color: var(--ink); }
+.w-root .tn .jtl button.done .stp, .w-root .tn .jtl button.on .stp { border: 2px solid var(--ink); background: var(--c); color: #1B1F3B; transform: rotate(var(--r)); animation: tnStamp .55s var(--spring); }
+.w-root .tn .jtl button.on .stp { transform: rotate(var(--r)) scale(1.28); box-shadow: 0 0 0 3px color-mix(in srgb, var(--c) 40%, transparent); }
+@keyframes tnStamp { 0% { transform: scale(2.2) rotate(-24deg); opacity: 0; } 60% { opacity: 1; } 100% { transform: rotate(var(--r)); } }
+
+/* stacked layout: the camera glides between stops */
+.w-root.w-flat .tn .lay, .w-root.w-flat .tn .j-cam, .w-root.w-flat .tn .j-trail, .w-root.w-flat .tn .j-sky, .w-root.w-flat .tn .j-dark { transition: transform 1.2s var(--ease), background 1.2s; }
+.w-root.w-flat .tn .j-frame { height: 62vw; min-height: 260px; }
+
+@media (prefers-reduced-motion: reduce) {
+  .w-root .tn .j-sky *, .w-root .tn svg * { animation: none !important; }
+  .w-root .tn .prop { transition: none; }
+  .w-root .tn .pf { display: none; }
+}
+
+.w-root.w-flat .tn .j-stage > * { min-width: 0; max-width: 100%; }
+.w-root.w-flat .tn .jtl { padding: 6px 10px; gap: 8px; }
+.w-root.w-flat .tn .jtl ol { gap: 1px; }
+.w-root.w-flat .tn .jtl button { width: 24px; height: 26px; }
+.w-root.w-flat .tn .jtl .stp { width: 22px; height: 22px; }
+.w-root.w-flat .tn .jtl .yr { min-width: 0; font-size: 12px; }
