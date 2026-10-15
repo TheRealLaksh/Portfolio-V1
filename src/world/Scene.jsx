@@ -488,10 +488,10 @@ export function RangeArt() {
   );
 }
 
-export function TablaArt({ playing }) {
+export function TablaArt({ playing, at = [1030, 640] }) {
   return (
     <S>
-      <g transform="translate(1030 640)">
+      <g transform={`translate(${at[0]} ${at[1]})`}>
         <ellipse className="rug" cx="0" cy="38" rx="86" ry="14" />
         <ellipse cx="0" cy="40" rx="68" ry="9" fill="none" stroke="var(--trim)" strokeWidth="2" opacity=".6" />
         {/* dayan */}

@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { PLACES, ME } from './data';
 import { clamp, ss, range, useTrack, useScrub } from './hooks';
 import { attachGaze, reactAvatar, idleGestures } from './avatarLife';
+import { PaintedSky, PaintedClouds, PaintedFar, PaintedValley, PaintedPlace, PaintedFg, PaintedLife } from './Painted';
 import {
   VB, pct, SkyLayer, CloudLayer, KitesLayer, FarLayer, HillLeftLayer, HillRightLayer, GhatLayer, RiverLayer,
   MUArt, ShiftsDealArt, InternsArt, BestowArt, RangeArt, TablaArt, MeArt, ForegroundLeft, ForegroundRight, ForegroundBottom, Birds,
@@ -10,7 +11,16 @@ import {
 const FOCAL = { x: 0.62, y: 0.58 }; // the point the scene flies into
 
 // Pins sit above their place. x, y are in the 1600 x 900 scene space.
-const PINS = [
+// The valley is painted (set PAINTED to false for the old hand-drawn SVG valley).
+const PAINTED = true;
+const PINS = PAINTED ? [
+  { id: 'mu', x: 228, y: 322, tag: '2026', mark: 'MU' },
+  { id: 'shiftsdeal', x: 470, y: 252, tag: 'Now', mark: 'SD' },
+  { id: 'interns', x: 1120, y: 120, tag: '2025', mark: '25' },
+  { id: 'bestow', x: 1442, y: 138, tag: '2026', mark: 'B' },
+  { id: 'range', x: 330, y: 742, tag: 'AIR 54', mark: 'R' },
+  { id: 'me', x: 1260, y: 212, tag: null, mark: 'L', face: true },
+] : [
   { id: 'mu', x: 150, y: 506, tag: '2026', mark: 'MU' },
   { id: 'shiftsdeal', x: 850, y: 426, tag: 'Now', mark: 'SD' },
   { id: 'interns', x: 1124, y: 92, tag: '2025', mark: '25' },
@@ -18,9 +28,18 @@ const PINS = [
   { id: 'range', x: 1205, y: 466, tag: 'AIR 54', mark: 'R' },
   { id: 'me', x: 1396, y: 326, tag: null, mark: 'L', face: true },
 ];
+const TABLA_AT = PAINTED ? [610, 800] : [1030, 640];
+const TABLA_PIN = PAINTED ? [610, 746] : [1030, 586];
 
 // Clickable area per place (scene space): x, y, w, h.
-const HOT = {
+const HOT = PAINTED ? {
+  mu: [103, 325, 250, 238],
+  shiftsdeal: [305, 258, 330, 282],
+  interns: [1079, 125, 82, 361],
+  bestow: [1342, 141, 200, 175],
+  range: [230, 746, 200, 116],
+  me: [1217, 220, 84, 250],
+} : {
   mu: [96, 374, 380, 296],
   shiftsdeal: [500, 330, 470, 400],
   interns: [1086, 100, 76, 372],
@@ -31,7 +50,23 @@ const HOT = {
 
 const hotStyle = ([x, y, w, h]) => ({ left: `${(x / VB.w) * 100}%`, top: `${(y / VB.h) * 100}%`, width: `${(w / VB.w) * 100}%`, height: `${(h / VB.h) * 100}%` });
 
-const LAYERS = [
+const LAYERS_PAINTED = [
+  { id: 'sky', d: 0.02, keep: true, art: <PaintedSky /> },
+  { id: 'clouds', d: 0.08, keep: true, art: <PaintedClouds /> },
+  { id: 'far', d: 0.12, art: <PaintedFar /> },
+  { id: 'valley', d: 0.22, art: <PaintedValley /> },
+  { id: 'life', d: 0.23, art: <PaintedLife /> },
+  { id: 'interns', d: 0.24, art: <PaintedPlace id="interns" />, place: 'interns' },
+  { id: 'bestow', d: 0.25, art: <PaintedPlace id="bestow" />, place: 'bestow' },
+  { id: 'mu', d: 0.26, art: <PaintedPlace id="mu" />, place: 'mu' },
+  { id: 'shiftsdeal', d: 0.28, art: <PaintedPlace id="shiftsdeal" />, place: 'shiftsdeal' },
+  { id: 'range', d: 0.3, art: <PaintedPlace id="range" />, place: 'range' },
+  { id: 'me', d: 0.3, art: <MeArt />, place: 'me' },
+  { id: 'fgL', d: 0.85, fg: true, art: <PaintedFg side="l" /> },
+  { id: 'fgR', d: 0.9, fg: true, art: <PaintedFg side="r" /> },
+];
+
+const LAYERS_SVG = [
   { id: 'sky', d: 0.02, keep: true, art: <SkyLayer /> },
   { id: 'kites', d: 0.05, keep: true, art: <KitesLayer /> },
   { id: 'clouds', d: 0.08, keep: true, art: <CloudLayer /> },
@@ -50,6 +85,7 @@ const LAYERS = [
   { id: 'me', d: 0.95, art: <MeArt />, place: 'me' },
   { id: 'fgB', d: 1, fg: true, art: <ForegroundBottom /> },
 ];
+const LAYERS = PAINTED ? LAYERS_PAINTED : LAYERS_SVG;
 
 // A bank of overlapping puffs (circles), so the paper rises behind real-looking clouds. Original shapes.
 function CloudBank({ seed, front = false }) {
@@ -149,7 +185,7 @@ export default function Hero({ music, onMusic, goJourney }) {
   const geo = useRef({ SW: 0, SH: 0, ox: 0, oy: 0, vw: 0, vh: 0 });
   const [focusId, setFocus] = useState(null);
   const [ready, setReady] = useState(false);
-  const pan = useRef({ ax: 0.52, drag: null });
+  const pan = useRef({ ax: typeof window !== 'undefined' && window.innerWidth < 720 ? 0.74 : 0.52, drag: null });
   const reduced = useRef(!scrub);
 
   const layout = useCallback(() => {
@@ -296,7 +332,7 @@ export default function Hero({ music, onMusic, goJourney }) {
 
   return (
     <section className="valley" id="top" ref={valley} aria-label="The valley">
-      <div className={`stage ${ready ? 'ready' : ''} ${focusId ? 'focused' : ''}`} ref={stage}
+      <div className={`stage ${PAINTED ? 'painted' : ''} ${ready ? 'ready' : ''} ${focusId ? 'focused' : ''}`} ref={stage}
         onPointerDown={onDown} onPointerMove={(e) => { onMove(e); onPointer(e); }} onPointerUp={onUp} onPointerCancel={onUp}
         onClick={(e) => { if (focusId && !e.target.closest('.hot, .pin, .sheet')) setFocus(null); }}>
         <div className="cam" ref={cam}>
@@ -321,8 +357,8 @@ export default function Hero({ music, onMusic, goJourney }) {
               </div>
             ))}
             <div className="ly tabla-ly" data-d="0.34" data-fg="0" ref={(el) => { layers.current.tabla = el; }} style={{ transformOrigin: `${FOCAL.x * 100}% ${FOCAL.y * 100}%`, ['--dk']: 0.34 }}>
-              <TablaArt playing={music} />
-              <button type="button" className={`pin rpin ${music ? 'playing' : ''}`} style={{ ...pct(1030, 586), ['--c']: '#8E7CFF' }} aria-pressed={music} onClick={(e) => { e.stopPropagation(); onMusic(); }}>
+              <TablaArt playing={music} at={TABLA_AT} />
+              <button type="button" className={`pin rpin ${music ? 'playing' : ''}`} style={{ ...pct(TABLA_PIN[0], TABLA_PIN[1]), ['--c']: '#8E7CFF' }} aria-pressed={music} onClick={(e) => { e.stopPropagation(); onMusic(); }}>
                 <b>
                   <span className="pmark ico" aria-hidden="true">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><path d="M9 18V6l10-2v12" /><circle cx="6.5" cy="18" r="2.6" /><circle cx="16.5" cy="16" r="2.6" /></svg>

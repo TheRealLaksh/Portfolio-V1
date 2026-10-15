@@ -43,6 +43,7 @@ A. Valley redesign (branch `feat/world-portfolio`): (0) Laksh to review the moti
 - Mail forwarding is verified: test mails to work@ and me@ showed "Forwarded" in Cloudflare's activity log on 9 Oct 2026.
 
 ## Decisions not to undo
+- Hero art is painted (`public/art`). Do not regenerate or replace it without asking: it cost Figma credits. The old SVG valley still exists behind `PAINTED = false` in `Hero.jsx`.
 - No custom cursor (Laksh asked for it to go, 16 Oct 2026). Keep the native pointer.
 - The hero avatar must stand on the ghat steps above the river line (feet at scene y about 640), never in the water.
 - Scroll scenes run when `SCRUB_QUERY` matches (min 720 px wide, 420 px high, landscape, motion allowed). Do not raise it back to 900 px: laptops at 125-150% scaling are 850-1100 CSS px wide. Stacked-layout CSS must stay under `.w-flat`, never keyed to width alone.
@@ -54,6 +55,7 @@ A. Valley redesign (branch `feat/world-portfolio`): (0) Laksh to review the moti
 - Laksh chose small commits, pushed after each (every push to `main` goes live on Vercel). Session of 8 Oct 2026.
 
 ## Session log (newest first)
+- 2026-10-16 (painted valley): Laksh approved AI-painted art and Figma credits. 16 images generated with Figma MCP `generate_image` (model `gemini-3.1-flash-lite-image`, plan `team::1569607447911221327`), keyed on magenta and saved as `public/art/*.webp` (about 0.9 MB total); recipe, prompts and processing scripts in `scripts/art/`. `src/world/Painted.jsx` + `painted.css` lay the art out in the old 1600 x 900 scene space (sky day/night cross-fade, drifting clouds, hazy skyline, the valley, five place sprites with night window glows, foliage corners, SVG boats/glints/fish/walkers/diyas kept on top); `Hero.jsx` has `PAINTED = true` (set false for the old SVG valley), new `LAYERS_PAINTED`, pins and hot zones re-laid for the painting (MU and ShiftsDeal on the left hill, tower and Bestow cottage on the right hill, avatar on the ghat steps at about (1260, 470) as a mid-ground layer d .3, the range hut and tabla on the foreground meadow bottom-left). The headline moved to the open sky in the middle (centred at 53% on wide screens, left on phones). Kites and the balloon are not used in the painted scene (flat vector art clashed). Night is the same paintings through a CSS filter plus the painted night sky. Checked headless at 1280x720, 853x480, 1920x1080 and 390x844, day and night, click-to-focus on every place.
 - 2026-10-16 (avatar fixes, after Laksh looked): removed the custom cursor ring (`motion.js`, `motion.css`; tilt, magnetic buttons, floaters and click confetti stay, confetti is skipped inside the hero stage and the sidekick). He was standing in the river: the river layer covers the ghat steps below about y 668, so his feet (and the three walkers) moved up to y 640 / 596-640 and his pin and hot zone moved up with him (`PINS.me` y 326, `HOT.me` y 340, `.me3d` top 38.2%). Click glitch: 3D transforms (perspective rotateX/rotateY) on the head forced layer repaints while the camera zoomed, and each reaction replaced the idle animation, so it jumped back when it ended. Now the head uses flat 2D transforms and every reaction plays on its own wrapper (`.a3-hop`, `.a3-nod`, `.a3-walk`) over the idle sway. Livelier idle: bigger sway, breathing and head sway, faster glances, and a random tilt / nod / look-up every 6-12 s (`idleGestures` in `avatarLife.js`). Traveller on the map is a little bigger.
 - 2026-10-16 (avatar): animated Laksh's 3D avatar (`public/me-avatar.webp`). `src/world/Avatar3D.jsx` + `avatar3d.css`: the one image is cut with clip-path into legs / torso / head (overlapping seams, so nothing opens up); CSS gives breathing, weight shift, a slow head sway and blinking (two skin-coloured lids), all sized in container units (cqw/cqh) so it works at any scale. `avatarLife.js`: `attachGaze` (head turns towards the pointer via `--lx`/`--ly`, wanders when idle) and `reactAvatar` (nod, hop, tilt, look up in turn; fired when he is clicked in the hero, which also opens his sheet). `MeArt` in `Scene.jsx` is now an HTML `.me3d` box (3D transforms need HTML) at the same ground spot. `Journey.jsx`: the map traveller is the avatar as an SVG `<image>` that waddles while the route moves and faces where he goes. `Sidekick.jsx`: small Laksh bottom-left on wide screens, walks in after the hero, one line per section (hidden in the journey, where he is the traveller), hops on arrival, reacts on click. Laksh chose: idle life, gaze, click reactions, calm style, sidekick through the page. Not possible with one still image: arm poses (wave, namaste), pupils following the cursor. `/lab/avatar` shows him big with a button per reaction. The older SVG figure (`Avatar.jsx`) is only used on that lab page now.
 - 2026-10-16: the hero figure (`MeArt` in `src/world/Scene.jsx`) is now Laksh's supplied 3D avatar (black hoodie, cargo pants, white sneakers) instead of the hand-drawn SVG `MeFigure`. Background removed with OpenCV GrabCut plus hand-drawn shoe polygons into `public/me-avatar.webp` (302x898, 28 KB, transparent); it is an SVG `<image>` at the same ground origin and height (about 296 units) with a soft shadow ellipse. Checked headless at 1440x810 day and night: standing on the deck at right, 'That's me' pin still sits above him; build passes. `Avatar.jsx` and `/lab/avatar` (old drawn looks) are left in place, unused by the hero. The small `me.webp` photo is still used in the nav pill, `/book`, the journey traveller and Life. Not done: a retina-size cut-out (source was 768x1024) and a wave/idle animation.
@@ -110,6 +112,7 @@ Branch: `feat/world-portfolio` · remote: https://github.com/TheRealLaksh/Portfo
 
 ### Last 15 commits
 
+- `539dcd6` 2026-10-16 01:22 Painted valley art: skies, valley, skyline, clouds, buildings and foliage (WEBP)
 - `d608356` 2026-10-16 01:07 Avatar fixes: off the river, no custom cursor, smoother reactions, livelier idle
 - `21694b9` 2026-10-16 01:00 Avatar as the map traveller and a sidekick that walks the page with him
 - `3f2a783` 2026-10-16 01:00 Animate the 3D avatar: breathing, blinking, head follows the pointer, click reactions
@@ -124,32 +127,17 @@ Branch: `feat/world-portfolio` · remote: https://github.com/TheRealLaksh/Portfo
 - `71bf850` 2026-10-15 19:27 Remove the four sites-I-have-built cards (Arun Medicals, About Varanasi, Artistry, Kalavrndam)
 - `9d9e30d` 2026-10-15 19:26 Scroll-driven stack: gift shakes, throws its lid and bursts the tools into a grid
 - `9ee7d3f` 2026-10-15 19:25 Scroll-driven Profiley section: highlights draw, resume builds itself, then every hat arrives
-- `97307d8` 2026-10-15 19:23 Scroll-driven Work (3D card box that opens) and Brand (pinned sideways carousel with progress bar)
 
 ### Uncommitted changes at refresh time
 
 ```
-A  public/art/bestow.webp
-A  public/art/cloud-1.webp
-A  public/art/cloud-2.webp
-A  public/art/cloud-3.webp
-A  public/art/cloud-4.webp
-A  public/art/cloud-5.webp
-A  public/art/far.webp
-A  public/art/fg-left.webp
-A  public/art/fg-right.webp
-A  public/art/mu.webp
-A  public/art/quay.webp
-A  public/art/range.webp
-A  public/art/shifts.webp
-A  public/art/sky-day.webp
-A  public/art/sky-night.webp
-A  public/art/tower.webp
-A  public/art/valley.webp
- M src/world/Hero.jsx
- M src/world/Scene.jsx
-?? scripts/art/
-?? src/world/Painted.jsx
-?? src/world/painted.css
+M  HANDOFF.md
+A  scripts/art/README.md
+A  scripts/art/process.py
+A  scripts/art/valley.py
+M  src/world/Hero.jsx
+A  src/world/Painted.jsx
+M  src/world/Scene.jsx
+A  src/world/painted.css
 ```
 <!-- handoff:auto:end -->

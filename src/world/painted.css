@@ -1,0 +1,47 @@
+/* The painted valley (see Painted.jsx). Images only; the animated bits live in motion.css. */
+
+.pt-full { position: absolute; inset: 0; }
+.pt-img { position: absolute; display: block; user-select: none; -webkit-user-drag: none; }
+.pt-full > .pt-img { inset: 0; width: 100%; height: 100%; }
+.pt-sprite { position: absolute; pointer-events: none; }
+.pt-sprite .pt-img { inset: 0; width: 100%; height: 100%; }
+
+/* sky: day and night are two paintings that cross-fade with the theme */
+.pt-sky-day { opacity: var(--day-o); transition: opacity .9s; }
+.pt-sky-night { position: absolute; inset: 0; width: 100%; height: 100%; opacity: var(--night-o); transition: opacity .9s; }
+.pt-cloud { position: absolute; animation: ptDrift 160s linear infinite; opacity: var(--day-o); transition: opacity .9s; }
+.pt-cloud .pt-img { position: relative; width: 100%; height: auto; }
+@keyframes ptDrift { from { transform: translateX(-14%); } to { transform: translateX(26%); } }
+.pt-far { opacity: .5; -webkit-mask: linear-gradient(#000 70%, transparent); mask: linear-gradient(#000 70%, transparent); }
+
+/* night: the same paintings, darker and bluer, with the windows lit */
+.w-root .pt-valley, .w-root .pt-sprite .pt-img, .w-root .pt-far { transition: filter .9s; }
+.w-root[data-theme="night"] .pt-valley { filter: brightness(.46) saturate(.8) hue-rotate(-14deg) contrast(1.06); }
+.w-root[data-theme="night"] .pt-sprite .pt-img { filter: brightness(.55) saturate(.82) hue-rotate(-10deg) contrast(1.05); }
+.w-root[data-theme="night"] .pt-far { filter: brightness(.45) saturate(.7) hue-rotate(-20deg); opacity: .4; }
+.w-root[data-theme="night"] .pt-fg .pt-img { filter: brightness(.4) saturate(.8) hue-rotate(-10deg); }
+.pt-glow { position: absolute; height: 0; transform: translate(-50%, -50%); border-radius: 50%; background: radial-gradient(circle, rgba(255, 205, 120, .85), rgba(255, 170, 70, .28) 45%, transparent 70%); mix-blend-mode: screen; opacity: var(--night-o); transition: opacity .9s; pointer-events: none; }
+.w-root .pt-sprite:has(.pt-img):hover .pt-img { filter: brightness(1.06) saturate(1.06); }
+
+/* the avatar stands on the steps; the headline sits in the open sky between the two hills */
+.w-root .stage.painted .me3d { left: 76.1%; top: 24.4%; width: 5.25%; height: 27.8%; }
+.w-root .stage.painted .hero-copy { left: 50%; margin-left: -19vw; width: 38vw; left: 53%; max-width: none; text-align: center; top: clamp(54px, 8.5vh, 110px); }
+.w-root .stage.painted .hero-copy h1 { font-size: clamp(28px, min(4.1vw, 8.2vh), 66px); }
+.w-root .stage.painted .hero-copy .sub { margin-inline: auto; max-width: 26em; }
+.w-root .stage.painted .hey { justify-content: center; }
+
+/* phones and narrow windows: the headline goes back to the left edge */
+@media (max-width: 719px) {
+  .w-root .stage.painted .hero-copy { left: clamp(20px, 5vw, 80px); margin-left: 0; width: auto; max-width: min(560px, 90vw); text-align: left; top: calc(max(64px, env(safe-area-inset-top)) + 20px); }
+  .w-root .stage.painted .hero-copy h1 { font-size: clamp(30px, 9vw, 46px); }
+  .w-root .stage.painted .hey { justify-content: flex-start; }
+  .w-root .stage.painted .hero-copy .sub { margin-inline: 0; }
+}
+
+/* small stages: the name pins shrink so they do not pile on top of each other */
+@media (max-height: 600px), (max-width: 900px) {
+  .w-root .stage.painted .pin b { font-size: 11px; padding: 3px 8px 3px 3px; gap: 5px; }
+  .w-root .stage.painted .pin .pmark { width: 19px; height: 19px; font-size: 8px; }
+  .w-root .stage.painted .pin .pyr { font-size: 8.5px; padding: 2px 5px; }
+  .w-root .stage.painted .pin .pd { width: 9px; height: 9px; }
+}
