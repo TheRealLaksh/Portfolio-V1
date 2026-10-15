@@ -1,6 +1,6 @@
 // "Music on the hill": a small generative piece made live with the Web Audio API.
-// A tanpura-style drone, sparse pentatonic plucks (Bhoopali: C D E G A) and a soft tabla-like
-// pulse. Nothing is sampled or downloaded, so there is no licence to worry about.
+// A tanpura-style drone and sparse pentatonic plucks (Bhoopali: C D E G A). No percussion
+// (the tabla beats were removed on 16 Oct 2026). Nothing is sampled or downloaded, so there is no licence to worry about.
 
 let ctx = null;
 let master = null;
@@ -70,28 +70,6 @@ function pluck(c, out, semi, when, vel = 0.12) {
   o2.stop(when + 1.7);
 }
 
-function drum(c, out, when, kind) {
-  const g = c.createGain();
-  g.connect(out);
-  const o = c.createOscillator();
-  o.type = 'sine';
-  if (kind === 'ge') {
-    o.frequency.setValueAtTime(140, when);
-    o.frequency.exponentialRampToValueAtTime(58, when + 0.28);
-    g.gain.setValueAtTime(0.5, when);
-    g.gain.exponentialRampToValueAtTime(0.0001, when + 0.42);
-  } else {
-    const base = kind === 'tin' ? 520 : 340;
-    o.frequency.setValueAtTime(base * 1.06, when);
-    o.frequency.exponentialRampToValueAtTime(base, when + 0.05);
-    g.gain.setValueAtTime(0.26, when);
-    g.gain.exponentialRampToValueAtTime(0.0001, when + 0.22);
-  }
-  o.connect(g);
-  o.start(when);
-  o.stop(when + 0.5);
-}
-
 export function startMusic() {
   if (running) return true;
   const AC = window.AudioContext || window.webkitAudioContext;
@@ -114,17 +92,14 @@ export function startMusic() {
   drone(ctx, dry);
   running = true;
 
-  // Taal: 16 beats at ~64 bpm, drum pattern on the beat; melody picks a note on most beats.
+  // Slow pulse at ~64 bpm; the melody picks a note on every fourth half-beat and on some others.
   const beat = 60 / 64;
-  const pattern = ['ge', 'na', 'tin', 'na', 'ge', 'na', 'tin', 'na', 'ge', 'na', 'tin', 'na', 'ge', 'na', 'tin', 'na'];
   let n = 0;
   let next = ctx.currentTime + 0.4;
   let last = 4;
   const schedule = () => {
     if (!running) return;
     while (next < ctx.currentTime + 0.6) {
-      const kind = pattern[n % 16];
-      if (n % 2 === 0 || kind === 'ge') drum(ctx, dry, next, kind);
       if (n % 4 === 0 || Math.random() < 0.38) {
         const step = Math.round((Math.random() - 0.5) * 3);
         last = Math.max(0, Math.min(9, last + step));

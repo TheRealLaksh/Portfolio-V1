@@ -114,6 +114,7 @@ Branch: `feat/world-portfolio` · remote: https://github.com/TheRealLaksh/Portfo
 
 ### Last 15 commits
 
+- `457adb9` 2026-10-16 01:39 Update hero place content: no scholarship, ShiftsDeal reframed, Bestow and internships, shooting as a past mention
 - `4bc6604` 2026-10-16 01:22 Lay the painted valley into the hero: layers, pins, centred headline, night filter
 - `539dcd6` 2026-10-16 01:22 Painted valley art: skies, valley, skyline, clouds, buildings and foliage (WEBP)
 - `d608356` 2026-10-16 01:07 Avatar fixes: off the river, no custom cursor, smoother reactions, livelier idle
@@ -128,20 +129,14 @@ Branch: `feat/world-portfolio` · remote: https://github.com/TheRealLaksh/Portfo
 - `bebabfc` 2026-10-15 19:35 Redraw the avatar (three looks on /lab/avatar, painted look in the hero) and add light rays and grain to the hero
 - `0e47450` 2026-10-15 19:30 Scroll-driven Process line, cork board desk, wall rows and contact keys; fix Brand after the sites removal
 - `71bf850` 2026-10-15 19:27 Remove the four sites-I-have-built cards (Arun Medicals, About Varanasi, Artistry, Kalavrndam)
-- `9d9e30d` 2026-10-15 19:26 Scroll-driven stack: gift shakes, throws its lid and bursts the tools into a grid
 
 ### Uncommitted changes at refresh time
 
 ```
-M  HANDOFF.md
-M  src/world/Book.jsx
- M src/world/Hero.jsx
-M  src/world/Journey.jsx
- M src/world/Life.jsx
- M src/world/Scene.jsx
-M  src/world/Story.jsx
- M src/world/audio.js
-M  src/world/data.js
- M src/world/world.css
+M  src/world/Hero.jsx
+M  src/world/Life.jsx
+M  src/world/Scene.jsx
+M  src/world/audio.js
+M  src/world/world.css
 ```
 <!-- handoff:auto:end -->

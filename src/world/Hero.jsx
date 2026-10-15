@@ -5,7 +5,7 @@ import { attachGaze, reactAvatar, idleGestures } from './avatarLife';
 import { PaintedSky, PaintedClouds, PaintedFar, PaintedValley, PaintedPlace, PaintedFg, PaintedLife } from './Painted';
 import {
   VB, pct, SkyLayer, CloudLayer, KitesLayer, FarLayer, HillLeftLayer, HillRightLayer, GhatLayer, RiverLayer,
-  MUArt, ShiftsDealArt, InternsArt, BestowArt, RangeArt, TablaArt, MeArt, ForegroundLeft, ForegroundRight, ForegroundBottom, Birds,
+  MUArt, ShiftsDealArt, InternsArt, BestowArt, RangeArt, LaptopArt, AppPhoneArt, MeArt, ForegroundLeft, ForegroundRight, ForegroundBottom, Birds,
 } from './Scene';
 
 const FOCAL = { x: 0.62, y: 0.58 }; // the point the scene flies into
@@ -16,9 +16,9 @@ const PAINTED = true;
 const PINS = PAINTED ? [
   { id: 'mu', x: 228, y: 322, tag: '2026', mark: 'MU' },
   { id: 'shiftsdeal', x: 470, y: 252, tag: 'Now', mark: 'SD' },
-  { id: 'interns', x: 1120, y: 120, tag: '2025', mark: '25' },
-  { id: 'bestow', x: 1442, y: 138, tag: '2026', mark: 'B' },
-  { id: 'range', x: 330, y: 742, tag: 'AIR 54', mark: 'R' },
+  { id: 'interns', x: 1120, y: 120, tag: '2025–26', mark: '25' },
+  { id: 'bestow', x: 1442, y: 138, tag: 'Now', mark: 'B' },
+  { id: 'range', x: 330, y: 742, tag: 'Past', mark: 'R' },
   { id: 'me', x: 1260, y: 212, tag: null, mark: 'L', face: true },
 ] : [
   { id: 'mu', x: 150, y: 506, tag: '2026', mark: 'MU' },
@@ -28,8 +28,9 @@ const PINS = PAINTED ? [
   { id: 'range', x: 1205, y: 466, tag: 'AIR 54', mark: 'R' },
   { id: 'me', x: 1396, y: 326, tag: null, mark: 'L', face: true },
 ];
-const TABLA_AT = PAINTED ? [610, 800] : [1030, 640];
-const TABLA_PIN = PAINTED ? [610, 746] : [1030, 586];
+const APP_AT = [748, 540]; // the phone beside the ShiftsDeal building (painted valley only)
+const LAPTOP_AT =PAINTED ? [610, 800] : [1030, 640];
+const LAPTOP_PIN = PAINTED ? [610, 746] : [1030, 586];
 
 // Clickable area per place (scene space): x, y, w, h.
 const HOT = PAINTED ? {
@@ -356,9 +357,22 @@ export default function Hero({ music, onMusic, goJourney }) {
                 ))}
               </div>
             ))}
-            <div className="ly tabla-ly" data-d="0.34" data-fg="0" ref={(el) => { layers.current.tabla = el; }} style={{ transformOrigin: `${FOCAL.x * 100}% ${FOCAL.y * 100}%`, ['--dk']: 0.34 }}>
-              <TablaArt playing={music} at={TABLA_AT} />
-              <button type="button" className={`pin rpin ${music ? 'playing' : ''}`} style={{ ...pct(TABLA_PIN[0], TABLA_PIN[1]), ['--c']: '#8E7CFF' }} aria-pressed={music} onClick={(e) => { e.stopPropagation(); onMusic(); }}>
+            {PAINTED && <div className="ly app-ly"data-d="0.29" data-fg="0" ref={(el) => { layers.current.app = el; }} style={{ transformOrigin: `${FOCAL.x * 100}% ${FOCAL.y * 100}%`, ['--dk']: 0.29 }}>
+              <AppPhoneArt at={APP_AT} />
+              <button type="button" className="pin" style={{ ...pct(APP_AT[0], APP_AT[1] - 86), ['--c']: '#E8505B' }} onClick={(e) => { e.stopPropagation(); pick('shiftsdeal'); }} aria-label="ShiftsDeal app, in progress">
+                <b>
+                  <span className="pmark ico" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><rect x="7" y="2.5" width="10" height="19" rx="2.5" /><path d="M11 18.5h2" /></svg>
+                  </span>
+                  Building the app
+                  <small className="pyr">Now</small>
+                </b>
+                <i className="pd" aria-hidden="true" />
+              </button>
+            </div>}
+            <div className="ly laptop-ly" data-d="0.34" data-fg="0" ref={(el) => { layers.current.laptop = el; }} style={{ transformOrigin: `${FOCAL.x * 100}% ${FOCAL.y * 100}%`, ['--dk']: 0.34 }}>
+              <LaptopArt playing={music} at={LAPTOP_AT} />
+              <button type="button" className={`pin rpin ${music ? 'playing' : ''}`} style={{ ...pct(LAPTOP_PIN[0], LAPTOP_PIN[1]), ['--c']: '#8E7CFF' }} aria-pressed={music} onClick={(e) => { e.stopPropagation(); onMusic(); }}>
                 <b>
                   <span className="pmark ico" aria-hidden="true">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><path d="M9 18V6l10-2v12" /><circle cx="6.5" cy="18" r="2.6" /><circle cx="16.5" cy="16" r="2.6" /></svg>
@@ -395,7 +409,7 @@ export default function Hero({ music, onMusic, goJourney }) {
             <span className="ln"><span>Building things so</span></span>
             <span className="ln" style={{ ['--dl']: '1.9s' }}><span>ideas actually <span className="rq">ship.</span></span></span>
           </h1>
-          <p className="sub">Full-stack developer, 18. Former national-level shooter who <span className="br">learned to ship software.</span></p>
+          <p className="sub">Full-stack developer, 18. Tech Head at ShiftsDeal, <span className="br">studying Data Science &amp; AI at Masters&rsquo; Union.</span></p>
         </div>
 
         <div className="scroll-cue" ref={cue}><i />scroll to fly in</div>

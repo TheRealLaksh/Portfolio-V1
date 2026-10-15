@@ -32,7 +32,7 @@
   --tower: #F3E2C4; --tower-hi: #FFF2D9; --woodwall: #D9A877; --chim: #B56A4E;
   --step-a: #F2D9AD; --step-b: #E4C28C; --step-edge: #C79A5E; --plaza: #D8C09A;
   --fg: #2F8A47; --fg-hi: #52B463; --fg-leaf: #2A7A3E;
-  --rug: #E8505B; --tabla-body: #C98B52; --tabla-head: #F5E6C8; --tabla-metal: #D79A3C;
+  --rug: #E8505B;
   --sign: #1B1F3B; --sign-t: #FFC93C; --glow: transparent; --lampglass: rgba(255, 240, 190, .35);
   --night-o: 0; --day-o: 1; --cloud-foot: #FFFFFF;
 
@@ -66,7 +66,7 @@
   --tower: #7E70A8; --tower-hi: #9A8CC2; --woodwall: #6B4C6B; --chim: #4A334F;
   --step-a: #5F5486; --step-b: #4E4474; --step-edge: #3E3560; --plaza: #4C4570;
   --fg: #14363B; --fg-hi: #1E4B4C; --fg-leaf: #0F2D33;
-  --rug: #A8384F; --tabla-body: #7B5A52; --tabla-head: #CBBFA6; --tabla-metal: #B8863A;
+  --rug: #A8384F;
   --sign: #FFC93C; --sign-t: #1B1F3B; --glow: rgba(255, 190, 90, .85); --lampglass: rgba(255, 200, 100, .9);
   --night-o: 1; --day-o: 0; --cloud-foot: #3A3A7A;
   color-scheme: dark;
@@ -176,10 +176,15 @@
 .w-root .plaza { fill: var(--plaza); } .w-root .tower { fill: var(--tower); } .w-root .tower-hi { fill: var(--tower-hi); }
 .w-root .wood-wall { fill: var(--woodwall); } .w-root .chim { fill: var(--chim); } .w-root .win-big { fill: var(--win); }
 .w-root .lane { stroke: var(--trim); stroke-width: 3; stroke-dasharray: 10 8; fill: none; opacity: .7; }
-.w-root .rug { fill: var(--rug); } .w-root .tabla-body { fill: var(--tabla-body); } .w-root .tabla-head { fill: var(--tabla-head); } .w-root .tabla-metal { fill: var(--tabla-metal); }
+.w-root .rug { fill: var(--rug); }
 .w-root .flag { fill: var(--rose-c); animation: flap 2.2s ease-in-out infinite; transform-box: fill-box; transform-origin: 0 50%; }
 .w-root .flag.f2 { animation-delay: -.7s; } .w-root .flag.f3 { animation-delay: -1.4s; }
 @keyframes flap { 50% { transform: skewY(-8deg) scaleX(.92); } }
+.w-root .app-phone { animation: appBob 3.2s ease-in-out infinite; }
+.w-root .app-bar { transform-box: fill-box; transform-origin: 0 50%; animation: appLoad 3.6s ease-in-out infinite; }
+@keyframes appBob { 50% { transform: translateY(-3px); } }
+@keyframes appLoad { 0% { transform: scaleX(.12); } 70%, 100% { transform: scaleX(.8); } }
+@media (prefers-reduced-motion: reduce) { .w-root .app-phone, .w-root .app-bar { animation: none; } .w-root .app-bar { transform: scaleX(.6); } }
 .w-root .tnotes { opacity: 0; } .w-root .tnotes.on { opacity: 1; animation: noteFloat 2s ease-in-out infinite; }
 @keyframes noteFloat { 50% { transform: translateY(-8px); } }
 .w-root .wave { animation: wave 1.6s ease-in-out infinite; }

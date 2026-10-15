@@ -488,24 +488,49 @@ export function RangeArt() {
   );
 }
 
-export function TablaArt({ playing, at = [1030, 640] }) {
+// A phone standing on the bank beside the ShiftsDeal building: the app Laksh is building now (a loading bar keeps filling).
+// Colours are fixed (not theme variables) so the phone reads the same by day and by night.
+export function AppPhoneArt({ at = [745, 528] }) {
+  return (
+    <S>
+      <g transform={`translate(${at[0]} ${at[1]})`}>
+        <ellipse cx="0" cy="2" rx="28" ry="6" fill="#000" opacity=".18" />
+        <g className="app-phone">
+          <rect x="-21" y="-80" width="42" height="78" rx="9" fill="#1B1F3B" />
+          <rect x="-17" y="-74" width="34" height="66" rx="5" fill="#FFF8E7" />
+          <rect x="-17" y="-74" width="34" height="16" rx="5" fill="#E8505B" />
+          <rect x="-17" y="-64" width="34" height="6" fill="#E8505B" />
+          <rect x="-12" y="-52" width="24" height="9" rx="2.5" fill="#1B1F3B" opacity=".14" />
+          <rect x="-12" y="-40" width="24" height="9" rx="2.5" fill="#1B1F3B" opacity=".14" />
+          <rect x="-12" y="-28" width="14" height="9" rx="2.5" fill="#1B1F3B" opacity=".14" />
+          <rect x="-12" y="-15" width="24" height="4" rx="2" fill="#1B1F3B" opacity=".18" />
+          <rect className="app-bar" x="-12" y="-15" width="24" height="4" rx="2" fill="#E8505B" />
+        </g>
+      </g>
+    </S>
+  );
+}
+
+// A laptop and a coffee on a rug: the "building" corner of the meadow. Also the music switch (notes rise while it plays).
+export function LaptopArt({ playing, at = [1030, 640] }) {
   return (
     <S>
       <g transform={`translate(${at[0]} ${at[1]})`}>
         <ellipse className="rug" cx="0" cy="38" rx="86" ry="14" />
         <ellipse cx="0" cy="40" rx="68" ry="9" fill="none" stroke="var(--trim)" strokeWidth="2" opacity=".6" />
-        {/* dayan */}
-        <g transform="translate(-28 0)">
-          <path className="tabla-body" d="M-18 8 L-14 -22 L14 -22 L18 8 Z" />
-          <ellipse className="tabla-head" cx="0" cy="-23" rx="16" ry="6" />
-          <ellipse fill="var(--ink)" cx="0" cy="-23" rx="7" ry="2.6" opacity=".7" />
-          <path d="M-14 -20 L-10 6 M-5 -18 L-4 7 M5 -18 L4 7 M14 -20 L10 6" stroke="var(--trim)" strokeWidth="1.5" opacity=".8" />
+        {/* laptop: lid, screen with a code glyph, keyboard deck */}
+        <g transform="translate(-10 0)">
+          <rect x="-36" y="-34" width="72" height="46" rx="5" fill="var(--ink)" />
+          <rect x="-31" y="-29" width="62" height="36" rx="2.5" fill="var(--teal-c)" opacity=".92" />
+          <text x="0" y="-5" textAnchor="middle" fontSize="19" fontWeight="700" fill="var(--trim)">&lt;/&gt;</text>
+          <path d="M-44 12 L44 12 L38 24 L-38 24 Z" fill="var(--wood)" />
+          <path d="M-40 14 L40 14" stroke="var(--trim)" strokeWidth="1.5" opacity=".55" />
         </g>
-        {/* bayan */}
-        <g transform="translate(26 6)">
-          <path className="tabla-metal" d="M-22 12 C -26 -10 -18 -22 0 -24 C 18 -22 26 -10 22 12 Z" />
-          <ellipse className="tabla-head" cx="0" cy="-24" rx="15" ry="5.5" />
-          <ellipse fill="var(--ink)" cx="3" cy="-24" rx="6" ry="2.2" opacity=".7" />
+        {/* coffee */}
+        <g transform="translate(52 12)">
+          <path d="M-8 -14 L8 -14 L6 6 L-6 6 Z" fill="var(--trim)" stroke="var(--ink)" strokeWidth="1.5" />
+          <path d="M8 -10 q8 0 8 6 q0 6 -8 6" fill="none" stroke="var(--ink)" strokeWidth="1.5" />
+          <path className="steam" d="M-3 -18 q-4 -6 0 -10 M3 -18 q-4 -6 0 -10" fill="none" stroke="var(--ink)" strokeWidth="1.3" strokeLinecap="round" opacity=".45" />
         </g>
         <g className={`tnotes ${playing ? 'on' : ''}`} fill="var(--wood)">
           <text x="-30" y="-48" fontSize="22">♪</text>

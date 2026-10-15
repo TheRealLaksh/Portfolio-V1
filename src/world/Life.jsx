@@ -78,7 +78,7 @@ export default function Life({ music, onMusic }) {
         <div className="sec-head" data-rv>
           <p className="kicker"><Icon n="user" size={16} />Off the clock</p>
           <h2>Calm hands, <span className="hl b-coral">busy head.</span></h2>
-          <p>18. Based between Varanasi and Delhi NCR. When I am not coding, I am usually learning tabla or reading about business.</p>
+          <p>18. Based between Varanasi and Delhi NCR. When I am not coding, I am usually reading about business.</p>
         </div>
 
         <div className="desk" ref={desk} {...(scrub ? {} : { 'data-rv': '' })}>
@@ -108,7 +108,7 @@ export default function Life({ music, onMusic }) {
           </Polaroid>
 
           <button type="button" className={`item vinyl p5 ${music ? 'on' : ''}`} onClick={onMusic} aria-pressed={music} aria-label={music ? 'Pause the music' : 'Play some music'} style={{ ['--r']: '-3deg' }}>
-            <span className="vn-sleeve"><b>On repeat</b><small>{music ? 'playing now' : 'tabla + drone'}</small></span>
+            <span className="vn-sleeve"><b>On repeat</b><small>{music ? 'playing now' : 'drone + plucks'}</small></span>
             <span className="vn-disc"><i /></span>
             <span className="vn-cap">music is life</span>
           </button>
