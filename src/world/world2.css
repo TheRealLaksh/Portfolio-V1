@@ -38,7 +38,7 @@
 .w-root .tell { font-size: clamp(26px, 3.6vw, 50px); line-height: 1.22; font-weight: 700; letter-spacing: -.03em; }
 .w-root .tell .hl { white-space: normal; }
 .w-root .sticky { position: absolute; width: 190px; padding: 14px 14px 12px; background: var(--sc); color: #1B1F3B; font: 700 20px/1.15 var(--hand); box-shadow: 0 14px 20px -12px rgba(0, 0, 0, .4); transform: rotate(var(--r, 0deg)); cursor: grab; touch-action: none; transition-property: opacity, transform; }
-.w-root .sticky small { display: block; margin-top: 6px; font: 600 13px var(--sans); opacity: .65; }
+.w-root .sticky small { display: block; margin-top: 6px; font: 600 13px var(--sans); opacity: .82; }
 .w-root .sticky::before { content: ""; position: absolute; left: 50%; top: -10px; width: 58px; height: 18px; margin-left: -29px; background: rgba(255, 255, 255, .55); transform: rotate(-2deg); }
 .w-root .move-hint { margin-top: 26px; font: 700 20px var(--hand); color: var(--ink-2); }
 
@@ -196,7 +196,7 @@
 .w-root .vinyl:hover .vn-disc { transform: translateX(14px) rotate(60deg); } .w-root .vinyl.on .vn-disc { animation: spin 2.4s linear infinite; transform: translateX(14px); }
 @keyframes spin { to { transform: translateX(14px) rotate(360deg); } }
 .w-root .vn-cap { position: absolute; left: 0; right: 0; bottom: -28px; text-align: center; font: 700 18px var(--hand); }
-.w-root .note { width: 190px; padding: 22px 16px 14px; background: var(--sc); color: #1B1F3B; font: 700 21px/1.15 var(--hand); box-shadow: 0 14px 20px -12px rgba(0, 0, 0, .4); } .w-root .note small { display: block; margin-top: 6px; font: 600 13px var(--sans); opacity: .65; }
+.w-root .note { width: 190px; padding: 22px 16px 14px; background: var(--sc); color: #1B1F3B; font: 700 21px/1.15 var(--hand); box-shadow: 0 14px 20px -12px rgba(0, 0, 0, .4); } .w-root .note small { display: block; margin-top: 6px; font: 600 13px var(--sans); opacity: .82; }
 .w-root .taped::before { content: ""; position: absolute; left: 50%; top: -10px; width: 62px; height: 20px; margin-left: -31px; background: rgba(255, 255, 255, .6); transform: rotate(-3deg); }
 .w-root .ticket { display: grid; grid-template-columns: 1fr auto; width: 430px; background: #fff; color: #1B1F3B; border-radius: 14px; box-shadow: 0 16px 24px -14px rgba(0, 0, 0, .5); overflow: hidden; }
 .w-root .tk-main { padding: 14px 18px; border-right: 2px dashed #C9C2B4; } .w-root .tk-top { display: flex; justify-content: space-between; align-items: baseline; font-weight: 800; } .w-root .tk-top small { font: 700 11px var(--sans); letter-spacing: .12em; text-transform: uppercase; color: #777; }

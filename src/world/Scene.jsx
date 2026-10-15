@@ -218,19 +218,24 @@ export function RiverLayer() {
         <path d="M120 700 q40 -8 80 0 M320 724 q50 -10 100 0 M560 706 q40 -8 80 0 M760 736 q60 -10 120 0 M1010 700 q40 -8 80 0 M1180 730 q50 -10 100 0 M1400 706 q40 -8 80 0 M60 760 q50 -8 100 0 M470 770 q60 -10 120 0 M900 772 q50 -8 100 0" />
       </g>
       {/* boat */}
-      <g className="boat" transform="translate(380 700)">
-        <path className="wood" d="M-52 0 L52 0 L38 18 L-38 18Z" />
-        <path className="hull-hi" d="M-52 0 L52 0 L48 5 L-48 5Z" />
-        <rect className="wood" x="-2" y="-58" width="4" height="58" />
-        <path className="sail" d="M2 -54 L36 -8 L2 -8Z" />
-        <circle className="lamp" cx="-34" cy="-8" r="5" />
+      {/* the outer <g> positions the boat (SVG attribute); the inner one bobs (CSS animation) */}
+      <g transform="translate(380 700)">
+        <g className="boat">
+          <path className="wood" d="M-52 0 L52 0 L38 18 L-38 18Z" />
+          <path className="hull-hi" d="M-52 0 L52 0 L48 5 L-48 5Z" />
+          <rect className="wood" x="-2" y="-58" width="4" height="58" />
+          <path className="sail" d="M2 -54 L36 -8 L2 -8Z" />
+          <circle className="lamp" cx="-34" cy="-8" r="5" />
+        </g>
       </g>
-      <g className="boat b2" transform="translate(1090 740) scale(.75)">
-        <path className="wood" d="M-52 0 L52 0 L38 18 L-38 18Z" />
-        <path className="hull-hi" d="M-52 0 L52 0 L48 5 L-48 5Z" />
-        <rect className="wood" x="-2" y="-58" width="4" height="58" />
-        <path className="sail" d="M2 -54 L-30 -8 L2 -8Z" />
-        <circle className="lamp" cx="30" cy="-8" r="5" />
+      <g transform="translate(1090 740) scale(.75)">
+        <g className="boat b2">
+          <path className="wood" d="M-52 0 L52 0 L38 18 L-38 18Z" />
+          <path className="hull-hi" d="M-52 0 L52 0 L48 5 L-48 5Z" />
+          <rect className="wood" x="-2" y="-58" width="4" height="58" />
+          <path className="sail" d="M2 -54 L-30 -8 L2 -8Z" />
+          <circle className="lamp" cx="30" cy="-8" r="5" />
+        </g>
       </g>
       {/* diyas floating on the water */}
       {[[640, 760], [760, 748], [1260, 770], [200, 776], [880, 780]].map(([x, y], i) => (

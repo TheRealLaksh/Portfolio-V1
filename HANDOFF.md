@@ -49,6 +49,7 @@ A. Valley redesign (branch `feat/world-portfolio`): (1) give the wall and visito
 - Laksh chose small commits, pushed after each (every push to `main` goes live on Vercel). Session of 8 Oct 2026.
 
 ## Session log (newest first)
+- 2026-10-15 (later): polish and QA on `feat/world-portfolio`. Fixed boats jumping to the top-left (a CSS animation transform replaces an SVG `transform` attribute: position on an outer `<g>`, animate an inner one), sticky-note and desk contrast, night clouds, pin collisions; windows only glow at night (no filters in day, which keeps scroll cheap). Added real screenshots in `public/work/` for Profiley, Helios and CaliBridge (ShiftsDeal keeps a placeholder until Laksh confirms it may be shown; the fan-made Stranger Things site was left out because its art is Netflix's). Headless Chromium: 180 fps scroll on the valley, music starts/stops, keyboard opens a place and Esc closes it, wall form validates and degrades when the API is missing, axe wcag2a/aa clean after the contrast fix, `/classic` and `/hire` still load. Preview deploys on every push (needs Vercel login); `/api/*` return 503 until the Redis store is added.
 - 2026-10-15: started the valley redesign on `feat/world-portfolio`: added `src/world/` (data, hooks, Web Audio music, hand-drawn SVG scene, hero with scroll fly-in and clickable places, nav bar with day/night and music, story, journey map, work cards, websites + packages, Profiley section, tool box, process, desk of movable things, guestbook wall, hotkey contact), `api/wall.js` + `api/visit.js` (Upstash REST), web fonts in `index.html`, and routes in `App.jsx` (`/` is the valley, `/classic` the old home). Checked with headless Chromium at 1280x720 and 390x844: sections render, no sideways scroll on mobile, place sheets and the journey/work dialogs open.
 - 2026-10-14: About section terminal card now says Freelance Full-Stack Developer and adds the Masters' Union line; the location radar says Delhi NCR (Delhi coordinates). Footer, Contact, hero, `index.html`, `routeMeta.js` and JSON-LD still say Varanasi: site-wide change still waiting on Laksh.
 - 2026-10-14: About section bio (`02-About.jsx`) rewritten with current facts: freelance full-stack developer in Delhi NCR, B.Tech Data Science & AI at Masters' Union, four production apps at Unified Mentor (Helios, Calibridge), link to `/hire`; 'high school student' and 'seeking' wording removed. ShiftsDeal left out of the text on purpose (same call as the LinkedIn About). Plaksha/Outskill kept from the original text (not in the vault, confirm).
@@ -89,12 +90,13 @@ A. Valley redesign (branch `feat/world-portfolio`): (1) give the wall and visito
 <!-- handoff:auto:start -->
 ## Auto: repo state
 
-_Refreshed 15 Oct 2026, 2:53 pm IST by `scripts/handoff.mjs` (runs on every commit). Don't edit inside this block._
+_Refreshed 15 Oct 2026, 2:56 pm IST by `scripts/handoff.mjs` (runs on every commit). Don't edit inside this block._
 
 Branch: `feat/world-portfolio` · remote: https://github.com/TheRealLaksh/Portfolio-V2.git
 
 ### Last 15 commits
 
+- `2d8f4b2` 2026-10-15 14:53 Polish the valley: pin placement, night clouds, draggable notes, cheaper window glow
 - `f588ec9` 2026-10-15 14:53 Use real screenshots for my own projects; add Mercatora
 - `f563f17` 2026-10-15 14:51 Mount the valley at / and keep the old home at /classic
 - `0b94246` 2026-10-15 14:51 Add serverless endpoints for the guestbook wall and visitor counter
@@ -109,14 +111,12 @@ Branch: `feat/world-portfolio` · remote: https://github.com/TheRealLaksh/Portfo
 - `be7cceb` 2026-10-14 10:07 Respect the reduced-motion setting
 - `0a0d812` 2026-10-14 10:06 Skip the preloader on /hire and for reduced-motion visitors
 - `4d038d4` 2026-10-14 10:05 Hide the social sidebar where it overlaps the page content
-- `7ac7e03` 2026-10-14 10:04 Stop the chat teaser from covering the page on phones
 
 ### Uncommitted changes at refresh time
 
 ```
-M  src/world/Hero.jsx
-M  src/world/Story.jsx
-M  src/world/world.css
+M HANDOFF.md
+M  src/world/Scene.jsx
 M  src/world/world2.css
 ```
 <!-- handoff:auto:end -->
