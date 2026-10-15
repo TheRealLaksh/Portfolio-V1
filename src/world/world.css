@@ -217,7 +217,7 @@
 .w-root .rpin .eq i { width: 3px; height: 4px; background: var(--c); border-radius: 2px; }
 .w-root .rpin.playing .eq i { animation: eq .8s ease-in-out infinite; } .w-root .rpin.playing .eq i:nth-child(2) { animation-delay: .25s; } .w-root .rpin.playing .eq i:nth-child(3) { animation-delay: .5s; }
 
-.w-root .hero-copy { position: absolute; left: clamp(20px, 5vw, 80px); top: clamp(60px, 11vh, 130px); z-index: 7; max-width: min(560px, 90vw); pointer-events: none; will-change: transform, opacity; }
+.w-root .hero-copy { position: absolute; left: clamp(20px, 5vw, 80px); top: clamp(60px, 11vh, 130px); z-index: 7; max-width: min(max(560px, 42vw), 90vw); pointer-events: none; will-change: transform, opacity; }
 .w-root .hey { display: inline-flex; align-items: center; gap: 8px; font: 700 clamp(20px, 2.2vw, 28px) var(--hand); color: var(--ink); margin-bottom: 8px; opacity: 0; animation: fadeUp .9s var(--ease) 1s forwards; }
 .w-root .stage .hero-copy h1 { font-weight: 800; font-size: clamp(30px, min(4.7vw, 9vh), 72px); line-height: .98; letter-spacing: -.035em; color: #1B1F3B; text-shadow: 0 2px 0 rgba(255, 255, 255, .25); }
 .w-root[data-theme="night"] .stage .hero-copy h1, .w-root[data-theme="night"] .hey, .w-root[data-theme="night"] .sub { color: #FFF3DA; text-shadow: 0 2px 18px rgba(0, 0, 0, .5); }
