@@ -33,6 +33,7 @@ function MapArt() {
       <path className="m-land" d="M-20 140 C 120 80 260 120 340 80 C 470 30 560 90 700 70 C 840 50 940 90 1060 60 C 1140 40 1200 60 1230 80 L1230 700 C 1100 730 1000 690 880 710 C 740 730 640 690 520 712 C 380 736 260 690 130 716 C 60 728 0 716 -20 700Z" />
       <path className="m-land2" d="M60 470 C 160 430 230 470 330 450 C 420 432 470 470 560 456 C 660 440 720 380 800 392 C 900 408 940 470 1040 450 C 1110 436 1160 470 1200 490 L1200 700 L60 700Z" />
       <path className="m-river" d="M-10 330 C 140 300 220 360 360 330 C 500 300 560 220 690 238 C 800 252 900 340 1010 330 C 1100 322 1160 290 1210 300" />
+      <path className="m-flow" d="M-10 330 C 140 300 220 360 360 330 C 500 300 560 220 690 238 C 800 252 900 340 1010 330 C 1100 322 1160 290 1210 300" />
       {trees.map((t, i) => (
         <g key={i} transform={`translate(${t.x} ${t.y}) scale(${t.k})`} className="m-tree">
           <circle cx="0" cy="-8" r="9" /><rect x="-1.4" y="0" width="2.8" height="8" />
@@ -42,6 +43,31 @@ function MapArt() {
       <g className="m-mount" transform="translate(800 120)"><path d="M0 40 L36 -16 L72 40Z" /></g>
       <g className="m-wave" transform="translate(70 640)"><path d="M0 0 q10 -10 20 0 t20 0 t20 0" /></g>
       <g className="m-wave" transform="translate(980 650)"><path d="M0 0 q10 -10 20 0 t20 0 t20 0" /></g>
+      {[[60, 44], [300, 22], [610, 16], [900, 30], [1100, 16], [200, 708], [520, 714], [800, 706], [1050, 710], [1150, 698]].map(([x, y], i) => (
+        <g key={i} className="m-wave" transform={`translate(${x} ${y})`}><path className="m-wv" style={{ animationDelay: `${-i * 0.55}s` }} d="M0 0 q10 -10 20 0 t20 0 t20 0" /></g>
+      ))}
+      {[[0, 26, 70], [0, 704, 90]].map(([x, y, dur], i) => (
+        <g key={i} transform={`translate(${x} ${y})`}>
+          <g className="m-sail" style={{ animationDuration: `${dur}s`, animationDelay: `${-i * 31}s` }}>
+            <g className="m-boat" style={{ animationDelay: `${-i * 1.3}s` }}>
+              <path d="M-22 0 L22 0 L15 10 L-15 10Z" fill="#8A5A3B" />
+              <rect x="-1.2" y="-32" width="2.4" height="32" fill="#7C5233" />
+              <path d="M2 -30 L20 -4 L2 -4Z" fill="#FFF4DC" stroke="#C9B49A" strokeWidth="1" />
+              <path d="M-2 -26 L-14 -4 L-2 -4Z" fill="#fff" stroke="#C9B49A" strokeWidth="1" />
+            </g>
+          </g>
+        </g>
+      ))}
+      {[[0, 150, 38], [0, 560, 52]].map(([x, y, dur], i) => (
+        <g key={i} transform={`translate(${x} ${y})`}>
+          <g className="m-flock" style={{ animationDuration: `${dur}s`, animationDelay: `${-i * 17}s` }}>
+            {[[0, 0], [22, -10], [24, 12], [48, 0]].map(([bx, by], k) => <path key={k} className="m-bird" style={{ animationDelay: `${k * 0.18}s` }} d={`M${bx - 9} ${by} q4.5 -7 9 0 q4.5 -7 9 0`} />)}
+          </g>
+        </g>
+      ))}
+      {[[-300, 140, 1], [-300, 420, 1.2], [-300, 600, .9]].map(([x, y, k], i) => (
+        <ellipse key={i} className="m-shade" cx={x} cy={y} rx={150 * k} ry={46 * k} style={{ animationDelay: `${-i * 19}s`, animationDuration: `${62 + i * 9}s` }} />
+      ))}
     </g>
   );
 }
@@ -228,9 +254,11 @@ export default function Journey() {
                 {/* the traveller */}
                 <g className="trav" ref={trav} style={scrub ? undefined : { transform: `translate(${here[0]}px, ${here[1] - 44}px)` }}>
                   <ellipse cx="0" cy="44" rx="12" ry="4" className="trav-sh" />
-                  <path className="trav-pin" d="M0 38 C -16 20 -22 8 -22 -4 a22 22 0 0 1 44 0 C 22 8 16 20 0 38Z" />
-                  <clipPath id="travClip"><circle cx="0" cy="-4" r="15" /></clipPath>
-                  <image href="/me.webp" x="-22" y="-26" width="44" height="44" clipPath="url(#travClip)" preserveAspectRatio="xMidYMid slice" />
+                  <g className="trav-bob">
+                    <path className="trav-pin" d="M0 38 C -16 20 -22 8 -22 -4 a22 22 0 0 1 44 0 C 22 8 16 20 0 38Z" />
+                    <clipPath id="travClip"><circle cx="0" cy="-4" r="15" /></clipPath>
+                    <image href="/me.webp" x="-22" y="-26" width="44" height="44" clipPath="url(#travClip)" preserveAspectRatio="xMidYMid slice" />
+                  </g>
                 </g>
               </svg>
             </div>

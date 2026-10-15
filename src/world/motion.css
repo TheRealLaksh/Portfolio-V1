@@ -114,11 +114,112 @@
 .w-root .m-bit { position: fixed; z-index: 95; width: 8px; height: 8px; border-radius: 2px; pointer-events: none; }
 @media (hover: none), (pointer: coarse) { .w-root .m-ring { display: none; } }
 
+/* ---------- journey map ---------- */
+.w-root .m-flow { fill: none; stroke: rgba(255, 255, 255, .8); stroke-width: 3; stroke-linecap: round; stroke-dasharray: 7 26; animation: mFlow 3.2s linear infinite; }
+@keyframes mFlow { to { stroke-dashoffset: -66; } }
+.w-root .m-wv { animation: mWave 3.6s ease-in-out infinite; }
+@keyframes mWave { 0%, 100% { transform: translateX(-5px); opacity: .5; } 50% { transform: translateX(7px); opacity: 1; } }
+.w-root .m-sail { animation: mSailX 70s linear infinite; }
+@keyframes mSailX { from { transform: translateX(-80px); } to { transform: translateX(1290px); } }
+.w-root .m-boat { animation: bob 3.4s ease-in-out infinite; transform-box: fill-box; }
+.w-root .m-flock { animation: mFlockX 38s linear infinite; }
+@keyframes mFlockX { from { transform: translate(-90px, 0); } 50% { transform: translate(600px, -26px); } to { transform: translate(1290px, 6px); } }
+.w-root .m-bird { fill: none; stroke: rgba(27, 31, 59, .55); stroke-width: 2.2; stroke-linecap: round; transform-box: fill-box; transform-origin: 50% 100%; animation: flapb .9s ease-in-out infinite; }
+.w-root .m-shade { fill: rgba(27, 31, 59, .08); animation: mShade 62s linear infinite; }
+@keyframes mShade { from { transform: translateX(0); } to { transform: translateX(1900px); } }
+.w-root .m-tree circle { transform-box: fill-box; transform-origin: 50% 100%; animation: treeSway 4.6s ease-in-out infinite alternate; }
+.w-root .m-tree:nth-child(3n) circle { animation-duration: 5.6s; animation-delay: -1.2s; }
+.w-root .m-tree:nth-child(3n+1) circle { animation-duration: 3.9s; animation-delay: -2.4s; }
+@keyframes treeSway { from { transform: rotate(-5deg); } to { transform: rotate(5deg); } }
+.w-root .trav-bob { animation: travBob 1.3s ease-in-out infinite; }
+@keyframes travBob { 50% { translate: 0 -5px; } }
+.w-root .trav-sh { transform-box: fill-box; transform-origin: center; animation: travSh 1.3s ease-in-out infinite; }
+@keyframes travSh { 50% { transform: scale(.82); opacity: .6; } }
+.w-root .stop.on .stop-dot { transform-box: fill-box; transform-origin: center; animation: stopPop .7s var(--spring); }
+@keyframes stopPop { 0% { transform: scale(.6); } 60% { transform: scale(1.3); } 100% { transform: scale(1); } }
+.w-root[data-theme="night"] .m-shade { fill: rgba(0, 0, 0, .18); }
+.w-root[data-theme="night"] .m-flow { stroke: rgba(160, 200, 255, .5); }
+
+/* ---------- sections: small idle motion and hover polish ---------- */
+.w-root .sticky { animation: stickySway 5.5s ease-in-out infinite alternate; }
+.w-root .sticky:nth-of-type(2n) { animation-duration: 6.8s; animation-delay: -2s; }
+.w-root .sticky:hover { animation-play-state: paused; }
+@keyframes stickySway { from { rotate: -1.4deg; } to { rotate: 1.6deg; } }
+
+.w-root .kicker svg { animation: kickWiggle 5s ease-in-out infinite; transform-origin: 50% 60%; }
+@keyframes kickWiggle { 0%, 70%, 100% { transform: rotate(0); } 76% { transform: rotate(-16deg) scale(1.15); } 84% { transform: rotate(14deg) scale(1.15); } 92% { transform: rotate(-6deg); } }
+
+.w-root .btn-main, .w-root .nw-cta { position: relative; overflow: hidden; }
+.w-root .btn-main::after, .w-root .nw-cta::after { content: ""; position: absolute; inset: 0; background: linear-gradient(100deg, transparent 30%, rgba(255, 255, 255, .4) 50%, transparent 70%); transform: translateX(-130%); pointer-events: none; }
+.w-root .btn-main:hover::after, .w-root .nw-cta:hover::after { transform: translateX(130%); transition: transform .8s var(--ease); }
+.w-root .nw-cta .nw-pen { display: inline-grid; animation: penWrite 2.6s ease-in-out infinite; transform-origin: 20% 90%; }
+@keyframes penWrite { 0%, 60%, 100% { transform: rotate(0); } 70% { transform: rotate(-14deg) translateX(-2px); } 80% { transform: rotate(8deg) translateX(3px); } 90% { transform: rotate(-8deg); } }
+
+.w-root .logo:hover i { animation: wig .6s ease-in-out; }
+@keyframes wig { 25% { transform: rotate(-12deg); } 60% { transform: rotate(10deg); } }
+.w-root .theme-btn:hover .ti { animation: spinOnce .7s var(--ease); }
+@keyframes spinOnce { to { transform: rotate(360deg); } }
+
+.w-root .box-tilt { animation: boxFloat 6s ease-in-out infinite alternate; }
+@keyframes boxFloat { from { translate: 0 -6px; } to { translate: 0 8px; } }
+.w-root .bi-list button { transition: transform .3s var(--spring); }
+.w-root .bi-list button:hover { transform: translateY(-3px) rotate(-1.5deg); }
+
+.w-root .brand-row .bc { animation: cardFloat 6s ease-in-out infinite alternate; }
+.w-root .brand-row .bc:nth-child(2n) { animation-duration: 7.4s; animation-delay: -2.5s; }
+.w-root .brand-row .bc:nth-child(3n) { animation-duration: 5.4s; animation-delay: -1s; }
+@keyframes cardFloat { from { translate: 0 -4px; } to { translate: 0 5px; } }
+.w-root .pk-p { display: inline-block; transform-origin: 0 50%; transition: transform .3s var(--spring); }
+.w-root .pk:hover .pk-p { transform: rotate(-3deg) scale(1.06); }
+
+.w-root .rs-pdf { animation: pdfPulse 2.6s ease-in-out infinite; }
+@keyframes pdfPulse { 0%, 100% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--acc, var(--rose-c)) 55%, transparent); } 60% { box-shadow: 0 0 0 10px transparent; } }
+.w-root .hat { animation: hatBob 3.2s ease-in-out infinite alternate; }
+.w-root .ll-roles li:nth-child(2n) .hat { animation-delay: -1.1s; } .w-root .ll-roles li:nth-child(3n) .hat { animation-delay: -2s; }
+@keyframes hatBob { from { transform: translateY(-2px) rotate(-4deg); } to { transform: translateY(3px) rotate(4deg); } }
+.w-root .rs-doc .rs-sec em { transform-origin: 0 50%; }
+
+.w-root .gt-i, .w-root .tool-i { animation: toolBob 3.8s ease-in-out infinite alternate; }
+.w-root li:nth-child(2n) > .gt .gt-i, .w-root li:nth-child(2n) .tool-i { animation-delay: -1.3s; animation-duration: 4.6s; }
+.w-root li:nth-child(3n) > .gt .gt-i, .w-root li:nth-child(3n) .tool-i { animation-delay: -2.4s; animation-duration: 3.4s; }
+@keyframes toolBob { from { transform: translateY(-3px) rotate(-3deg); } to { transform: translateY(3px) rotate(3deg); } }
+.w-root .gt.on .gt-i, .w-root .tool.on .tool-i { animation-play-state: paused; }
+
+.w-root .pnode.in .pn, .w-root .proc .pn { animation: pnPulse 3.4s ease-in-out infinite; }
+@keyframes pnPulse { 0%, 100% { box-shadow: 4px 4px 0 var(--ink), 0 0 0 0 color-mix(in srgb, var(--c, var(--sun-c)) 60%, transparent); } 60% { box-shadow: 4px 4px 0 var(--ink), 0 0 0 12px transparent; } }
+.w-root .pl-pen { animation: penPulse 1s ease-in-out infinite alternate; transform-box: fill-box; transform-origin: center; }
+@keyframes penPulse { to { transform: scale(1.35); } }
+
+.w-root .vn-disc { animation: discIdle 16s linear infinite; }
+@keyframes discIdle { to { rotate: 360deg; } }
+.w-root .tk-route i { display: inline-grid; animation: planeHop 2.8s ease-in-out infinite; }
+@keyframes planeHop { 0%, 100% { transform: translate(-6px, 2px) rotate(-6deg); } 50% { transform: translate(8px, -4px) rotate(4deg); } }
+.w-root .pc4 .pol-art svg path:last-child { transform-box: fill-box; transform-origin: 50% 100%; animation: steam 2.6s ease-in-out infinite; }
+.w-root .pc4 .pol-art svg path:nth-last-child(2) { animation: none; }
+@keyframes steam { 0%, 100% { transform: translateY(0) scaleY(1); opacity: .35; } 50% { transform: translateY(-3px) scaleY(1.12); opacity: .75; } }
+
+.w-root .nw-card { transition: box-shadow .3s; }
+.w-root .nw-card:hover { box-shadow: 0 22px 28px -14px rgba(0, 0, 0, .45); }
+.w-root .nw-ava { animation: avaPop 5s ease-in-out infinite; }
+@keyframes avaPop { 0%, 85%, 100% { transform: none; } 92% { transform: scale(1.14) rotate(-6deg); } }
+
+.w-root .keys .kw .key { animation: keyFloat 3.6s ease-in-out infinite alternate; }
+.w-root .keys .kw:nth-child(2n) .key { animation-delay: -1.2s; animation-duration: 4.2s; }
+.w-root .keys .kw:nth-child(3n) .key { animation-delay: -2.1s; animation-duration: 3.2s; }
+@keyframes keyFloat { from { translate: 0 -4px; } to { translate: 0 5px; } }
+.w-root .keys .kw .key:hover, .w-root .keys .kw .key:active { animation-play-state: paused; }
+.w-root .clouds-foot i { animation: cloudSway 14s ease-in-out infinite alternate; }
+.w-root .clouds-foot i:nth-child(2) { animation-duration: 18s; animation-direction: alternate-reverse; }
+@keyframes cloudSway { from { transform: translateX(-24px); } to { transform: translateX(24px); } }
+.w-root .keys-hint kbd { animation: kbdTap 4s ease-in-out infinite; }
+.w-root .keys-hint kbd:nth-child(2) { animation-delay: .5s; } .w-root .keys-hint kbd:nth-child(3) { animation-delay: 1s; } .w-root .keys-hint kbd:nth-child(4) { animation-delay: 1.5s; } .w-root .keys-hint kbd:nth-child(5) { animation-delay: 2s; }
+@keyframes kbdTap { 0%, 80%, 100% { transform: none; border-bottom-width: 3px; } 88% { transform: translateY(2px); border-bottom-width: 1px; } }
+
 @media (prefers-reduced-motion: reduce) {
   .w-root .clk-m, .w-root .clk-h, .w-root .smoke, .w-root .beam, .w-root .walker, .w-root .leg, .w-root .glint, .w-root .fish, .w-root .splash, .w-root .sailing,
   .w-root .balloon, .w-root .balloon-sway, .w-root .shoot, .w-root .fly, .w-root .birds, .w-root .pin b, .w-root .rq::before { animation: none; }
   .w-root .smoke, .w-root .fish, .w-root .splash, .w-root .shoot { opacity: 0; }
-  .w-root .fl-i, .w-root .m-ring, .w-root .m-bit { animation: none; }
+  .w-root .fl-i, .w-root .m-ring, .w-root .m-bit, .w-root .m-flow, .w-root .m-wv, .w-root .m-sail, .w-root .m-boat, .w-root .m-flock, .w-root .m-bird, .w-root .m-shade, .w-root .m-tree circle, .w-root .trav-bob, .w-root .trav-sh, .w-root .sticky, .w-root .kicker svg, .w-root .nw-pen, .w-root .box-tilt, .w-root .brand-row .bc, .w-root .rs-pdf, .w-root .hat, .w-root .gt-i, .w-root .tool-i, .w-root .pn, .w-root .pl-pen, .w-root .vn-disc, .w-root .tk-route i, .w-root .nw-ava, .w-root .key, .w-root .clouds-foot i, .w-root kbd { animation: none; }
   .w-root .m-ring, .w-root .m-bit { display: none; }
   .w-root .ly { translate: none; }
 }

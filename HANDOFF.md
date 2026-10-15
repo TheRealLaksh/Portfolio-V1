@@ -100,12 +100,13 @@ A. Valley redesign (branch `feat/world-portfolio`): (1) give the wall and visito
 <!-- handoff:auto:start -->
 ## Auto: repo state
 
-_Refreshed 16 Oct 2026, 12:38 am IST by `scripts/handoff.mjs` (runs on every commit). Don't edit inside this block._
+_Refreshed 16 Oct 2026, 12:40 am IST by `scripts/handoff.mjs` (runs on every commit). Don't edit inside this block._
 
 Branch: `feat/world-portfolio` · remote: https://github.com/TheRealLaksh/Portfolio-V2.git
 
 ### Last 15 commits
 
+- `09299de` 2026-10-16 00:38 Pointer polish and floating doodles across the page
 - `a0d6154` 2026-10-16 00:34 Bring the valley to life: ticking clock, chimney smoke, walkers, glints, fish, balloon, flocks, fireflies
 - `85a3bb9` 2026-10-16 00:32 Use Laksh's 3D avatar as the hero figure
 - `df0d7e3` 2026-10-16 00:30 Run the scroll scenes on laptop-sized windows (720 px and up), not only 900 px
@@ -120,25 +121,11 @@ Branch: `feat/world-portfolio` · remote: https://github.com/TheRealLaksh/Portfo
 - `600c2f5` 2026-10-15 15:31 Link the websites section to the new booking page
 - `ca01fcc` 2026-10-15 15:31 Add a Topmate-style booking page at /book
 - `3d8ef26` 2026-10-15 15:27 Log the ShiftsDeal screenshot approval in HANDOFF
-- `9099463` 2026-10-15 15:27 Show a real ShiftsDeal screenshot on its work card
 
 ### Uncommitted changes at refresh time
 
 ```
-M  src/world/Brand.jsx
-M  src/world/Flagship.jsx
-A  src/world/Floaters.jsx
-M  src/world/Hello.jsx
-M  src/world/Life.jsx
-M  src/world/Process.jsx
-M  src/world/Stack.jsx
-M  src/world/Story.jsx
-M  src/world/Wall.jsx
-M  src/world/Work.jsx
-M  src/world/World.jsx
+M  src/world/Journey.jsx
 M  src/world/motion.css
-A  src/world/motion.js
-M  src/world/world2.css
-M  src/world/world3.css
 ```
 <!-- handoff:auto:end -->
