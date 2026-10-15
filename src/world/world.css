@@ -180,6 +180,9 @@
 .w-root .flag { fill: var(--rose-c); animation: flap 2.2s ease-in-out infinite; transform-box: fill-box; transform-origin: 0 50%; }
 .w-root .flag.f2 { animation-delay: -.7s; } .w-root .flag.f3 { animation-delay: -1.4s; }
 @keyframes flap { 50% { transform: skewY(-8deg) scaleX(.92); } }
+.w-root .app-ly { opacity: 0; visibility: hidden; pointer-events: none; transition: opacity .5s var(--ease), visibility 0s .5s; }
+.w-root .app-ly.show { opacity: 1; visibility: visible; transition-delay: .35s, 0s; }
+.w-root .app-ly .app-tag { pointer-events: none; cursor: default; }
 .w-root .app-phone { animation: appBob 3.2s ease-in-out infinite; }
 .w-root .app-bar { transform-box: fill-box; transform-origin: 0 50%; animation: appLoad 3.6s ease-in-out infinite; }
 @keyframes appBob { 50% { transform: translateY(-3px); } }

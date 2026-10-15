@@ -115,6 +115,7 @@ Branch: `feat/world-portfolio` · remote: https://github.com/TheRealLaksh/Portfo
 
 ### Last 15 commits
 
+- `785f5bd` 2026-10-16 01:50 Play That's What I Like by Bruno Mars from the music button via Spotify's embedded player
 - `16b6990` 2026-10-16 01:39 Remove tabla; add laptop on rug, ShiftsDeal app phone and new hero sub-line
 - `457adb9` 2026-10-16 01:39 Update hero place content: no scholarship, ShiftsDeal reframed, Bestow and internships, shooting as a past mention
 - `4bc6604` 2026-10-16 01:22 Lay the painted valley into the hero: layers, pins, centred headline, night filter
@@ -129,16 +130,11 @@ Branch: `feat/world-portfolio` · remote: https://github.com/TheRealLaksh/Portfo
 - `85a3bb9` 2026-10-16 00:32 Use Laksh's 3D avatar as the hero figure
 - `df0d7e3` 2026-10-16 00:30 Run the scroll scenes on laptop-sized windows (720 px and up), not only 900 px
 - `bebabfc` 2026-10-15 19:35 Redraw the avatar (three looks on /lab/avatar, painted look in the hero) and add light rays and grain to the hero
-- `0e47450` 2026-10-15 19:30 Scroll-driven Process line, cork board desk, wall rows and contact keys; fix Brand after the sites removal
 
 ### Uncommitted changes at refresh time
 
 ```
-M  HANDOFF.md
-M  src/world/Bar.jsx
- M src/world/Hero.jsx
-M  src/world/Life.jsx
-M  src/world/audio.js
- M src/world/world.css
+M  src/world/Hero.jsx
+M  src/world/world.css
 ```
 <!-- handoff:auto:end -->

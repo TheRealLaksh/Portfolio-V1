@@ -357,9 +357,9 @@ export default function Hero({ music, onMusic, goJourney }) {
                 ))}
               </div>
             ))}
-            {PAINTED && <div className="ly app-ly"data-d="0.29" data-fg="0" ref={(el) => { layers.current.app = el; }} style={{ transformOrigin: `${FOCAL.x * 100}% ${FOCAL.y * 100}%`, ['--dk']: 0.29 }}>
+            {PAINTED && <div className={`ly app-ly ${focusId === 'shiftsdeal' ? 'show' : ''}`} aria-hidden="true" data-d="0.29" data-fg="0" ref={(el) => { layers.current.app = el; }} style={{ transformOrigin: `${FOCAL.x * 100}% ${FOCAL.y * 100}%`, ['--dk']: 0.29 }}>
               <AppPhoneArt at={APP_AT} />
-              <button type="button" className="pin" style={{ ...pct(APP_AT[0], APP_AT[1] - 86), ['--c']: '#E8505B' }} onClick={(e) => { e.stopPropagation(); pick('shiftsdeal'); }} aria-label="ShiftsDeal app, in progress">
+              <div className="pin on app-tag" style={{ ...pct(APP_AT[0], APP_AT[1] - 86), ['--c']: '#E8505B' }}>
                 <b>
                   <span className="pmark ico" aria-hidden="true">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><rect x="7" y="2.5" width="10" height="19" rx="2.5" /><path d="M11 18.5h2" /></svg>
@@ -368,7 +368,7 @@ export default function Hero({ music, onMusic, goJourney }) {
                   <small className="pyr">Now</small>
                 </b>
                 <i className="pd" aria-hidden="true" />
-              </button>
+              </div>
             </div>}
             <div className="ly laptop-ly" data-d="0.34" data-fg="0" ref={(el) => { layers.current.laptop = el; }} style={{ transformOrigin: `${FOCAL.x * 100}% ${FOCAL.y * 100}%`, ['--dk']: 0.34 }}>
               <LaptopArt playing={music} at={LAPTOP_AT} />
