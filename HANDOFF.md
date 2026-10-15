@@ -104,12 +104,13 @@ A. Valley redesign (branch `feat/world-portfolio`): (0) Laksh to review the moti
 <!-- handoff:auto:start -->
 ## Auto: repo state
 
-_Refreshed 16 Oct 2026, 1:07 am IST by `scripts/handoff.mjs` (runs on every commit). Don't edit inside this block._
+_Refreshed 16 Oct 2026, 1:22 am IST by `scripts/handoff.mjs` (runs on every commit). Don't edit inside this block._
 
 Branch: `feat/world-portfolio` · remote: https://github.com/TheRealLaksh/Portfolio-V2.git
 
 ### Last 15 commits
 
+- `d608356` 2026-10-16 01:07 Avatar fixes: off the river, no custom cursor, smoother reactions, livelier idle
 - `21694b9` 2026-10-16 01:00 Avatar as the map traveller and a sidekick that walks the page with him
 - `3f2a783` 2026-10-16 01:00 Animate the 3D avatar: breathing, blinking, head follows the pointer, click reactions
 - `4820e98` 2026-10-16 00:41 Let the hero headline use the width on very wide screens; log the motion pass in HANDOFF
@@ -124,20 +125,31 @@ Branch: `feat/world-portfolio` · remote: https://github.com/TheRealLaksh/Portfo
 - `9d9e30d` 2026-10-15 19:26 Scroll-driven stack: gift shakes, throws its lid and bursts the tools into a grid
 - `9ee7d3f` 2026-10-15 19:25 Scroll-driven Profiley section: highlights draw, resume builds itself, then every hat arrives
 - `97307d8` 2026-10-15 19:23 Scroll-driven Work (3D card box that opens) and Brand (pinned sideways carousel with progress bar)
-- `f9b50e1` 2026-10-15 19:17 Scroll storytelling foundation: eased scroll tracks, deeper hero fly-through with rising clouds, pinned story with drawn highlights
 
 ### Uncommitted changes at refresh time
 
 ```
-M  HANDOFF.md
-M  src/world/Avatar3D.jsx
-M  src/world/Hero.jsx
-M  src/world/Journey.jsx
-M  src/world/Scene.jsx
-M  src/world/Sidekick.jsx
-M  src/world/avatar3d.css
-M  src/world/avatarLife.js
-M  src/world/motion.css
-M  src/world/motion.js
+A  public/art/bestow.webp
+A  public/art/cloud-1.webp
+A  public/art/cloud-2.webp
+A  public/art/cloud-3.webp
+A  public/art/cloud-4.webp
+A  public/art/cloud-5.webp
+A  public/art/far.webp
+A  public/art/fg-left.webp
+A  public/art/fg-right.webp
+A  public/art/mu.webp
+A  public/art/quay.webp
+A  public/art/range.webp
+A  public/art/shifts.webp
+A  public/art/sky-day.webp
+A  public/art/sky-night.webp
+A  public/art/tower.webp
+A  public/art/valley.webp
+ M src/world/Hero.jsx
+ M src/world/Scene.jsx
+?? scripts/art/
+?? src/world/Painted.jsx
+?? src/world/painted.css
 ```
 <!-- handoff:auto:end -->
