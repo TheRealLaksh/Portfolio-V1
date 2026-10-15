@@ -95,12 +95,13 @@ A. Valley redesign (branch `feat/world-portfolio`): (1) give the wall and visito
 <!-- handoff:auto:start -->
 ## Auto: repo state
 
-_Refreshed 15 Oct 2026, 7:23 pm IST by `scripts/handoff.mjs` (runs on every commit). Don't edit inside this block._
+_Refreshed 15 Oct 2026, 7:25 pm IST by `scripts/handoff.mjs` (runs on every commit). Don't edit inside this block._
 
 Branch: `feat/world-portfolio` · remote: https://github.com/TheRealLaksh/Portfolio-V2.git
 
 ### Last 15 commits
 
+- `97307d8` 2026-10-15 19:23 Scroll-driven Work (3D card box that opens) and Brand (pinned sideways carousel with progress bar)
 - `f9b50e1` 2026-10-15 19:17 Scroll storytelling foundation: eased scroll tracks, deeper hero fly-through with rising clouds, pinned story with drawn highlights
 - `547fcbc` 2026-10-15 19:14 Make the journey scroll-driven: pinned stage, traveller walks the route as you scroll
 - `600c2f5` 2026-10-15 15:31 Link the websites section to the new booking page
@@ -115,13 +116,11 @@ Branch: `feat/world-portfolio` · remote: https://github.com/TheRealLaksh/Portfo
 - `0b94246` 2026-10-15 14:51 Add serverless endpoints for the guestbook wall and visitor counter
 - `2a7b35a` 2026-10-15 14:51 Add the valley sections: story, journey map, work, tools, desk, wall, contact
 - `c88d590` 2026-10-15 14:51 Add the valley hero: SVG scene, scroll fly-in, places and nav bar
-- `d471855` 2026-10-15 14:51 Add valley portfolio data, hooks, generative music and icons
 
 ### Uncommitted changes at refresh time
 
 ```
-M  src/world/Brand.jsx
-M  src/world/Work.jsx
+M  src/world/Flagship.jsx
 M  src/world/world3.css
 ```
 <!-- handoff:auto:end -->
