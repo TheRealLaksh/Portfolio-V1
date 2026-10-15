@@ -142,14 +142,6 @@ export const WORK = [
     tags: ['JavaScript', 'Vite', 'Firebase'], link: 'https://github.com/TheRealLaksh/mercatora', note: 'Open source' },
 ];
 
-// Websites for other people. Only public or clearly his own; client work waits for permission.
-export const SITES = [
-  { n: 'Arun Medicals', k: 'Local pharmacy site', c: '#1FA6A0', link: 'https://arun-medicals.vercel.app', img: null },
-  { n: 'About Varanasi', k: 'Web Wizards, 2nd place', c: '#E88A1F', link: 'https://github.com/TheRealLaksh/about-varanasi', img: null },
-  { n: 'Artistry', k: 'Artist portfolio', c: '#8E7CFF', link: 'https://github.com/TheRealLaksh/Artist-Portfolio', img: null },
-  { n: 'Kalavrndam', k: 'Arts organisation site', c: '#E8505B', link: 'https://github.com/TheRealLaksh/Kalavrndam', img: null },
-];
-
 // Tools, with what Laksh actually does with each. (confirm) the list.
 export const STACK = [
   { n: 'React', c: '#1FA6A0', cat: 'Frontend', p: 'This site, Profiley and most client builds. Hooks, routing, state.' },

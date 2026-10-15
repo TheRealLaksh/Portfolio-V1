@@ -32,7 +32,7 @@ React, Vite, Tailwind, Framer Motion, React Three Fiber, Lenis, AOS, react-route
 Migrating off the expired lakshp.live. URLs (meta tags, `/resume` redirect, resume link) now use lakshpradhwani.com. The contact address is now `work@lakshpradhwani.com` (Cloudflare Email Routing forwards it to Laksh's Gmail). Remaining: the resume PDF. `npm run build` was not run: `node_modules` is not installed in this folder (run `npm ci` first).
 
 ## Next steps
-A. Valley redesign (branch `feat/world-portfolio`): (1) give the wall and visitor counter a store: add an Upstash Redis integration to the `portfolio-v2-llp` Vercel project (env `UPSTASH_REDIS_REST_URL` + `UPSTASH_REDIS_REST_TOKEN`, or `KV_REST_API_URL` + `KV_REST_API_TOKEN`) and a `WALL_ADMIN_TOKEN` to delete notes; until then `/api/wall` and `/api/visit` return 503 and the page hides the counter and shows "the wall is warming up". (2) Capture real screenshots of the live work sites into `public/work/<id>.webp` (cards fall back to a placeholder if missing). (3) Confirm the items marked "(confirm)" in `src/world/data.js` (nationals year, tool list, boarding-pass route, which sites to show). (4) Real booking link: create a Google Calendar appointment schedule and paste its URL into `ME.book` in `src/world/data.js` (the one place; `/book`, the valley's Brand and contact sections all switch from WhatsApp to "Book a call" by themselves). (5) Test on a real phone and Safari; run axe on `/book` too. (6) Merge to `main` only on Laksh's say-so; then update sitemap/meta for `/` and `/book` (add `/book` to `public/sitemap.xml`; `/book` has no static prerendered head like `/hire`, its title/description are set at run time by `usePageMeta(BOOK_META)`, so link previews show the home tags until it gets a `vite.config.js` plugin entry like `hire-static-html`; add a `/book` rewrite in `vercel.json` only if that is done), and decide Varanasi vs Delhi NCR wording. (7) `/book` has no testimonials on purpose (none exist); when a client agrees to be quoted add a "Kind words" section where the comment in `Book.jsx` says. Add real service durations only if Laksh states them.
+A. Valley redesign (branch `feat/world-portfolio`): (1) give the wall and visitor counter a store: add an Upstash Redis integration to the `portfolio-v2-llp` Vercel project (env `UPSTASH_REDIS_REST_URL` + `UPSTASH_REDIS_REST_TOKEN`, or `KV_REST_API_URL` + `KV_REST_API_TOKEN`) and a `WALL_ADMIN_TOKEN` to delete notes; until then `/api/wall` and `/api/visit` return 503 and the page hides the counter and shows "the wall is warming up". (2) Capture real screenshots of the live work sites into `public/work/<id>.webp` (cards fall back to a placeholder if missing). (3) Confirm the items marked "(confirm)" in `src/world/data.js` (nationals year, tool list, boarding-pass route). (4) Real booking link: create a Google Calendar appointment schedule and paste its URL into `ME.book` in `src/world/data.js` (the one place; `/book`, the valley's Brand and contact sections all switch from WhatsApp to "Book a call" by themselves). (5) Test on a real phone and Safari; run axe on `/book` too. (6) Merge to `main` only on Laksh's say-so; then update sitemap/meta for `/` and `/book` (add `/book` to `public/sitemap.xml`; `/book` has no static prerendered head like `/hire`, its title/description are set at run time by `usePageMeta(BOOK_META)`, so link previews show the home tags until it gets a `vite.config.js` plugin entry like `hire-static-html`; add a `/book` rewrite in `vercel.json` only if that is done), and decide Varanasi vs Delhi NCR wording. (7) `/book` has no testimonials on purpose (none exist); when a client agrees to be quoted add a "Kind words" section where the comment in `Book.jsx` says. Add real service durations only if Laksh states them.
 00. After the 14 Oct fixes: in Search Console use URL Inspection on `https://lakshpradhwani.com/hire` and Request indexing (it was canonicalised to the home page until today); re-run the Rich Results Test on it; refresh the LinkedIn preview with the Post Inspector (https://www.linkedin.com/post-inspector/) and re-share the link in WhatsApp to see the new card. Optionally give `/hire` its own 1200x630 OG image (`og-image.jpg` is the home hero crop).
 0. Hire page: add a real booking link once Laksh creates a Google Calendar appointment schedule (put it in `CONTACT` and add a "Book a call" button on `/hire`); add two case studies. When `feat/skyline-world` is merged later, expect conflicts in `src/App.jsx` (routes), `src/components/sections/07-Services.jsx`, `Navbar.jsx`, `MobileNavbar.jsx`, `index.html` and `vercel.json`: keep the Hire page, the `/hire` route and the shared `packages.js` data.
 1. Regenerate `src/assets/resume/laksh.pradhwani.resume.pdf`: it contains the link `https://www.lakshp.live/` (export again from Profiley once its default portfolio link is updated).
@@ -50,6 +50,7 @@ A. Valley redesign (branch `feat/world-portfolio`): (1) give the wall and visito
 - Laksh chose small commits, pushed after each (every push to `main` goes live on Vercel). Session of 8 Oct 2026.
 
 ## Session log (newest first)
+- 2026-10-15 (night): removed the four "sites I have built" (Arun Medicals, About Varanasi, Artistry, Kalavrndam) at Laksh's request: deleted `SITES` from `src/world/data.js`, its cards from `Brand.jsx` (carousel and stacked layouts) and `Book.jsx`. The Web Wizards 2nd place milestone in the journey stays (it is an achievement, not a card). Dead `.sites`/`.st-dot`/`.bc-k`/`.bc.site` CSS in `world2.css`/`world3.css` left for later. Build passes.
 - 2026-10-15 (evening, 2): the valley's websites section (`Brand.jsx`) now also links to `/book` ("or book a call"), next to the `/hire` link.
 - 2026-10-15 (evening): built `/book` (route in `App.jsx`, `BOOK_META` in `routeMeta.js`, `Book.jsx`, `book.css`). Checked in the Browser pane: desktop 1280 and 390 px, day and night, no sideways scroll, the "What is included" toggle works (fixed `display:grid` overriding `hidden`), `npm run build` passes. `npx eslint` cannot run in this worktree (eslint 8 vs a flat config: `./config` export error), unrelated to this change.
 - 2026-10-15: the journey is now scroll-driven on wide screens (`src/world/Journey.jsx`, `.journey.scrub` block in `world2.css`): a 10-viewport-tall track with a sticky pinned stage (about 0.5 vh lead-in, 1 vh per stop); a rAF scroll listener (`useScrollFrame` + `trackProgress`) moves the traveller along the SVG path with `getPointAtLength` (eased between stops), draws the red route up to it and pans the map by writing DOM styles directly; React state only changes when the current stop does (card, dots). The Next stop button is gone there; dots, stop numbers and arrow keys scroll to that stop's position (Lenis `scrollTo`). Phones under 900 px and `prefers-reduced-motion` keep the old stacked layout with prev/next buttons (no pinning). Checked headless at 1280x720 day and night and 390x844, build passes, no sideways scroll, nav marks Journey. Laksh asked for this explicitly, despite the earlier no-scroll-scenes rule for other sites.
@@ -95,12 +96,13 @@ A. Valley redesign (branch `feat/world-portfolio`): (1) give the wall and visito
 <!-- handoff:auto:start -->
 ## Auto: repo state
 
-_Refreshed 15 Oct 2026, 7:26 pm IST by `scripts/handoff.mjs` (runs on every commit). Don't edit inside this block._
+_Refreshed 15 Oct 2026, 7:27 pm IST by `scripts/handoff.mjs` (runs on every commit). Don't edit inside this block._
 
 Branch: `feat/world-portfolio` · remote: https://github.com/TheRealLaksh/Portfolio-V2.git
 
 ### Last 15 commits
 
+- `9d9e30d` 2026-10-15 19:26 Scroll-driven stack: gift shakes, throws its lid and bursts the tools into a grid
 - `9ee7d3f` 2026-10-15 19:25 Scroll-driven Profiley section: highlights draw, resume builds itself, then every hat arrives
 - `97307d8` 2026-10-15 19:23 Scroll-driven Work (3D card box that opens) and Brand (pinned sideways carousel with progress bar)
 - `f9b50e1` 2026-10-15 19:17 Scroll storytelling foundation: eased scroll tracks, deeper hero fly-through with rising clouds, pinned story with drawn highlights
@@ -115,12 +117,15 @@ Branch: `feat/world-portfolio` · remote: https://github.com/TheRealLaksh/Portfo
 - `f588ec9` 2026-10-15 14:53 Use real screenshots for my own projects; add Mercatora
 - `f563f17` 2026-10-15 14:51 Mount the valley at / and keep the old home at /classic
 - `0b94246` 2026-10-15 14:51 Add serverless endpoints for the guestbook wall and visitor counter
-- `2a7b35a` 2026-10-15 14:51 Add the valley sections: story, journey map, work, tools, desk, wall, contact
 
 ### Uncommitted changes at refresh time
 
 ```
-M  src/world/Stack.jsx
-M  src/world/world3.css
+M  HANDOFF.md
+M  src/world/Book.jsx
+M  src/world/Brand.jsx
+ M src/world/Process.jsx
+M  src/world/data.js
+ M src/world/world3.css
 ```
 <!-- handoff:auto:end -->

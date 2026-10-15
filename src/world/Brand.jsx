@@ -1,26 +1,11 @@
 import React, { useCallback, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
-import { SITES, ME, waLink } from './data';
+import { ME, waLink } from './data';
 import { packages } from '../data/packages';
 import { clamp, range, ss, useTrack, useScrub } from './hooks';
 import Icon from './Icon';
 
 const PK_TONES = ['var(--teal-c)', 'var(--lilac-c)', 'var(--saffron)'];
-const host = (u) => u.replace(/^https?:\/\//, '').replace(/\/$/, '').replace(/^github\.com\/TheRealLaksh\//, 'github.com/');
-
-// A browser-window card for a site. The page area is an abstract placeholder in the site's colour:
-// no real screenshots exist yet, so nothing here pretends to be one.
-function SiteCard({ s, i }) {
-  return (
-    <a className="bc site" href={s.link} target="_blank" rel="noopener noreferrer" style={{ ['--sc']: s.c, ['--tilt']: `${[-1.4, 1.2, -1, 1.5][i % 4]}deg`, ['--dy']: `${[10, -14, 18, -6][i % 4]}px` }}>
-      <span className="win">
-        <span className="chrome"><i /><i /><i /><em>{host(s.link)}</em></span>
-        <span className="page"><b>{s.n}</b><span /><span /><span className="s" /></span>
-      </span>
-      <span className="cap"><b>{s.n}</b><span>{s.k} · visit</span></span>
-    </a>
-  );
-}
 
 export default function Brand() {
   const scrub = useScrub();
@@ -107,9 +92,7 @@ export default function Brand() {
                     <p>{p.bestFor}.</p>
                     <ul>{p.features.slice(0, 3).map((f) => <li key={f}>{f}</li>)}</ul>
                   </article>
-                ))}
-                <p className="bc-k hand" aria-hidden="true">sites I have built</p>
-                {SITES.map((s, i) => <SiteCard key={s.n} s={s} i={i} />)}
+                ))} s={s} i={i} />)}
               </div>
             </div>
             <div className="brand-prog" aria-hidden="true"><i ref={bar} /></div>
@@ -135,20 +118,6 @@ export default function Brand() {
           ))}
         </ul>
         <p className="pk-more" data-rv><Link to="/hire">See every package and what is included <Icon n="arrow" size={16} /></Link> <span className="pk-or">or</span> <Link to="/book">book a call <Icon n="arrow" size={16} /></Link></p>
-
-        <p className="sites-k" data-rv>Sites I have built</p>
-        <ul className="sites">
-          {SITES.map((s, i) => (
-            <li key={s.n} data-rv style={{ transitionDelay: `${i * 0.07}s` }}>
-              <a href={s.link} target="_blank" rel="noopener noreferrer" style={{ ['--sc']: s.c }}>
-                <span className="st-dot" aria-hidden="true" />
-                <b>{s.n}</b>
-                <span>{s.k}</span>
-                <Icon n="ext" size={15} />
-              </a>
-            </li>
-          ))}
-        </ul>
       </div>
     </section>
   );

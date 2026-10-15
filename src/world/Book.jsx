@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { ME, SITES, waLink } from './data';
+import { ME, waLink } from './data';
 import { packages, featuredWork } from '../data/packages';
 import { useReveal, useTheme } from './hooks';
 import usePageMeta from '../hooks/usePageMeta';
@@ -161,18 +161,6 @@ export default function Book() {
                 <a href={w.url} target="_blank" rel="noopener noreferrer">
                   <span className="bk-w-h"><b>{w.name}</b><em>{w.kind}</em><Icon n="ext" size={15} /></span>
                   <span className="bk-w-p">{w.description}</span>
-                </a>
-              </li>
-            ))}
-          </ul>
-          <ul className="sites bk-sites">
-            {SITES.map((s) => (
-              <li key={s.n}>
-                <a href={s.link} target="_blank" rel="noopener noreferrer" style={{ ['--sc']: s.c }}>
-                  <span className="st-dot" aria-hidden="true" />
-                  <b>{s.n}</b>
-                  <span>{s.k}</span>
-                  <Icon n="ext" size={15} />
                 </a>
               </li>
             ))}
