@@ -90,12 +90,13 @@ A. Valley redesign (branch `feat/world-portfolio`): (1) give the wall and visito
 <!-- handoff:auto:start -->
 ## Auto: repo state
 
-_Refreshed 15 Oct 2026, 2:56 pm IST by `scripts/handoff.mjs` (runs on every commit). Don't edit inside this block._
+_Refreshed 15 Oct 2026, 3:27 pm IST by `scripts/handoff.mjs` (runs on every commit). Don't edit inside this block._
 
 Branch: `feat/world-portfolio` · remote: https://github.com/TheRealLaksh/Portfolio-V2.git
 
 ### Last 15 commits
 
+- `a5c5ad9` 2026-10-15 14:56 Record the valley QA pass in HANDOFF
 - `afb5018` 2026-10-15 14:56 Fix boats jumping out of place and raise note contrast
 - `2d8f4b2` 2026-10-15 14:53 Polish the valley: pin placement, night clouds, draggable notes, cheaper window glow
 - `f588ec9` 2026-10-15 14:53 Use real screenshots for my own projects; add Mercatora
@@ -110,11 +111,10 @@ Branch: `feat/world-portfolio` · remote: https://github.com/TheRealLaksh/Portfo
 - `5582902` 2026-10-14 10:09 Add a skip link and fix nested controls and landmarks
 - `00b0a9b` 2026-10-14 10:09 Raise text contrast on the Hire page to WCAG AA
 - `be7cceb` 2026-10-14 10:07 Respect the reduced-motion setting
-- `0a0d812` 2026-10-14 10:06 Skip the preloader on /hire and for reduced-motion visitors
 
 ### Uncommitted changes at refresh time
 
 ```
-M  HANDOFF.md
+A  public/work/shiftsdeal.webp
 ```
 <!-- handoff:auto:end -->
