@@ -22,12 +22,13 @@ export const waLink = (m = "Hi Laksh, I found your website and I'd like to talk 
 export const PLACES = {
   shiftsdeal: {
     c: '#E8505B', side: 'left', tag: 'Now · Aug 2026', t: 'ShiftsDeal', r: 'Tech Head',
-    h: 'The whole platform, one person.',
+    h: 'From a basic starter to a live platform.',
     story: [
-      'ShiftsDeal is an early-stage venue-booking marketplace in Delhi. I joined on <b>1 August 2026</b> as a social media intern and video editor, moved into growth and cold calls, and ended up as the <b>entire tech function</b>.',
-      'I built the website from scratch and took it to production, wired <b>Razorpay</b> payments, and ship new features most days. The database outgrew the free tier within weeks and moved to a paid plan.',
+      'ShiftsDeal is an early-stage venue-booking marketplace in Delhi. I joined on <b>1 August 2026</b> as an intern: editing video, running social media and making cold calls to venue owners. Then the website needed an owner, and I became <b>Tech Head</b>.',
+      'The site began as a basic first version. I took it over and built it out into the live platform: <b>bookings with Razorpay payments</b>, a <b>venue-owner dashboard and admin panel</b>, <b>AI-assisted search and checks</b>, and an <b>email campaign system</b>, with automation and tests behind it. New features ship most days.',
+      'Right now I am building the <b>ShiftsDeal app</b>.',
     ],
-    nums: [['1 Aug', 'joined, 2026'], ['Solo', 'full-stack build'], ['Daily', 'feature shipping']],
+    nums: [['1 Aug', 'joined, 2026'], ['Daily', 'feature shipping'], ['App', 'in progress']],
     links: [['Visit ShiftsDeal', 'https://www.shiftsdeal.com']],
     journey: 8,
   },
@@ -35,49 +36,51 @@ export const PLACES = {
     c: '#8E7CFF', side: 'right', tag: 'Term 1 · 2026', t: "Masters' Union", r: 'UG, Data Science & AI',
     h: 'Learning business next to code.',
     story: [
-      'I got into the <b>UG programme in Data Science &amp; AI</b> at Masters\' Union in January 2026 and earned a <b>50% scholarship</b> after the proctored exam in June.',
+      'I am pursuing the <b>UG programme in Data Science &amp; AI</b> at Masters\' Union, <b>class of 2030</b>. I got in in January 2026.',
       'I picked it because I learn best from real, practical work, and because I want to understand business as well as computer science.',
     ],
-    nums: [['50%', 'scholarship'], ['2026–30', 'class'], ['Term 1', 'right now']],
+    nums: [['UG', 'Data Science & AI'], ['2030', 'class of'], ['Term 1', 'right now']],
     links: [],
     journey: 7,
   },
   bestow: {
-    c: '#1FA6A0', side: 'left', tag: 'Freelance · 2026', t: 'Bestow', r: 'Freelance developer',
+    c: '#1FA6A0', side: 'left', tag: 'Intern + freelance · 2026', t: 'Bestow', r: 'Intern and freelance developer',
     h: 'Client websites with a panel they can run.',
+    // Agency facts are from bestow.in (founded 2009; Vadodara, Ahmedabad, Rajkot, Gurgaon). Directories say 2008: confirm if it matters.
     story: [
-      'Through the agency <b>Bestow</b> I build full client websites with a content panel, so the client\'s own team can edit pages without calling me.',
-      'Each project goes from design directions to a handed-over zip and a live launch. The clients belong to the agency, so I only name them with permission.',
+      '<b>Bestow</b> is a creative and marketing agency, founded in 2009 and based in Gujarat (Vadodara and Ahmedabad) with offices in Rajkot and Gurgaon. It does branding, SEO, web design and apps.',
+      'I joined in August 2026 as an intern and now build their clients\' websites as a freelance developer: a full site plus a content panel, so the client\'s own team can edit pages without calling me.',
+      'Each project goes from design directions to a handed-over zip and a live launch. The clients belong to the agency, so I do not name them.',
     ],
-    nums: [['Site + CMS', 'per project'], ['Design first', 'several directions'], ['Handover', 'zip + live']],
+    nums: [['2009', 'agency founded'], ['Site + CMS', 'per project'], ['Zip + live', 'handover']],
     links: [['See services', '/hire']],
     journey: 8,
   },
   interns: {
-    c: '#F2A93B', side: 'left', tag: '2025', t: 'Internships', r: 'Four teams, one year',
+    c: '#F2A93B', side: 'left', tag: '2025 – now', t: 'Internships', r: 'Six teams since 2025',
     h: 'Where I learned to ship.',
     story: [
-      '<b>Unified Mentor</b> (Oct – Dec 2025): full-stack developer, four production apps.',
-      '<b>IIT Madras</b> (Aug – Oct 2025): eight-week AI and algorithmic problem-solving programme.',
+      '<b>Now:</b> <b>ShiftsDeal</b> (Aug 2026 – now), started as an intern on video, social media and cold calls and is now Tech Head. <b>Bestow</b> (Aug 2026 – now), intern and freelance developer on client websites.',
+      '<b>Unified Mentor</b> (Oct – Dec 2025): full-stack developer, four production apps. <b>IIT Madras</b> (Aug – Oct 2025): eight-week AI and algorithmic problem-solving programme.',
       '<b>MoreYeahs</b> (Aug – Sep 2025): Django REST backend for a gig platform. <b>Hotel Kavana</b> (Jun 2025): IT infrastructure, on site.',
     ],
-    nums: [['4', 'apps shipped at Unified Mentor'], ['8 wk', 'IIT Madras programme'], ['3', 'remote roles']],
+    nums: [['2', 'current roles'], ['4', 'apps shipped at Unified Mentor'], ['8 wk', 'IIT Madras programme']],
     links: [['Read the timeline', '#journey']],
     journey: 5,
   },
   range: {
-    c: '#E88A1F', side: 'right', tag: '2019 – 2024', t: 'The range', r: 'National-level shooter',
+    c: '#E88A1F', side: 'right', tag: 'Past · 2024 – 25', t: 'The range', r: 'Past: national-level shooter',
     h: 'Focus first. Then everything else.',
     story: [
-      'I shoot 10 m air pistol and reached the nationals in the U-17 category: <b>state rank 34, all-India rank 54</b>.',
-      'Shooting taught me calm under pressure and how to repeat one small motion perfectly. I bring the same habit to a codebase.',
+      'In the 2024 – 25 season I shot 10 m air pistol at the U-17 nationals: <b>state rank 34, all-India rank 54</b>. I have left shooting for now.',
+      'It taught me calm under pressure and how to repeat one small motion perfectly.',
     ],
-    nums: [['AIR 54', 'U-17 nationals'], ['State 34', 'rank'], ['10 m', 'air pistol']],
+    nums: [['AIR 54', 'U-17 nationals'], ['State 34', 'rank'], ['2024–25', 'season']],
     links: [],
     journey: 2,
   },
   me: {
-    c: '#FFC93C', side: 'left', tag: 'About me', t: "Hey, I'm Laksh", r: '18 · Developer · Shooter · Student',
+    c: '#FFC93C', side: 'left', tag: 'About me', t: "Hey, I'm Laksh", r: '18 · Developer · Student',
     h: 'I turn complicated problems into things people can use.',
     story: [],
     fun: [
@@ -87,14 +90,14 @@ export const PLACES = {
         ['Sunbeam School, Varanasi', 'PCM and Computer Science, 2024 to 2026.'],
       ]],
       ['Work', '#1FA6A0', [
-        ['Tech Head at ShiftsDeal', 'The whole platform, from nothing to production.'],
+        ['Tech Head at ShiftsDeal', 'I own the platform and am building the app.'],
+        ['Intern and freelance at Bestow', 'Client sites with admin panels.'],
         ['Four internships in 2025', 'Django, full-stack apps, IIT Madras and a hotel network.'],
-        ['Freelance with Bestow', 'Client sites with admin panels.'],
       ]],
       ['Off the clock', '#8E7CFF', [
-        ['Tabla', 'I keep tabla notes and play when I need a reset.'],
         ['Model UN', 'CHEMUN, IIMUN, TISB and the G20 MUN press corps.'],
-        ['Badminton and shooting', 'Precision, repeated.'],
+        ['Badminton', 'District level, and I still play.'],
+        ['Reading about business', 'Part of why I chose Masters\' Union.'],
       ]],
     ],
     nums: [['18', 'years old'], ['50+', 'GitHub repos, public and private']],
@@ -107,11 +110,11 @@ export const PLACES = {
 export const JOURNEY = [
   { y: '2019', t: 'Coimbatore', r: 'Chinmaya International Residential School', icon: 'cap',
     p: 'Five years in a residential school: House Captain, a Round Square committee seat and Model UNs from CHEMUN to the G20 press corps.' },
-  // Year of the nationals is inferred from the vault timeline (confirm).
-  { y: '2023', t: 'On the range', r: 'Nationals, 10 m air pistol', icon: 'target',
-    p: 'Years of early mornings on the range ended at the U-17 nationals: state rank 34 and all-India rank 54.' },
   { y: '2024', t: 'Back to Varanasi', r: 'Sunbeam School, Lahartara', icon: 'home',
     p: 'Class X at 87.8% with 94% in Maths. Then PCM and Computer Science, and the first real lines of code.' },
+  // The ranks are from the 2024-25 season (Laksh, 16 Oct 2026). The range sheet points at this stop (PLACES.range.journey = 2).
+  { y: '2024 – 25', t: 'On the range', r: 'Nationals, 10 m air pistol', icon: 'target',
+    p: 'Early mornings on the range led to the U-17 nationals: state rank 34 and all-India rank 54. I have left shooting for now.' },
   { y: 'Jun 2025', t: 'Hotel Kavana', r: 'IT infrastructure intern', icon: 'bed',
     p: 'Twenty days on site: hotel management systems, POS integrations, networks and a little workflow automation.' },
   { y: 'Jul 2025', t: 'First portfolio', r: 'GitHub opens, Web Wizards 2nd place', icon: 'code',
@@ -120,16 +123,16 @@ export const JOURNEY = [
     p: 'A Django gig platform, an eight-week AI programme with IIT Madras, then four production apps at Unified Mentor.' },
   { y: 'Dec 2025', t: 'Building in public', r: 'Profiley, Vaultara, Mercatora', icon: 'bulb',
     p: 'A resume builder, a privacy-first document vault and a mall management system, plus the first version of this site.' },
-  { y: 'Jan 2026', t: "Masters' Union", r: 'Admitted, then a 50% scholarship', icon: 'book',
-    p: 'Got into the UG Data Science and AI programme, and the scholarship went from 25% to 50% after the June exam.' },
+  { y: 'Jan 2026', t: "Masters' Union", r: 'UG, Data Science & AI', icon: 'book',
+    p: 'Got into the UG Data Science and AI programme at Masters\' Union, class of 2030.' },
   { y: 'Aug 2026', t: 'ShiftsDeal and Bestow', r: 'Tech Head, plus freelance', icon: 'rocket',
-    p: 'Joined ShiftsDeal as an intern and became Tech Head within weeks. Started client websites with Bestow the same month.' },
+    p: 'Joined ShiftsDeal as an intern (video, social media, cold calls), then became Tech Head. Started client websites with Bestow the same month.' },
 ];
 
 // Selected work: real, public, linkable. (confirm) which others he wants featured.
 export const WORK = [
-  { id: 'shiftsdeal', n: 'ShiftsDeal', k: 'Venue-booking marketplace', c: '#E8505B', d: 'Built end to end as the only developer: listings, bookings, Razorpay payments and an ops dashboard.',
-    tags: ['React', 'Supabase', 'Razorpay'], link: 'https://www.shiftsdeal.com', note: 'My day job' },
+  { id: 'shiftsdeal', n: 'ShiftsDeal', k: 'Venue-booking marketplace', c: '#E8505B', d: 'Took a basic first version and built it into the live platform: bookings, Razorpay payments, owner dashboard, admin panel and AI search. The app is next.',
+    tags: ['Next.js', 'Razorpay', 'AI search'], link: 'https://www.shiftsdeal.com', note: 'App in progress' },
   { id: 'profiley', n: 'Profiley', k: 'Resume builder', c: '#1FA6A0', d: 'Live-preview resume editor with ten-plus themes and one-click PDF export. This site\'s resume page is rendered by it.',
     tags: ['React 19', 'Vite', 'Firebase'], link: 'https://profiley.lakshpradhwani.com', note: 'Free to use' },
   { id: 'helios', n: 'Helios', k: 'Web music player', c: '#8E7CFF', d: 'Adaptive cover colour, five ambiences, a waveform seekbar, three visualisers, a queue and a 3-band equaliser. No frameworks.',
@@ -165,18 +168,18 @@ export const STACK = [
 
 // "How I work" case study. Facts only, no invented metrics.
 export const PROCESS = {
-  title: 'Taking ShiftsDeal from nothing to live',
+  title: 'Taking ShiftsDeal from a basic start to live',
   steps: [
-    { t: 'Listen first', p: 'I spent the first days on cold calls, hearing what venue owners actually asked before I wrote a line of code.' },
-    { t: 'Smallest working slice', p: 'Listings, then bookings, then payments. Each slice shipped before the next one started.' },
+    { t: 'Listen first', p: 'I spent the first days on cold calls, hearing what venue owners actually asked before I changed a line of code.' },
+    { t: 'Smallest working slice', p: 'Start from what already works, then improve one slice at a time: listings, bookings, then payments. Each slice shipped before the next one started.' },
     { t: 'Make money flow', p: 'Razorpay went in early, because a booking product that cannot take payment is a brochure.' },
-    { t: 'Watch it break', p: 'Real users found what tests missed. When the database outgrew the free tier I upgraded the same week.' },
+    { t: 'Watch it break', p: 'Real users found what tests missed. I fixed it the same week and added a test so it stays fixed.' },
     { t: 'Ship again', p: 'Small releases most days, so every fix reaches users quickly and nothing piles up.' },
   ],
 };
 
 export const OFF_CLOCK = {
-  list1: ['Tabla and music', 'Model UN and debate', 'Shooting and badminton'],
+  list1: ['Reading about business', 'Model UN and debate', 'Badminton, and shooting in the past'],
   list2: ['Building with Claude Code every day', 'Asking "how does that work?" about everything'],
 };
 

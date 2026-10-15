@@ -165,7 +165,7 @@ export default function Story() {
             <p className="tell" ref={tell} data-rv>
               I started out as a <span className="hl b-sky">national-level shooter</span>, learning to stay calm and repeat one small motion perfectly.
               Then I got hooked on <span className="hl b-sun">how things get built.</span> So I taught myself to code, and
-              I&rsquo;ve been <span className="hl b-coral">shipping real products</span> ever since, from hotel networks to <span className="hl b-lilac">a startup&rsquo;s whole platform.</span>
+              I&rsquo;ve been <span className="hl b-coral">shipping real products</span> ever since, from hotel networks to <span className="hl b-lilac">a startup&rsquo;s live platform.</span>
             </p>
             <svg className="doodles" ref={svg} aria-hidden="true" focusable="false" />
             {NOTE_STICKIES.map((s, i) => (

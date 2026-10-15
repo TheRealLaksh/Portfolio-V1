@@ -144,7 +144,7 @@ export default function Book() {
         <section className="bk-sec" aria-labelledby="bk-about-h">
           <h2 id="bk-about-h" data-rv>About</h2>
           <div className="bk-about" data-rv>
-            <p>I&rsquo;m a freelance full-stack developer. I&rsquo;m the Tech Head at ShiftsDeal, where I built the platform and took it to production, and I build client sites with admin panels through the agency Bestow.</p>
+            <p>I&rsquo;m a freelance full-stack developer. I&rsquo;m the Tech Head at ShiftsDeal, where I took over the platform and built it out into the live product, and I build client sites with admin panels through the agency Bestow.</p>
             <p>I&rsquo;m also in the first year of the UG programme in Data Science &amp; AI at Masters&rsquo; Union.</p>
             <p className="bk-links">
               <a href={ME.resume} target="_blank" rel="noopener noreferrer">Resume <Icon n="ext" size={14} /></a>

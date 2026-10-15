@@ -282,7 +282,7 @@ export default function Journey() {
               <div className="jc-in" key="intro">
                 <div className="jc-top"><span className="jc-yr">2019 &rarr; now</span><span className="jc-ic"><Icon n="map" size={20} /></span></div>
                 <h3>Ready when you are.</h3>
-                <p>Nine stops: from a residential school in Coimbatore, through the shooting range, a hotel network and four internships, to a Delhi startup.</p>
+                <p>Nine stops: from a residential school in Coimbatore, through Varanasi, the shooting range, a hotel network and four internships, to a Delhi startup.</p>
               </div>
             )}
           </article>
