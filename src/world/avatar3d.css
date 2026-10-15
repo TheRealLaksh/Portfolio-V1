@@ -1,0 +1,66 @@
+/* Laksh's 3D avatar, animated (see Avatar3D.jsx). Everything is sized in container units (cqw / cqh) so it
+   looks the same whether the figure is 300 units tall in the valley or 120 px tall as the sidekick.
+   Calm by design: small, slow, believable. */
+
+.a3 { position: absolute; inset: 0; container-type: size; --lx: 0; --ly: 0; --ht: 0deg; pointer-events: none; }
+.a3-part { position: absolute; inset: 0; }
+.a3-img { position: absolute; inset: 0; width: 100%; height: 100%; user-select: none; -webkit-user-drag: none; }
+.a3-shadow { position: absolute; left: -10%; right: -10%; bottom: -1.2%; height: 3.4%; border-radius: 50%; background: radial-gradient(closest-side, rgba(27, 31, 59, .34), transparent); }
+
+/* weight shifts slowly from foot to foot */
+.a3-sway { position: absolute; inset: 0; transform-origin: 50% 98%; animation: a3Sway 8s ease-in-out infinite alternate; }
+@keyframes a3Sway { from { transform: rotate(-.5deg) translateX(-.4cqw); } to { transform: rotate(.5deg) translateX(.4cqw); } }
+
+/* breathing: the chest and head rise a hair around the waist */
+.a3-up { position: absolute; inset: 0; transform-origin: 50% 58.1%; perspective: 340cqw; animation: a3Breath 4.8s ease-in-out infinite; }
+@keyframes a3Breath { 0%, 100% { transform: scaleY(1) translateY(0); } 50% { transform: scaleY(1.011) translateY(-.15cqh); } }
+
+/* the head turns towards the pointer (set by avatarLife.js), keeps a slow idle sway, and tilts on reactions */
+.a3-head-follow { position: absolute; inset: 0; transform-origin: 48% 15.6%;
+  transform: rotateZ(calc(var(--lx) * 3deg + var(--ht))) rotateY(calc(var(--lx) * 17deg)) rotateX(calc(var(--ly) * -8deg)) translateX(calc(var(--lx) * .7cqw));
+  transition: transform .45s ease-out; }
+.a3-head-idle { position: absolute; inset: 0; transform-origin: 48% 15.6%; animation: a3Head 6.4s ease-in-out infinite alternate; }
+@keyframes a3Head { from { transform: rotate(-.9deg); } 50% { transform: rotate(.3deg) translateY(-.08cqh); } to { transform: rotate(1deg); } }
+
+/* blink: two lids the colour of his skin close over the eyes */
+.a3-lid { position: absolute; top: 8.4%; width: 7.4%; height: 1.2%; border-radius: 50%; transform: scaleY(0); transform-origin: 50% 0; animation: a3Blink 5.8s infinite; box-shadow: 0 0 .5cqw .2cqw var(--lc); background: var(--lc); border-bottom: .35cqw solid rgba(52, 26, 18, .55); }
+.a3-lid.l { left: 36%; --lc: #C58A68; }
+.a3-lid.r { left: 49.6%; --lc: #E7B696; }
+@keyframes a3Blink { 0%, 90%, 100% { transform: scaleY(0); } 92.5% { transform: scaleY(1); } 95% { transform: scaleY(0); } 97% { transform: scaleY(1); } 99% { transform: scaleY(0); } }
+
+/* ---- reactions (data-act) ---- */
+.a3[data-act="hop"] .a3-sway { animation: a3Hop .85s cubic-bezier(.3, .7, .4, 1); }
+@keyframes a3Hop {
+  0% { transform: scale(1.03, .96); } 28% { transform: translateY(-6cqh) scale(.99, 1.02); } 62% { transform: translateY(0) scale(1.03, .96); } 82% { transform: scale(.995, 1.005); } 100% { transform: none; }
+}
+.a3[data-act="nod"] .a3-head-idle { animation: a3Nod 1.5s ease-in-out; }
+@keyframes a3Nod { 0%, 100% { transform: rotateX(0); } 20%, 60% { transform: rotateX(14deg) translateY(.5cqh); } 40%, 80% { transform: rotateX(-2deg); } }
+.a3[data-act="tilt"] { --ht: -7deg; }
+.a3[data-act="lookup"] .a3-head-idle { animation: a3Up 2s ease-in-out; }
+@keyframes a3Up { 0%, 100% { transform: rotateX(0); } 30%, 70% { transform: rotateX(-12deg) rotateZ(3deg); } }
+.a3[data-act="hop"] .a3-lid, .a3[data-act="nod"] .a3-lid { animation-duration: 1.4s; }
+
+/* ---- walking: a waddle, with a quick bob ---- */
+.a3[data-walk="1"] .a3-sway { animation: a3Waddle .62s ease-in-out infinite; }
+@keyframes a3Waddle { 0%, 100% { transform: rotate(-2.4deg) translateY(0); } 25% { transform: rotate(0) translateY(-1.4cqh); } 50% { transform: rotate(2.4deg) translateY(0); } 75% { transform: rotate(0) translateY(-1.4cqh); } }
+.a3[data-flip="1"] { transform: scaleX(-1); }
+
+/* ---- in the valley ---- */
+.me3d { position: absolute; left: 86.81%; top: 48.67%; width: 6.22%; height: 32.89%; pointer-events: none; }
+.w-root[data-theme="night"] .a3-img { filter: brightness(.8) saturate(.88); }
+.w-root[data-theme="night"] .a3-lid { filter: brightness(.8); }
+
+@media (prefers-reduced-motion: reduce) {
+  .a3-sway, .a3-up, .a3-head-idle, .a3-lid { animation: none !important; }
+  .a3-head-follow { transition: none; }
+}
+
+/* ---- the sidekick: a small Laksh in the bottom-left corner ---- */
+.sk { position: fixed; left: 10px; bottom: 0; z-index: 55; pointer-events: none; transform: translateX(-150%); transition: transform 1.1s cubic-bezier(.3, .8, .3, 1); }
+.sk.on { transform: none; }
+.sk-fig { position: relative; height: clamp(130px, 20vh, 200px); aspect-ratio: 302 / 898; pointer-events: auto; cursor: pointer; }
+.sk-say { position: absolute; left: calc(100% + 6px); bottom: 62%; margin: 0; width: max-content; max-width: 260px; background: #fff; color: #1B1F3B; font: 700 18px/1.15 var(--hand); padding: 7px 13px 8px; border: 2px solid #1B1F3B; border-radius: 16px 16px 16px 4px; box-shadow: 4px 4px 0 #1B1F3B; animation: skPop .55s var(--spring) both, skOut .5s ease 6s forwards; }
+@keyframes skPop { from { opacity: 0; transform: translateY(8px) scale(.8); transform-origin: 0 100%; } }
+@keyframes skOut { to { opacity: 0; transform: translateY(-4px); } }
+@media (max-width: 899px) { .sk-say { font-size: 16px; max-width: 170px; } }
+@media (prefers-reduced-motion: reduce) { .sk { transition: none; } .sk-say { animation: none; } }

@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { PLACES, ME } from './data';
 import { clamp, ss, range, useTrack, useScrub } from './hooks';
+import { attachGaze, reactAvatar } from './avatarLife';
 import {
   VB, pct, SkyLayer, CloudLayer, KitesLayer, FarLayer, HillLeftLayer, HillRightLayer, GhatLayer, RiverLayer,
   MUArt, ShiftsDealArt, InternsArt, BestowArt, RangeArt, TablaArt, MeArt, ForegroundLeft, ForegroundRight, ForegroundBottom, Birds,
@@ -192,8 +193,13 @@ export default function Hero({ music, onMusic, goJourney }) {
   }, []);
 
   const pick = useCallback((id) => {
+    // he reacts when you open him: a nod, a hop, a curious tilt, a look up, in turn
+    if (id === 'me' && focusRef.current !== 'me') reactAvatar(layers.current.me?.querySelector('.a3'));
     setFocus((cur) => (cur === id ? null : id));
   }, []);
+
+  // his head follows the pointer
+  useEffect(() => attachGaze(layers.current.me?.querySelector('.a3')), []);
 
   useEffect(() => { applyFocus(focusId); }, [focusId, applyFocus]);
 

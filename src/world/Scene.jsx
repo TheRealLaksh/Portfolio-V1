@@ -1,4 +1,5 @@
 import React from 'react';
+import Avatar3D from './Avatar3D';
 
 // The valley: hand-drawn SVG layers in a 1600 x 900 space. Colours come from CSS variables
 // (see world.css), so day and night are one set of shapes with two palettes.
@@ -518,14 +519,13 @@ export function TablaArt({ playing }) {
 
 // Laksh: the 3D avatar Laksh supplied (public/me-avatar.webp, background cut out, 302x898 px, feet at the bottom edge).
 // Local space matches the old drawing: origin on the ground between the feet, +y down, about 296 units tall.
+// His 3D avatar is an HTML puppet (see Avatar3D.jsx) placed on the same ground spot and height the old SVG
+// figure had: about 296 units tall, feet at (1432, 734) in the 1600 x 900 scene.
 export function MeArt() {
   return (
-    <S>
-      <g className="me-fig" transform="translate(1432 732) scale(.98)">
-        <ellipse cx="2" cy="8" rx="46" ry="7" fill="var(--ink)" opacity=".22" />
-        <image href="/me-avatar.webp" x="-44" y="-300" width="101.5" height="302" preserveAspectRatio="xMidYMax meet" />
-      </g>
-    </S>
+    <div className="me3d">
+      <Avatar3D />
+    </div>
   );
 }
 
