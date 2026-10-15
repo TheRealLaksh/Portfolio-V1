@@ -95,6 +95,7 @@ Branch: `feat/world-portfolio` · remote: https://github.com/TheRealLaksh/Portfo
 
 ### Last 15 commits
 
+- `2a7b35a` 2026-10-15 14:51 Add the valley sections: story, journey map, work, tools, desk, wall, contact
 - `c88d590` 2026-10-15 14:51 Add the valley hero: SVG scene, scroll fly-in, places and nav bar
 - `d471855` 2026-10-15 14:51 Add valley portfolio data, hooks, generative music and icons
 - `09358a8` 2026-10-14 12:14 Show current role, study and Delhi NCR in the About cards
@@ -109,25 +110,14 @@ Branch: `feat/world-portfolio` · remote: https://github.com/TheRealLaksh/Portfo
 - `f4e9e1e` 2026-10-14 10:04 Keep the Hire me icon visible in the mobile nav and name the icon links
 - `a46055f` 2026-10-14 10:02 Make section links work from /hire and on direct #links
 - `ac238ef` 2026-10-14 09:56 Give /hire its own title, canonical and link-preview tags
-- `8c6f3cf` 2026-10-13 19:32 Record that the Hire page is live
 
 ### Uncommitted changes at refresh time
 
 ```
-M index.html
+A  api/_redis.js
+A  api/visit.js
+A  api/wall.js
+ M index.html
  M src/App.jsx
-A  src/world/Brand.jsx
-A  src/world/Flagship.jsx
-A  src/world/Hello.jsx
-A  src/world/Journey.jsx
-A  src/world/Life.jsx
-A  src/world/Process.jsx
-A  src/world/Stack.jsx
-A  src/world/Story.jsx
-A  src/world/Wall.jsx
-A  src/world/Work.jsx
-A  src/world/World.jsx
-A  src/world/world2.css
-?? api/
 ```
 <!-- handoff:auto:end -->
