@@ -23,6 +23,8 @@ React, Vite, Tailwind, Framer Motion, React Three Fiber, Lenis, AOS, react-route
 - `public/signature/`: images used in Laksh's Gmail signatures, hosted at https://lakshpradhwani.com/signature/<file>. `icon-linkedin.png`, `icon-github.png`, `icon-instagram.png` (36x36, white Simple Icons glyph on black circle) are the live signature icons. `lp-logo.png` is no longer in the signature but is kept because older sent emails reference it. Do not move or delete these or the signature images break.
 
 ## Status
+**Valley redesign in progress on branch `feat/world-portfolio` (cut from `main` on 15 Oct 2026, worktree `..\Portfolio-V2-world`, previews on branch pushes; `main` and the live site are untouched).** Laksh's reference is https://www.jameschugh.com/ (an illustrated "valley" you fly into, journey map, work cards, tool box, desk of movable things, guestbook wall, hotkey contact). Decision (15 Oct 2026): recreate its structure and interaction patterns, but every illustration, word and logo is original: hand-built SVG art, Laksh's own copy and facts, no AI images, no invented numbers. The new site lives in `src/world/` and is mounted at `/` in `src/App.jsx` (outside the classic `Layout`); the previous home page is kept at `/classic`, `/hire` is unchanged. Not yet verified: real devices, Safari, and performance on low-end phones. Needs Laksh: Vercel storage for the wall/counter (see Next steps), real work screenshots, a booking link.
+
 **Hire page is LIVE at https://lakshpradhwani.com/hire (merged to `main` and deployed 13 Oct 2026, commit `b03f2c5`).** The redesign branch `feat/skyline-world` is still separate and unmerged. `/hire` is a client-facing page: intro with WhatsApp and email actions, the three packages, recent work (Profiley, Helios, Calibridge), a three-step "how it starts", the stack, and a closing call to action. The packages live in one file, `src/data/packages.js` (also holds `CONTACT`, `whatsappLink`, `mailLink`, `featuredWork`, `stack`), and are shown by the shared `src/components/ui/PackageCard.jsx` on both `/hire` and the homepage Services section. Prices are starting prices in rupees: Business Website + CMS 30,000, AI Features + Automation 55,000, Custom Web App 75,000, matching LinkedIn's Services page and the Google Business Profile (starter 15,000, multi-page 30,000, custom 75,000). Keep all four in step. The old `/booking` page was a demo (made-up slots, fake "Booking Confirmed!", dollar prices); it is gone and `/booking` and `/bookings` redirect to `/hire`.
 
 **14 Oct 2026 bug-fix pass on /hire (nine fixes, all live and re-tested on production with Playwright + axe-core):** own head/canonical/link-preview tags, section links from /hire, direct `/#hash` links, mobile Hire me icon, chat teaser, sidebar overlap, preloader skipped off-home, reduced motion, contrast and keyboard/landmark fixes. Details in the session log.
@@ -30,6 +32,7 @@ React, Vite, Tailwind, Framer Motion, React Three Fiber, Lenis, AOS, react-route
 Migrating off the expired lakshp.live. URLs (meta tags, `/resume` redirect, resume link) now use lakshpradhwani.com. The contact address is now `work@lakshpradhwani.com` (Cloudflare Email Routing forwards it to Laksh's Gmail). Remaining: the resume PDF. `npm run build` was not run: `node_modules` is not installed in this folder (run `npm ci` first).
 
 ## Next steps
+A. Valley redesign (branch `feat/world-portfolio`): (1) give the wall and visitor counter a store: add an Upstash Redis integration to the `portfolio-v2-llp` Vercel project (env `UPSTASH_REDIS_REST_URL` + `UPSTASH_REDIS_REST_TOKEN`, or `KV_REST_API_URL` + `KV_REST_API_TOKEN`) and a `WALL_ADMIN_TOKEN` to delete notes; until then `/api/wall` and `/api/visit` return 503 and the page hides the counter and shows "the wall is warming up". (2) Capture real screenshots of the live work sites into `public/work/<id>.webp` (cards fall back to a placeholder if missing). (3) Confirm the items marked "(confirm)" in `src/world/data.js` (nationals year, tool list, boarding-pass route, which sites to show). (4) Real booking link in `ME.book`. (5) Test on a real phone and Safari; run axe. (6) Merge to `main` only on Laksh's say-so; then update sitemap/meta for `/` and decide Varanasi vs Delhi NCR wording. (7) Later: a Topmate-style booking page (Laksh's request, modelled on topmate.io/jameschughh).
 00. After the 14 Oct fixes: in Search Console use URL Inspection on `https://lakshpradhwani.com/hire` and Request indexing (it was canonicalised to the home page until today); re-run the Rich Results Test on it; refresh the LinkedIn preview with the Post Inspector (https://www.linkedin.com/post-inspector/) and re-share the link in WhatsApp to see the new card. Optionally give `/hire` its own 1200x630 OG image (`og-image.jpg` is the home hero crop).
 0. Hire page: add a real booking link once Laksh creates a Google Calendar appointment schedule (put it in `CONTACT` and add a "Book a call" button on `/hire`); add two case studies. When `feat/skyline-world` is merged later, expect conflicts in `src/App.jsx` (routes), `src/components/sections/07-Services.jsx`, `Navbar.jsx`, `MobileNavbar.jsx`, `index.html` and `vercel.json`: keep the Hire page, the `/hire` route and the shared `packages.js` data.
 1. Regenerate `src/assets/resume/laksh.pradhwani.resume.pdf`: it contains the link `https://www.lakshp.live/` (export again from Profiley once its default portfolio link is updated).
@@ -40,11 +43,13 @@ Migrating off the expired lakshp.live. URLs (meta tags, `/resume` redirect, resu
 - Mail forwarding is verified: test mails to work@ and me@ showed "Forwarded" in Cloudflare's activity log on 9 Oct 2026.
 
 ## Decisions not to undo
+- Valley site (`src/world/`): scene art is hand-built SVG with CSS-variable palettes (day/night); never replace it with AI-generated images. Hero fly-in uses `position: sticky` and needs `html.world-on` (set in `World.jsx`) to clip instead of hide horizontal overflow. No word-by-word scroll-fill text; reveals are one-time. The generative music in `src/world/audio.js` is original (Web Audio), no samples. The wall stores the poster's email but never returns it from the API.
 - Domain is lakshpradhwani.com (Hostinger, bought 8 Oct 2026). Do not reintroduce lakshp.live.
 - Public contact address is `work@lakshpradhwani.com`; `me@` is for personal use.
 - Laksh chose small commits, pushed after each (every push to `main` goes live on Vercel). Session of 8 Oct 2026.
 
 ## Session log (newest first)
+- 2026-10-15: started the valley redesign on `feat/world-portfolio`: added `src/world/` (data, hooks, Web Audio music, hand-drawn SVG scene, hero with scroll fly-in and clickable places, nav bar with day/night and music, story, journey map, work cards, websites + packages, Profiley section, tool box, process, desk of movable things, guestbook wall, hotkey contact), `api/wall.js` + `api/visit.js` (Upstash REST), web fonts in `index.html`, and routes in `App.jsx` (`/` is the valley, `/classic` the old home). Checked with headless Chromium at 1280x720 and 390x844: sections render, no sideways scroll on mobile, place sheets and the journey/work dialogs open.
 - 2026-10-14: About section terminal card now says Freelance Full-Stack Developer and adds the Masters' Union line; the location radar says Delhi NCR (Delhi coordinates). Footer, Contact, hero, `index.html`, `routeMeta.js` and JSON-LD still say Varanasi: site-wide change still waiting on Laksh.
 - 2026-10-14: About section bio (`02-About.jsx`) rewritten with current facts: freelance full-stack developer in Delhi NCR, B.Tech Data Science & AI at Masters' Union, four production apps at Unified Mentor (Helios, Calibridge), link to `/hire`; 'high school student' and 'seeking' wording removed. ShiftsDeal left out of the text on purpose (same call as the LinkedIn About). Plaksha/Outskill kept from the original text (not in the vault, confirm).
 - 2026-10-14: Production check after the nine fixes: `curl` shows /hire with its own title and canonical and the home page unchanged; Playwright on the live site (nav, footer, direct hash, chat chip, mobile nav at 390/360/320 px, teaser gone after 12 s, sidebar clear at 1024/1280, no preloader on /hire, home still has it) all pass; axe-core 0 violations on desktop. Still open: Varanasi vs Delhi NCR wording, a real booking link, case studies.
@@ -84,12 +89,13 @@ Migrating off the expired lakshp.live. URLs (meta tags, `/resume` redirect, resu
 <!-- handoff:auto:start -->
 ## Auto: repo state
 
-_Refreshed 14 Oct 2026, 12:14 pm IST by `scripts/handoff.mjs` (runs on every commit). Don't edit inside this block._
+_Refreshed 15 Oct 2026, 2:51 pm IST by `scripts/handoff.mjs` (runs on every commit). Don't edit inside this block._
 
-Branch: `main` · remote: https://github.com/TheRealLaksh/Portfolio-V2.git
+Branch: `feat/world-portfolio` · remote: https://github.com/TheRealLaksh/Portfolio-V2.git
 
 ### Last 15 commits
 
+- `09358a8` 2026-10-14 12:14 Show current role, study and Delhi NCR in the About cards
 - `8d1b7b9` 2026-10-14 12:13 Update the About bio with current role, study and freelance work
 - `7400fc0` 2026-10-14 10:15 Record the Hire page bug-fix pass in HANDOFF
 - `5582902` 2026-10-14 10:09 Add a skip link and fix nested controls and landmarks
@@ -104,12 +110,34 @@ Branch: `main` · remote: https://github.com/TheRealLaksh/Portfolio-V2.git
 - `8c6f3cf` 2026-10-13 19:32 Record that the Hire page is live
 - `b03f2c5` 2026-10-13 19:27 Add a Hire me link to the desktop and mobile navigation
 - `5c2e5d5` 2026-10-13 19:27 Line up the action buttons on the package cards
-- `1e0317b` 2026-10-13 19:25 Name the new packages in the structured data
 
 ### Uncommitted changes at refresh time
 
 ```
-M  HANDOFF.md
-M  src/components/sections/02-About.jsx
+M HANDOFF.md
+ M index.html
+ M src/App.jsx
+A  src/world/Icon.jsx
+A  src/world/api.js
+A  src/world/audio.js
+A  src/world/data.js
+A  src/world/hooks.js
+?? api/
+?? src/world/Bar.jsx
+?? src/world/Brand.jsx
+?? src/world/Flagship.jsx
+?? src/world/Hello.jsx
+?? src/world/Hero.jsx
+?? src/world/Journey.jsx
+?? src/world/Life.jsx
+?? src/world/Process.jsx
+?? src/world/Scene.jsx
+?? src/world/Stack.jsx
+?? src/world/Story.jsx
+?? src/world/Wall.jsx
+?? src/world/Work.jsx
+?? src/world/World.jsx
+?? src/world/world.css
+?? src/world/world2.css
 ```
 <!-- handoff:auto:end -->
