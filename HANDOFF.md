@@ -49,6 +49,7 @@ A. Valley redesign (branch `feat/world-portfolio`): (1) give the wall and visito
 - Laksh chose small commits, pushed after each (every push to `main` goes live on Vercel). Session of 8 Oct 2026.
 
 ## Session log (newest first)
+- 2026-10-15: Laksh confirmed a ShiftsDeal screenshot may be shown; added `public/work/shiftsdeal.webp` (captured from the live site with the cookie banner rejected), so the ShiftsDeal card is no longer a placeholder.
 - 2026-10-15 (later): polish and QA on `feat/world-portfolio`. Fixed boats jumping to the top-left (a CSS animation transform replaces an SVG `transform` attribute: position on an outer `<g>`, animate an inner one), sticky-note and desk contrast, night clouds, pin collisions; windows only glow at night (no filters in day, which keeps scroll cheap). Added real screenshots in `public/work/` for Profiley, Helios and CaliBridge (ShiftsDeal keeps a placeholder until Laksh confirms it may be shown; the fan-made Stranger Things site was left out because its art is Netflix's). Headless Chromium: 180 fps scroll on the valley, music starts/stops, keyboard opens a place and Esc closes it, wall form validates and degrades when the API is missing, axe wcag2a/aa clean after the contrast fix, `/classic` and `/hire` still load. Preview deploys on every push (needs Vercel login); `/api/*` return 503 until the Redis store is added.
 - 2026-10-15: started the valley redesign on `feat/world-portfolio`: added `src/world/` (data, hooks, Web Audio music, hand-drawn SVG scene, hero with scroll fly-in and clickable places, nav bar with day/night and music, story, journey map, work cards, websites + packages, Profiley section, tool box, process, desk of movable things, guestbook wall, hotkey contact), `api/wall.js` + `api/visit.js` (Upstash REST), web fonts in `index.html`, and routes in `App.jsx` (`/` is the valley, `/classic` the old home). Checked with headless Chromium at 1280x720 and 390x844: sections render, no sideways scroll on mobile, place sheets and the journey/work dialogs open.
 - 2026-10-14: About section terminal card now says Freelance Full-Stack Developer and adds the Masters' Union line; the location radar says Delhi NCR (Delhi coordinates). Footer, Contact, hero, `index.html`, `routeMeta.js` and JSON-LD still say Varanasi: site-wide change still waiting on Laksh.
@@ -96,6 +97,7 @@ Branch: `feat/world-portfolio` · remote: https://github.com/TheRealLaksh/Portfo
 
 ### Last 15 commits
 
+- `9099463` 2026-10-15 15:27 Show a real ShiftsDeal screenshot on its work card
 - `a5c5ad9` 2026-10-15 14:56 Record the valley QA pass in HANDOFF
 - `afb5018` 2026-10-15 14:56 Fix boats jumping out of place and raise note contrast
 - `2d8f4b2` 2026-10-15 14:53 Polish the valley: pin placement, night clouds, draggable notes, cheaper window glow
@@ -110,11 +112,10 @@ Branch: `feat/world-portfolio` · remote: https://github.com/TheRealLaksh/Portfo
 - `7400fc0` 2026-10-14 10:15 Record the Hire page bug-fix pass in HANDOFF
 - `5582902` 2026-10-14 10:09 Add a skip link and fix nested controls and landmarks
 - `00b0a9b` 2026-10-14 10:09 Raise text contrast on the Hire page to WCAG AA
-- `be7cceb` 2026-10-14 10:07 Respect the reduced-motion setting
 
 ### Uncommitted changes at refresh time
 
 ```
-A  public/work/shiftsdeal.webp
+M  HANDOFF.md
 ```
 <!-- handoff:auto:end -->
