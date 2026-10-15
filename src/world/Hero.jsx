@@ -11,7 +11,7 @@ const FOCAL = { x: 0.62, y: 0.58 }; // the point the scene flies into
 // Pins sit above their place. x, y are in the 1600 x 900 scene space.
 const PINS = [
   { id: 'mu', x: 150, y: 506, tag: '2026', mark: 'MU' },
-  { id: 'shiftsdeal', x: 732, y: 322, tag: 'Now', mark: 'SD' },
+  { id: 'shiftsdeal', x: 850, y: 426, tag: 'Now', mark: 'SD' },
   { id: 'interns', x: 1124, y: 92, tag: '2025', mark: '25' },
   { id: 'bestow', x: 1379, y: 130, tag: '2026', mark: 'B' },
   { id: 'range', x: 1205, y: 466, tag: 'AIR 54', mark: 'R' },

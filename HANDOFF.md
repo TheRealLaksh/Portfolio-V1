@@ -95,6 +95,7 @@ Branch: `feat/world-portfolio` · remote: https://github.com/TheRealLaksh/Portfo
 
 ### Last 15 commits
 
+- `f588ec9` 2026-10-15 14:53 Use real screenshots for my own projects; add Mercatora
 - `f563f17` 2026-10-15 14:51 Mount the valley at / and keep the old home at /classic
 - `0b94246` 2026-10-15 14:51 Add serverless endpoints for the guestbook wall and visitor counter
 - `2a7b35a` 2026-10-15 14:51 Add the valley sections: story, journey map, work, tools, desk, wall, contact
@@ -109,18 +110,13 @@ Branch: `feat/world-portfolio` · remote: https://github.com/TheRealLaksh/Portfo
 - `0a0d812` 2026-10-14 10:06 Skip the preloader on /hire and for reduced-motion visitors
 - `4d038d4` 2026-10-14 10:05 Hide the social sidebar where it overlaps the page content
 - `7ac7e03` 2026-10-14 10:04 Stop the chat teaser from covering the page on phones
-- `f4e9e1e` 2026-10-14 10:04 Keep the Hire me icon visible in the mobile nav and name the icon links
 
 ### Uncommitted changes at refresh time
 
 ```
-A  public/work/calibridge.webp
-A  public/work/helios.webp
-A  public/work/profiley.webp
- M src/world/Hero.jsx
- M src/world/Story.jsx
-M  src/world/data.js
- M src/world/world.css
- M src/world/world2.css
+M  src/world/Hero.jsx
+M  src/world/Story.jsx
+M  src/world/world.css
+M  src/world/world2.css
 ```
 <!-- handoff:auto:end -->

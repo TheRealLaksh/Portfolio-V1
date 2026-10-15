@@ -253,9 +253,9 @@
 .w-root .key:hover .cap { transform: translateY(-3px); } .w-root .key:active .cap, .w-root .key.press .cap { transform: translateY(5px); }
 .w-root .foot-note { position: relative; z-index: 3; margin-top: 90px; padding: 0 20px 110px; font-size: 14px; color: #2b3150; } .w-root[data-theme="night"] .foot-note { color: #FFF3DA; }
 .w-root .clouds-foot { position: absolute; left: 0; right: 0; bottom: 0; height: 190px; pointer-events: none; z-index: 2; }
-.w-root .clouds-foot i { position: absolute; bottom: -70px; width: 62%; height: 170px; background: radial-gradient(closest-side at 18% 70%, #fff 96%, transparent), radial-gradient(closest-side at 42% 55%, #fff 96%, transparent), radial-gradient(closest-side at 66% 65%, #fff 96%, transparent), radial-gradient(closest-side at 86% 72%, #fff 96%, transparent); background-size: 100% 100%; background-repeat: no-repeat; opacity: .97; }
+.w-root .clouds-foot i { position: absolute; bottom: -70px; width: 62%; height: 170px; background: radial-gradient(closest-side at 18% 70%, var(--cloud-foot) 96%, transparent), radial-gradient(closest-side at 42% 55%, var(--cloud-foot) 96%, transparent), radial-gradient(closest-side at 66% 65%, var(--cloud-foot) 96%, transparent), radial-gradient(closest-side at 86% 72%, var(--cloud-foot) 96%, transparent); background-size: 100% 100%; background-repeat: no-repeat; opacity: .97; }
 .w-root .clouds-foot i:nth-child(1) { left: -14%; } .w-root .clouds-foot i:nth-child(2) { right: -16%; bottom: -90px; } .w-root .clouds-foot i.front { left: 20%; width: 62%; bottom: -110px; }
-.w-root[data-theme="night"] .clouds-foot i { filter: brightness(.35) saturate(.8); }
+
 
 /* ---------- small screens ---------- */
 @media (max-width: 899px) {

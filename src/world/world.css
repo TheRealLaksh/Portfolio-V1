@@ -34,7 +34,7 @@
   --fg: #2F8A47; --fg-hi: #52B463; --fg-leaf: #2A7A3E;
   --rug: #E8505B; --tabla-body: #C98B52; --tabla-head: #F5E6C8; --tabla-metal: #D79A3C;
   --sign: #1B1F3B; --sign-t: #FFC93C; --glow: transparent; --lampglass: rgba(255, 240, 190, .35);
-  --night-o: 0; --day-o: 1;
+  --night-o: 0; --day-o: 1; --cloud-foot: #FFFFFF;
 
   color-scheme: light;
   background: var(--paper);
@@ -68,7 +68,7 @@
   --fg: #14363B; --fg-hi: #1E4B4C; --fg-leaf: #0F2D33;
   --rug: #A8384F; --tabla-body: #7B5A52; --tabla-head: #CBBFA6; --tabla-metal: #B8863A;
   --sign: #FFC93C; --sign-t: #1B1F3B; --glow: rgba(255, 190, 90, .85); --lampglass: rgba(255, 200, 100, .9);
-  --night-o: 1; --day-o: 0;
+  --night-o: 1; --day-o: 0; --cloud-foot: #3A3A7A;
   color-scheme: dark;
 }
 
@@ -165,15 +165,16 @@
 @keyframes flick { 50% { transform: scale(1.18, .9); } }
 .w-root .step-a { fill: var(--step-a); } .w-root .step-b { fill: var(--step-b); } .w-root .step-edge { stroke: var(--step-edge); stroke-width: 2; fill: none; }
 .w-root .brick { fill: var(--brick); } .w-root .brick2 { fill: var(--brick2); } .w-root .roof { fill: var(--roof); }
-.w-root .trim { fill: var(--trim); } .w-root .win { fill: var(--win); filter: drop-shadow(0 0 3px var(--glow)); } .w-root .win-dark { fill: var(--win-dark); }
+.w-root .trim { fill: var(--trim); } .w-root .win { fill: var(--win); } .w-root .win-dark { fill: var(--win-dark); }
 .w-root .door { fill: var(--door); } .w-root .wall { fill: var(--wall); } .w-root .wall2 { fill: var(--wall2); }
 .w-root .awn-a { fill: var(--awn-a); } .w-root .awn-b { fill: var(--awn-b); } .w-root .awn-edge { fill: var(--awn-a); }
 .w-root .sign { fill: var(--sign); } .w-root .sign-t { fill: var(--sign-t); font: 800 13px var(--sans); letter-spacing: .06em; }
-.w-root .bulb { fill: #FFE27A; filter: drop-shadow(0 0 5px #FFD23F); animation: bulb 2.6s ease-in-out infinite; opacity: .55; }
+.w-root .bulb { fill: #FFE27A; animation: bulb 2.6s ease-in-out infinite; opacity: .55; }
 .w-root[data-theme="night"] .bulb { opacity: 1; }
-@keyframes bulb { 50% { filter: drop-shadow(0 0 9px #FFD23F) brightness(1.2); } }
+@keyframes bulb { 50% { opacity: .85; } }
+.w-root[data-theme="night"] .win, .w-root[data-theme="night"] .win-big { filter: drop-shadow(0 0 4px var(--glow)); }
 .w-root .plaza { fill: var(--plaza); } .w-root .tower { fill: var(--tower); } .w-root .tower-hi { fill: var(--tower-hi); }
-.w-root .wood-wall { fill: var(--woodwall); } .w-root .chim { fill: var(--chim); } .w-root .win-big { fill: var(--win); filter: drop-shadow(0 0 6px var(--glow)); }
+.w-root .wood-wall { fill: var(--woodwall); } .w-root .chim { fill: var(--chim); } .w-root .win-big { fill: var(--win); }
 .w-root .lane { stroke: var(--trim); stroke-width: 3; stroke-dasharray: 10 8; fill: none; opacity: .7; }
 .w-root .rug { fill: var(--rug); } .w-root .tabla-body { fill: var(--tabla-body); } .w-root .tabla-head { fill: var(--tabla-head); } .w-root .tabla-metal { fill: var(--tabla-metal); }
 .w-root .flag { fill: var(--rose-c); animation: flap 2.2s ease-in-out infinite; transform-box: fill-box; transform-origin: 0 50%; }
