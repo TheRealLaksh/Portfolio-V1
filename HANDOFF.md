@@ -96,12 +96,13 @@ A. Valley redesign (branch `feat/world-portfolio`): (1) give the wall and visito
 <!-- handoff:auto:start -->
 ## Auto: repo state
 
-_Refreshed 15 Oct 2026, 7:27 pm IST by `scripts/handoff.mjs` (runs on every commit). Don't edit inside this block._
+_Refreshed 15 Oct 2026, 7:30 pm IST by `scripts/handoff.mjs` (runs on every commit). Don't edit inside this block._
 
 Branch: `feat/world-portfolio` · remote: https://github.com/TheRealLaksh/Portfolio-V2.git
 
 ### Last 15 commits
 
+- `71bf850` 2026-10-15 19:27 Remove the four sites-I-have-built cards (Arun Medicals, About Varanasi, Artistry, Kalavrndam)
 - `9d9e30d` 2026-10-15 19:26 Scroll-driven stack: gift shakes, throws its lid and bursts the tools into a grid
 - `9ee7d3f` 2026-10-15 19:25 Scroll-driven Profiley section: highlights draw, resume builds itself, then every hat arrives
 - `97307d8` 2026-10-15 19:23 Scroll-driven Work (3D card box that opens) and Brand (pinned sideways carousel with progress bar)
@@ -116,16 +117,15 @@ Branch: `feat/world-portfolio` · remote: https://github.com/TheRealLaksh/Portfo
 - `2d8f4b2` 2026-10-15 14:53 Polish the valley: pin placement, night clouds, draggable notes, cheaper window glow
 - `f588ec9` 2026-10-15 14:53 Use real screenshots for my own projects; add Mercatora
 - `f563f17` 2026-10-15 14:51 Mount the valley at / and keep the old home at /classic
-- `0b94246` 2026-10-15 14:51 Add serverless endpoints for the guestbook wall and visitor counter
 
 ### Uncommitted changes at refresh time
 
 ```
-M  HANDOFF.md
-M  src/world/Book.jsx
 M  src/world/Brand.jsx
- M src/world/Process.jsx
-M  src/world/data.js
- M src/world/world3.css
+M  src/world/Hello.jsx
+M  src/world/Life.jsx
+M  src/world/Process.jsx
+M  src/world/Wall.jsx
+M  src/world/world3.css
 ```
 <!-- handoff:auto:end -->

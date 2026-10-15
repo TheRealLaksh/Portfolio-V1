@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import { OFF_CLOCK } from './data';
+import { range, ss, backOut, useTrack, useScrub } from './hooks';
 import Icon from './Icon';
 
 // Everything on the desk can be dragged (pointer events, so touch works too).
@@ -51,7 +52,24 @@ const Polaroid = ({ children, cap, style, cls = '' }) => (
 
 export default function Life({ music, onMusic }) {
   const desk = useRef(null);
+  const scrub = useScrub();
   useDrag(desk);
+
+  // The board zooms up to you and everything on it flies in from outside, one piece at a time.
+  useTrack(desk, (p) => {
+    const d = desk.current;
+    if (!d) return;
+    d.style.transform = `scale(${(0.9 + 0.1 * ss(range(p, 0.18, 0.4))).toFixed(4)})`;
+    d.querySelectorAll('.item').forEach((el, i) => {
+      const t = range(p, 0.22 + i * 0.022, 0.4 + i * 0.022);
+      const e = t < 1 ? backOut(t) : 1;
+      const a = i * 2.4;
+      el.style.translate = `${(Math.cos(a) * 720 * (1 - e)).toFixed(0)}px ${(Math.sin(a) * 420 * (1 - e) - 180 * (1 - e)).toFixed(0)}px`;
+      el.style.rotate = `${((1 - e) * (i % 2 ? 50 : -50)).toFixed(1)}deg`;
+      el.style.scale = (0.5 + 0.5 * Math.min(1, e)).toFixed(3);
+      el.style.opacity = String(Math.min(1, t * 3));
+    });
+  }, { mode: 'pass', enabled: scrub, damp: 9 });
   return (
     <section className="life torn" id="life" aria-label="Off the clock">
       <div className="wrap">
@@ -61,7 +79,7 @@ export default function Life({ music, onMusic }) {
           <p>18. Based between Varanasi and Delhi NCR. When I am not coding, I am usually learning tabla or reading about business.</p>
         </div>
 
-        <div className="desk" ref={desk} data-rv>
+        <div className="desk" ref={desk} {...(scrub ? {} : { 'data-rv': '' })}>
           <Polaroid cls="p1" cap="me, mid-smile" style={{ ['--r']: '-5deg', ['--pc']: '#E8505B' }}>
             <img src="/me.webp" alt="Laksh smiling in a black kurta, under a leafy tree" loading="lazy" />
           </Polaroid>

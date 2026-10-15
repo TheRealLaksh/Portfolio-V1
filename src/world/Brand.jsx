@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { ME, waLink } from './data';
-import { packages } from '../data/packages';
+import { packages, whatsappLink } from '../data/packages';
 import { clamp, range, ss, useTrack, useScrub } from './hooks';
 import Icon from './Icon';
 
@@ -85,14 +85,20 @@ export default function Brand() {
             </div>
             <div className="brand-car">
               <div className="brand-row" ref={row}>
-                {packages.map((p, i) => (
+                {packages.flatMap((p, i) => [
                   <article key={p.id} className="bc pk" style={{ ['--pc']: PK_TONES[i % 3], ['--tilt']: `${[-1, 1.2, -.8][i % 3]}deg` }} tabIndex={0}>
                     <b className="pk-p">from {p.price}</b>
                     <h3>{p.name}</h3>
                     <p>{p.bestFor}.</p>
                     <ul>{p.features.slice(0, 3).map((f) => <li key={f}>{f}</li>)}</ul>
-                  </article>
-                ))} s={s} i={i} />)}
+                  </article>,
+                  <article key={`${p.id}-2`} className="bc pk pk-2" style={{ ['--pc']: PK_TONES[i % 3], ['--tilt']: `${[1.2, -1, 1][i % 3]}deg`, ['--dy']: '14px' }} tabIndex={0}>
+                    <b className="pk-p">{p.name}</b>
+                    <p className="pk-d">{p.description}</p>
+                    <ul>{p.features.slice(3).map((f) => <li key={f}>{f}</li>)}</ul>
+                    <a className="pk-go" href={whatsappLink(`Hi Laksh, I'd like to ask about: ${p.name}.`)} target="_blank" rel="noopener noreferrer">{p.cta} <Icon n="ext" size={14} /></a>
+                  </article>,
+                ])}
               </div>
             </div>
             <div className="brand-prog" aria-hidden="true"><i ref={bar} /></div>

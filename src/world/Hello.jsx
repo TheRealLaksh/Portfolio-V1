@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { ME, waLink } from './data';
+import { range, ss, backOut, useTrack, useScrub } from './hooks';
 import Icon from './Icon';
 
 const mailto = `mailto:${ME.email}?subject=${encodeURIComponent('Project enquiry')}`;
@@ -16,6 +17,38 @@ const KEYS = [
 export default function Hello() {
   const [pressed, setPressed] = useState(null);
   const [copied, setCopied] = useState(false);
+  const scrub = useScrub();
+  const sec = useRef(null);
+  const h2 = useRef(null);
+  const sub = useRef(null);
+  const mat = useRef(null);
+  const clouds = useRef(null);
+
+  // The headline zooms in out of the sky, the keys drop onto the mat one by one, and the cloud bank rises behind.
+  useTrack(sec, (p0, dt, vh) => {
+    // this is the last section, so its progress tops out below 1: stretch it to the reachable range
+    const h = sec.current.offsetHeight;
+    const p = Math.min(1, p0 / (h / (h + vh)));
+    const a = ss(range(p, 0.1, 0.34));
+    h2.current.style.transform = `translate3d(0,${((1 - a) * 50).toFixed(1)}px,0) scale(${(0.88 + 0.12 * a).toFixed(4)})`;
+    h2.current.style.opacity = String(a);
+    sub.current.style.opacity = String(ss(range(p, 0.22, 0.4)));
+    mat.current.style.opacity = String(ss(range(p, 0.28, 0.42)));
+    mat.current.style.transform = `translate3d(0,${((1 - ss(range(p, 0.28, 0.46))) * 40).toFixed(1)}px,0)`;
+    mat.current.querySelectorAll('.kw').forEach((kw, i) => {
+      const t = range(p, 0.36 + i * 0.07, 0.5 + i * 0.07);
+      const e = t < 1 ? backOut(t) : 1;
+      kw.style.transform = `translate3d(0,${((1 - e) * -90).toFixed(1)}px,0) scale(${(0.6 + 0.4 * e).toFixed(3)})`;
+      kw.style.opacity = String(Math.min(1, t * 3));
+    });
+    const c = clouds.current;
+    if (c) {
+      const q = ss(range(p, 0.1, 0.7));
+      c.querySelectorAll('i').forEach((el, i) => {
+        el.style.translate = `${((i === 0 ? -1 : i === 1 ? 1 : 0) * (1 - q) * 120).toFixed(0)}px ${((1 - q) * (90 + i * 40)).toFixed(0)}px`;
+      });
+    }
+  }, { mode: 'pass', enabled: scrub, damp: 8 });
 
   const copy = async () => {
     try { await navigator.clipboard.writeText(ME.email); setCopied(true); setTimeout(() => setCopied(false), 1600); } catch { /* clipboard blocked */ }
@@ -38,12 +71,12 @@ export default function Hello() {
   }, []);
 
   return (
-    <section className="hello" id="hello" aria-label="Contact">
+    <section className="hello" id="hello" aria-label="Contact" ref={sec}>
       <div className="hello-sky" aria-hidden="true" />
       <div className="wrap inner">
-        <h2 data-rv>Let&rsquo;s build something <span className="rq">people use.</span></h2>
-        <p data-rv>Open to projects with founders, startups and local businesses. I reply fast.</p>
-        <div className="keys-mat" data-rv>
+        <h2 ref={h2} {...(scrub ? {} : { 'data-rv': '' })}>Let&rsquo;s build something <span className="rq">people use.</span></h2>
+        <p ref={sub} {...(scrub ? {} : { 'data-rv': '' })}>Open to projects with founders, startups and local businesses. I reply fast.</p>
+        <div className="keys-mat" ref={mat} {...(scrub ? {} : { 'data-rv': '' })}>
           <p className="keys-hint">psst, these work on your keyboard too: {KEYS.map((x) => <kbd key={x.k}>{x.k.toUpperCase()}</kbd>)}</p>
           <div className="keys">
             {KEYS.map((x) => (
@@ -75,7 +108,7 @@ export default function Hello() {
         </div>
       </div>
       <div className="foot-note"><p>&copy; {new Date().getFullYear()} Laksh Pradhwani. Hand-built in React, with a little help from Claude Code.</p></div>
-      <div className="clouds-foot" aria-hidden="true"><i /><i /><i className="front" /></div>
+      <div className="clouds-foot" aria-hidden="true" ref={clouds}><i /><i /><i className="front" /></div>
     </section>
   );
 }

@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
+import { range, ss, useTrack, useScrub } from './hooks';
 import Icon from './Icon';
 import { fetchNotes, postNote } from './api';
 
@@ -27,6 +28,21 @@ export default function Wall() {
   const [done, setDone] = useState(false);
   const [count, setCount] = useState(0);
   const form = useRef(null);
+  const sec = useRef(null);
+  const rowsEl = useRef(null);
+  const scrub = useScrub();
+
+  // The two rows of notes slide against each other as you scroll past, and the wall zooms up to full size.
+  useTrack(sec, (p) => {
+    const r = rowsEl.current;
+    if (!r) return;
+    const e = ss(range(p, 0.28, 0.58));
+    r.style.transform = `scale(${(0.9 + 0.1 * e).toFixed(4)})`;
+    r.style.opacity = String(0.15 + 0.85 * e);
+    r.querySelectorAll('.nw-row').forEach((row, i) => {
+      row.style.translate = `${((i ? 1 : -1) * (p - 0.5) * 360).toFixed(1)}px 0`;
+    });
+  }, { mode: 'pass', enabled: scrub, damp: 9 });
 
   useEffect(() => {
     let alive = true;
@@ -66,7 +82,7 @@ export default function Wall() {
   const rows = [list.slice(0, half), list.slice(half)];
 
   return (
-    <section className="notes torn torn-bot" id="notes" aria-label="Notes wall">
+    <section className="notes torn torn-bot" id="notes" aria-label="Notes wall" ref={sec}>
       <div className="wrap nw-head">
         <div className="sec-head" data-rv>
           <p className="kicker"><Icon n="chat" size={16} />The wall</p>
@@ -76,7 +92,7 @@ export default function Wall() {
         <button className="nw-cta" type="button" onClick={() => setOpen(true)}><span className="nw-pen" aria-hidden="true"><Icon n="pen" size={18} /></span>Write a note</button>
       </div>
 
-      <div className="nw-rows" aria-live="polite">
+      <div className="nw-rows" aria-live="polite" ref={rowsEl}>
         {list.length === 0 ? (
           <p className="nw-empty">{notes === null ? 'Loading the wall…' : online ? 'The wall is empty. Be the first to pin a note.' : 'The wall is warming up. Email me in the meantime.'}</p>
         ) : (

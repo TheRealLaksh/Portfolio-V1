@@ -154,3 +154,36 @@
 .w-root .gs-tip { position: absolute; z-index: 6; width: 290px; padding: 16px 18px; background: var(--card); border: 2px solid var(--ink); border-radius: 18px; box-shadow: 6px 6px 0 var(--tc, var(--ink)); opacity: 0; pointer-events: none; transform: translate(-50%, -50%) scale(.92); transition: opacity .2s, transform .35s var(--spring); }
 .w-root .gs-tip.in { opacity: 1; transform: translate(-50%, -50%); }
 .w-root .gs-tip p { font-size: 14.5px; line-height: 1.4; }
+
+/* ---------- process: a line that draws itself ---------- */
+.w-root .proc-line { position: relative; height: clamp(400px, 56vh, 500px); margin-top: 30px; transform-origin: 50% 50%; will-change: transform; }
+.w-root .proc-line svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; fill: none; }
+.w-root .pl-bg { stroke: var(--ink); stroke-width: 3; stroke-dasharray: 3 11; stroke-linecap: round; opacity: .28; }
+.w-root .pl-fg { stroke: var(--saffron); stroke-width: 6; stroke-linecap: round; stroke-dashoffset: 99999; }
+.w-root .pl-pen { fill: var(--rose-c); stroke: var(--ink); stroke-width: 2.5; opacity: 0; }
+.w-root .proc-line ol { position: absolute; inset: 0; }
+.w-root .pnode { position: absolute; width: 0; height: 0; }
+.w-root .pnode .pn { position: absolute; left: -26px; top: -26px; background: var(--c); transform: scale(.3); opacity: 0; transition: transform .6s var(--spring), opacity .3s; }
+.w-root .pnode.in .pn { transform: scale(1); opacity: 1; }
+.w-root .pnode .pc { position: absolute; left: -125px; width: 250px; padding: 12px 14px; background: var(--card); border: 2px solid var(--ink); border-radius: 16px; box-shadow: 5px 5px 0 var(--ink); opacity: 0; transition: opacity .45s .08s, transform .6s .08s var(--ease); }
+.w-root .pnode.dn .pc { top: 40px; transform: translateY(18px); }
+.w-root .pnode.up .pc { bottom: 40px; transform: translateY(-18px); }
+.w-root .pnode.in .pc { opacity: 1; transform: none; }
+.w-root .pnode h3 { font: 800 19px var(--sans); letter-spacing: -.025em; }
+.w-root .pnode p { margin-top: 4px; font-size: 13.5px; line-height: 1.4; color: var(--ink-2); }
+.w-root .brand-row .pk-2 { background: color-mix(in srgb, var(--pc) 10%, var(--card)); display: flex; flex-direction: column; }
+.w-root .pk-2 .pk-d { margin-top: 12px; font-size: 15px; color: var(--ink); }
+.w-root .pk-go { margin-top: auto; padding-top: 14px; display: inline-flex; align-items: center; gap: 6px; font-weight: 800; font-size: 14.5px; }
+.w-root .pk-go:hover { text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 4px; }
+.w-root .brand-top { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 0 40px; }
+.w-root .brand-top .pk-more { margin-bottom: 6px; }
+.w-root .brand-row .bc.pk { min-height: 0; }
+
+/* ---------- off the clock: a cork board you can rearrange ---------- */
+.w-root { --cork: #C99A5E; --cork-2: #B98A4E; --frame: #8E6234; }
+.w-root[data-theme="night"] { --cork: #6B4E3F; --cork-2: #5C4235; --frame: #3C2A2A; }
+.w-root .desk { border: 14px solid var(--frame); border-radius: 28px; background-color: var(--cork); background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' seed='4'/%3E%3CfeColorMatrix values='0 0 0 0 .35 0 0 0 0 .22 0 0 0 0 .1 0 0 0 .55 0'/%3E%3C/filter%3E%3Crect width='220' height='220' filter='url(%23n)'/%3E%3C/svg%3E"); box-shadow: inset 0 0 0 3px rgba(255, 240, 210, .25), inset 0 10px 30px rgba(0, 0, 0, .2), 0 26px 50px -22px rgba(0, 0, 0, .5); }
+.w-root .desk-hint { color: rgba(255, 248, 230, .9); text-shadow: 0 1px 2px rgba(0, 0, 0, .35); }
+.w-root.w-scrub .desk { will-change: transform; transform-origin: 50% 40%; }
+.w-root.w-flat .desk { border: 0; background: none; box-shadow: none; }
+.w-root.w-flat .desk-hint { color: var(--ink-2); text-shadow: none; }
