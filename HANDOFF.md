@@ -117,6 +117,7 @@ Branch: `feat/world-portfolio` · remote: https://github.com/TheRealLaksh/Portfo
 
 ### Last 15 commits
 
+- `07855aa` 2026-10-16 02:10 Journey is now a scroll-driven train line: nine station scenes, parallax camera, dawn-to-night sky, passport stamps
 - `51d87aa` 2026-10-16 01:56 Trim journey stops: drop Round Square, G20 press corps, Class X marks and Web Wizards; Building in public now Profiley and CaliBridge
 - `94c1c9b` 2026-10-16 01:50 Show the ShiftsDeal app phone only while the ShiftsDeal place is selected
 - `785f5bd` 2026-10-16 01:50 Play That's What I Like by Bruno Mars from the music button via Spotify's embedded player
@@ -131,16 +132,11 @@ Branch: `feat/world-portfolio` · remote: https://github.com/TheRealLaksh/Portfo
 - `bb24aa7` 2026-10-16 00:40 Journey map comes alive; idle motion and hover polish in every section
 - `09299de` 2026-10-16 00:38 Pointer polish and floating doodles across the page
 - `a0d6154` 2026-10-16 00:34 Bring the valley to life: ticking clock, chimney smoke, walkers, glints, fish, balloon, flocks, fireflies
-- `85a3bb9` 2026-10-16 00:32 Use Laksh's 3D avatar as the hero figure
 
 ### Uncommitted changes at refresh time
 
 ```
-M HANDOFF.md
-M  src/world/Journey.jsx
- M src/world/motion.css
-A  src/world/train.css
-A  src/world/trainArt.jsx
- M src/world/world2.css
+M  src/world/motion.css
+M  src/world/world2.css
 ```
 <!-- handoff:auto:end -->
