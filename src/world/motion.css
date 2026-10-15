@@ -1,0 +1,103 @@
+/* Ambient life. Everything here is decoration: small loops that make the valley and the sections feel
+   inhabited. Loaded after world.css, world2.css and world3.css. Reduced motion switches the lot off at the end. */
+
+/* ---------- valley: little things that move ---------- */
+@keyframes mSpin { to { transform: rotate(360deg); } }
+.w-root .clk-m { transform-box: fill-box; transform-origin: 50% 100%; animation: mSpin 45s steps(60) infinite; }
+.w-root .clk-h { transform-box: fill-box; transform-origin: 0 0; animation: mSpin 540s linear infinite; }
+
+.w-root .smoke { fill: var(--cloud); opacity: 0; transform-box: fill-box; transform-origin: center; animation: smokeUp 6s ease-out infinite; }
+@keyframes smokeUp {
+  0% { opacity: 0; transform: translate(0, 0) scale(.5); }
+  16% { opacity: .75; }
+  100% { opacity: 0; transform: translate(40px, -96px) scale(3); }
+}
+
+.w-root .beam-wrap { opacity: var(--night-o); }
+.w-root .beam { fill: rgba(255, 240, 170, .14); opacity: 0; animation: beamSweep 9s ease-in-out infinite; }
+.w-root .beam-b { animation-delay: -4.5s; }
+@keyframes beamSweep { 0%, 100% { opacity: 0; } 30%, 50% { opacity: 1; } }
+
+.w-root .walker { animation: walkAlong 30s linear infinite; }
+@keyframes walkAlong {
+  0% { transform: translate(0, 0) scaleX(1); }
+  47% { transform: translate(var(--dx), var(--dy)) scaleX(1); }
+  50% { transform: translate(var(--dx), var(--dy)) scaleX(-1); }
+  97% { transform: translate(0, 0) scaleX(-1); }
+  100% { transform: translate(0, 0) scaleX(1); }
+}
+.w-root .leg { transform-box: fill-box; transform-origin: 50% 0; animation: legSwing .72s ease-in-out infinite alternate; }
+.w-root .lg2 { animation-delay: -.36s; }
+@keyframes legSwing { from { transform: rotate(-28deg); } to { transform: rotate(28deg); } }
+
+.w-root .glint { fill: #fff; opacity: 0; scale: .2; transform-box: fill-box; transform-origin: center; animation: glintA 3.4s ease-in-out infinite; }
+@keyframes glintA { 0%, 100% { opacity: 0; scale: .2; } 50% { opacity: .95; scale: 1; } }
+.w-root .fish { opacity: 0; transform-box: fill-box; transform-origin: center; animation: fishJump 7.5s ease-in-out infinite; }
+@keyframes fishJump {
+  0%, 26% { opacity: 0; transform: translate(-8px, 10px) rotate(-60deg); }
+  27% { opacity: 1; }
+  34% { transform: translate(8px, -34px) rotate(-5deg); }
+  41% { transform: translate(26px, -6px) rotate(55deg); opacity: 1; }
+  44%, 100% { opacity: 0; transform: translate(34px, 10px) rotate(70deg); }
+}
+.w-root .splash { fill: none; stroke: var(--ripple); stroke-width: 2.5; opacity: 0; transform-box: fill-box; transform-origin: center; animation: splashA 7.5s ease-out infinite; }
+@keyframes splashA { 0%, 38% { opacity: 0; transform: scale(.3); } 41% { opacity: .9; } 62%, 100% { opacity: 0; transform: scale(1.7); } }
+.w-root .sailing { animation: sailX 38s ease-in-out infinite alternate; }
+.w-root .sailing.s2 { animation-duration: 46s; animation-direction: alternate-reverse; }
+@keyframes sailX { from { transform: translateX(-80px); } to { transform: translateX(90px); } }
+
+.w-root .balloon { animation: balloonRise 75s linear infinite; }
+@keyframes balloonRise {
+  0% { transform: translate(-150px, 90px); opacity: 0; }
+  6% { opacity: 1; }
+  94% { opacity: 1; }
+  100% { transform: translate(420px, -270px); opacity: 0; }
+}
+.w-root .balloon-sway { transform-box: fill-box; transform-origin: 50% 0; animation: balloonSway 6s ease-in-out infinite alternate; }
+@keyframes balloonSway { from { transform: rotate(-3.5deg); } to { transform: rotate(3.5deg); } }
+.w-root .burner { transform-box: fill-box; transform-origin: 50% 100%; animation: flick .9s ease-in-out infinite; }
+
+.w-root .shoots { opacity: var(--night-o); }
+.w-root .shoot { opacity: 0; animation: shootA 11s linear infinite; }
+.w-root .shoot.s2 { animation-duration: 17s; animation-delay: -6s; }
+@keyframes shootA { 0%, 88% { opacity: 0; translate: 0 0; } 90% { opacity: 1; } 100% { opacity: 0; translate: 260px 52px; } }
+.w-root .flies { opacity: var(--night-o); }
+.w-root .fly { fill: #FFE27A; stroke: rgba(255, 226, 122, .35); stroke-width: 7; animation: flyA 8s ease-in-out infinite alternate, flyB 2.4s ease-in-out infinite; }
+@keyframes flyA { from { translate: 0 0; } to { translate: var(--fx) var(--fy); } }
+@keyframes flyB { 0%, 100% { opacity: .25; } 50% { opacity: 1; } }
+.w-root:not([data-theme="night"]) .fly, .w-root:not([data-theme="night"]) .shoot, .w-root:not([data-theme="night"]) .beam, .w-root:not([data-theme="night"]) .stars circle { animation: none; }
+
+/* flocks of birds cross the whole sky */
+.w-root .birds { left: -36vw; top: 15%; animation: flock 46s linear infinite; }
+.w-root .birds.b2 { top: 33%; width: min(19vw, 210px); animation-duration: 62s; animation-delay: -24s; }
+@keyframes flock { from { transform: translate3d(0, 0, 0); } to { transform: translate3d(190vw, -70px, 0); } }
+
+.w-root .sun circle:nth-child(1) { transform-box: fill-box; transform-origin: center; animation: sunPulse 7s ease-in-out infinite; }
+@keyframes sunPulse { 50% { transform: scale(1.07); opacity: .8; } }
+
+/* each layer drifts with the pointer by its depth: far hills barely, near leaves a lot */
+.w-root .ly { translate: calc(var(--mx, 0px) * var(--dk, 0)) calc(var(--my, 0px) * var(--dk, 0)); transition: translate .8s var(--ease); }
+.w-root .stage.focused .ly { translate: none; }
+
+/* pins float, each at its own pace */
+.w-root .pin b { animation: pinIn .7s var(--spring) 2.2s both, pinFloat 4.4s ease-in-out 3.2s infinite; }
+.w-root .pin[data-id="shiftsdeal"] b { animation-duration: .7s, 5s; }
+.w-root .pin[data-id="interns"] b { animation-duration: .7s, 4.1s; }
+.w-root .pin[data-id="bestow"] b { animation-duration: .7s, 4.8s; }
+.w-root .pin[data-id="range"] b { animation-duration: .7s, 5.3s; }
+.w-root .pin[data-id="me"] b { animation-duration: .7s, 4.6s; }
+@keyframes pinFloat { 50% { translate: 0 -5px; } }
+
+/* the yellow blob behind "ship." breathes */
+.w-root .rq::before { animation: blob 7s ease-in-out infinite alternate; }
+@keyframes blob {
+  0% { border-radius: 62% 38% 55% 45% / 55% 60% 40% 45%; transform: rotate(-1.5deg); }
+  100% { border-radius: 42% 58% 38% 62% / 60% 42% 58% 40%; transform: rotate(1deg) scale(1.03); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .w-root .clk-m, .w-root .clk-h, .w-root .smoke, .w-root .beam, .w-root .walker, .w-root .leg, .w-root .glint, .w-root .fish, .w-root .splash, .w-root .sailing,
+  .w-root .balloon, .w-root .balloon-sway, .w-root .shoot, .w-root .fly, .w-root .birds, .w-root .pin b, .w-root .rq::before { animation: none; }
+  .w-root .smoke, .w-root .fish, .w-root .splash, .w-root .shoot { opacity: 0; }
+  .w-root .ly { translate: none; }
+}

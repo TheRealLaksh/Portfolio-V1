@@ -280,8 +280,8 @@ export default function Hero({ music, onMusic, goJourney }) {
     const { vw, vh } = geo.current;
     const nx = e.clientX / vw - 0.5;
     const ny = e.clientY / vh - 0.5;
-    scene.current.style.setProperty('--px', `${nx * -14}px`);
-    scene.current.style.setProperty('--py', `${ny * -8}px`);
+    stage.current.style.setProperty('--mx', `${(nx * -46).toFixed(1)}px`);
+    stage.current.style.setProperty('--my', `${(ny * -26).toFixed(1)}px`);
   };
 
   return (
@@ -298,7 +298,7 @@ export default function Hero({ music, onMusic, goJourney }) {
                 data-d={L.d}
                 data-fg={L.fg ? '1' : '0'}
                 ref={(el) => { layers.current[L.id] = el; }}
-                style={{ transformOrigin: `${FOCAL.x * 100}% ${FOCAL.y * 100}%`, ['--i']: LAYERS.indexOf(L) }}
+                style={{ transformOrigin: `${FOCAL.x * 100}% ${FOCAL.y * 100}%`, ['--i']: LAYERS.indexOf(L), ['--dk']: L.d }}
               >
                 {L.art}
                 {L.id === 'range' && null}
@@ -310,7 +310,7 @@ export default function Hero({ music, onMusic, goJourney }) {
                 ))}
               </div>
             ))}
-            <div className="ly tabla-ly" data-d="0.34" data-fg="0" ref={(el) => { layers.current.tabla = el; }} style={{ transformOrigin: `${FOCAL.x * 100}% ${FOCAL.y * 100}%` }}>
+            <div className="ly tabla-ly" data-d="0.34" data-fg="0" ref={(el) => { layers.current.tabla = el; }} style={{ transformOrigin: `${FOCAL.x * 100}% ${FOCAL.y * 100}%`, ['--dk']: 0.34 }}>
               <TablaArt playing={music} />
               <button type="button" className={`pin rpin ${music ? 'playing' : ''}`} style={{ ...pct(1030, 586), ['--c']: '#8E7CFF' }} aria-pressed={music} onClick={(e) => { e.stopPropagation(); onMusic(); }}>
                 <b>
@@ -327,6 +327,7 @@ export default function Hero({ music, onMusic, goJourney }) {
         </div>
 
         <Birds />
+        <Birds cls="b2" />
         <div className="sky-plane" aria-hidden="true">
           <div className="sp-in">
             <div className="sp-ban">

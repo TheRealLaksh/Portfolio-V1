@@ -100,12 +100,13 @@ A. Valley redesign (branch `feat/world-portfolio`): (1) give the wall and visito
 <!-- handoff:auto:start -->
 ## Auto: repo state
 
-_Refreshed 16 Oct 2026, 12:32 am IST by `scripts/handoff.mjs` (runs on every commit). Don't edit inside this block._
+_Refreshed 16 Oct 2026, 12:34 am IST by `scripts/handoff.mjs` (runs on every commit). Don't edit inside this block._
 
 Branch: `feat/world-portfolio` · remote: https://github.com/TheRealLaksh/Portfolio-V2.git
 
 ### Last 15 commits
 
+- `85a3bb9` 2026-10-16 00:32 Use Laksh's 3D avatar as the hero figure
 - `df0d7e3` 2026-10-16 00:30 Run the scroll scenes on laptop-sized windows (720 px and up), not only 900 px
 - `bebabfc` 2026-10-15 19:35 Redraw the avatar (three looks on /lab/avatar, painted look in the hero) and add light rays and grain to the hero
 - `0e47450` 2026-10-15 19:30 Scroll-driven Process line, cork board desk, wall rows and contact keys; fix Brand after the sites removal
@@ -120,13 +121,13 @@ Branch: `feat/world-portfolio` · remote: https://github.com/TheRealLaksh/Portfo
 - `3d8ef26` 2026-10-15 15:27 Log the ShiftsDeal screenshot approval in HANDOFF
 - `9099463` 2026-10-15 15:27 Show a real ShiftsDeal screenshot on its work card
 - `a5c5ad9` 2026-10-15 14:56 Record the valley QA pass in HANDOFF
-- `afb5018` 2026-10-15 14:56 Fix boats jumping out of place and raise note contrast
 
 ### Uncommitted changes at refresh time
 
 ```
-M  HANDOFF.md
-A  public/me-avatar.webp
+M  src/world/Hero.jsx
 M  src/world/Scene.jsx
+M  src/world/World.jsx
+A  src/world/motion.css
 ```
 <!-- handoff:auto:end -->

@@ -17,6 +17,7 @@ import Hello from './Hello';
 import './world.css';
 import './world2.css';
 import './world3.css';
+import './motion.css';
 
 export default function World() {
   const root = useRef(null);

@@ -87,6 +87,10 @@ export function SkyLayer() {
         <circle cx="1226" cy="204" r="6" fill="#DAD5BE" />
         <circle cx="1214" cy="166" r="4" fill="#DAD5BE" />
       </g>
+      <g className="shoots">
+        <path className="shoot" d="M0 0 L-130 -26" stroke="#FFF8E1" strokeWidth="3" strokeLinecap="round" transform="translate(560 120)" />
+        <path className="shoot s2" d="M0 0 L-110 -20" stroke="#FFF8E1" strokeWidth="2.6" strokeLinecap="round" transform="translate(1240 60)" />
+      </g>
       <g className="stars">
         {stars.map((s, i) => (
           <circle key={i} cx={s.x} cy={s.y} r={s.s} fill="#FFF8E1" style={{ animationDelay: `${s.d}s` }} />
@@ -112,6 +116,19 @@ export function KitesLayer() {
       <g className="kite k1"><Kite x={420} y={150} c="#E8505B" r={-16} /></g>
       <g className="kite k2"><Kite x={640} y={96} c="#FFC93C" r={12} /></g>
       <g className="kite k3"><Kite x={330} y={250} c="#1FA6A0" r={-6} /></g>
+      <g transform="translate(900 300)">
+        <g className="balloon">
+          <g className="balloon-sway">
+            <path d="M0 -70 C 46 -70 62 -32 50 0 C 42 22 20 40 12 54 L-12 54 C -20 40 -42 22 -50 0 C -62 -32 -46 -70 0 -70Z" fill="var(--rose-c)" />
+            <path d="M0 -70 C 18 -70 28 -32 22 0 C 18 24 8 42 5 54 L-5 54 C -8 42 -18 24 -22 0 C -28 -32 -18 -70 0 -70Z" fill="var(--sun-c)" />
+            <path d="M0 -70 C 6 -70 8 -32 6 0 C 5 24 2 42 1 54 L-1 54 C -2 42 -5 24 -6 0 C -8 -32 -6 -70 0 -70Z" fill="var(--teal-c)" />
+            <path d="M-12 54 L-9 78 M12 54 L9 78 M-4 54 L-3 78 M4 54 L3 78" stroke="var(--ink)" strokeWidth="1.6" opacity=".6" />
+            <rect x="-13" y="78" width="26" height="17" rx="3" fill="var(--wood)" />
+            <path d="M-13 83 h26" stroke="var(--trim)" strokeWidth="2" opacity=".6" />
+            <path className="burner" d="M0 66 q4 6 0 12 q-4 -6 0 -12Z" fill="#FFB02E" />
+          </g>
+        </g>
+      </g>
     </S>
   );
 }
@@ -206,7 +223,26 @@ export function GhatLayer() {
           </g>
         ))}
       </g>
+      <Walker x={1270} y={632} dx={250} dy={-14} c="#FF8A1F" dur={26} delay={0} />
+      <Walker x={1360} y={684} dx={210} dy={-12} c="#1FA6A0" dur={31} delay={-12} s={1.1} />
+      <Walker x={1330} y={738} dx={270} dy={-14} c="#8E7CFF" dur={36} delay={-20} s={1.15} />
     </S>
+  );
+}
+
+// A little person who walks along a step, turns round at the end and comes back.
+function Walker({ x, y, dx, dy, c, dur, delay, s = 1 }) {
+  return (
+    <g transform={`translate(${x} ${y}) scale(${s})`}>
+      <g className="walker" style={{ ['--dx']: `${dx / s}px`, ['--dy']: `${dy / s}px`, animationDuration: `${dur}s`, animationDelay: `${delay}s` }}>
+        <ellipse cx="0" cy="1" rx="9" ry="2.6" fill="rgba(0,0,0,.18)" />
+        <path className="leg lg1" d="M-2 -16 L-2 0" stroke="#3a2a2a" strokeWidth="3.4" strokeLinecap="round" />
+        <path className="leg lg2" d="M2 -16 L2 0" stroke="#3a2a2a" strokeWidth="3.4" strokeLinecap="round" />
+        <rect x="-6" y="-36" width="12" height="22" rx="5" fill={c} />
+        <circle cx="0" cy="-43" r="6" fill="#E3A87A" />
+        <path d="M-6 -45 a6 6 0 0 1 12 0 q-6 -4 -12 0Z" fill="#2B2230" />
+      </g>
+    </g>
   );
 }
 
@@ -217,25 +253,38 @@ export function RiverLayer() {
       <g className="ripple">
         <path d="M120 700 q40 -8 80 0 M320 724 q50 -10 100 0 M560 706 q40 -8 80 0 M760 736 q60 -10 120 0 M1010 700 q40 -8 80 0 M1180 730 q50 -10 100 0 M1400 706 q40 -8 80 0 M60 760 q50 -8 100 0 M470 770 q60 -10 120 0 M900 772 q50 -8 100 0" />
       </g>
+      {/* glints on the water */}
+      {[[170, 716], [430, 744], [610, 700], [820, 752], [1050, 716], [1230, 746], [1460, 700], [90, 772], [700, 780], [980, 770], [1330, 780]].map(([x, y], i) => (
+        <path key={i} className="glint" d="M0 -9 L2 -2 L9 0 L2 2 L0 9 L-2 2 L-9 0 L-2 -2Z" transform={`translate(${x} ${y})`} style={{ animationDelay: `${(i * 0.73) % 3.4}s` }} />
+      ))}
+      {[[300, 740, 0], [1180, 760, 3.2]].map(([x, y, dl], i) => (
+        <g key={i} transform={`translate(${x} ${y})`}>
+          <g className="fish" style={{ animationDelay: `${dl}s` }}>
+            <path d="M-12 0 Q0 -9 12 0 Q0 7 -12 0Z M12 0 L20 -6 L20 6Z" fill="var(--teal-c)" />
+            <circle cx="-6" cy="-1.5" r="1.4" fill="#fff" />
+          </g>
+          <ellipse className="splash" cx="12" cy="4" rx="14" ry="4" style={{ animationDelay: `${dl}s` }} />
+        </g>
+      ))}
       {/* boat */}
       {/* the outer <g> positions the boat (SVG attribute); the inner one bobs (CSS animation) */}
       <g transform="translate(380 700)">
-        <g className="boat">
+        <g className="sailing"><g className="boat">
           <path className="wood" d="M-52 0 L52 0 L38 18 L-38 18Z" />
           <path className="hull-hi" d="M-52 0 L52 0 L48 5 L-48 5Z" />
           <rect className="wood" x="-2" y="-58" width="4" height="58" />
           <path className="sail" d="M2 -54 L36 -8 L2 -8Z" />
           <circle className="lamp" cx="-34" cy="-8" r="5" />
-        </g>
+        </g></g>
       </g>
       <g transform="translate(1090 740) scale(.75)">
-        <g className="boat b2">
+        <g className="sailing s2"><g className="boat b2">
           <path className="wood" d="M-52 0 L52 0 L38 18 L-38 18Z" />
           <path className="hull-hi" d="M-52 0 L52 0 L48 5 L-48 5Z" />
           <rect className="wood" x="-2" y="-58" width="4" height="58" />
           <path className="sail" d="M2 -54 L-30 -8 L2 -8Z" />
           <circle className="lamp" cx="30" cy="-8" r="5" />
-        </g>
+        </g></g>
       </g>
       {/* diyas floating on the water */}
       {[[640, 760], [760, 748], [1260, 770], [200, 776], [880, 780]].map(([x, y], i) => (
@@ -269,7 +318,8 @@ export function MUArt() {
         {/* clock */}
         <circle className="trim" cx="280" cy="432" r="22" />
         <circle fill="none" stroke="var(--ink)" strokeWidth="3" cx="280" cy="432" r="22" />
-        <path d="M280 432 L280 416 M280 432 L292 438" stroke="var(--ink)" strokeWidth="3" strokeLinecap="round" />
+        <path className="clk-m" d="M280 432 L280 414" stroke="var(--ink)" strokeWidth="3" strokeLinecap="round" />
+        <path className="clk-h" d="M280 432 L291 438" stroke="var(--ink)" strokeWidth="3.6" strokeLinecap="round" />
         {/* arched windows */}
         {[154, 190, 226, 330, 366, 400].map((x, i) => (
           <g key={i}>
@@ -371,6 +421,7 @@ export function InternsArt() {
         ))}
         <rect className="trim" x="1090" y="160" width="68" height="10" rx="3" />
         <path className="roof" d="M1094 160 a30 30 0 0 1 60 0Z" />
+        <g className="beam-wrap"><path className="beam" d="M1124 112 L1700 62 L1700 150Z" /><path className="beam beam-b" d="M1124 112 L560 52 L560 172Z" /></g>
         <rect className="wood" x="1122" y="106" width="4" height="40" />
         {/* four flags: one per team */}
         {[['#E8505B', 1126, 110], ['#FFC93C', 1126, 124], ['#1FA6A0', 1126, 138], ['#8E7CFF', 1126, 152]].map(([c, x, y], i) => (
@@ -388,6 +439,7 @@ export function BestowArt() {
         <rect className="wood-wall" x="1290" y="210" width="178" height="106" />
         <path className="roof" d="M1274 214 L1379 156 L1484 214Z" />
         <rect className="chim" x="1430" y="150" width="20" height="46" />
+        {[0, 1, 2, 3].map((i) => <circle key={i} className="smoke" cx="1440" cy="146" r="7" style={{ animationDelay: `${i * 1.5}s` }} />)}
         <rect className="win-big" x="1310" y="236" width="76" height="52" rx="6" />
         <path d="M1348 236 v52 M1310 262 h76" stroke="var(--wood)" strokeWidth="3" />
         <path className="door" d="M1410 316 v-62 a16 16 0 0 1 32 0 v62Z" />
@@ -514,8 +566,17 @@ export function ForegroundRight() {
 }
 
 export function ForegroundBottom() {
+  const flies = React.useMemo(() => {
+    const r = rng(31);
+    return Array.from({ length: 26 }, () => ({ x: 80 + r() * 1440, y: 480 + r() * 380, d: r() * 6, t: 5 + r() * 6, k: r() }));
+  }, []);
   return (
     <S>
+      <g className="flies">
+        {flies.map((f, i) => (
+          <circle key={i} className="fly" cx={f.x} cy={f.y} r={2.4 + f.k * 2} style={{ animationDelay: `${-f.d}s`, animationDuration: `${f.t}s`, ['--fx']: `${(f.k - 0.5) * 120}px`, ['--fy']: `${-30 - f.k * 60}px` }} />
+        ))}
+      </g>
       <path className="fg2" d="M380 900 C 480 850 640 830 760 860 C 860 880 960 850 1060 880 L1060 900Z" />
       {Array.from({ length: 8 }, (_, i) => (
         <path key={i} className="fg-leaf" d={`M${420 + i * 78} 900 q-20 -50 ${(i % 2 ? -1 : 1) * 24} -92 q34 38 -2 92Z`} />
@@ -524,9 +585,9 @@ export function ForegroundBottom() {
   );
 }
 
-export function Birds() {
+export function Birds({ cls = '' }) {
   return (
-    <svg className="birds" viewBox="0 0 400 120" aria-hidden="true" focusable="false">
+    <svg className={`birds ${cls}`} viewBox="0 0 400 120" aria-hidden="true" focusable="false">
       {[[40, 60, 1], [96, 34, 0.8], [150, 72, 0.9], [210, 40, 0.7], [262, 66, 1]].map(([x, y, s], i) => (
         <path key={i} className="bird" style={{ animationDelay: `${i * 0.35}s` }} d={`M${x - 14 * s} ${y} q${7 * s} ${-12 * s} ${14 * s} 0 q${7 * s} ${-12 * s} ${14 * s} 0`} />
       ))}
