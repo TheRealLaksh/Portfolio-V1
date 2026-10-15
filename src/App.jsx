@@ -9,6 +9,7 @@ import 'aos/dist/aos.css';
 import Home from './pages/Home';
 import Hire from './pages/Hire';
 import World from './world/World';
+import Book from './world/Book';
 
 function App() {
   useEffect(() => {
@@ -47,6 +48,7 @@ function App() {
       <Routes>
         {/* The valley portfolio has its own chrome (bar, nav), so it sits outside the classic Layout. */}
         <Route path="/" element={<World />} />
+        <Route path="/book" element={<Book />} />
         <Route path="/classic" element={<Layout><Home /></Layout>} />
         <Route path="/hire" element={<Layout><Hire /></Layout>} />
         {/* The old /booking page was a demo with made-up slots; send visitors to the real page. */}

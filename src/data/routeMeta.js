@@ -26,6 +26,16 @@ export const HIRE_META = {
   imageAlt: 'Laksh Pradhwani, freelance full-stack developer: websites, admin panels and AI features',
 };
 
+export const BOOK_META = {
+  title: 'Book Laksh Pradhwani | Websites, AI features and web apps',
+  description:
+    'Book a call with freelance full-stack developer Laksh Pradhwani. Business websites with a CMS from Rs 30,000, AI features and automation from Rs 55,000, custom web apps from Rs 75,000.',
+  ogDescription:
+    'Book a call about a business website, AI feature or custom web app. Starting prices in rupees, quote after a short brief.',
+  path: '/book',
+  imageAlt: 'Laksh Pradhwani, freelance full-stack developer: book a call about your project',
+};
+
 export const hireNoscript = `<main style="font-family: system-ui, sans-serif; max-width: 40rem; margin: 3rem auto; padding: 0 1rem; line-height: 1.6; color: #e2e8f0; background: #050505;">
       <h1>Hire Laksh Pradhwani</h1>
       <p>Freelance full-stack developer in Delhi NCR. I build company websites your team can edit, apps that run on your process, and AI features that save time.</p>
