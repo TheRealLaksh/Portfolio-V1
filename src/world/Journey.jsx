@@ -171,7 +171,17 @@ export default function Journey() {
     const n = Math.min(Math.floor(f), PTS.length - 2);
     const cur = f >= PTS.length - 1 ? g.L : g.SL[n] + (g.SL[n + 1] - g.SL[n]) * ss(f - n);
     const pt = path.getPointAtLength(cur);
-    trav.current.style.transform = `translate(${pt.x}px, ${pt.y - 44}px)`;
+    trav.current.style.transform = `translate(${pt.x}px, ${pt.y}px)`;
+    // he waddles while the route moves under him, faces the way he is going, and stands still at a stop
+    const was = live.current.lastLen;
+    live.current.lastLen = cur;
+    if (was != null && Math.abs(cur - was) > 0.15) {
+      trav.current.dataset.walk = '1';
+      if (Math.abs(pt.x - (live.current.lastX ?? pt.x)) > 0.25) trav.current.dataset.face = pt.x < live.current.lastX ? 'l' : 'r';
+      clearTimeout(live.current.stopT);
+      live.current.stopT = setTimeout(() => { if (trav.current) trav.current.dataset.walk = '0'; }, 220);
+    }
+    live.current.lastX = pt.x;
     path.style.strokeDasharray = g.L;
     path.style.strokeDashoffset = g.L - cur;
     const pan = place(sz.w, sz.h, kk, [pt.x, pt.y]);
@@ -252,13 +262,9 @@ export default function Journey() {
                   </g>
                 ))}
                 {/* the traveller */}
-                <g className="trav" ref={trav} style={scrub ? undefined : { transform: `translate(${here[0]}px, ${here[1] - 44}px)` }}>
-                  <ellipse cx="0" cy="44" rx="12" ry="4" className="trav-sh" />
-                  <g className="trav-bob">
-                    <path className="trav-pin" d="M0 38 C -16 20 -22 8 -22 -4 a22 22 0 0 1 44 0 C 22 8 16 20 0 38Z" />
-                    <clipPath id="travClip"><circle cx="0" cy="-4" r="15" /></clipPath>
-                    <image href="/me.webp" x="-22" y="-26" width="44" height="44" clipPath="url(#travClip)" preserveAspectRatio="xMidYMid slice" />
-                  </g>
+                <g className="trav" ref={trav} data-walk="0" data-face="r" style={scrub ? undefined : { transform: `translate(${here[0]}px, ${here[1]}px)` }}>
+                  <ellipse cx="0" cy="2" rx="15" ry="4.5" className="trav-sh" />
+                  <g className="trav-fig"><g className="trav-walk"><image href="/me-avatar.webp" x="-16.2" y="-96" width="32.4" height="96" preserveAspectRatio="xMidYMax meet" /></g></g>
                 </g>
               </svg>
             </div>
