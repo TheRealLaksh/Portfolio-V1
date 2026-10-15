@@ -187,3 +187,17 @@
 .w-root.w-scrub .desk { will-change: transform; transform-origin: 50% 40%; }
 .w-root.w-flat .desk { border: 0; background: none; box-shadow: none; }
 .w-root.w-flat .desk-hint { color: var(--ink-2); text-shadow: none; }
+
+/* ---------- avatar ---------- */
+@keyframes sq { 50% { opacity: .2; } }
+.w-root .sq { animation: sq 3.2s ease-in-out infinite; }
+.w-root .lab-row { display: flex; flex-wrap: wrap; gap: 18px; justify-content: center; max-width: 1300px; margin: 0 auto 22px; }
+.w-root .lab-card { margin: 0; flex: 1 1 340px; max-width: 420px; background: var(--card); border: 2px solid var(--ink); border-radius: 20px; overflow: hidden; }
+.w-root .lab-card svg { display: block; width: 100%; height: auto; }
+.w-root .lab-card figcaption { padding: 12px 16px; font-weight: 700; }
+.w-root .lab-row.small { align-items: flex-end; }
+.w-root .lab-row.small svg { border-radius: 12px; border: 2px solid var(--ink); }
+.w-root[data-theme="night"] .me-fig { filter: brightness(.78) saturate(.9); }
+/* painterly depth, kept cheap: two static overlays, no per-frame filters */
+.w-root .rays { position: absolute; inset: 0; z-index: 3; pointer-events: none; opacity: var(--day-o); background: repeating-linear-gradient(112deg, transparent 0 9%, rgba(255, 244, 205, .10) 9% 13%, transparent 13% 22%); -webkit-mask-image: radial-gradient(70% 80% at 74% 12%, #000, transparent 75%); mask-image: radial-gradient(70% 80% at 74% 12%, #000, transparent 75%); transition: opacity .9s; }
+.w-root .grain { position: absolute; inset: 0; z-index: 3; pointer-events: none; opacity: .13; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' seed='9'/%3E%3CfeColorMatrix values='0 0 0 0 .2 0 0 0 0 .15 0 0 0 0 .1 0 0 0 1 0'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23g)'/%3E%3C/svg%3E"); }

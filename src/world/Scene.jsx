@@ -1,4 +1,5 @@
 import React from 'react';
+import { MeFigure } from './Avatar';
 
 // The valley: hand-drawn SVG layers in a 1600 x 900 space. Colours come from CSS variables
 // (see world.css), so day and night are one set of shapes with two palettes.
@@ -464,43 +465,12 @@ export function TablaArt({ playing }) {
   );
 }
 
-// Laksh, drawn as a flat figure: dark swept-up hair, black kurta, waving.
-export function MeArt() {
+// Laksh: the drawing lives in Avatar.jsx (look 'a', painted). Other looks are compared at /lab/avatar.
+export function MeArt({ look = 'a' }) {
   return (
     <S>
-      <g transform="translate(1432 726)">
-        {/* shadow */}
-        <ellipse cx="0" cy="8" rx="34" ry="7" fill="var(--ink)" opacity=".2" />
-        {/* legs */}
-        <path fill="#2B2F55" d="M-17 -66 h15 l-3 70 h-14Z" />
-        <path fill="#2B2F55" d="M2 -66 h15 l4 70 h-14Z" />
-        <path fill="#F4F1E8" d="M-19 0 h18 l1 8 h-22Z" />
-        <path fill="#F4F1E8" d="M2 0 h18 l3 8 h-20Z" />
-        {/* kurta */}
-        <path fill="#15162B" d="M-27 -150 q27 -16 54 0 l5 94 q-32 12 -64 0Z" />
-        <path fill="#2A2C55" d="M-27 -150 q9 -6 16 -8 l-3 66 l-16 -2Z" opacity=".6" />
-        <path d="M0 -146 v40" stroke="#6C6FA8" strokeWidth="1.6" opacity=".7" />
-        <circle cx="0" cy="-128" r="1.8" fill="#8E7CFF" /><circle cx="0" cy="-114" r="1.8" fill="#8E7CFF" />
-        {/* left arm (down) */}
-        <path fill="#15162B" d="M-27 -146 q-12 30 -8 58 l12 2 q-2 -28 6 -56Z" />
-        <circle cx="-31" cy="-84" r="7" fill="#D8A27D" />
-        {/* right arm waving */}
-        <g className="wave" style={{ transformOrigin: '26px -144px' }}>
-          <path fill="#15162B" d="M22 -148 q26 -10 34 -44 l-14 -6 q-6 26 -26 34Z" />
-          <circle cx="50" cy="-200" r="8" fill="#D8A27D" />
-        </g>
-        {/* neck + head */}
-        <rect x="-6" y="-166" width="12" height="16" fill="#D8A27D" />
-        <ellipse cx="0" cy="-184" rx="21" ry="24" fill="#E3AD88" />
-        <ellipse cx="-21" cy="-182" rx="4" ry="6" fill="#E3AD88" />
-        <ellipse cx="21" cy="-182" rx="4" ry="6" fill="#E3AD88" />
-        {/* hair, swept up */}
-        <path fill="#1A1420" d="M-24 -186 C -28 -214 -6 -222 10 -216 C 24 -214 30 -200 24 -186 C 20 -196 12 -200 -2 -198 C -12 -198 -20 -194 -24 -186Z" />
-        <path fill="#1A1420" d="M-6 -214 C 0 -232 20 -228 22 -212Z" />
-        {/* face */}
-        <path d="M-9 -180 q2.5 -3 5 0 M5 -180 q2.5 -3 5 0" stroke="#2A1D1A" strokeWidth="2.2" fill="none" strokeLinecap="round" />
-        <path d="M-7 -170 q7 8 14 0" stroke="#7A3B2E" strokeWidth="2.4" fill="none" strokeLinecap="round" />
-        <circle cx="-14" cy="-171" r="3.5" fill="#E8505B" opacity=".25" /><circle cx="14" cy="-171" r="3.5" fill="#E8505B" opacity=".25" />
+      <g className="me-fig" transform="translate(1432 732) scale(.98)">
+        <MeFigure look={look} id="hero" />
       </g>
     </S>
   );

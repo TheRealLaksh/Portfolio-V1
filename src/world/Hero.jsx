@@ -15,7 +15,7 @@ const PINS = [
   { id: 'interns', x: 1124, y: 92, tag: '2025', mark: '25' },
   { id: 'bestow', x: 1379, y: 130, tag: '2026', mark: 'B' },
   { id: 'range', x: 1205, y: 466, tag: 'AIR 54', mark: 'R' },
-  { id: 'me', x: 1374, y: 506, tag: null, mark: 'L', face: true },
+  { id: 'me', x: 1396, y: 418, tag: null, mark: 'L', face: true },
 ];
 
 // Clickable area per place (scene space): x, y, w, h.
@@ -25,7 +25,7 @@ const HOT = {
   interns: [1086, 100, 76, 372],
   bestow: [1272, 150, 214, 170],
   range: [1000, 480, 310, 160],
-  me: [1384, 500, 100, 240],
+  me: [1374, 430, 134, 310],
 };
 
 const hotStyle = ([x, y, w, h]) => ({ left: `${(x / VB.w) * 100}%`, top: `${(y / VB.h) * 100}%`, width: `${(w / VB.w) * 100}%`, height: `${(h / VB.h) * 100}%` });
@@ -357,6 +357,8 @@ export default function Hero({ music, onMusic, goJourney }) {
 
         <div className="night" aria-hidden="true"><i /></div>
         <div className="shade" aria-hidden="true" />
+        <div className="rays" aria-hidden="true" />
+        <div className="grain" aria-hidden="true" />
         <div className="haze" ref={haze} aria-hidden="true" />
         <div className="cloudbank cb-a" ref={cloudA} aria-hidden="true"><CloudBank seed={3} /></div>
         <div className="cloudbank cb-b" ref={cloudB} aria-hidden="true"><CloudBank seed={11} front /></div>

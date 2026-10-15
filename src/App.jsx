@@ -10,6 +10,7 @@ import Home from './pages/Home';
 import Hire from './pages/Hire';
 import World from './world/World';
 import Book from './world/Book';
+import AvatarLab from './world/AvatarLab';
 
 function App() {
   useEffect(() => {
@@ -49,6 +50,8 @@ function App() {
         {/* The valley portfolio has its own chrome (bar, nav), so it sits outside the classic Layout. */}
         <Route path="/" element={<World />} />
         <Route path="/book" element={<Book />} />
+        {/* Unlinked lab page for comparing avatar looks. */}
+        <Route path="/lab/avatar" element={<AvatarLab />} />
         <Route path="/classic" element={<Layout><Home /></Layout>} />
         <Route path="/hire" element={<Layout><Hire /></Layout>} />
         {/* The old /booking page was a demo with made-up slots; send visitors to the real page. */}
