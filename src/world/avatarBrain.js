@@ -1,47 +1,31 @@
 import { clamp } from './hooks';
+import { MOVES, SECTION_MOVE, SURPRISE } from './avatarMoves';
 import { pick, lineFor, greeting, IDLE_QUIPS, WAKE_LINES, FIVE_LINES, NIGHT_LINE, DAY_LINE } from './avatarLines';
 
 // What the 3D sidekick does, kept apart from three.js (avatarStage.js) and from React (Sidekick3D.jsx).
 //
-// Movement is physical, not scripted: he has a position and a velocity, and a target he is heading for. Scrolling
-// moves the target back and forth across the whole screen (one sweep per ~1.5 screens of scrolling), so he walks
-// the way the page goes, runs if you fly down it, and trails behind if you outrun him. He speeds up and slows down,
-// turns through facing the camera, leans into a run, and his feet are locked to the ground (the clip speed is set
-// from the measured stride, so they never skate). Idle: he breathes, glances about, sometimes strolls a little, and
-// falls asleep after a while. The phone version stays put.
+// He holds one spot and does not wander. He pops up from below the screen edge when you leave the hero, then acts:
+// each section has its own move when you settle in it (a wave, a point, a flex, a clap...), a click waves, a double
+// click flips, a triple click spins, and the menu can ask for tricks. Between moves he breathes and glances about;
+// after a while with nobody about he yawns and falls asleep. The moves themselves live in avatarMoves.js; stunts
+// (the jump, the flip, the spin) are the body's job and are done here with a little physics.
 
-const ACC = 1000; // px/s per second
-const TURN = 8.5; // rad/s
+const G = 1500; // px/s squared
 const SLEEP_MS = 20000;
-const MARGIN_L = 90;
-const MARGIN_R = 110;
-
-const tri = (u) => { const f = u - Math.floor(u / 2) * 2; return f < 1 ? f : 2 - f; };
-const smooth = (t) => t * t * (3 - 2 * t);
+const SETTLE_MS = 700; // how long a section must hold the screen before its move plays
 
 export function createBrain({ stage, els, size, say, onZzz }) {
-  const cal = { walk: 150, run: 420 }; // px/s one clip cycle covers at timeScale 1 (measured in calibrate())
   let shown = false;
-  let x = -160;
-  let vx = 0;
-  let target = x;
-  let state = 'idle'; // idle | react | sleep
-  let mode = 'idle'; // idle | walk | run
-  let faceCur = 0;
-  let faceWant = 0;
-  let still = 0;
-  let leanCur = 0;
-  let sv = 0;
-  let lastY = window.scrollY;
+  let state = 'idle'; // idle | sleep
+  let sectionId = null;
+  let settleId = null;
+  let settleAt = 0;
   let lastActive = performance.now();
   let lastSay = 0;
   let lastQuip = performance.now();
   let lastFive = 0;
-  let lastPhew = 0;
   let lastLine = '';
-  let sectionId = null;
-  let vy = 0;
-  let y = 0;
+  let lastMove = 0;
   let menu = false;
   let night = false;
   let curAnim = null;
@@ -51,46 +35,66 @@ export function createBrain({ stage, els, size, say, onZzz }) {
   let wanderLook = 0;
   let wx = 0;
   let wy = 0;
-  let wanderAt = performance.now() + 9000;
   let offTimer = 0;
+  let riseT = 1; // pop-up from below the edge: 0 -> 1
+  let afterRise = null;
+  // stunt body: vertical position (px), velocity, and the phase of the current jump
+  let y = 0;
+  let vy = 0;
+  let stunt = null; // { def, phase: 'crouch' | 'air' | 'land', t, air, airT }
+  let squash = 1;
+  let flip = 0;
+  let spin = 0;
 
   const now = () => performance.now();
   const speak = (t) => { lastSay = now(); lastLine = t; say(t); };
   const touch = () => { lastActive = now(); };
 
-  function calibrate() {
-    const k = stage.pxPerUnit();
-    const w = stage.strideSpeed('walk');
-    const r = stage.strideSpeed('run');
-    if (w) cal.walk = w * k;
-    if (r) cal.run = r * k; else if (w) cal.run = cal.walk * 2.6;
-    return { ...cal };
+  function spot() { return size().mini ? 52 : 120; }
+
+  function setAnim(name, speed = 1) {
+    if (name !== curAnim) { curAnim = name; stage.play(name, { speed }); }
   }
 
-  // where the scroll position says he should be: a smooth sweep from the left margin to the right and back
-  function pathGoal() {
-    const { W, H } = size();
-    const period = Math.max(900, H * 1.5);
-    const u = smooth(tri(window.scrollY / period));
-    return MARGIN_L + u * (W - MARGIN_L - MARGIN_R);
+  // ---- moves ----
+  function perform(name, then) {
+    const def = MOVES[name];
+    if (!def) return;
+    if (state === 'sleep') wake();
+    lastMove = now();
+    touch();
+    stage.perform(def, then);
+    if (def.stunt) stunt = { def: def.stunt, phase: 'crouch', t: 0, air: 0, airT: 0 };
   }
+  const busy = () => stage.busy() || !!stunt;
 
-  function setAnim(name, speed = 1, fade = 0.3) {
-    if (name !== curAnim) { curAnim = name; stage.play(name, { speed, fade }); } else stage.setSpeed(speed);
-  }
-
-  function react(name, { hold = 300, then } = {}) {
-    state = 'react';
-    curAnim = null;
-    stage.play(name, {
-      once: true,
-      fade: 0.2,
-      onDone: () => setTimeout(() => { if (state === 'react') { state = 'idle'; curAnim = null; if (then) then(); } }, hold),
-    });
+  function stuntFrame(dt) {
+    if (!stunt) return;
+    const s = stunt;
+    s.t += dt;
+    if (s.phase === 'crouch') {
+      squash = 1 - 0.16 * Math.min(1, s.t / s.def.at);
+      if (s.t >= s.def.at) { s.phase = 'air'; s.air = 0; s.airT = (2 * s.def.vy) / G; vy = s.def.vy; squash = 1.08; }
+    } else if (s.phase === 'air') {
+      s.air += dt;
+      const u = clamp(s.air / s.airT);
+      const e = u * u * (3 - 2 * u);
+      if (s.def.flip) flip = s.def.flip * Math.PI * 2 * e;
+      if (s.def.spin) spin = s.def.spin * Math.PI * 2 * e;
+      squash += (1.0 - squash) * Math.min(1, dt * 8);
+      if (y <= 0 && vy <= 0 && s.air > 0.1) { s.phase = 'land'; s.t = 0; flip = 0; spin = 0; y = 0; vy = 0; }
+    } else {
+      squash = 0.86 + 0.14 * clamp(s.t / 0.28);
+      if (s.t >= 0.28) { stunt = null; squash = 1; }
+    }
+    stage.setFlip(flip);
+    stage.setSpin(spin);
+    stage.setSquash(squash);
   }
 
   function hop() { vy = Math.max(300, size().charH * 2.1); }
 
+  // ---- showing, hiding, sections ----
   function show(on) {
     if (on === shown) return;
     shown = on;
@@ -108,21 +112,16 @@ export function createBrain({ stage, els, size, say, onZzz }) {
     if (!id) { show(false); return; }
     if (!shown) {
       show(true);
-      const { mini } = size();
-      x = mini ? 52 : -160; // walks in from off screen on the wide layout
-      vx = 0;
-      target = mini ? 52 : pathGoal();
       state = 'idle';
       curAnim = null;
       sectionId = id;
-      speak(greeting());
+      settleId = null;
+      riseT = 0; // pop up from below the edge, then say hello with a wave
+      afterRise = () => { speak(greeting()); perform('wave'); };
       return;
     }
     if (state === 'sleep') wake();
-    if (id !== sectionId) {
-      sectionId = id;
-      if (now() - lastSay > 4000) speak(lineFor(id, lastLine));
-    }
+    if (id !== sectionId) { sectionId = id; settleId = id; settleAt = now() + SETTLE_MS; }
   }
 
   function sleep() {
@@ -151,7 +150,7 @@ export function createBrain({ stage, els, size, say, onZzz }) {
     night = isNight;
     stage.setTone(night);
     if (!shown) return;
-    if (night) { react('sad_pose', { hold: 1200 }); speak(NIGHT_LINE); } else { react('agree', { hold: 200 }); speak(DAY_LINE); }
+    if (night) { perform('yawn'); speak(NIGHT_LINE); } else { perform('stretch'); speak(DAY_LINE); }
   }
 
   function onPointer(e) {
@@ -159,12 +158,11 @@ export function createBrain({ stage, els, size, say, onZzz }) {
     mx = e.clientX;
     my = e.clientY;
     lastPtr = now();
-    const { H, charH, mini, bottom } = size();
-    if (!mini && !menu && state === 'idle' && mode === 'idle' && shown && now() - lastFive > 8000
-      && Math.abs(mx - x) < 70 && my > H - bottom - charH - 20) {
+    const { H, charH, bottom } = size();
+    if (!menu && shown && state === 'idle' && !busy() && now() - lastFive > 20000
+      && Math.abs(mx - spot()) < 80 && my > H - bottom - charH - 20) {
       lastFive = now();
-      react('agree', { hold: 400 });
-      hop();
+      perform('wave');
       speak(pick(FIVE_LINES, lastLine));
     }
   }
@@ -172,98 +170,65 @@ export function createBrain({ stage, els, size, say, onZzz }) {
   window.addEventListener('pointermove', onPointer, { passive: true });
   window.addEventListener('pointerdown', onPointer, { passive: true });
   window.addEventListener('keydown', onKey);
+  window.addEventListener('scroll', touch, { passive: true });
 
   function frame(dt) {
     const t = now();
-    const { W, H, charH, bottom, mini } = size();
+    const { W, H, charH, bottom } = size();
 
-    // ---- scroll: it moves the target, and wakes him ----
-    const sy = window.scrollY;
-    const dy = sy - lastY;
-    lastY = sy;
-    sv += (Math.abs(dy) / Math.max(dt, 0.001) - sv) * Math.min(1, dt * 8);
-    if (Math.abs(dy) > 0.5) {
-      touch();
-      if (!mini && shown) target = pathGoal();
+    // pop up from below the edge (an ease-out with a little overshoot)
+    let rise = 0;
+    if (riseT < 1) {
+      riseT = Math.min(1, riseT + dt / 0.85);
+      const c = 1.4;
+      const k = riseT - 1;
+      const e = 1 + (c + 1) * k * k * k + c * k * k;
+      rise = -charH * 1.2 * (1 - e);
+      if (riseT >= 1 && afterRise) { const f = afterRise; afterRise = null; f(); }
     }
 
-    // ---- hop physics ----
+    // hop physics
     if (vy !== 0 || y > 0) {
-      vy -= 1500 * dt;
+      vy -= G * dt;
       y = Math.max(0, y + vy * dt);
       if (y === 0) vy = 0;
-      stage.setY(y);
     }
+    stuntFrame(dt);
+    stage.setY(y + rise);
 
-    // ---- sleep / wake ----
     if (shown) {
+      // sleep / wake, with a yawn on the way down
       if (state === 'sleep') {
         if (t - lastActive < 400) wake();
-      } else if (state === 'idle' && !menu && t - lastActive > SLEEP_MS) {
-        sleep();
+      } else if (state === 'idle' && !menu && !busy() && riseT >= 1 && t - lastActive > SLEEP_MS) {
+        lastActive = t - SLEEP_MS + 2600; // the yawn takes about that long; then he nods off
+        perform('yawn', () => { if (state === 'idle' && t - lastActive > 0) sleep(); });
+      }
+
+      // a section has held the screen long enough: its move
+      if (settleId && t >= settleAt && riseT >= 1 && !busy() && state === 'idle' && !menu && t - lastMove > 1500) {
+        const id = settleId;
+        settleId = null;
+        const m = SECTION_MOVE[id];
+        if (m) perform(m);
+        if (t - lastSay > 4000) speak(lineFor(id, lastLine));
+      }
+
+      if (state === 'idle') setAnim('idle');
+
+      // a quip now and then when nothing is going on
+      if (state === 'idle' && !busy() && !menu && t - lastSay > 26000 && t - lastQuip > 26000
+        && t - lastActive > 9000 && t - lastActive < SLEEP_MS - 3000) {
+        lastQuip = t;
+        speak(pick(IDLE_QUIPS, lastLine));
       }
     }
 
-    // ---- occasional stroll when nobody is doing anything ----
-    if (shown && state === 'idle' && !menu && !mini && Math.abs(target - x) < 6 && Math.abs(vx) < 10 && t > wanderAt && t - lastActive > 3000) {
-      wanderAt = t + 8000 + Math.random() * 6000;
-      const d = (Math.random() < 0.5 ? -1 : 1) * (140 + Math.random() * 200);
-      target = clamp(x + d, MARGIN_L, W - MARGIN_R);
-    }
-
-    // ---- velocity: head for the target, easing in and out ----
-    const canMove = shown && state === 'idle' && !menu && !mini;
-    let want = 0;
-    if (canMove) {
-      const d = target - x;
-      const vmax = cal.run * 1.9; // a sprint, still with the feet on the ground
-      want = Math.abs(d) < 3 ? 0 : clamp(d * 3.2, -vmax, vmax);
-    }
-    vx += clamp(want - vx, -ACC * dt, ACC * dt);
-    if (mini) { vx = 0; x = 52; } else x += vx * dt;
-    if (Math.abs(target - x) < 3 && Math.abs(vx) < 4) vx = 0;
-    const s = Math.abs(vx);
-
-    // ---- which clip, at what speed (feet locked to the ground) ----
-    if (shown && state === 'idle') {
-      const prev = mode;
-      if (s < 10) mode = 'idle';
-      else if (mode === 'idle' && s >= 18) mode = 'walk';
-      if (mode === 'walk' && s > cal.walk * 1.7) mode = 'run';
-      else if (mode === 'run' && s < cal.walk * 1.35) mode = 'walk';
-      if (mode === 'idle') setAnim('idle');
-      else if (mode === 'walk') setAnim('walk', clamp(s / cal.walk, 0.45, 1.8));
-      else setAnim('run', clamp(s / cal.run, 0.6, 1.9));
-      if (prev === 'run' && mode === 'idle' && t - lastPhew > 15000) {
-        lastPhew = t;
-        react('sad_pose', { hold: 650 });
-        speak('Phew.');
-      }
-    } else if (state !== 'idle') {
-      mode = 'idle';
-    }
-
-    // ---- facing: turn through the camera, never snap ----
-    if (s > 14) { faceWant = Math.sign(vx) * (Math.PI / 2); still = 0; } else if (s < 8) { still += dt; if (still > 0.25) faceWant = 0; }
-    const step = TURN * dt;
-    faceCur += clamp(faceWant - faceCur, -step, step);
-
-    // ---- lean into a run ----
-    const leanWant = mode === 'run' ? clamp((s - cal.walk) / cal.run, 0, 0.4) * 0.45 : 0;
-    leanCur += (leanWant - leanCur) * Math.min(1, dt * 6);
-
-    // ---- quips ----
-    if (shown && state === 'idle' && mode === 'idle' && !menu
-      && t - lastSay > 26000 && t - lastQuip > 26000 && t - lastActive > 9000 && t - lastActive < SLEEP_MS - 3000) {
-      lastQuip = t;
-      speak(pick(IDLE_QUIPS, lastLine));
-    }
-
-    // ---- head: follows the pointer; when nobody moves it he glances about by himself ----
-    const facingCam = 1 - clamp(Math.abs(faceCur) / 0.6);
+    // head follows the pointer; when nobody moves it he glances about by himself
     let lx = 0;
     let ly = 0;
-    if (state === 'idle' || state === 'react') {
+    if (state === 'idle') {
+      const x = spot();
       if (t - lastPtr < 3500 && mx >= 0) {
         const headY = H - bottom - charH * 0.88;
         lx = clamp((mx - x) / (W * 0.35));
@@ -273,13 +238,12 @@ export function createBrain({ stage, els, size, say, onZzz }) {
         lx = wx; ly = wy;
       }
     }
-    stage.setLook(lx * facingCam, ly * facingCam);
+    stage.setLook(lx, ly);
 
-    stage.setFacing(faceCur);
-    stage.setLean(leanCur);
+    const x = spot();
     stage.setX(x);
-    els.follow.style.transform = `translate3d(${x.toFixed(1)}px,0,0)`;
-    els.follow.dataset.side = x > Math.max(W / 2, W - 340) ? 'l' : 'r';
+    els.follow.style.transform = `translate3d(${x}px,0,0)`;
+    els.follow.dataset.side = 'r';
   }
 
   function dispose() {
@@ -287,7 +251,10 @@ export function createBrain({ stage, els, size, say, onZzz }) {
     window.removeEventListener('pointermove', onPointer);
     window.removeEventListener('pointerdown', onPointer);
     window.removeEventListener('keydown', onKey);
+    window.removeEventListener('scroll', touch);
   }
 
-  return { frame, goTo, setMenu, setTone, speak, react, hop, calibrate, dispose };
+  const surprise = () => perform(pick(SURPRISE));
+
+  return { frame, goTo, setMenu, setTone, speak, perform, surprise, hop, dispose };
 }

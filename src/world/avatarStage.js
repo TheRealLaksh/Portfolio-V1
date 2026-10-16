@@ -6,12 +6,20 @@ import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 // mixer. It knows nothing about the page: avatarBrain.js decides what he does and calls these methods.
 // Loaded with a dynamic import so three never weighs on the first paint.
 //
-// Look: toon shading (three flat tones) plus an inked outline, so he matches the hand-drawn, ink-outlined site
-// instead of looking like a plastic render. Any rigged model can be dropped in; materials named like "joint" get the
-// joint colour, the rest the body colour.
+// Look: toon shading (three flat tones) plus an inked outline, so he matches the hand-drawn, ink-outlined site.
+// Moves: avatarMoves.js poses named body parts over the idle clip (see applyMove). Any rigged model with Mixamo-style
+// bone names can be dropped in; materials named like "joint" get the joint colour, the rest the body colour.
 
 const OUTLINE_PX = 2.4;
 const PALETTE = { body: 0xf5b13d, joint: 0x2a2f57, ink: 0x1b1f3b };
+
+// move role -> bone name (lower case, without the "mixamorig" prefix)
+const ROLES = {
+  hips: 'hips', spine: 'spine', spine1: 'spine1', spine2: 'spine2', neck: 'neck', head: 'head',
+  lSh: 'leftshoulder', rSh: 'rightshoulder', lArm: 'leftarm', rArm: 'rightarm',
+  lFore: 'leftforearm', rFore: 'rightforearm', lHand: 'lefthand', rHand: 'righthand',
+  lUp: 'leftupleg', rUp: 'rightupleg', lLeg: 'leftleg', rLeg: 'rightleg',
+};
 
 export async function createStage(canvas, { url = '/avatar/Xbot.glb', onFrame, palette = {} } = {}) {
   const pal = { ...PALETTE, ...palette };
@@ -68,8 +76,14 @@ export async function createStage(canvas, { url = '/avatar/Xbot.glb', onFrame, p
     m.add(out);
   });
 
-  let head = null;
-  model.traverse((o) => { if (o.isBone && /head$/i.test(o.name) && !head) head = o; });
+  // ---- bones by role ----
+  const bones = {};
+  const byName = {};
+  model.traverse((o) => { if (o.isBone) byName[o.name.toLowerCase().replace(/^mixamorig:?/, '')] = o; });
+  Object.entries(ROLES).forEach(([role, n]) => { if (byName[n]) bones[role] = byName[n]; });
+  const depth = (b) => { let d = 0; for (let p = b.parent; p; p = p.parent) d++; return d; };
+  const order = Object.keys(bones).sort((a, b) => depth(bones[a]) - depth(bones[b])); // parents before children
+  const head = bones.head || null;
 
   // ---- animation ----
   const mixer = new THREE.AnimationMixer(model);
@@ -86,12 +100,18 @@ export async function createStage(canvas, { url = '/avatar/Xbot.glb', onFrame, p
   if (idleA) idleA.stop();
   const size = box.getSize(new THREE.Vector3());
   const centre = box.getCenter(new THREE.Vector3());
-  model.position.set(-centre.x, -box.min.y, -centre.z); // feet on y = 0, centred on x = z = 0
-  const holder = new THREE.Group();
-  holder.rotation.order = 'YXZ'; // y = which way he faces, x = leaning forward in that direction
-  holder.add(model);
-  scene.add(holder);
   const unit = size.y || 1;
+
+  // holder: where he stands and which way he faces; flipper: pivots about his middle for flips and spins
+  const holder = new THREE.Group();
+  holder.rotation.order = 'YXZ';
+  const flipper = new THREE.Group();
+  flipper.rotation.order = 'YXZ';
+  flipper.position.y = unit / 2;
+  model.position.set(-centre.x, -box.min.y - unit / 2, -centre.z); // feet at the holder's y = 0
+  flipper.add(model);
+  holder.add(flipper);
+  scene.add(holder);
 
   let current = null;
   let doneCb = null;
@@ -102,6 +122,7 @@ export async function createStage(canvas, { url = '/avatar/Xbot.glb', onFrame, p
   function play(name, { once = false, fade = 0.3, speed = 1, onDone } = {}) {
     const a = actions[name] || actions.idle || actions[names[0]];
     if (!a) return;
+    if (a === current && !once && a.isRunning()) { a.setEffectiveTimeScale(speed); return; } // already playing: keep going
     a.enabled = true;
     a.reset();
     a.setEffectiveTimeScale(speed);
@@ -113,54 +134,69 @@ export async function createStage(canvas, { url = '/avatar/Xbot.glb', onFrame, p
     current = a;
     doneCb = once ? onDone || null : null;
   }
-  const setSpeed = (s) => { if (current) current.timeScale = s; };
 
-  // How fast the body must travel for the feet not to slide: sample a clip, find when each foot is planted (low) and
-  // how fast it moves backwards then. Returns model units per second at timeScale 1; times pxPerUnit() for pixels.
-  function strideSpeed(name) {
-    const a = actions[name];
-    const feet = [];
-    model.traverse((o) => { if (o.isBone && /(left|right)foot$/i.test(o.name)) feet.push(o); });
-    if (!a || !feet.length) return null;
-    const dur = a.getClip().duration;
-    const N = 60;
-    const v = new THREE.Vector3();
-    a.reset(); a.enabled = true; a.setEffectiveWeight(1); a.setEffectiveTimeScale(1); a.play();
-    const rows = feet.map(() => []);
-    for (let i = 0; i <= N; i++) {
-      a.time = (dur * i) / N;
-      mixer.update(0);
-      model.updateMatrixWorld(true);
-      feet.forEach((f, k) => { f.getWorldPosition(v); model.worldToLocal(v); rows[k].push({ y: v.y, z: v.z }); });
+  // ---- moves: pose named body parts over the idle clip ----
+  let mv = null; // { def, t, dur, hold, done }
+  const qm = new THREE.Quaternion();
+  const qmInv = new THREE.Quaternion();
+  const qp = new THREE.Quaternion();
+  const qpInv = new THREE.Quaternion();
+  const qr = new THREE.Quaternion();
+  const eul = new THREE.Euler();
+  const D = Math.PI / 180;
+
+  function perform(def, onDone) {
+    if (mv && mv.done) mv.done = null;
+    mv = { def, t: 0, dur: def.dur, hold: false, done: onDone || null };
+  }
+  const hold = (def, t) => { mv = { def, t, dur: def.dur, hold: true, done: null }; };
+  const release = () => { mv = null; };
+  const busy = () => !!mv;
+
+  function applyMove(dt) {
+    if (!mv) return;
+    if (!mv.hold) mv.t += dt;
+    const u = Math.min(1, mv.t / mv.dur);
+    model.updateMatrixWorld(true);
+    model.getWorldQuaternion(qm);
+    qmInv.copy(qm).invert();
+    for (let i = 0; i < order.length; i++) {
+      const role = order[i];
+      const f = mv.def.bones[role];
+      if (!f) continue;
+      const bone = bones[role];
+      const e = f(mv.t, u);
+      eul.set(e[0] * D, e[1] * D, e[2] * D, 'XYZ');
+      qr.setFromEuler(eul);
+      // the same turn, as a world rotation about his body axes, then expressed in the parent's frame
+      qr.premultiply(qm).multiply(qmInv);
+      bone.parent.updateWorldMatrix(true, false);
+      bone.parent.getWorldQuaternion(qp);
+      qpInv.copy(qp).invert();
+      bone.quaternion.premultiply(qr.premultiply(qpInv).multiply(qp));
+      bone.updateMatrix();
     }
-    a.stop();
-    const speeds = [];
-    rows.forEach((r) => {
-      const ys = r.map((p) => p.y);
-      const lo = Math.min(...ys);
-      const hi = Math.max(...ys);
-      for (let i = 0; i < N; i++) {
-        if (r[i].y < lo + 0.3 * (hi - lo) && r[i + 1].y < lo + 0.3 * (hi - lo)) {
-          const s = -(r[i + 1].z - r[i].z) / (dur / N);
-          if (s > 0) speeds.push(s);
-        }
-      }
-    });
-    if (!speeds.length) return null;
-    speeds.sort((p, q) => p - q);
-    return speeds[Math.floor(speeds.length * 0.8)]; // the flat-foot plateau; heel and toe phases are slower
+    if (!mv.hold && u >= 1) { const cb = mv.done; mv = null; if (cb) cb(); }
   }
 
   // ---- placement, in CSS pixels ----
   let heightPx = 160;
+  let squash = 1;
+  const applyScale = () => {
+    const k = heightPx / unit;
+    const w = 1 / Math.sqrt(squash);
+    holder.scale.set(k * w, k * squash, k * w);
+  };
   const setX = (x) => { holder.position.x = x; };
   const setY = (y) => { holder.position.y = y; };
   const setFacing = (rad) => { holder.rotation.y = rad; };
   const setLean = (rad) => { holder.rotation.x = rad; };
-  const pxPerUnit = () => heightPx / unit;
+  const setFlip = (rad) => { flipper.rotation.x = rad; };
+  const setSpin = (rad) => { flipper.rotation.y = rad; };
+  const setSquash = (s) => { squash = s; applyScale(); };
   function setHeight(px) {
     heightPx = px;
-    holder.scale.setScalar(px / unit);
+    applyScale();
     thick.value = bindHeight ? (OUTLINE_PX * bindHeight) / px : 0.5;
   }
   function resize(w, h) {
@@ -176,7 +212,6 @@ export async function createStage(canvas, { url = '/avatar/Xbot.glb', onFrame, p
 
   // head follows a look target (-1..1 each way); smoothed here
   const look = { x: 0, y: 0, cx: 0, cy: 0 };
-  const tmpE = new THREE.Euler();
   const tmpQ = new THREE.Quaternion();
   const setLook = (x, y) => { look.x = x; look.y = y; };
   function applyLook(dt) {
@@ -184,8 +219,8 @@ export async function createStage(canvas, { url = '/avatar/Xbot.glb', onFrame, p
     const k = 1 - Math.exp(-dt * 9);
     look.cx += (look.x - look.cx) * k;
     look.cy += (look.y - look.cy) * k;
-    tmpE.set(look.cy * 0.3, look.cx * 0.55, 0);
-    tmpQ.setFromEuler(tmpE);
+    eul.set(look.cy * 0.3, look.cx * 0.55, 0, 'XYZ');
+    tmpQ.setFromEuler(eul);
     head.quaternion.multiply(tmpQ);
   }
 
@@ -193,14 +228,19 @@ export async function createStage(canvas, { url = '/avatar/Xbot.glb', onFrame, p
   let raf = 0;
   let last = 0;
   let want = false;
+  // one frame of the world; step() lets a test drive it at a fixed rate while the loop is stopped
+  const step = (dt) => {
+    if (onFrame) onFrame(dt);
+    mixer.update(dt);
+    applyMove(dt);
+    applyLook(dt);
+    renderer.render(scene, cam);
+  };
   const tick = (t) => {
     raf = requestAnimationFrame(tick);
     const dt = Math.min(0.05, last ? (t - last) / 1000 : 0.016);
     last = t;
-    if (onFrame) onFrame(dt);
-    mixer.update(dt);
-    applyLook(dt);
-    renderer.render(scene, cam);
+    step(dt);
   };
   const start = () => { if (!raf) { last = 0; raf = requestAnimationFrame(tick); } };
   const stop = () => { cancelAnimationFrame(raf); raf = 0; };
@@ -220,6 +260,7 @@ export async function createStage(canvas, { url = '/avatar/Xbot.glb', onFrame, p
   }
 
   return {
-    play, setSpeed, strideSpeed, pxPerUnit, setX, setY, setFacing, setLean, setHeight, resize, setTone, setLook, setActive, dispose, names, hasHead: !!head,
+    play, perform, hold, release, busy, step, setX, setY, setFacing, setLean, setFlip, setSpin, setSquash, setHeight, resize, setTone, setLook, setActive, dispose,
+    names, roles: Object.keys(bones), hasHead: !!head,
   };
 }
