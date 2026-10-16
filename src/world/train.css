@@ -106,31 +106,23 @@
 .w-root.w-flat .tn .jtl .stp { width: 22px; height: 22px; }
 .w-root.w-flat .tn .jtl .yr { min-width: 0; font-size: 12px; }
 
-/* speech bubble: Laksh narrates from the train window, so the story is where the eyes already are */
-.w-root .tn .j-say { position: absolute; left: 0; top: 0; z-index: 4; pointer-events: none; will-change: transform; }
-.w-root .tn .say-t { position: relative; margin: 0; padding: 12px 16px 13px; background: #fff; color: var(--ink); border: 2.5px solid var(--ink); border-radius: 18px; box-shadow: 4px 4px 0 color-mix(in srgb, var(--ink) 85%, transparent); font: 700 clamp(15px, 1.25vw, 18px)/1.3 var(--sans); text-align: left; transform-origin: 50% 100%; transition: opacity .35s ease, transform .5s var(--spring); animation: tnSay .55s var(--spring); }
-.w-root .tn .say-t::after { content: ""; position: absolute; left: 50%; top: 100%; width: 16px; height: 16px; margin: -9px 0 0 -8px; background: #fff; border-right: 2.5px solid var(--ink); border-bottom: 2.5px solid var(--ink); transform: rotate(45deg); }
-.w-root[data-theme="night"] .tn .say-t, .w-root[data-theme="night"] .tn .say-t::after { background: #FFF4DC; color: #1B1F3B; }
-.w-root .tn .say-dots { position: absolute; left: 50%; bottom: 8px; display: flex; gap: 6px; padding: 12px 16px; background: #fff; border: 2.5px solid var(--ink); border-radius: 18px; transform: translateX(-50%) scale(.8); opacity: 0; transition: opacity .25s, transform .4s var(--spring); box-shadow: 4px 4px 0 color-mix(in srgb, var(--ink) 85%, transparent); }
-.w-root .tn .say-dots i { width: 8px; height: 8px; border-radius: 50%; background: var(--ink); animation: tnDots 1s ease-in-out infinite; }
-.w-root .tn .say-dots i:nth-child(2) { animation-delay: .15s; } .w-root .tn .say-dots i:nth-child(3) { animation-delay: .3s; }
-.w-root .tn .j-say[data-walk="1"] .say-t { opacity: 0; transform: scale(.7); animation: none; }
-.w-root .tn .j-say[data-walk="1"] .say-dots { opacity: 1; transform: translateX(-50%) scale(1); }
-@keyframes tnSay { from { opacity: 0; transform: scale(.4) translateY(14px); } }
-@keyframes tnDots { 50% { transform: translateY(-5px); opacity: .5; } }
-
-/* the card is a boarding pass that flies out of the window */
-.w-root .tn .jcard.fly { animation: tnTicket 1s var(--spring) both; }
-@keyframes tnTicket {
-  0% { translate: var(--fx, 0px) var(--fy, 0px); scale: .18; rotate: -16deg; opacity: 0; }
-  18% { opacity: 1; }
-  100% { translate: 0 0; scale: 1; rotate: 0deg; opacity: 1; }
-}
+/* the stop card is a paper ticket: thrown from the window, unfolded, stamped (all driven from Journey.jsx) */
 .w-root .tn .jc-top { padding-bottom: 12px; margin-bottom: 12px; border-bottom: 2px dashed color-mix(in srgb, var(--ink) 28%, transparent); gap: 10px; }
 .w-root .tn .jc-n { margin-right: auto; font: 800 12px var(--sans); letter-spacing: .1em; text-transform: uppercase; color: var(--ink-2); }
 .w-root .tn .jc-from { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; margin-top: 14px !important; padding-top: 10px; border-top: 2px dashed color-mix(in srgb, var(--ink) 28%, transparent); font: 700 12px var(--sans) !important; letter-spacing: .04em; text-transform: uppercase; color: var(--ink-2) !important; }
 
-@media (prefers-reduced-motion: reduce) {
-  .w-root .tn .say-t { animation: none; }
-  .w-root .tn .say-dots i { animation: none; }
-}
+
+.w-root .tn.scrub .jcard { --x: 1; --fo: 0; --cr: 0; will-change: transform, opacity; transform-origin: 50% 50%; visibility: hidden; }
+.w-root .tn.scrub .jc-in { animation: none; }
+.w-root .tn.scrub .jcard .ln { --e: clamp(0, calc(var(--x, 1) * 6 - var(--k, 0)), 1); opacity: var(--e); transform: translateY(calc((1 - var(--e)) * 14px)); }
+.w-root .tn .jc-face { position: absolute; inset: 0; z-index: 2; display: grid; place-content: center; text-align: center; border-radius: inherit; background: var(--card); opacity: var(--fo, 0); pointer-events: none; }
+.w-root .tn .jc-face::before { content: ""; position: absolute; inset: 10px; border: 2px dashed color-mix(in srgb, var(--ink) 30%, transparent); border-radius: 14px; }
+.w-root .tn .jc-face span { font: 800 20px var(--sans); letter-spacing: .28em; color: var(--ink-2); margin-left: .28em; }
+.w-root .tn .jc-face b { font: 800 120px/1 var(--sans); letter-spacing: -.04em; color: var(--ink); }
+.w-root .tn .jc-crease { position: absolute; inset: 0; z-index: 3; border-radius: inherit; pointer-events: none; opacity: var(--cr, 0); background: linear-gradient(to bottom, transparent 32.4%, rgba(27, 31, 59, .22) 33%, rgba(255, 255, 255, .7) 33.6%, transparent 34.4%, transparent 65.6%, rgba(27, 31, 59, .22) 66.2%, rgba(255, 255, 255, .7) 66.8%, transparent 67.6%); }
+.w-root .tn .jcard { overflow: hidden; }
+.w-root .tn .fx-stamp { position: absolute; left: 0; top: 0; z-index: 8; width: 54px; height: 54px; border-radius: 50%; display: grid; place-items: center; background: var(--c); border: 3px solid var(--ink); color: #1B1F3B; opacity: 0; pointer-events: none; will-change: transform, opacity; }
+.w-root .tn .fx-stamp::before { content: ""; position: absolute; inset: 4px; border-radius: 50%; border: 2px dashed rgba(27, 31, 59, .45); }
+.w-root .tn .jtl button.on:not(.done) .stp { border: 2px solid var(--ink); background: transparent; color: transparent; transform: scale(1.2); animation: none; }
+.w-root .tn .jtl button.on:not(.done) .stp svg { opacity: 0; }
+.w-root .tn .tr-me, .w-root .tn .tr-pane { transition: none; }

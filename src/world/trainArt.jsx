@@ -591,7 +591,14 @@ export const Train = memo(function Train() {
         <rect x="-66" y="500" width="140" height="9" fill={C.cream} />
         <rect x="-70" y="442" width="148" height="12" rx="6" fill="#C98714" stroke={INK} strokeWidth="3" />
         <rect x="-34" y="462" width="62" height="40" rx="6" fill="#BEE3F2" />
-        <g clipPath="url(#tn-win)"><image href="/me-avatar.webp" x="-34" y="466" width="62" height="184" preserveAspectRatio="xMidYMin slice" /></g>
+        <g clipPath="url(#tn-win)">
+          <image className="tr-me" href="/me-avatar.webp" x="-34" y="466" width="62" height="184" preserveAspectRatio="xMidYMin slice" />
+          <g className="tr-pane">
+            <rect x="-34" y="462" width="62" height="40" fill="#BEE3F2" opacity=".22" />
+            <path d="M-24 464 L-8 464 L-24 496 L-34 496 L-34 480Z M2 464 L10 464 L-6 496 L-14 496Z" fill="#fff" opacity=".4" />
+            <rect x="-34" y="497" width="62" height="5" fill="#8FB9CC" /><rect x="-34" y="497" width="62" height="1.5" fill="#fff" opacity=".6" />
+          </g>
+        </g>
         <rect x="-34" y="462" width="62" height="40" rx="6" fill="none" stroke={INK} strokeWidth="3" />
         <rect x="40" y="464" width="22" height="30" rx="4" fill={C.glass} stroke={INK} strokeWidth="2.5" />
         <rect x="-60" y="464" width="20" height="30" rx="4" fill={C.glass} stroke={INK} strokeWidth="2.5" />

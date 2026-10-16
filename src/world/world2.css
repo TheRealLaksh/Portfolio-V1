@@ -72,7 +72,7 @@
 /* Scroll mode (wide screens, motion allowed): a tall track with the stage pinned inside it. Scroll
    position drives the traveller, so transitions on the map are off. Phones and reduced motion keep
    the stacked layout above. */
-.w-root .journey.scrub { height: calc(100vh * 10); height: calc(100svh * 10); padding-block: 0; }
+.w-root .journey.scrub { height: calc(100vh * var(--tv, 10)); height: calc(100svh * var(--tv, 10)); padding-block: 0; }
 .w-root .journey.scrub .j-pin { --intro: 1; position: sticky; top: 0; height: 100vh; height: 100svh; overflow: hidden; }
 .w-root .journey.scrub .j-stage { position: absolute; inset: 66px 14px 12px; width: auto; height: auto; margin: 0; }
 .w-root .journey.scrub .j-head { position: absolute; z-index: 6; top: 84px; left: calc((100% - 380px) / 2); width: min(680px, calc(100% - 440px)); text-align: center; pointer-events: none; opacity: var(--intro); transform: translateX(-50%) translateY(calc((1 - var(--intro)) * -18px)); }

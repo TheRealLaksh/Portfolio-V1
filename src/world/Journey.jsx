@@ -1,24 +1,26 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { useLenis } from '@studio-freight/react-lenis';
 import { JOURNEY } from './data';
-import { clamp, range, ss, trackProgress, useScrollFrame, prefersReducedMotion, SCRUB_QUERY } from './hooks';
+import { clamp, range, ss, trackProgress, useScrollFrame, SCRUB_QUERY } from './hooks';
 import { STEP, LOCAL0, stX, FarLayer, MidLayer, NearLayer, ForeLayer, Train, SkyArt } from './trainArt';
 import Icon from './Icon';
 import './train.css';
 
 // The journey is a train line: one station per stop. Scrolling drives the train; the camera follows it.
 // Layers slide at different speeds (parallax), the sky runs from dawn to night, each station builds
-// itself as the train arrives, and a passport stamp lands for every stop.
+// itself as the train arrives, and at every station Laksh opens his window and throws a ticket: it spins
+// through the air to the right-hand side, unfolds into the stop card, gets stamped, and the stamp flies
+// down into the passport strip. All of it is scrubbed by scroll, so it plays backwards too.
 
 const N = JOURNEY.length;
 const YEARS = JOURNEY.map((s) => s.y.replace(' – ', '-'));
 const PAR = { far: 0.15, mid: 0.5, near: 1, fore: 1.35 };
 
-// Where the train is on the line for stop coordinate f (0..N-1). It dwells at each station, then glides.
+// Where the train is on the line for stop coordinate f (0..N-1). It rests at each station, then glides.
 const trainX = (f) => {
   if (f >= N - 1) return stX(N - 1);
   const n = Math.floor(f);
-  return stX(n) + STEP * ss(range(f - n, 0.14, 0.86));
+  return stX(n) + STEP * ss(range(f - n, 0.3, 0.7));
 };
 
 // Sky and light for a time of day t (0 = dawn, 1 = night): [t, top, bottom, tint rgba]
@@ -57,20 +59,31 @@ function geom(w, h, scrub) {
   return { Hv, y0, s, ax: (avail / s) * (scrub ? 0.48 : 0.5), ay: 560 };
 }
 
-// Scroll mode: the track is TRACK_VH viewport heights tall with the stage pinned inside it. Scroll
-// position y (in viewport heights) maps to a stop coordinate f in 0..N-1: LEAD of lead-in, then one
-// viewport per stop (stop n sits at y = LEAD + n), the rest is lead-out.
-const TRACK_VH = N + 1;
+// Scroll mode: PER viewport heights of scrolling per stop, LEAD before the first and TAIL after the last.
+// f = (y - LEAD) / PER is the stop coordinate: station n is at f = n.
+const PER = 1.5;
 const LEAD = 0.5;
-const INTRO_END = 0.3; // before this the card shows the intro, after it stop 1
+const TAIL = 0.9;
+const TRACK_VH = LEAD + (N - 1) * PER + TAIL + 1;
+const SETTLED = 0.27; // f offset past a station where the ticket has landed and been stamped
 
 // Phones and visitors who ask for less motion get the stacked layout with buttons instead.
 const canScrub = () => typeof window !== 'undefined' && window.matchMedia(SCRUB_QUERY).matches;
 
 const STAMP = ['#E8505B', '#1FA6A0', '#F2A93B', '#8E7CFF', '#7FB866', '#E8505B', '#1FA6A0', '#F2A93B', '#8E7CFF'];
+const rotOf = (n) => ((n * 37) % 23) - 11;
+const STAMP_PX = 54;
+const SLOT_PX = 26;
+
+const bez = (a, c, e, t) => (1 - t) * (1 - t) * a + 2 * (1 - t) * t * c + t * t * e;
+const outBack = (t) => 1 + 2.70158 * (t - 1) ** 3 + 1.70158 * (t - 1) ** 2;
+const outFast = (t) => 1 - (1 - t) ** 2.4;
+const inOut = (t) => (t < 0.5 ? 2 * t * t : 1 - (-2 * t + 2) ** 2 / 2);
 
 export default function Journey() {
-  const [i, setI] = useState(-1); // -1 = intro, before the first stop
+  const [i, setI] = useState(-1); // the stop shown on the ticket, -1 = none yet
+  const [bi, setBi] = useState(-1); // stations built so far
+  const [stamped, setStamped] = useState(0); // passport stamps collected
   const [size, setSize] = useState({ w: 0, h: 0 });
   const [scrub, setScrub] = useState(canScrub);
 
@@ -84,9 +97,10 @@ export default function Journey() {
   const lay = useRef({});
   const trail = useRef(null);
   const trainBox = useRef(null);
-  const sayEl = useRef(null);
   const card = useRef(null);
-  const live = useRef({ f: 0, size, scrub, i: -1, night: false }); // read by the scroll loop, never rendered
+  const stampEl = useRef(null);
+  const slots = useRef([]);
+  const live = useRef({ f: 0, fr: -1, size, scrub, i: -1, bi: -1, st: 0, night: false }); // read by the scroll loop, never rendered
   const lenis = useLenis();
   live.current.size = size;
   live.current.scrub = scrub;
@@ -121,8 +135,120 @@ export default function Journey() {
     return () => mo.disconnect();
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
+  // Where the card rests and where each passport slot is, in frame coordinates. The ticket's path
+  // starts at the window, ends at the card, and the stamp ends in a slot.
+  const measure = () => {
+    const fr = frame.current;
+    const c = card.current;
+    if (!fr || !c) return;
+    const f0 = fr.getBoundingClientRect();
+    live.current.rest = { cx: c.offsetLeft + c.offsetWidth / 2, cy: c.offsetTop, w: c.offsetWidth, h: c.offsetHeight };
+    live.current.slots = slots.current.map((el) => {
+      if (!el) return { x: 0, y: 0 };
+      const r = el.getBoundingClientRect();
+      return { x: r.left - f0.left + r.width / 2, y: r.top - f0.top + r.height / 2 };
+    });
+  };
+
+  // The ticket, scrubbed. d is how far the scroll is from station k (in stop units).
+  //   d -0.30..-0.25  window opens           d  0.04..0.17  text lines appear
+  //   d -0.25..-0.02  ticket flies in an arc  d  0.10..0.14  stamp slams on the ticket
+  //   d -0.04..0.08   unfolds into the card   d  0.15..0.25  stamp flies to the strip
+  //   d  0.30..0.46   blown away as the train leaves (not at the last station)
+  const ticket = (fr) => {
+    const c = card.current;
+    const R = live.current.rest;
+    const win = live.current.win;
+    const sz = live.current.size;
+    if (!c || !R || !win) return;
+    const k = clamp(Math.round(fr), 0, N - 1);
+    const d = fr - k;
+    const pt = range(d, -0.25, -0.21);
+    const pf = range(d, -0.22, -0.02);
+    const pu = range(d, -0.04, 0.08);
+    const px = range(d, 0.04, 0.17);
+    const ps = range(d, 0.1, 0.14);
+    const pg = range(d, 0.15, 0.25);
+    const pb = k < N - 1 ? range(d, 0.3, 0.46) : 0;
+
+    // the throw
+    const S = { x: win.x - R.cx, y: win.y - R.cy };
+    const Cp = { x: S.x * 0.4, y: Math.min(S.y, 0) - 240 };
+    const t = outFast(pf);
+    let tx = bez(S.x, Cp.x, 0, t);
+    let ty = bez(S.y, Cp.y, 0, t);
+    let rot = -(1 - t) * 640;
+    let fl = Math.sin(t * Math.PI * 3) * 38 * (1 - t);
+    let sc = (0.16 + 0.34 * t) * outBack(pt);
+    let op = range(pt, 0, 0.35);
+    if (pu > 0) sc = 0.5 + 0.5 * outBack(pu);
+    if (pu > 0 && pu < 1) rot += Math.sin(pu * Math.PI * 2) * 3 * (1 - pu);
+    let face = 1 - range(pu, 0.05, 0.55);
+    let lines = px;
+    // the stamp lands with a thud
+    if (ps > 0 && ps < 1) { ty += Math.sin(ps * Math.PI) * 5; sc *= 1 - 0.012 * Math.sin(ps * Math.PI); }
+    // the wind takes it when the train leaves
+    if (pb > 0) {
+      const e = pb ** 1.7;
+      tx = -sz.w * 0.62 * e + Math.sin(pb * Math.PI * 3) * 30 * e;
+      ty = -(R.cy + 40) * e + Math.sin(pb * Math.PI * 5) * 28 * e;
+      rot = -pb * 520;
+      fl = Math.sin(pb * Math.PI * 4) * 55 * pb;
+      sc = 1 - 0.78 * e;
+      op = 1 - range(pb, 0.62, 1);
+      face = range(pb, 0, 0.3);
+      lines = px * (1 - range(pb, 0, 0.25));
+    }
+    if (d < -0.25) op = 0;
+
+    c.style.transform = `translate(${tx.toFixed(1)}px, ${ty.toFixed(1)}px) translateY(-50%) perspective(900px) rotateX(var(--rx, 0deg)) rotateY(calc(${fl.toFixed(1)}deg + var(--ry, 0deg))) rotate(${rot.toFixed(1)}deg) scale(${Math.max(0.001, sc).toFixed(3)})`;
+    c.style.opacity = op.toFixed(3);
+    c.style.visibility = op < 0.01 ? 'hidden' : 'visible';
+    c.style.setProperty('--x', lines.toFixed(3));
+    c.style.setProperty('--fo', face.toFixed(3));
+    c.style.setProperty('--cr', (1 - pu).toFixed(3));
+
+    // the stamp: slams on the ticket's corner, then flies into the passport strip
+    const st = stampEl.current;
+    const slot = live.current.slots?.[k];
+    if (st && slot) {
+      const P = { x: R.cx + R.w * 0.5 - 58, y: R.cy - R.h * 0.5 + 58 };
+      let x = P.x;
+      let y = P.y;
+      let s2 = 1;
+      let r2 = -12;
+      let o2 = 0;
+      if (pg > 0) {
+        const u = inOut(pg);
+        x = bez(P.x, (P.x + slot.x) / 2 + 90, slot.x, u);
+        y = bez(P.y, (P.y + slot.y) / 2 - 120, slot.y, u);
+        s2 = 1 + (SLOT_PX / STAMP_PX - 1) * u;
+        r2 = -12 + (rotOf(k) + 12) * u;
+        o2 = pg > 0.985 ? 0 : 1;
+      } else if (ps > 0) {
+        s2 = 1 + 1.6 * (1 - ps) ** 2;
+        o2 = range(ps, 0, 0.3);
+      }
+      if (pb > 0) o2 = 0;
+      st.style.transform = `translate(${(x - STAMP_PX / 2).toFixed(1)}px, ${(y - STAMP_PX / 2).toFixed(1)}px) rotate(${r2.toFixed(1)}deg) scale(${s2.toFixed(3)})`;
+      st.style.opacity = o2.toFixed(2);
+      st.style.boxShadow = ps > 0 && pg <= 0 ? `0 0 0 ${(ps * 26).toFixed(0)}px rgba(27,31,59,${((1 - ps) * 0.18).toFixed(2)})` : 'none';
+      if (live.current.stampK !== k) { live.current.stampK = k; st.style.setProperty('--c', STAMP[k]); }
+    }
+
+    // window and Laksh: the pane slides down to let the ticket out
+    const tb = trainBox.current;
+    if (tb) {
+      const open = clamp(range(d, -0.3, -0.25) - range(d, -0.14, -0.08));
+      const pane = tb.querySelector('.tr-pane');
+      const me = tb.querySelector('.tr-me');
+      if (pane) pane.style.transform = `translateY(${(open * 31).toFixed(1)}px)`;
+      if (me) me.style.transform = `translate(${(open * 3).toFixed(1)}px, ${(-open * 6).toFixed(1)}px)`;
+    }
+  };
+
   // Paint the scene for the current stop coordinate. Direct DOM writes: React state only changes
-  // when the current stop does.
+  // when a stop, a built station or a stamp changes.
   const draw = () => {
     const { f, size: sz, scrub: sc, night } = live.current;
     if (!sz.w || !camA.current) return;
@@ -131,7 +257,7 @@ export default function Journey() {
 
     // camera: scale to fit, ease in a little while the train is stopped at a station
     const nd = Math.abs(f - Math.round(f));
-    const z = 1 + 0.06 * (1 - ss(range(nd, 0.04, 0.32)));
+    const z = 1 + 0.06 * (1 - ss(range(nd, 0.08, 0.3)));
     const cam = `scale(${g.s}) translate(0px, ${-g.y0}px) translate(${g.ax}px, ${g.ay}px) scale(${z.toFixed(4)}) translate(${-g.ax}px, ${-g.ay}px)`;
     camA.current.style.transform = cam;
     camB.current.style.transform = cam;
@@ -139,25 +265,19 @@ export default function Journey() {
     Object.entries(PAR).forEach(([k, p]) => { if (L[k]) L[k].style.transform = `translate(${(g.ax - x * p + LOCAL0).toFixed(1)}px, 0px)`; });
     if (trail.current) trail.current.style.transform = `scaleX(${Math.max(0, x - stX(0)).toFixed(1)})`;
     if (trainBox.current) trainBox.current.style.left = `${(g.ax - 460).toFixed(1)}px`;
-    // Laksh's window (scene x = ax - 3, y = 482) and the speech bubble that sits on the roof above it
-    const toX = (X) => g.s * (g.ax + (X - g.ax) * z);
-    const toY = (Y) => g.s * (g.ay + (Y - g.ay) * z - g.y0);
-    live.current.win = { x: toX(g.ax - 3), y: toY(482) };
-    if (sayEl.current) {
-      const bw = Math.min(300, sz.w - 24);
-      const bx = Math.min(sz.w - bw / 2 - 12, Math.max(bw / 2 + 12, toX(g.ax - 3)));
-      sayEl.current.style.width = `${bw}px`;
-      sayEl.current.style.transform = `translate(${bx.toFixed(1)}px, ${toY(432).toFixed(1)}px) translate(-50%, -100%)`;
-    }
+    // Laksh's window, in frame pixels (scene x = ax - 3, y = 482)
+    live.current.win = {
+      x: g.s * (g.ax + (g.ax - 3 - g.ax) * z),
+      y: g.s * (g.ay + (482 - g.ay) * z - g.y0),
+    };
 
     // the train rolls while it moves and rests at a station
     const was = live.current.lastX;
     live.current.lastX = x;
     if (was != null && Math.abs(x - was) > 0.4 && trainBox.current) {
       trainBox.current.dataset.walk = '1';
-      if (sayEl.current) sayEl.current.dataset.walk = '1';
       clearTimeout(live.current.stopT);
-      live.current.stopT = setTimeout(() => { if (trainBox.current) trainBox.current.dataset.walk = '0'; if (sayEl.current) sayEl.current.dataset.walk = '0'; }, sc ? 260 : 1300);
+      live.current.stopT = setTimeout(() => { if (trainBox.current) trainBox.current.dataset.walk = '0'; }, sc ? 260 : 1300);
     }
 
     // time of day
@@ -181,51 +301,60 @@ export default function Journey() {
     const ov = `rgba(${c.o.slice(0, 3).map(Math.round).join(',')}, ${c.o[3].toFixed(2)})`;
     if (dark.current && ov !== live.current.ov) { live.current.ov = ov; dark.current.style.background = ov; }
     frame.current?.style.setProperty('--dark', c.o[3].toFixed(2));
+
+    if (sc) ticket(live.current.fr);
   };
 
   useScrollFrame(() => {
     if (!live.current.scrub || !track.current) return;
     const y = trackProgress(track.current) * (TRACK_VH - 1);
-    const f = clamp(y - LEAD, 0, N - 1);
-    live.current.f = f;
+    const fr = (y - LEAD) / PER; // can be negative before the first station
+    live.current.fr = fr;
+    live.current.f = clamp(fr, 0, N - 1);
     draw();
-    pin.current?.style.setProperty('--intro', (1 - range(y, 0.12, INTRO_END + 0.1)).toFixed(3));
-    const idx = y < INTRO_END ? -1 : Math.round(f);
+    pin.current?.style.setProperty('--intro', (1 - range(y, 0.04, 0.28)).toFixed(3));
+    const k = clamp(Math.round(fr), 0, N - 1);
+    const idx = fr < -0.25 ? -1 : k;
+    const built = clamp(Math.floor(fr + 0.45), -1, N - 1);
+    const st = clamp(Math.floor(fr - 0.25) + 1, 0, N);
     if (idx !== live.current.i) { live.current.i = idx; setI(idx); }
+    if (built !== live.current.bi) { live.current.bi = built; setBi(built); }
+    if (st !== live.current.st) { live.current.st = st; setStamped(st); }
   });
 
-  // Stacked layout (phones, reduced motion): the stop buttons move the camera.
+  // Stacked layout (phones, reduced motion): the stop buttons move the camera and the card is plain.
   useEffect(() => {
-    if (!scrub) live.current.f = Math.max(0, i);
+    if (!scrub) {
+      live.current.f = Math.max(0, i);
+      live.current.fr = i;
+      const c = card.current;
+      if (c) { c.style.transform = ''; c.style.opacity = ''; c.style.visibility = ''; c.style.setProperty('--x', '1'); c.style.setProperty('--fo', '0'); c.style.setProperty('--cr', '0'); }
+      const tb = trainBox.current;
+      tb?.querySelector('.tr-pane')?.style.removeProperty('transform');
+      tb?.querySelector('.tr-me')?.style.removeProperty('transform');
+      if (stampEl.current) stampEl.current.style.opacity = '0';
+    }
     draw();
   }, [scrub, size, i]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  // The stop card is a ticket that flies out of Laksh's window each time the train pulls into a station.
-  useEffect(() => {
-    const c = card.current;
-    const fr = frame.current;
-    const win = live.current.win;
-    if (!c) return;
-    c.classList.remove('fly');
-    if (!live.current.scrub || !win || !fr || prefersReducedMotion()) return;
-    const cr = c.getBoundingClientRect();
-    const fr0 = fr.getBoundingClientRect();
-    c.style.setProperty('--fx', `${(win.x - (cr.left - fr0.left + cr.width / 2)).toFixed(0)}px`);
-    c.style.setProperty('--fy', `${(win.y - (cr.top - fr0.top + cr.height / 2)).toFixed(0)}px`);
-    void c.offsetWidth;
-    c.classList.add('fly');
-  }, [i]);
+  useLayoutEffect(() => {
+    measure();
+    draw();
+    if (document.fonts?.ready) document.fonts.ready.then(measure);
+  }, [i, size, scrub]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const stop = i >= 0 ? JOURNEY[i] : null;
   const g = size.w ? geom(size.w, size.h, scrub) : null;
+  const built = scrub ? bi : i;
+  const done = scrub ? stamped : i + 1;
 
   const go = (n) => {
     const to = Math.max(-1, Math.min(N - 1, n));
     if (!scrub) { setI(to); return; }
     const tr = track.current;
     if (!tr) return;
-    const y = window.scrollY + tr.getBoundingClientRect().top + (to < 0 ? 0 : (LEAD + to) * window.innerHeight);
-    if (lenis) lenis.scrollTo(y, { duration: 1.4 });
+    const y = window.scrollY + tr.getBoundingClientRect().top + (to < 0 ? 0 : (LEAD + (to + SETTLED) * PER) * window.innerHeight);
+    if (lenis) lenis.scrollTo(y, { duration: 1.6 });
     else window.scrollTo({ top: y, behavior: 'smooth' });
   };
   const onKey = (e) => {
@@ -235,9 +364,10 @@ export default function Journey() {
 
   const setLay = (k) => (el) => { lay.current[k] = el; };
   const years = useMemo(() => YEARS, []);
+  const ln = (k) => ({ '--k': k });
 
   return (
-    <section className={`journey tn torn ${scrub ? 'scrub' : 'torn-bot'}`} id="journey" ref={track} aria-label="The journey">
+    <section className={`journey tn torn ${scrub ? 'scrub' : 'torn-bot'}`} id="journey" ref={track} aria-label="The journey" style={scrub ? { '--tv': TRACK_VH } : undefined}>
       <div className="j-pin" ref={pin}>
         <div className="j-head">
           <div className="wrap">
@@ -256,7 +386,7 @@ export default function Journey() {
               <div className="lay" ref={setLay('far')}><FarLayer p={PAR.far} /></div>
               <div className="lay" ref={setLay('mid')}><MidLayer p={PAR.mid} /></div>
               <div className="lay" ref={setLay('near')}>
-                <NearLayer i={i} years={years} />
+                <NearLayer i={built} years={years} />
                 <div className="j-trail" ref={trail} style={{ left: stX(0) - LOCAL0 }} />
               </div>
             </div>
@@ -265,20 +395,18 @@ export default function Journey() {
               <div className="j-train" ref={trainBox} data-walk="0" style={{ left: g ? g.ax - 460 : 0 }}><Train /></div>
               <div className="lay" ref={setLay('fore')}><ForeLayer p={PAR.fore} /></div>
             </div>
-            <div className="j-say" ref={sayEl} data-walk="0" aria-hidden="true">
-              <span className="say-dots"><i /><i /><i /></span>
-              <p className="say-t" key={i}>{stop ? stop.say : 'All aboard! Scroll and I will show you the way.'}</p>
-            </div>
           </div>
 
           <article className="jcard" aria-live="polite" ref={card}>
+            <div className="jc-face" aria-hidden="true"><span>STOP</span><b>{i >= 0 ? i + 1 : 1}</b></div>
+            <div className="jc-crease" aria-hidden="true" />
             {stop ? (
               <div className="jc-in" key={i}>
-                <div className="jc-top"><span className="jc-yr">{stop.y}</span><span className="jc-n">Stop {i + 1} of {N}</span><span className="jc-ic"><Icon n={stop.icon} size={20} /></span></div>
-                <h3>{stop.t}</h3>
-                <p className="jc-role">{stop.r}</p>
-                <p>{stop.p}</p>
-                <p className="jc-from">{i > 0 ? `From ${JOURNEY[i - 1].t}` : 'Start of the line'} <Icon n="arrow" size={13} /> {stop.t}</p>
+                <div className="jc-top ln" style={ln(0)}><span className="jc-yr">{stop.y}</span><span className="jc-n">Stop {i + 1} of {N}</span><span className="jc-ic"><Icon n={stop.icon} size={20} /></span></div>
+                <h3 className="ln" style={ln(1)}>{stop.t}</h3>
+                <p className="jc-role ln" style={ln(2)}>{stop.r}</p>
+                <p className="ln" style={ln(3)}>{stop.p}</p>
+                <p className="jc-from ln" style={ln(4)}>{i > 0 ? `From ${JOURNEY[i - 1].t}` : 'Start of the line'} <Icon n="arrow" size={13} /> {stop.t}</p>
               </div>
             ) : (
               <div className="jc-in" key="intro">
@@ -288,6 +416,8 @@ export default function Journey() {
               </div>
             )}
           </article>
+
+          {scrub && <div className="fx-stamp" ref={stampEl} style={{ '--c': STAMP[0] }} aria-hidden="true"><Icon n={JOURNEY[Math.max(0, i)].icon} size={22} /></div>}
 
           {/* Previous/next buttons only exist where the page is not scroll-driven (phones, reduced motion). */}
           {!scrub && (
@@ -304,8 +434,8 @@ export default function Journey() {
             <ol>
               {JOURNEY.map((s, n) => (
                 <li key={s.t}>
-                  <button type="button" className={n === i ? 'on' : n < i ? 'done' : ''} onClick={() => go(n)} aria-label={`${s.y}: ${s.t}`} aria-current={n === i ? 'step' : undefined}>
-                    <span className="stp" style={{ '--c': STAMP[n], '--r': `${((n * 37) % 23) - 11}deg` }}><Icon n={s.icon} size={14} /></span>
+                  <button type="button" className={`${n === i ? 'on' : ''} ${n < done ? 'done' : ''}`} onClick={() => go(n)} aria-label={`${s.y}: ${s.t}`} aria-current={n === i ? 'step' : undefined}>
+                    <span className="stp" ref={(el) => { slots.current[n] = el; }} style={{ '--c': STAMP[n], '--r': `${rotOf(n)}deg` }}><Icon n={s.icon} size={14} /></span>
                   </button>
                 </li>
               ))}
@@ -317,4 +447,3 @@ export default function Journey() {
     </section>
   );
 }
-
