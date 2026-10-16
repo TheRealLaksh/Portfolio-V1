@@ -1,7 +1,7 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useLenis } from '@studio-freight/react-lenis';
 import { WORK, WORK_FILTERS } from './data';
-import { clamp, lerp, range, ss, backOut, useTrack, useScrub } from './hooks';
+import { clamp, lerp, range, ss, backOut, useTrack, useScrub, scrubMode } from './hooks';
 import Icon from './Icon';
 import Floaters from './Floaters';
 
@@ -15,36 +15,85 @@ function Mock({ c, name }) {
   );
 }
 
-function Shot({ w }) {
+function Shot({ w, alt = '' }) {
   const [ok, setOk] = useState(true);
   if (!ok) return <Mock c={w.c} name={w.n} />;
-  return <img className="shot" src={`/work/${w.id}.webp`} alt="" loading="lazy" onError={() => setOk(false)} />;
+  return <img className="shot" src={`/work/${w.id}.webp`} alt={alt} loading="lazy" onError={() => setOk(false)} />;
 }
 
-function Case({ w, onClose }) {
+function Case({ w, list, onNav, onClose }) {
   const ref = useRef(null);
+  const [copied, setCopied] = useState(false);
+  const at = list.findIndex((x) => x.id === w.id);
+  const nav = list.length > 1;
+
   useEffect(() => {
     const prev = document.activeElement;
     ref.current?.focus();
-    const k = (e) => { if (e.key === 'Escape') onClose(); };
+    return () => { prev?.focus?.(); };
+  }, []);
+
+  useEffect(() => {
+    const k = (e) => {
+      if (e.key === 'Escape') { onClose(); return; }
+      if (nav && e.key === 'ArrowRight') { e.preventDefault(); onNav(1); return; }
+      if (nav && e.key === 'ArrowLeft') { e.preventDefault(); onNav(-1); return; }
+      if (e.key !== 'Tab' || !ref.current) return;
+      // keep Tab inside the dialog
+      const f = [...ref.current.querySelectorAll('a[href], button:not([disabled])')];
+      if (!f.length) return;
+      const first = f[0];
+      const last = f[f.length - 1];
+      const on = document.activeElement;
+      if (e.shiftKey && (on === first || on === ref.current)) { e.preventDefault(); last.focus(); }
+      else if (!e.shiftKey && on === last) { e.preventDefault(); first.focus(); }
+    };
     window.addEventListener('keydown', k);
-    return () => { window.removeEventListener('keydown', k); prev?.focus?.(); };
-  }, [onClose]);
+    return () => window.removeEventListener('keydown', k);
+  }, [onClose, onNav, nav]);
+
+  useEffect(() => { setCopied(false); }, [w.id]);
+
+  const copy = async () => {
+    try {
+      await navigator.clipboard.writeText(`${window.location.origin}${window.location.pathname}#work/${w.id}`);
+      setCopied(true);
+      window.setTimeout(() => setCopied(false), 1800);
+    } catch { /* clipboard blocked: the address bar already holds the link */ }
+  };
+
   return (
     <div className="cs open" role="dialog" aria-modal="true" aria-label={`${w.n}, case summary`} data-lenis-prevent onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}>
       <div className="cs-sheet" ref={ref} tabIndex={-1} style={{ ['--cc']: w.c }}>
         <button type="button" className="cs-x" onClick={onClose} aria-label="Close">&times;</button>
-        <div className="cs-art"><Shot w={w} /></div>
-        <div className="cs-body">
+        <div className="cs-art" key={`a-${w.id}`}><Shot w={w} alt={`Screenshot of ${w.n}, ${w.k.toLowerCase()}`} /></div>
+        <div className="cs-body" key={`b-${w.id}`}>
           <p className="cs-k">{w.k}</p>
           <h3>{w.n}</h3>
           <p className="cs-d">{w.d}</p>
+          <dl className="cs-facts">
+            <div><dt>Year</dt><dd>{w.year}</dd></div>
+            <div><dt>Role</dt><dd>{w.role}</dd></div>
+            <div><dt>Status</dt><dd>{w.status}</dd></div>
+          </dl>
           <ul className="cs-tags">{w.tags.map((t) => <li key={t}>{t}</li>)}</ul>
           <p className="cs-note"><Icon n="star" size={14} />{w.note}</p>
           <div className="cs-links">
             {w.live && <a className="btn-main" href={w.live} target="_blank" rel="noopener noreferrer">Open the live site <Icon n="ext" size={16} /></a>}
             {w.code && <a className={w.live ? 'btn-ghost' : 'btn-main'} href={w.code} target="_blank" rel="noopener noreferrer">View the code <Icon n="ext" size={16} /></a>}
           </div>
+        </div>
+        <div className="cs-foot">
+          {nav ? (
+            <div className="cs-nav">
+              <button type="button" onClick={() => onNav(-1)} aria-label="Previous project"><Icon n="arrow" size={18} className="flip" /></button>
+              <span aria-live="polite">{at + 1} of {list.length}</span>
+              <button type="button" onClick={() => onNav(1)} aria-label="Next project"><Icon n="arrow" size={18} /></button>
+            </div>
+          ) : <span />}
+          <button type="button" className="cs-copy" onClick={copy}>
+            <Icon n={copied ? 'check' : 'copy'} size={16} />{copied ? 'Link copied' : 'Copy link'}
+          </button>
         </div>
       </div>
     </div>
@@ -245,16 +294,58 @@ function Deck({ onOpen, filter, setFilter, keep }) {
   );
 }
 
+const HASH = /^#work\/([\w-]+)$/;
+
 export default function Work() {
   const [open, setOpen] = useState(null);
   const [filter, setFilter] = useState('all');
   const scrub = useScrub();
+  const lenis = useLenis();
   const keep = WORK_FILTERS.find((f) => f.id === filter).test;
+  // prev / next walks the projects the filter keeps lit; a dimmed project opened by hand walks all of them
+  const list = useMemo(() => (open && !keep(open) ? WORK : WORK.filter(keep)), [open, keep]);
+
+  const close = useCallback(() => {
+    setOpen(null);
+    try { if (HASH.test(window.location.hash)) window.history.replaceState(null, '', '#work'); } catch { /* no history access */ }
+  }, []);
+
+  const onNav = useCallback((dir) => {
+    if (!open) return;
+    const i = list.findIndex((x) => x.id === open.id);
+    setOpen(list[(i + dir + list.length) % list.length]);
+  }, [open, list]);
+
+  // the address bar follows the open project, so the link can be shared
+  useEffect(() => {
+    if (!open) return;
+    try { window.history.replaceState(null, '', `#work/${open.id}`); } catch { /* no history access */ }
+  }, [open]);
+
+  // opening a link like /#work/helios lands on the work section with that project's popup open
+  useEffect(() => {
+    const read = () => {
+      const m = HASH.exec(window.location.hash);
+      const w = m && WORK.find((x) => x.id === m[1]);
+      if (!w) return;
+      setOpen(w);
+      window.setTimeout(() => {
+        const sec = document.getElementById('work');
+        if (!sec) return;
+        const y = sec.getBoundingClientRect().top + window.scrollY + (scrubMode() ? Math.max(0, sec.offsetHeight - window.innerHeight) * 0.95 : 0);
+        if (lenis) lenis.scrollTo(y, { immediate: true }); else window.scrollTo(0, y);
+      }, 500);
+    };
+    read();
+    window.addEventListener('hashchange', read);
+    return () => window.removeEventListener('hashchange', read);
+  }, [lenis]);
+
   return (
     <section className="work" id="work" aria-label="Selected work">
       {!scrub && <Floaters set="work" />}
       {scrub ? <CardBox onOpen={setOpen} filter={filter} setFilter={setFilter} keep={keep} /> : <Deck onOpen={setOpen} filter={filter} setFilter={setFilter} keep={keep} />}
-      {open && <Case w={open} onClose={() => setOpen(null)} />}
+      {open && <Case w={open} list={list} onNav={onNav} onClose={close} />}
     </section>
   );
 }

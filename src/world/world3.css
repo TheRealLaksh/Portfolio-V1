@@ -225,6 +225,25 @@
 .w-root .wk.off .wk-in, .w-root .wcard.off, .w-root .bi-list li.off { filter: grayscale(1); opacity: .32; }
 .w-root .cs-links { display: flex; flex-wrap: wrap; gap: 10px; }
 .w-root .cs-links { margin-top: 22px; }
-.w-root .cs-links .btn-main, .w-root .cs-links .btn-ghost { margin-top: 0; }
-.w-root .btn-ghost { display: inline-flex; align-items: center; gap: 8px; padding: 12px 20px; border-radius: 99px; border: 2px solid var(--ink); background: transparent; color: var(--ink); font-weight: 700; transition: transform .3s var(--spring), background .2s; }
-.w-root .btn-ghost:hover { transform: translateY(-2px); background: var(--card); }
+.w-root .cs-links .btn-main, .w-root .cs-links .btn-ghost { margin: 0; }
+
+/* project popup: facts row, previous / next, copy link */
+.w-root .cs-sheet { grid-template-rows: 1fr auto; }
+.w-root .cs-body, .w-root .cs-art { animation: fade .3s; }
+.w-root .cs-facts { display: flex; flex-wrap: wrap; gap: 8px 22px; margin: 16px 0 0; }
+.w-root .cs-facts div { display: grid; gap: 1px; }
+.w-root .cs-facts dt { font: 700 11px var(--sans); letter-spacing: .12em; text-transform: uppercase; color: var(--ink-2); }
+.w-root .cs-facts dd { margin: 0; font: 800 15px var(--sans); }
+.w-root .cs-foot { grid-column: 1 / -1; display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 12px 18px; border-top: 2px solid var(--ink); background: color-mix(in srgb, var(--cc) 10%, var(--card)); }
+.w-root .cs-nav { display: flex; align-items: center; gap: 12px; font: 700 14px var(--sans); color: var(--ink-2); }
+.w-root .cs-nav button, .w-root .cs-copy { border: 2px solid var(--ink); background: var(--card); color: var(--ink); transition: transform .3s var(--spring); }
+.w-root .cs-nav button { width: 40px; height: 40px; border-radius: 50%; display: grid; place-items: center; }
+.w-root .cs-copy { display: inline-flex; align-items: center; gap: 6px; padding: 9px 16px; border-radius: 99px; font: 700 14px var(--sans); }
+.w-root .cs-nav button:hover, .w-root .cs-copy:hover { transform: translateY(-2px); }
+.w-root .cs-nav button:focus-visible, .w-root .cs-copy:focus-visible, .w-root .cs-x:focus-visible, .w-root .btn-ghost:focus-visible, .w-root .cs-links a:focus-visible { outline: 3px solid var(--cc); outline-offset: 3px; }
+@media (max-width: 720px) {
+  /* the floating nav pill sits over the bottom of the screen; keep the popup (and its prev / next row) clear of it */
+  .w-root .cs { padding-top: 64px; padding-bottom: 96px; }
+  .w-root .cs-sheet { max-height: calc(100svh - 160px); }
+}
+.w-root .cs-foot { position: sticky; bottom: 0; z-index: 2; }
