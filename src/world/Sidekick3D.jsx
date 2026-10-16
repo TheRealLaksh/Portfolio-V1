@@ -10,14 +10,13 @@ import './sidekick3d.css';
 // speech bubble, the "Zzz" and the guide menu. three.js loads lazily after the page has settled; if anything fails
 // the parent falls back to the flat 2D sidekick.
 const IDS = ['story', 'work', 'brand', 'profiley', 'stack', 'process', 'life', 'notes', 'hello'];
-const STRIP = 260; // tall enough for him plus a hop
 const MINI_STRIP = 150;
 
 const metrics = (mini) => {
   const W = window.innerWidth;
   const H = window.innerHeight;
-  const charH = mini ? 118 : Math.min(200, Math.max(130, H * 0.2));
-  return { W, H, mini, charH, bottom: mini ? 78 : 0, strip: mini ? MINI_STRIP : STRIP };
+  const charH = mini ? 118 : Math.min(270, Math.max(170, H * 0.27));
+  return { W, H, mini, charH, bottom: mini ? 78 : 0, strip: mini ? MINI_STRIP : Math.round(charH + 120) }; // room for a hop
 };
 
 export default function Sidekick3D({ mini, onFail }) {
@@ -56,6 +55,7 @@ export default function Sidekick3D({ mini, onFail }) {
       root.style.setProperty('--sk-ch', `${m.charH}px`);
       root.style.setProperty('--sk-strip', `${m.strip}px`);
       root.style.setProperty('--sk-bottom', `${m.bottom}px`);
+      root.style.setProperty('--sk-w', `${Math.round(m.charH * 0.5)}px`);
       stage.resize(m.W, m.strip);
       stage.setHeight(m.charH);
     };
@@ -77,8 +77,11 @@ export default function Sidekick3D({ mini, onFail }) {
         });
         brainRef.current = brain;
         fit();
+        brain.calibrate();
         stage.play('idle');
-        window.addEventListener('resize', fit);
+        if (import.meta.env.DEV) window.__sk = { brain, stage };
+        const onResize = () => { fit(); brain.calibrate(); };
+        window.addEventListener('resize', onResize);
         // follow the light/night switch
         const w = document.querySelector('.w-root');
         const read = () => brain.setTone(w?.dataset.theme === 'night');
@@ -86,8 +89,8 @@ export default function Sidekick3D({ mini, onFail }) {
         if (w) {
           const mo = new MutationObserver(read);
           mo.observe(w, { attributes: true, attributeFilter: ['data-theme'] });
-          off = () => { mo.disconnect(); window.removeEventListener('resize', fit); };
-        } else off = () => window.removeEventListener('resize', fit);
+          off = () => { mo.disconnect(); window.removeEventListener('resize', onResize); };
+        } else off = () => window.removeEventListener('resize', onResize);
         brain.goTo(curRef.current);
       } catch (err) {
         // eslint-disable-next-line no-console

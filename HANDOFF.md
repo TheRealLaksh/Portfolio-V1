@@ -135,6 +135,7 @@ Branch: `feat/avatar-3d` · remote: https://github.com/TheRealLaksh/Portfolio-V2
 
 ### Last 15 commits
 
+- `d979a54` 2026-10-16 10:19 Sidekick: scroll-driven roaming with easing, turning, lean and run or walk by speed
 - `c2c5a8c` 2026-10-16 10:19 Sidekick: toon shading and ink outline, stride measurement for foot-locked speed
 - `939223d` 2026-10-16 10:10 Sidekick: 3D version with guide menu, phone mini and a 2D fallback
 - `0361fa3` 2026-10-16 10:10 Sidekick: three.js stage and behaviour brain (walk, scroll jog, sleep, look, high five)
@@ -149,13 +150,11 @@ Branch: `feat/avatar-3d` · remote: https://github.com/TheRealLaksh/Portfolio-V2
 - `28b494c` 2026-10-16 09:24 Journey: Laksh narrates from the train window and the stop card flies out as a boarding pass
 - `f8cb299` 2026-10-16 02:10 Remove the old journey map CSS; record the train journey in HANDOFF
 - `07855aa` 2026-10-16 02:10 Journey is now a scroll-driven train line: nine station scenes, parallax camera, dawn-to-night sky, passport stamps
-- `51d87aa` 2026-10-16 01:56 Trim journey stops: drop Round Square, G20 press corps, Class X marks and Web Wizards; Building in public now Profiley and CaliBridge
 
 ### Uncommitted changes at refresh time
 
 ```
-M src/world/Sidekick3D.jsx
-M  src/world/avatarBrain.js
- M src/world/sidekick3d.css
+M  src/world/Sidekick3D.jsx
+M  src/world/sidekick3d.css
 ```
 <!-- handoff:auto:end -->
