@@ -1,0 +1,30 @@
+/* The 3D sidekick: a transparent strip along the bottom edge that holds the canvas, and a follower box that moves
+   with him (the click button, speech bubble, Zzz and guide menu all live inside it). */
+.sk3 { --sk-ch: 160px; --sk-strip: 260px; --sk-bottom: 0px; position: fixed; left: 0; bottom: var(--sk-bottom); width: 100%; height: var(--sk-strip); z-index: 55; pointer-events: none; opacity: 0; transition: opacity .6s ease; }
+.sk3.on { opacity: 1; }
+.sk3-canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+.sk3-follow { position: absolute; left: 0; bottom: 0; width: 0; height: 0; will-change: transform; }
+.sk3-shadow { position: absolute; left: -34px; bottom: -4px; width: 68px; height: 12px; border-radius: 50%; background: radial-gradient(closest-side, rgba(27, 31, 59, .32), transparent); }
+.sk3-hit { position: absolute; left: -42px; bottom: 0; width: 84px; height: var(--sk-ch); padding: 0; border: 0; border-radius: 28px; background: transparent; pointer-events: auto; cursor: pointer; }
+.sk3-hit:focus-visible { outline: 3px solid #1B1F3B; outline-offset: 2px; }
+
+.sk3-say { position: absolute; bottom: calc(var(--sk-ch) * .66); margin: 0; width: max-content; max-width: 240px; background: #fff; color: #1B1F3B; font: 700 18px/1.15 var(--hand); padding: 7px 13px 8px; border: 2px solid #1B1F3B; box-shadow: 4px 4px 0 #1B1F3B; animation: sk3Pop .55s var(--spring) both, sk3Out .5s ease 6s forwards; pointer-events: none; }
+.sk3-follow[data-side="r"] .sk3-say { left: 44px; border-radius: 16px 16px 16px 4px; transform-origin: 0 100%; }
+.sk3-follow[data-side="l"] .sk3-say { right: 44px; border-radius: 16px 16px 4px 16px; transform-origin: 100% 100%; }
+@keyframes sk3Pop { from { opacity: 0; transform: translateY(8px) scale(.8); } }
+@keyframes sk3Out { to { opacity: 0; transform: translateY(-4px); } }
+
+.sk3-zzz { position: absolute; bottom: calc(var(--sk-ch) * .92); left: 12px; display: flex; gap: 2px; font: 700 22px var(--hand); color: #1B1F3B; pointer-events: none; }
+.sk3-zzz i { font-style: normal; opacity: 0; animation: sk3Z 2.4s ease-in-out infinite; }
+.sk3-zzz i:nth-child(2) { animation-delay: .5s; font-size: 18px; }
+.sk3-zzz i:nth-child(3) { animation-delay: 1s; font-size: 14px; }
+@keyframes sk3Z { 0% { opacity: 0; transform: translateY(8px); } 30%, 70% { opacity: 1; } 100% { opacity: 0; transform: translateY(-14px); } }
+
+.sk3-menu { position: absolute; bottom: calc(var(--sk-ch) + 6px); left: -40px; display: grid; gap: 6px; pointer-events: auto; animation: sk3Pop .35s var(--spring) both; }
+.sk3-follow[data-side="l"] .sk3-menu { left: auto; right: -40px; }
+.sk3-menu button, .sk3-menu a { display: block; text-align: left; white-space: nowrap; padding: 8px 16px; border: 2px solid #1B1F3B; border-radius: 99px; background: #fff; color: #1B1F3B; font: 700 14px var(--sans); box-shadow: 3px 3px 0 #1B1F3B; text-decoration: none; cursor: pointer; transition: transform .25s var(--spring); }
+.sk3-menu button:hover, .sk3-menu a:hover { transform: translateX(3px); }
+.sk3-menu button:focus-visible, .sk3-menu a:focus-visible { outline: 3px solid #1B1F3B; outline-offset: 2px; }
+
+.sk3.mini .sk3-say { max-width: 170px; font-size: 16px; }
+@media (prefers-reduced-motion: reduce) { .sk3 { transition: none; } .sk3-say, .sk3-menu, .sk3-zzz i { animation: none; } .sk3-zzz i { opacity: 1; } }

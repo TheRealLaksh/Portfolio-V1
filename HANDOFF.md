@@ -134,6 +134,7 @@ Branch: `feat/avatar-3d` · remote: https://github.com/TheRealLaksh/Portfolio-V2
 
 ### Last 15 commits
 
+- `0361fa3` 2026-10-16 10:10 Sidekick: three.js stage and behaviour brain (walk, scroll jog, sleep, look, high five)
 - `388e600` 2026-10-16 10:10 Sidekick: add a stand-in 3D model, the line bank and a section hook
 - `b672ab2` 2026-10-16 09:53 Work: real screenshots for Vaultara and Mercatora; handoff status for the work section pass
 - `e223e1a` 2026-10-16 09:51 Work popup: year, role and status, previous and next, copy link, #work/<id> deep link, focus trap and alt text
@@ -148,15 +149,12 @@ Branch: `feat/avatar-3d` · remote: https://github.com/TheRealLaksh/Portfolio-V2
 - `51d87aa` 2026-10-16 01:56 Trim journey stops: drop Round Square, G20 press corps, Class X marks and Web Wizards; Building in public now Profiley and CaliBridge
 - `94c1c9b` 2026-10-16 01:50 Show the ShiftsDeal app phone only while the ShiftsDeal place is selected
 - `785f5bd` 2026-10-16 01:50 Play That's What I Like by Bruno Mars from the music button via Spotify's embedded player
-- `16b6990` 2026-10-16 01:39 Remove tabla; add laptop on rug, ShiftsDeal app phone and new hero sub-line
 
 ### Uncommitted changes at refresh time
 
 ```
-M src/world/Sidekick.jsx
-A  src/world/avatarBrain.js
-A  src/world/avatarStage.js
-?? src/world/Sidekick3D.jsx
-?? src/world/sidekick3d.css
+M  src/world/Sidekick.jsx
+A  src/world/Sidekick3D.jsx
+A  src/world/sidekick3d.css
 ```
 <!-- handoff:auto:end -->

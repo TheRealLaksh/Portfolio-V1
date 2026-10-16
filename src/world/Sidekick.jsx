@@ -1,5 +1,5 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { useScrub } from './hooks';
+import React, { Suspense, lazy, useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useScrub, prefersReducedMotion } from './hooks';
 import Avatar3D from './Avatar3D';
 import { attachGaze, reactAvatar, setWalking, idleGestures } from './avatarLife';
 
@@ -19,7 +19,7 @@ const SAYS = {
 };
 const IDS = ['story', 'journey', 'work', 'brand', 'profiley', 'stack', 'process', 'life', 'notes', 'hello'];
 
-export default function Sidekick() {
+function Sidekick2D() {
   const scrub = useScrub();
   const root = useRef(null);
   const [cur, setCur] = useState(null);
@@ -71,4 +71,24 @@ export default function Sidekick() {
       <div className="sk-fig" onClick={() => reactAvatar(root.current?.querySelector('.a3'))}><Avatar3D /></div>
     </div>
   );
+}
+
+const Sidekick3D = lazy(() => import('./Sidekick3D'));
+
+const hasWebGL = () => {
+  try {
+    const c = document.createElement('canvas');
+    return !!(c.getContext('webgl2') || c.getContext('webgl'));
+  } catch { return false; }
+};
+
+// The 3D sidekick when the browser can draw it and the visitor has not asked for less motion (the phone gets a small
+// one); otherwise, or if it fails to load, the flat puppet above (wide screens only).
+export default function Sidekick() {
+  const scrub = useScrub();
+  const [failed, setFailed] = useState(false);
+  const can3d = useMemo(() => !prefersReducedMotion() && hasWebGL(), []);
+  const onFail = useCallback(() => setFailed(true), []);
+  if (!can3d || failed) return <Sidekick2D />;
+  return <Suspense fallback={null}><Sidekick3D mini={!scrub} onFail={onFail} /></Suspense>;
 }
