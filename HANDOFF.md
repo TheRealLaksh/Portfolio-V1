@@ -134,6 +134,7 @@ Branch: `feat/avatar-3d` · remote: https://github.com/TheRealLaksh/Portfolio-V2
 
 ### Last 15 commits
 
+- `388e600` 2026-10-16 10:10 Sidekick: add a stand-in 3D model, the line bank and a section hook
 - `b672ab2` 2026-10-16 09:53 Work: real screenshots for Vaultara and Mercatora; handoff status for the work section pass
 - `e223e1a` 2026-10-16 09:51 Work popup: year, role and status, previous and next, copy link, #work/<id> deep link, focus trap and alt text
 - `ac5e444` 2026-10-16 09:47 Work: status badges, All / Live / Open source filter, and separate live and code buttons
@@ -148,19 +149,14 @@ Branch: `feat/avatar-3d` · remote: https://github.com/TheRealLaksh/Portfolio-V2
 - `94c1c9b` 2026-10-16 01:50 Show the ShiftsDeal app phone only while the ShiftsDeal place is selected
 - `785f5bd` 2026-10-16 01:50 Play That's What I Like by Bruno Mars from the music button via Spotify's embedded player
 - `16b6990` 2026-10-16 01:39 Remove tabla; add laptop on rug, ShiftsDeal app phone and new hero sub-line
-- `457adb9` 2026-10-16 01:39 Update hero place content: no scholarship, ShiftsDeal reframed, Bestow and internships, shooting as a past mention
 
 ### Uncommitted changes at refresh time
 
 ```
-M HANDOFF.md
-A  public/avatar/Xbot.glb
- M src/world/Sidekick.jsx
-A  src/world/avatarLines.js
-A  src/world/useSection.js
+M src/world/Sidekick.jsx
+A  src/world/avatarBrain.js
+A  src/world/avatarStage.js
 ?? src/world/Sidekick3D.jsx
-?? src/world/avatarBrain.js
-?? src/world/avatarStage.js
 ?? src/world/sidekick3d.css
 ```
 <!-- handoff:auto:end -->
