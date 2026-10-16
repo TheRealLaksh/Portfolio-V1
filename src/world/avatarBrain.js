@@ -2,61 +2,86 @@ import { clamp } from './hooks';
 import { pick, lineFor, greeting, IDLE_QUIPS, WAKE_LINES, FIVE_LINES, NIGHT_LINE, DAY_LINE } from './avatarLines';
 
 // What the 3D sidekick does, kept apart from three.js (avatarStage.js) and from React (Sidekick3D.jsx).
-// States: idle (breathes, glances, quips), walk (heading to a spot beside the section), react (a one-off clip),
-// sleep (after a while with nobody about). While the page is scrolling he walks or jogs on the spot, facing the way
-// the page is going, and trots over to the new spot once it stops. Wide screens roam; the phone version stays put.
+//
+// Movement is physical, not scripted: he has a position and a velocity, and a target he is heading for. Scrolling
+// moves the target back and forth across the whole screen (one sweep per ~1.5 screens of scrolling), so he walks
+// the way the page goes, runs if you fly down it, and trails behind if you outrun him. He speeds up and slows down,
+// turns through facing the camera, leans into a run, and his feet are locked to the ground (the clip speed is set
+// from the measured stride, so they never skate). Idle: he breathes, glances about, sometimes strolls a little, and
+// falls asleep after a while. The phone version stays put.
 
-const SPEED = 190; // px per second when crossing the screen
-const WALK_BASE = 170; // px per second one walk-clip cycle covers at his size
+const ACC = 1000; // px/s per second
+const TURN = 8.5; // rad/s
 const SLEEP_MS = 20000;
-const SIDE = { story: 'l', work: 'crate', brand: 'r', profiley: 'l', stack: 'r', process: 'l', life: 'r', notes: 'l', hello: 'r' };
+const MARGIN_L = 90;
+const MARGIN_R = 110;
+
+const tri = (u) => { const f = u - Math.floor(u / 2) * 2; return f < 1 ? f : 2 - f; };
+const smooth = (t) => t * t * (3 - 2 * t);
 
 export function createBrain({ stage, els, size, say, onZzz }) {
+  const cal = { walk: 150, run: 420 }; // px/s one clip cycle covers at timeScale 1 (measured in calibrate())
   let shown = false;
   let x = -160;
-  let tx = x;
-  let state = 'idle';
+  let vx = 0;
+  let target = x;
+  let state = 'idle'; // idle | react | sleep
+  let mode = 'idle'; // idle | walk | run
   let faceCur = 0;
   let faceWant = 0;
-  let pending = null;
-  let pendingAt = 0;
+  let still = 0;
+  let leanCur = 0;
   let sv = 0;
   let lastY = window.scrollY;
-  let dir = 1;
-  let wasScrolling = false;
-  let wasRunning = false;
   let lastActive = performance.now();
   let lastSay = 0;
   let lastQuip = performance.now();
   let lastFive = 0;
+  let lastPhew = 0;
   let lastLine = '';
+  let sectionId = null;
   let vy = 0;
   let y = 0;
   let menu = false;
   let night = false;
   let curAnim = null;
-  let arriveId = null;
   let mx = -1;
   let my = -1;
   let lastPtr = 0;
-  let wander = 0;
+  let wanderLook = 0;
   let wx = 0;
   let wy = 0;
+  let wanderAt = performance.now() + 9000;
   let offTimer = 0;
 
   const now = () => performance.now();
   const speak = (t) => { lastSay = now(); lastLine = t; say(t); };
   const touch = () => { lastActive = now(); };
 
-  function setAnim(name, speed = 1) {
-    const key = name;
-    if (key !== curAnim) { curAnim = key; stage.play(name, { speed }); } else stage.setSpeed(speed);
+  function calibrate() {
+    const k = stage.pxPerUnit();
+    const w = stage.strideSpeed('walk');
+    const r = stage.strideSpeed('run');
+    if (w) cal.walk = w * k;
+    if (r) cal.run = r * k; else if (w) cal.run = cal.walk * 2.6;
+    return { ...cal };
+  }
+
+  // where the scroll position says he should be: a smooth sweep from the left margin to the right and back
+  function pathGoal() {
+    const { W, H } = size();
+    const period = Math.max(900, H * 1.5);
+    const u = smooth(tri(window.scrollY / period));
+    return MARGIN_L + u * (W - MARGIN_L - MARGIN_R);
+  }
+
+  function setAnim(name, speed = 1, fade = 0.3) {
+    if (name !== curAnim) { curAnim = name; stage.play(name, { speed, fade }); } else stage.setSpeed(speed);
   }
 
   function react(name, { hold = 300, then } = {}) {
     state = 'react';
     curAnim = null;
-    faceWant = 0;
     stage.play(name, {
       once: true,
       fade: 0.2,
@@ -65,38 +90,6 @@ export function createBrain({ stage, els, size, say, onZzz }) {
   }
 
   function hop() { vy = Math.max(300, size().charH * 2.1); }
-
-  function stand(id) {
-    const { W, mini } = size();
-    if (mini) return 52;
-    const side = SIDE[id] || 'l';
-    if (side === 'r') return W - 110;
-    if (side === 'crate') {
-      const r = document.querySelector('.box-fit')?.getBoundingClientRect();
-      if (r && r.width > 40) return clamp(r.left - 70, 90, W - 200);
-      return clamp(W * 0.2, 90, W - 200);
-    }
-    return 90;
-  }
-
-  function arrive() {
-    x = tx;
-    faceWant = 0;
-    const id = arriveId;
-    arriveId = null;
-    react('agree', { hold: 200 });
-    hop();
-    if (id) speak(lineFor(id, lastLine));
-  }
-
-  function startWalk(id) {
-    pending = null;
-    arriveId = id;
-    tx = stand(id);
-    if (size().mini || Math.abs(tx - x) < 8) { arrive(); return; }
-    state = 'walk';
-    curAnim = null;
-  }
 
   function show(on) {
     if (on === shown) return;
@@ -115,21 +108,25 @@ export function createBrain({ stage, els, size, say, onZzz }) {
     if (!id) { show(false); return; }
     if (!shown) {
       show(true);
-      x = size().mini ? 52 : -160;
+      const { mini } = size();
+      x = mini ? 52 : -160; // walks in from off screen on the wide layout
+      vx = 0;
+      target = mini ? 52 : pathGoal();
       state = 'idle';
       curAnim = null;
+      sectionId = id;
       speak(greeting());
-      if (!size().mini) { arriveId = null; tx = stand(id); state = 'walk'; }
       return;
     }
     if (state === 'sleep') wake();
-    if (sv > 140 && !size().mini) { pending = id; pendingAt = now(); return; }
-    startWalk(id);
+    if (id !== sectionId) {
+      sectionId = id;
+      if (now() - lastSay > 4000) speak(lineFor(id, lastLine));
+    }
   }
 
   function sleep() {
     state = 'sleep';
-    faceWant = 0;
     curAnim = null;
     setAnim('sad_pose');
     onZzz(true);
@@ -163,7 +160,7 @@ export function createBrain({ stage, els, size, say, onZzz }) {
     my = e.clientY;
     lastPtr = now();
     const { H, charH, mini, bottom } = size();
-    if (!mini && !menu && state === 'idle' && shown && now() - lastFive > 8000
+    if (!mini && !menu && state === 'idle' && mode === 'idle' && shown && now() - lastFive > 8000
       && Math.abs(mx - x) < 70 && my > H - bottom - charH - 20) {
       lastFive = now();
       react('agree', { hold: 400 });
@@ -180,13 +177,17 @@ export function createBrain({ stage, els, size, say, onZzz }) {
     const t = now();
     const { W, H, charH, bottom, mini } = size();
 
+    // ---- scroll: it moves the target, and wakes him ----
     const sy = window.scrollY;
     const dy = sy - lastY;
     lastY = sy;
     sv += (Math.abs(dy) / Math.max(dt, 0.001) - sv) * Math.min(1, dt * 8);
-    if (Math.abs(dy) > 0.5) { dir = dy > 0 ? 1 : -1; touch(); }
-    const scrolling = sv > 140 && !mini;
+    if (Math.abs(dy) > 0.5) {
+      touch();
+      if (!mini && shown) target = pathGoal();
+    }
 
+    // ---- hop physics ----
     if (vy !== 0 || y > 0) {
       vy -= 1500 * dt;
       y = Math.max(0, y + vy * dt);
@@ -194,49 +195,71 @@ export function createBrain({ stage, els, size, say, onZzz }) {
       stage.setY(y);
     }
 
+    // ---- sleep / wake ----
     if (shown) {
       if (state === 'sleep') {
         if (t - lastActive < 400) wake();
       } else if (state === 'idle' && !menu && t - lastActive > SLEEP_MS) {
         sleep();
       }
-
-      if (state === 'walk') {
-        const d = tx - x;
-        const step = SPEED * dt;
-        if (Math.abs(d) <= step) { arrive(); } else {
-          x += Math.sign(d) * step;
-          faceWant = Math.sign(d) * (Math.PI / 2);
-          setAnim('walk', SPEED / WALK_BASE);
-        }
-      } else if (state === 'idle') {
-        if (pending && !scrolling && t - pendingAt > 350) {
-          startWalk(pending);
-        } else if (menu) {
-          faceWant = 0;
-          setAnim('idle');
-        } else if (scrolling) {
-          wasScrolling = true;
-          const fast = sv > 1400;
-          if (fast) wasRunning = true;
-          faceWant = dir * (Math.PI / 2);
-          setAnim(fast ? 'run' : 'walk', fast ? clamp(sv / 2200, 0.9, 1.5) : clamp(sv / 420, 0.7, 1.5));
-        } else if (wasScrolling) {
-          wasScrolling = false;
-          faceWant = 0;
-          if (wasRunning) { wasRunning = false; react('sad_pose', { hold: 700 }); } else { curAnim = null; setAnim('idle'); }
-        } else {
-          faceWant = 0;
-          setAnim('idle');
-          if (t - lastSay > 26000 && t - lastQuip > 26000 && t - lastActive > 9000 && t - lastActive < SLEEP_MS - 3000) {
-            lastQuip = t;
-            speak(pick(IDLE_QUIPS, lastLine));
-          }
-        }
-      }
     }
 
-    // head: follows the pointer; when nobody moves it he glances about by himself
+    // ---- occasional stroll when nobody is doing anything ----
+    if (shown && state === 'idle' && !menu && !mini && Math.abs(target - x) < 6 && Math.abs(vx) < 10 && t > wanderAt && t - lastActive > 3000) {
+      wanderAt = t + 8000 + Math.random() * 6000;
+      const d = (Math.random() < 0.5 ? -1 : 1) * (140 + Math.random() * 200);
+      target = clamp(x + d, MARGIN_L, W - MARGIN_R);
+    }
+
+    // ---- velocity: head for the target, easing in and out ----
+    const canMove = shown && state === 'idle' && !menu && !mini;
+    let want = 0;
+    if (canMove) {
+      const d = target - x;
+      const vmax = cal.run * 1.9; // a sprint, still with the feet on the ground
+      want = Math.abs(d) < 3 ? 0 : clamp(d * 3.2, -vmax, vmax);
+    }
+    vx += clamp(want - vx, -ACC * dt, ACC * dt);
+    if (mini) { vx = 0; x = 52; } else x += vx * dt;
+    if (Math.abs(target - x) < 3 && Math.abs(vx) < 4) vx = 0;
+    const s = Math.abs(vx);
+
+    // ---- which clip, at what speed (feet locked to the ground) ----
+    if (shown && state === 'idle') {
+      const prev = mode;
+      if (s < 10) mode = 'idle';
+      else if (mode === 'idle' && s >= 18) mode = 'walk';
+      if (mode === 'walk' && s > cal.walk * 1.7) mode = 'run';
+      else if (mode === 'run' && s < cal.walk * 1.35) mode = 'walk';
+      if (mode === 'idle') setAnim('idle');
+      else if (mode === 'walk') setAnim('walk', clamp(s / cal.walk, 0.45, 1.8));
+      else setAnim('run', clamp(s / cal.run, 0.6, 1.9));
+      if (prev === 'run' && mode === 'idle' && t - lastPhew > 15000) {
+        lastPhew = t;
+        react('sad_pose', { hold: 650 });
+        speak('Phew.');
+      }
+    } else if (state !== 'idle') {
+      mode = 'idle';
+    }
+
+    // ---- facing: turn through the camera, never snap ----
+    if (s > 14) { faceWant = Math.sign(vx) * (Math.PI / 2); still = 0; } else if (s < 8) { still += dt; if (still > 0.25) faceWant = 0; }
+    const step = TURN * dt;
+    faceCur += clamp(faceWant - faceCur, -step, step);
+
+    // ---- lean into a run ----
+    const leanWant = mode === 'run' ? clamp((s - cal.walk) / cal.run, 0, 0.4) * 0.45 : 0;
+    leanCur += (leanWant - leanCur) * Math.min(1, dt * 6);
+
+    // ---- quips ----
+    if (shown && state === 'idle' && mode === 'idle' && !menu
+      && t - lastSay > 26000 && t - lastQuip > 26000 && t - lastActive > 9000 && t - lastActive < SLEEP_MS - 3000) {
+      lastQuip = t;
+      speak(pick(IDLE_QUIPS, lastLine));
+    }
+
+    // ---- head: follows the pointer; when nobody moves it he glances about by himself ----
     const facingCam = 1 - clamp(Math.abs(faceCur) / 0.6);
     let lx = 0;
     let ly = 0;
@@ -246,14 +269,14 @@ export function createBrain({ stage, els, size, say, onZzz }) {
         lx = clamp((mx - x) / (W * 0.35));
         ly = clamp((my - headY) / (H * 0.5));
       } else {
-        if (t > wander) { wander = t + 1500 + Math.random() * 2500; wx = (Math.random() * 2 - 1) * 0.6; wy = (Math.random() * 2 - 1) * 0.25; }
+        if (t > wanderLook) { wanderLook = t + 1500 + Math.random() * 2500; wx = (Math.random() * 2 - 1) * 0.6; wy = (Math.random() * 2 - 1) * 0.25; }
         lx = wx; ly = wy;
       }
     }
     stage.setLook(lx * facingCam, ly * facingCam);
 
-    faceCur += (faceWant - faceCur) * Math.min(1, dt * 8);
     stage.setFacing(faceCur);
+    stage.setLean(leanCur);
     stage.setX(x);
     els.follow.style.transform = `translate3d(${x.toFixed(1)}px,0,0)`;
     els.follow.dataset.side = x > Math.max(W / 2, W - 340) ? 'l' : 'r';
@@ -266,5 +289,5 @@ export function createBrain({ stage, els, size, say, onZzz }) {
     window.removeEventListener('keydown', onKey);
   }
 
-  return { frame, goTo, setMenu, setTone, speak, react, hop, dispose };
+  return { frame, goTo, setMenu, setTone, speak, react, hop, calibrate, dispose };
 }
