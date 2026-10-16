@@ -141,6 +141,7 @@ Branch: `feat/journey-painted` · remote: https://github.com/TheRealLaksh/Portfo
 
 ### Last 15 commits
 
+- `d545dc7` 2026-10-16 12:05 Journey art: ten painted pieces (stations, train, wheel, hill strips) and the script that keys them
 - `35d3a9e` 2026-10-16 11:44 Sidekick: held-pose wobble, section moves once per visit, calmer quips
 - `7b45d7a` 2026-10-16 11:44 Sidekick moves: overshoot, anticipation, follow-through, corrected hand placement
 - `88c4e74` 2026-10-16 11:20 Sidekick: click combos, flip and surprise menu items, room for flips
@@ -155,26 +156,12 @@ Branch: `feat/journey-painted` · remote: https://github.com/TheRealLaksh/Portfo
 - `b672ab2` 2026-10-16 09:53 Work: real screenshots for Vaultara and Mercatora; handoff status for the work section pass
 - `e223e1a` 2026-10-16 09:51 Work popup: year, role and status, previous and next, copy link, #work/<id> deep link, focus trap and alt text
 - `ac5e444` 2026-10-16 09:47 Work: status badges, All / Live / Open source filter, and separate live and code buttons
-- `bf755eb` 2026-10-16 09:46 Work: focusing a hidden project pill opens the box, and pills get a visible focus ring
 
 ### Uncommitted changes at refresh time
 
 ```
-M  .gitignore
- M HANDOFF.md
-A  public/art/journey/build.webp
-A  public/art/journey/cabin.webp
-A  public/art/journey/campus.webp
-A  public/art/journey/far.webp
-A  public/art/journey/hotel.webp
-A  public/art/journey/mid.webp
-A  public/art/journey/school.webp
-A  public/art/journey/train.webp
-A  public/art/journey/varanasi.webp
-A  public/art/journey/wheel.webp
-A  scripts/art/journey.py
- M src/world/Journey.jsx
- M src/world/train.css
- M src/world/trainArt.jsx
+M  src/world/Journey.jsx
+M  src/world/train.css
+M  src/world/trainArt.jsx
 ```
 <!-- handoff:auto:end -->

@@ -2,7 +2,7 @@ import React, { useEffect, useLayoutEffect, useMemo, useRef, useState } from 're
 import { useLenis } from '@studio-freight/react-lenis';
 import { JOURNEY } from './data';
 import { clamp, range, ss, trackProgress, useScrollFrame, SCRUB_QUERY } from './hooks';
-import { STEP, LOCAL0, stX, FarLayer, MidLayer, NearLayer, ForeLayer, Train, SkyArt } from './trainArt';
+import { STEP, LOCAL0, stX, WIN_Y, FarLayer, MidLayer, NearLayer, ForeLayer, Train, SkyArt } from './trainArt';
 import Icon from './Icon';
 import './train.css';
 
@@ -274,10 +274,10 @@ export default function Journey() {
     Object.entries(PAR).forEach(([k, p]) => { if (L[k]) L[k].style.transform = `translate(${(g.ax - x * p + LOCAL0).toFixed(1)}px, 0px)`; });
     if (trail.current) trail.current.style.transform = `scaleX(${Math.max(0, x - stX(0)).toFixed(1)})`;
     if (trainBox.current) trainBox.current.style.left = `${(g.ax - 460).toFixed(1)}px`;
-    // Laksh's window, in frame pixels (scene x = ax - 3, y = 482)
+    // Laksh's window, in frame pixels (scene x = ax - 3, y = WIN_Y)
     live.current.win = {
       x: g.s * (g.ax + (g.ax - 3 - g.ax) * z),
-      y: g.s * (g.ay + (482 - g.ay) * z - g.y0),
+      y: g.s * (g.ay + (WIN_Y - g.ay) * z - g.y0),
     };
 
     // the train rolls while it moves and rests at a station

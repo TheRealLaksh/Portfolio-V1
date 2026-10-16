@@ -126,3 +126,8 @@
 .w-root .tn .jtl button.on:not(.done) .stp { border: 2px solid var(--ink); background: transparent; color: transparent; transform: scale(1.2); animation: none; }
 .w-root .tn .jtl button.on:not(.done) .stp svg { opacity: 0; }
 .w-root .tn .tr-me, .w-root .tn .tr-pane { transition: none; }
+
+/* painted stations: grey until the train arrives, then colour with a small settle */
+.w-root .tn .stbuild { transform-box: fill-box; transform-origin: 50% 100%; filter: grayscale(.85) brightness(1.04); opacity: .6; transform: scale(.955); transition: filter 1s ease, opacity .6s ease, transform .9s var(--spring); }
+.w-root .tn .st.built .stbuild { filter: none; opacity: 1; transform: none; }
+.w-root .tn .sk-cloud { height: auto; }
