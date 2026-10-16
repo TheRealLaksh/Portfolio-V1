@@ -12,7 +12,8 @@ import { pick, lineFor, greeting, IDLE_QUIPS, WAKE_LINES, FIVE_LINES, NIGHT_LINE
 
 const G = 1500; // px/s squared
 const SLEEP_MS = 20000;
-const SETTLE_MS = 700; // how long a section must hold the screen before its move plays
+const SETTLE_MS = 1400; // how long a section must hold the screen before its move plays
+const AUTO_GAP = 18000; // never two unprompted moves closer than this
 
 export function createBrain({ stage, els, size, say, onZzz }) {
   let shown = false;
@@ -26,6 +27,8 @@ export function createBrain({ stage, els, size, say, onZzz }) {
   let lastFive = 0;
   let lastLine = '';
   let lastMove = 0;
+  let lastAuto = 0;
+  const played = new Set(); // each section's move plays once per visit
   let menu = false;
   let night = false;
   let curAnim = null;
@@ -116,12 +119,17 @@ export function createBrain({ stage, els, size, say, onZzz }) {
       curAnim = null;
       sectionId = id;
       settleId = null;
+      played.add(id);
+      lastAuto = now();
       riseT = 0; // pop up from below the edge, then say hello with a wave
       afterRise = () => { speak(greeting()); perform('wave'); };
       return;
     }
     if (state === 'sleep') wake();
-    if (id !== sectionId) { sectionId = id; settleId = id; settleAt = now() + SETTLE_MS; }
+    if (id !== sectionId) {
+      sectionId = id;
+      if (!played.has(id)) { settleId = id; settleAt = now() + SETTLE_MS; } else settleId = null;
+    }
   }
 
   function sleep() {
@@ -206,9 +214,11 @@ export function createBrain({ stage, els, size, say, onZzz }) {
       }
 
       // a section has held the screen long enough: its move
-      if (settleId && t >= settleAt && riseT >= 1 && !busy() && state === 'idle' && !menu && t - lastMove > 1500) {
+      if (settleId && t >= settleAt && riseT >= 1 && !busy() && state === 'idle' && !menu && t - lastAuto > AUTO_GAP) {
         const id = settleId;
         settleId = null;
+        played.add(id);
+        lastAuto = t;
         const m = SECTION_MOVE[id];
         if (m) perform(m);
         if (t - lastSay > 4000) speak(lineFor(id, lastLine));
@@ -217,7 +227,7 @@ export function createBrain({ stage, els, size, say, onZzz }) {
       if (state === 'idle') setAnim('idle');
 
       // a quip now and then when nothing is going on
-      if (state === 'idle' && !busy() && !menu && t - lastSay > 26000 && t - lastQuip > 26000
+      if (state === 'idle' && !busy() && !menu && t - lastSay > 45000 && t - lastQuip > 45000
         && t - lastActive > 9000 && t - lastActive < SLEEP_MS - 3000) {
         lastQuip = t;
         speak(pick(IDLE_QUIPS, lastLine));

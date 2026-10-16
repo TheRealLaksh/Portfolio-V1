@@ -21,6 +21,10 @@ const ROLES = {
   lUp: 'leftupleg', rUp: 'rightupleg', lLeg: 'leftleg', rLeg: 'rightleg',
 };
 
+// wobble amplitude in degrees, and a phase per role so the parts do not move in unison
+const WOBBLE = { lArm: 1.6, rArm: 1.6, lFore: 2.2, rFore: 2.2, head: 1.4, spine: 0.8, spine1: 0.9, spine2: 0.7, lSh: 0.8, rSh: 0.8, hips: 0.5, neck: 0.8 };
+const PHASE = { lArm: 0.4, rArm: 1.7, lFore: 2.6, rFore: 3.4, head: 4.1, spine: 0.9, spine1: 1.9, spine2: 2.9, lSh: 5.1, rSh: 5.9, hips: 0.2, neck: 3.7 };
+
 export async function createStage(canvas, { url = '/avatar/Xbot.glb', onFrame, palette = {} } = {}) {
   const pal = { ...PALETTE, ...palette };
   const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true, powerPreference: 'low-power' });
@@ -166,7 +170,15 @@ export async function createStage(canvas, { url = '/avatar/Xbot.glb', onFrame, p
       if (!f) continue;
       const bone = bones[role];
       const e = f(mv.t, u);
-      eul.set(e[0] * D, e[1] * D, e[2] * D, 'XYZ');
+      // a small constant wobble on every posed part, so a held pose is never frozen
+      const a = (WOBBLE[role] || 1) * Math.min(1, u * 6, (1 - u) * 6);
+      const ph = PHASE[role] || 0;
+      eul.set(
+        (e[0] + a * Math.sin(mv.t * 1.9 + ph)) * D,
+        (e[1] + a * 0.7 * Math.sin(mv.t * 1.3 + ph * 1.7)) * D,
+        (e[2] + a * Math.sin(mv.t * 2.3 + ph * 0.6)) * D,
+        'XYZ',
+      );
       qr.setFromEuler(eul);
       // the same turn, as a world rotation about his body axes, then expressed in the parent's frame
       qr.premultiply(qm).multiply(qmInv);

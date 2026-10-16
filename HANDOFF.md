@@ -137,6 +137,7 @@ Branch: `feat/avatar-3d` · remote: https://github.com/TheRealLaksh/Portfolio-V2
 
 ### Last 15 commits
 
+- `7b45d7a` 2026-10-16 11:44 Sidekick moves: overshoot, anticipation, follow-through, corrected hand placement
 - `88c4e74` 2026-10-16 11:20 Sidekick: click combos, flip and surprise menu items, room for flips
 - `58dfdb9` 2026-10-16 11:20 Sidekick: pose engine, stunts and pop-up entrance; no more walking across the screen
 - `b8a0e5d` 2026-10-16 11:20 Sidekick: code-written move library (wave, point, think, shrug, clap, cheer, stretch, yawn, flex, flip, spin)
@@ -151,14 +152,11 @@ Branch: `feat/avatar-3d` · remote: https://github.com/TheRealLaksh/Portfolio-V2
 - `ac5e444` 2026-10-16 09:47 Work: status badges, All / Live / Open source filter, and separate live and code buttons
 - `bf755eb` 2026-10-16 09:46 Work: focusing a hidden project pill opens the box, and pills get a visible focus ring
 - `4695c2a` 2026-10-16 09:45 Work: crate says 'This side up' and the lid gets tape and a project-count label instead of repeating the heading
-- `3867fc4` 2026-10-16 09:39 Journey: keep the info card up much longer (about 0.85 viewport of scrolling) before the train leaves
 
 ### Uncommitted changes at refresh time
 
 ```
-M HANDOFF.md
- M src/world/avatarBrain.js
-M  src/world/avatarMoves.js
- M src/world/avatarStage.js
+M  src/world/avatarBrain.js
+M  src/world/avatarStage.js
 ```
 <!-- handoff:auto:end -->
