@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
+import { useLenis } from '@studio-freight/react-lenis';
 import { WORK } from './data';
 import { clamp, lerp, range, ss, backOut, useTrack, useScrub } from './hooks';
 import Icon from './Icon';
@@ -64,6 +65,7 @@ function CardBox({ onOpen }) {
   const info = useRef(null);
   const hint = useRef(null);
   const tilt = useRef(null);
+  const lenis = useLenis();
 
   useTrack(track, (p, dt, vh) => {
     const spin = ss(range(p, 0, 0.32));
@@ -105,6 +107,15 @@ function CardBox({ onOpen }) {
   const onLeave = () => { if (tilt.current) tilt.current.style.transform = ''; };
 
   const lift = (i, on) => cards.current[i]?.classList.toggle('hover', on);
+
+  // The pill list is invisible until the lid is open. A keyboard user can Tab to it before that, so the first
+  // focus fast-forwards the scroll to the open box instead of leaving them on a control they cannot see.
+  const reveal = () => {
+    const t = track.current;
+    if (!t || t.classList.contains('ready')) return;
+    const y = t.getBoundingClientRect().top + window.scrollY + (t.offsetHeight - window.innerHeight) * 0.9;
+    if (lenis) lenis.scrollTo(y, { immediate: true }); else window.scrollTo(0, y);
+  };
 
   return (
     <div className="box-track" ref={track}>
@@ -165,7 +176,7 @@ function CardBox({ onOpen }) {
                   onClick={() => onOpen(w)}
                   onPointerEnter={(e) => { if (e.pointerType === 'mouse') lift(i, true); }}
                   onPointerLeave={() => lift(i, false)}
-                  onFocus={() => lift(i, true)}
+                  onFocus={() => { reveal(); lift(i, true); }}
                   onBlur={() => lift(i, false)}
                   aria-haspopup="dialog"
                 >

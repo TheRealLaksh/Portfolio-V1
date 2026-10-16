@@ -73,6 +73,7 @@
 .w-root .bi-list { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; }
 .w-root .bi-list button { display: flex; align-items: center; gap: 8px; padding: 8px 14px 8px 8px; border-radius: 99px; background: var(--card); border: 1px solid var(--line); box-shadow: var(--shadow-sm); transition: transform .3s var(--spring), border-color .2s; }
 .w-root .bi-list button:hover, .w-root .bi-list button:focus-visible { transform: translateY(-3px); border-color: var(--c); }
+.w-root .bi-list button:focus-visible { outline: 3px solid var(--c); outline-offset: 3px; }
 .w-root .bi-list b { font: 800 11px var(--sans); background: var(--c); color: #fff; border-radius: 99px; padding: 4px 8px; }
 .w-root .bi-list em { font: 800 15px var(--sans); font-style: normal; letter-spacing: -.02em; }
 .w-root .box-hint { font: 700 22px var(--hand); color: var(--ink-2); opacity: 0; }
