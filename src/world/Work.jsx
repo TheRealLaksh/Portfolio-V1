@@ -76,6 +76,7 @@ function CardBox({ onOpen }) {
     f.style.opacity = String(clamp(spin * 2.2));
     box.current.style.transform = `rotateX(${lerp(78, 56, spin).toFixed(2)}deg) rotateZ(${lerp(-78, 26, spin).toFixed(2)}deg)`;
     lid.current.style.transform = `translate3d(0,0,${BH}px) rotateX(${(open * 128).toFixed(2)}deg)`;
+    lid.current.style.setProperty('--open', open.toFixed(3));
     cards.current.forEach((el, i) => {
       if (!el) return;
       const s = 0.38 + i * 0.07;
@@ -144,8 +145,11 @@ function CardBox({ onOpen }) {
                     </span>
                   </button>
                 ))}
-                <div className="bx-front"><span>Things I built</span></div>
-                <div className="bx-lid" ref={lid} />
+                <div className="bx-front"><span><Icon n="arrow" size={22} sw={2.6} className="bx-up" />This side up</span></div>
+                <div className="bx-lid" ref={lid}>
+                  <i className="bx-tape" />
+                  <span className="bx-label"><b>{WORK.length} projects</b>packed inside</span>
+                </div>
               </div>
             </div>
           </div>

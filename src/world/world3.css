@@ -50,8 +50,14 @@
 .w-root .bx-left, .w-root .bx-right { width: var(--bd); height: var(--bh); background: linear-gradient(var(--crate-2), var(--crate-3)); transform: translate3d(0, 0, var(--bh)) rotateZ(90deg) rotateX(-90deg); }
 .w-root .bx-right { transform: translate3d(var(--bw), 0, var(--bh)) rotateZ(90deg) rotateX(-90deg); }
 .w-root .bx-front { width: var(--bw); height: var(--bh); background: linear-gradient(var(--crate), var(--crate-2)); transform: translate3d(0, var(--bd), var(--bh)) rotateX(-90deg); display: grid; place-items: center; box-shadow: inset 0 0 0 3px rgba(0, 0, 0, .12); }
-.w-root .bx-front span { font: 800 30px var(--sans); letter-spacing: -.03em; color: rgba(255, 246, 229, .95); text-shadow: 0 2px 0 rgba(0, 0, 0, .18); }
+.w-root .bx-front span { display: inline-flex; align-items: center; gap: 12px; font: 800 20px var(--sans); letter-spacing: .22em; text-transform: uppercase; color: rgba(255, 246, 229, .9); text-shadow: 0 2px 0 rgba(0, 0, 0, .18); }
+.w-root .bx-up { transform: rotate(-90deg); }
 .w-root .bx-lid { width: var(--bw); height: var(--bd); background: linear-gradient(160deg, var(--crate), var(--crate-2)); transform: translate3d(0, 0, var(--bh)); display: grid; place-items: center; box-shadow: inset 0 0 0 3px rgba(0, 0, 0, .1); }
+/* tape and label sit on the outside of the lid, so they fade out before it swings past upright and shows its underside */
+.w-root .bx-lid > * { opacity: clamp(0, calc(1 - var(--open, 0) * 2.2), 1); }
+.w-root .bx-tape { position: absolute; left: 0; right: 0; top: 50%; height: 54px; margin-top: -27px; background: rgba(238, 215, 170, .62); box-shadow: 0 1px 0 rgba(0, 0, 0, .08), 0 -1px 0 rgba(0, 0, 0, .06); }
+.w-root .bx-label { position: relative; display: grid; gap: 2px; padding: 10px 24px; background: #fff7e6; color: #3a2a14; border-radius: 4px; transform: rotate(-3deg); box-shadow: 0 2px 0 rgba(0, 0, 0, .18); text-align: center; font: 600 17px var(--sans); }
+.w-root .bx-label b { font: 800 30px var(--sans); letter-spacing: -.02em; }
 .w-root .wk { position: absolute; width: var(--cw); height: var(--ch); padding: 0; border: 0; background: none; cursor: pointer; transform-origin: 0 0; transform-style: preserve-3d; transform: translate3d(var(--x), var(--y), var(--zt)) rotateX(-90deg); }
 .w-root .wk-in { position: relative; display: flex; flex-direction: column; gap: 6px; width: 100%; height: 100%; padding: 12px; border-radius: 16px; background: var(--card); color: var(--ink); text-align: left; box-shadow: 0 0 0 1px var(--line), inset 0 6px 0 var(--cc); transition: transform .55s var(--spring), box-shadow .3s; }
 .w-root .wk-in::before { content: ""; position: absolute; left: 0; right: 0; top: 100%; height: 76px; }
