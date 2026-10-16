@@ -16,11 +16,23 @@ const N = JOURNEY.length;
 const YEARS = JOURNEY.map((s) => s.y.replace(' – ', '-'));
 const PAR = { far: 0.15, mid: 0.5, near: 1, fore: 1.35 };
 
+// Scroll mode, measured in viewport heights of scrolling: PER per stop, of which the train glides for
+// GLIDE and rests at the station for the rest. While it rests the ticket is thrown, unfolds, is read and
+// is stamped; the card then stays up for a good while (HOLD) before the train pulls out.
+const PER = 2.8;
+const GLIDE = 0.8;
+const LEAD = 1.3;
+const TAIL = 1.4;
+const TRACK_VH = LEAD + (N - 1) * PER + TAIL + 1;
+const HW = (PER - GLIDE) / 2 / PER; // the train rests while |f - n| < HW
+const v = (vh) => vh / PER; // viewport heights to stop units
+const SETTLED = 0.08; // f offset past a station where the ticket has landed and been stamped
+
 // Where the train is on the line for stop coordinate f (0..N-1). It rests at each station, then glides.
 const trainX = (f) => {
   if (f >= N - 1) return stX(N - 1);
   const n = Math.floor(f);
-  return stX(n) + STEP * ss(range(f - n, 0.3, 0.7));
+  return stX(n) + STEP * ss(range(f - n, HW, 1 - HW));
 };
 
 // Sky and light for a time of day t (0 = dawn, 1 = night): [t, top, bottom, tint rgba]
@@ -59,13 +71,7 @@ function geom(w, h, scrub) {
   return { Hv, y0, s, ax: (avail / s) * (scrub ? 0.48 : 0.5), ay: 560 };
 }
 
-// Scroll mode: PER viewport heights of scrolling per stop, LEAD before the first and TAIL after the last.
 // f = (y - LEAD) / PER is the stop coordinate: station n is at f = n.
-const PER = 1.5;
-const LEAD = 0.5;
-const TAIL = 0.9;
-const TRACK_VH = LEAD + (N - 1) * PER + TAIL + 1;
-const SETTLED = 0.27; // f offset past a station where the ticket has landed and been stamped
 
 // Phones and visitors who ask for less motion get the stacked layout with buttons instead.
 const canScrub = () => typeof window !== 'undefined' && window.matchMedia(SCRUB_QUERY).matches;
@@ -150,11 +156,12 @@ export default function Journey() {
     });
   };
 
-  // The ticket, scrubbed. d is how far the scroll is from station k (in stop units).
-  //   d -0.30..-0.25  window opens           d  0.04..0.17  text lines appear
-  //   d -0.25..-0.02  ticket flies in an arc  d  0.10..0.14  stamp slams on the ticket
-  //   d -0.04..0.08   unfolds into the card   d  0.15..0.25  stamp flies to the strip
-  //   d  0.30..0.46   blown away as the train leaves (not at the last station)
+  // The ticket, scrubbed. d is how far the scroll is from station k (in stop units); A = -HW is when the
+  // train has stopped. Times below are viewport heights of scrolling after A:
+  //   0..0.1    window opens             0.7..1.0    text lines appear
+  //   0.12..0.55 ticket flies in an arc  0.85..0.93  stamp slams on the ticket
+  //   0.5..0.76  unfolds into the card   0.95..1.15  stamp flies to the strip
+  //   1.15..2.0  the card stays up, readable   then it is blown away as the train leaves (not at the last stop)
   const ticket = (fr) => {
     const c = card.current;
     const R = live.current.rest;
@@ -163,13 +170,15 @@ export default function Journey() {
     if (!c || !R || !win) return;
     const k = clamp(Math.round(fr), 0, N - 1);
     const d = fr - k;
-    const pt = range(d, -0.25, -0.21);
-    const pf = range(d, -0.22, -0.02);
-    const pu = range(d, -0.04, 0.08);
-    const px = range(d, 0.04, 0.17);
-    const ps = range(d, 0.1, 0.14);
-    const pg = range(d, 0.15, 0.25);
-    const pb = k < N - 1 ? range(d, 0.3, 0.46) : 0;
+    const a = d + HW; // stop units since the train stopped
+    const pw = range(a, 0, v(0.1));
+    const pt = range(a, v(0.1), v(0.18));
+    const pf = range(a, v(0.12), v(0.55));
+    const pu = range(a, v(0.5), v(0.76));
+    const px = range(a, v(0.7), v(1.0));
+    const ps = range(a, v(0.85), v(0.93));
+    const pg = range(a, v(0.95), v(1.15));
+    const pb = k < N - 1 ? range(d, HW, HW + v(0.4)) : 0;
 
     // the throw
     const S = { x: win.x - R.cx, y: win.y - R.cy };
@@ -199,7 +208,7 @@ export default function Journey() {
       face = range(pb, 0, 0.3);
       lines = px * (1 - range(pb, 0, 0.25));
     }
-    if (d < -0.25) op = 0;
+    if (pw < 1) op = 0;
 
     c.style.transform = `translate(${tx.toFixed(1)}px, ${ty.toFixed(1)}px) translateY(-50%) perspective(900px) rotateX(var(--rx, 0deg)) rotateY(calc(${fl.toFixed(1)}deg + var(--ry, 0deg))) rotate(${rot.toFixed(1)}deg) scale(${Math.max(0.001, sc).toFixed(3)})`;
     c.style.opacity = op.toFixed(3);
@@ -239,7 +248,7 @@ export default function Journey() {
     // window and Laksh: the pane slides down to let the ticket out
     const tb = trainBox.current;
     if (tb) {
-      const open = clamp(range(d, -0.3, -0.25) - range(d, -0.14, -0.08));
+      const open = clamp(pw - range(a, v(0.5), v(0.62)));
       const pane = tb.querySelector('.tr-pane');
       const me = tb.querySelector('.tr-me');
       if (pane) pane.style.transform = `translateY(${(open * 31).toFixed(1)}px)`;
@@ -257,7 +266,7 @@ export default function Journey() {
 
     // camera: scale to fit, ease in a little while the train is stopped at a station
     const nd = Math.abs(f - Math.round(f));
-    const z = 1 + 0.06 * (1 - ss(range(nd, 0.08, 0.3)));
+    const z = 1 + 0.06 * (1 - ss(range(nd, HW - 0.08, HW + 0.04)));
     const cam = `scale(${g.s}) translate(0px, ${-g.y0}px) translate(${g.ax}px, ${g.ay}px) scale(${z.toFixed(4)}) translate(${-g.ax}px, ${-g.ay}px)`;
     camA.current.style.transform = cam;
     camB.current.style.transform = cam;
@@ -312,11 +321,11 @@ export default function Journey() {
     live.current.fr = fr;
     live.current.f = clamp(fr, 0, N - 1);
     draw();
-    pin.current?.style.setProperty('--intro', (1 - range(y, 0.04, 0.28)).toFixed(3));
+    pin.current?.style.setProperty('--intro', (1 - range(y, 0.05, 0.3)).toFixed(3));
     const k = clamp(Math.round(fr), 0, N - 1);
-    const idx = fr < -0.25 ? -1 : k;
+    const idx = fr < -HW ? -1 : k;
     const built = clamp(Math.floor(fr + 0.45), -1, N - 1);
-    const st = clamp(Math.floor(fr - 0.25) + 1, 0, N);
+    const st = clamp(Math.floor(fr - v(1.15) + HW) + 1, 0, N);
     if (idx !== live.current.i) { live.current.i = idx; setI(idx); }
     if (built !== live.current.bi) { live.current.bi = built; setBi(built); }
     if (st !== live.current.st) { live.current.st = st; setStamped(st); }
