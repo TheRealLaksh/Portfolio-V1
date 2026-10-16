@@ -136,6 +136,8 @@ Branch: `feat/avatar-3d` · remote: https://github.com/TheRealLaksh/Portfolio-V2
 
 ### Last 15 commits
 
+- `58dfdb9` 2026-10-16 11:20 Sidekick: pose engine, stunts and pop-up entrance; no more walking across the screen
+- `b8a0e5d` 2026-10-16 11:20 Sidekick: code-written move library (wave, point, think, shrug, clap, cheer, stretch, yawn, flex, flip, spin)
 - `82c3953` 2026-10-16 10:19 Sidekick: bigger, in front of the nav pill, calibrates on load
 - `d979a54` 2026-10-16 10:19 Sidekick: scroll-driven roaming with easing, turning, lean and run or walk by speed
 - `c2c5a8c` 2026-10-16 10:19 Sidekick: toon shading and ink outline, stride measurement for foot-locked speed
@@ -149,16 +151,10 @@ Branch: `feat/avatar-3d` · remote: https://github.com/TheRealLaksh/Portfolio-V2
 - `4695c2a` 2026-10-16 09:45 Work: crate says 'This side up' and the lid gets tape and a project-count label instead of repeating the heading
 - `3867fc4` 2026-10-16 09:39 Journey: keep the info card up much longer (about 0.85 viewport of scrolling) before the train leaves
 - `11f5ba1` 2026-10-16 09:36 Journey: scroll-scrubbed ticket throw (window opens, ticket spins out, unfolds, stamped, stamp flies to the passport strip); remove the speech bubble
-- `28b494c` 2026-10-16 09:24 Journey: Laksh narrates from the train window and the stop card flies out as a boarding pass
-- `f8cb299` 2026-10-16 02:10 Remove the old journey map CSS; record the train journey in HANDOFF
 
 ### Uncommitted changes at refresh time
 
 ```
-M HANDOFF.md
- M src/world/Sidekick3D.jsx
- M src/world/avatarBrain.js
-A  src/world/avatarMoves.js
- M src/world/avatarStage.js
+M  src/world/Sidekick3D.jsx
 ```
 <!-- handoff:auto:end -->

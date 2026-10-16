@@ -10,13 +10,12 @@ import './sidekick3d.css';
 // speech bubble, the "Zzz" and the guide menu. three.js loads lazily after the page has settled; if anything fails
 // the parent falls back to the flat 2D sidekick.
 const IDS = ['story', 'work', 'brand', 'profiley', 'stack', 'process', 'life', 'notes', 'hello'];
-const MINI_STRIP = 150;
 
 const metrics = (mini) => {
   const W = window.innerWidth;
   const H = window.innerHeight;
   const charH = mini ? 118 : Math.min(270, Math.max(170, H * 0.27));
-  return { W, H, mini, charH, bottom: mini ? 78 : 0, strip: mini ? MINI_STRIP : Math.round(charH + 120) }; // room for a hop
+  return { W, H, mini, charH, bottom: mini ? 78 : 0, strip: Math.round(charH + 190) }; // room for a flip
 };
 
 export default function Sidekick3D({ mini, onFail }) {
@@ -77,10 +76,9 @@ export default function Sidekick3D({ mini, onFail }) {
         });
         brainRef.current = brain;
         fit();
-        brain.calibrate();
-        stage.play('idle');
+        stage.play('idle', { fade: 0 }); // full weight from the start, so he never shows the bind pose
         if (import.meta.env.DEV) window.__sk = { brain, stage };
-        const onResize = () => { fit(); brain.calibrate(); };
+        const onResize = () => { fit(); };
         window.addEventListener('resize', onResize);
         // follow the light/night switch
         const w = document.querySelector('.w-root');
@@ -132,6 +130,17 @@ export default function Sidekick3D({ mini, onFail }) {
     if (!el) return;
     if (lenis) lenis.scrollTo(el, { offset: -8, duration: 1.6 }); else el.scrollIntoView({ behavior: 'smooth' });
   };
+  // click = wave (and the menu), double click = a flip, triple click = a spin
+  const clicks = useRef({ n: 0, t: 0 });
+  const onHit = () => {
+    const c = clicks.current;
+    clearTimeout(c.t);
+    c.n += 1;
+    const b = brainRef.current;
+    if (c.n === 1) { setMenu((m) => !m); if (b) b.perform('wave'); } else if (c.n === 2) { setMenu(false); if (b) b.perform('flip'); } else if (b) { setMenu(false); b.perform('spin'); }
+    c.t = setTimeout(() => { c.n = 0; }, 450);
+  };
+  const trick = (name) => { setMenu(false); if (brainRef.current) brainRef.current[name === 'surprise' ? 'surprise' : 'perform'](name); };
   const joke = () => {
     setMenu(false);
     if (brainRef.current) brainRef.current.speak(pick(JOKES, bubble && bubble.text));
@@ -148,7 +157,7 @@ export default function Sidekick3D({ mini, onFail }) {
           aria-label="Laksh's sidekick. Open the guide menu"
           aria-haspopup="menu"
           aria-expanded={menu}
-          onClick={() => setMenu((m) => !m)}
+          onClick={onHit}
         />
         {zzz && <span className="sk3-zzz" aria-hidden="true"><i>Z</i><i>z</i><i>z</i></span>}
         {bubble && !menu && <p className="sk3-say" key={bubble.id} aria-hidden="true">{bubble.text}</p>}
@@ -158,6 +167,8 @@ export default function Sidekick3D({ mini, onFail }) {
             <button type="button" role="menuitem" onClick={() => go('hello')}>Contact</button>
             <a role="menuitem" href={ME.resume} target="_blank" rel="noopener noreferrer" onClick={() => setMenu(false)}>Resume</a>
             <a role="menuitem" href="/hire" onClick={() => setMenu(false)}>Hire me</a>
+            <button type="button" role="menuitem" onClick={() => trick('flip')}>Do a flip</button>
+            <button type="button" role="menuitem" onClick={() => trick('surprise')}>Surprise me</button>
             <button type="button" role="menuitem" onClick={joke}>Tell me a joke</button>
           </div>
         )}
