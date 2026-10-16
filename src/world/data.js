@@ -128,20 +128,29 @@ export const JOURNEY = [
     p: 'Joined ShiftsDeal as an intern (video, social media, cold calls), then became Tech Head. Started client websites with Bestow the same month.' },
 ];
 
-// Selected work: real, public, linkable. (confirm) which others he wants featured.
+// Selected work: real, public, linkable. `live` is the running site, `code` the public repo; the card badge and the
+// filter both read them. Years come from each repo's first commit and the vault's project notes; ShiftsDeal's repo
+// is Sneha's, so it has no code link. (confirm) the "Solo build" roles and which others he wants featured.
 export const WORK = [
   { id: 'shiftsdeal', n: 'ShiftsDeal', k: 'Venue-booking marketplace', c: '#E8505B', d: 'Took a basic first version and built it into the live platform: bookings, Razorpay payments, owner dashboard, admin panel and AI search. The app is next.',
-    tags: ['Next.js', 'Razorpay', 'AI search'], link: 'https://www.shiftsdeal.com', note: 'App in progress' },
-  { id: 'profiley', n: 'Profiley', k: 'Resume builder', c: '#1FA6A0', d: 'Live-preview resume editor with ten-plus themes and one-click PDF export. This site\'s resume page is rendered by it.',
-    tags: ['React 19', 'Vite', 'Firebase'], link: 'https://profiley.lakshpradhwani.com', note: 'Free to use' },
+    tags: ['Next.js', 'Razorpay', 'AI search'], live: 'https://www.shiftsdeal.com', code: null, note: 'App in progress', status: 'Live', year: '2026', role: 'Tech Head' },
+  { id: 'profiley', n: 'Profiley', k: 'Resume builder', c: '#1FA6A0', d: "Live-preview resume editor with ten-plus themes and one-click PDF export. This site's resume page is rendered by it.",
+    tags: ['React 19', 'Vite', 'Firebase'], live: 'https://profiley.lakshpradhwani.com', code: 'https://github.com/TheRealLaksh/Profiley-Resume-Builder', note: 'Free to use', status: 'Live', year: '2025', role: 'Solo build' },
   { id: 'helios', n: 'Helios', k: 'Web music player', c: '#8E7CFF', d: 'Adaptive cover colour, five ambiences, a waveform seekbar, three visualisers, a queue and a 3-band equaliser. No frameworks.',
-    tags: ['JavaScript', 'Web Audio'], link: 'https://music.lakshpradhwani.com', note: 'No frameworks' },
+    tags: ['JavaScript', 'Web Audio'], live: 'https://music.lakshpradhwani.com', code: 'https://github.com/TheRealLaksh/Helios-Music-Player', note: 'No frameworks', status: 'Live', year: '2025', role: 'Solo build' },
   { id: 'calibridge', n: 'CaliBridge', k: 'Offline-first calendar', c: '#F2A93B', d: 'Installable calendar in strict TypeScript with real time zones, repeating events, reminders and .ics import and export.',
-    tags: ['TypeScript', 'PWA'], link: 'https://calibridge.lakshpradhwani.com', note: '43 end-to-end tests' },
+    tags: ['TypeScript', 'PWA'], live: 'https://calibridge.lakshpradhwani.com', code: 'https://github.com/TheRealLaksh/Callender-Events', note: '43 end-to-end tests', status: 'Live', year: '2025', role: 'Solo build' },
   { id: 'vaultara', n: 'Vaultara', k: 'Gov-tech document vault', c: '#E88A1F', d: 'Privacy-first storage for citizen documents, built on Firebase with encrypted storage and secure sharing.',
-    tags: ['Firebase', 'Security'], link: 'https://github.com/TheRealLaksh/Vaultara-GovDoc', note: 'Open source' },
+    tags: ['Firebase', 'Security'], live: null, code: 'https://github.com/TheRealLaksh/Vaultara-GovDoc', note: 'Open source', status: 'Open source', year: '2025', role: 'Solo build' },
   { id: 'mercatora', n: 'Mercatora', k: 'Mall management system', c: '#E8505B', d: 'An admin dashboard for managing shops and mall operations, built with vanilla JavaScript, Vite and Firebase.',
-    tags: ['JavaScript', 'Vite', 'Firebase'], link: 'https://github.com/TheRealLaksh/mercatora', note: 'Open source' },
+    tags: ['JavaScript', 'Vite', 'Firebase'], live: null, code: 'https://github.com/TheRealLaksh/mercatora', note: 'Open source', status: 'Open source', year: '2025', role: 'Solo build' },
+];
+
+// Filter chips for the work section: which projects each one keeps lit.
+export const WORK_FILTERS = [
+  { id: 'all', label: 'All', test: () => true },
+  { id: 'live', label: 'Live sites', test: (w) => !!w.live },
+  { id: 'code', label: 'Open source', test: (w) => !!w.code },
 ];
 
 // Tools, with what Laksh actually does with each. (confirm) the list.

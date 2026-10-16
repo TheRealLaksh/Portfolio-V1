@@ -56,6 +56,7 @@ A. Valley redesign (branch `feat/world-portfolio`): (0) Laksh to review the moti
 - Laksh chose small commits, pushed after each (every push to `main` goes live on Vercel). Session of 8 Oct 2026.
 
 ## Session log (newest first)
+- 2026-10-16 (Work, badges + filter): WORK entries now carry live, code, status, year and role (replaces the single link). Cards in the crate and the phone deck show a status badge (Live / Open source); chips All / Live sites / Open source under the pills dim the projects they leave out (grayscale, same state shared by crate, pills and deck). Popup shows a live-site button and/or a code button depending on what exists. Years from repo first commits (Profiley Dec 2025, CaliBridge Oct 2025, Vaultara Dec 2025) and the vault's Past Projects list; roles for the solo builds are marked (confirm) in data.js.
 - 2026-10-16 (Work, keyboard): the project pills under the crate are invisible until the lid is open but could still take focus. Focusing one now jumps the scroll to the open box (Lenis scrollTo immediate), and the pills get a visible focus ring. Checked with headless Playwright: before focus ready=false, after focus ready=true and the list is fully opaque.
 - 2026-10-16 (Work section, branch feat/work-section): crate front no longer repeats the section title; it says 'This side up' with an arrow, and the lid carries packing tape plus a label with the project count (from WORK.length). Tape and label fade out as the lid opens (CSS var --open) so no mirrored text shows on the underside.
 - 2026-10-16 (longer card hold): the card with the info stayed up for only about 0.1 viewport of scrolling, so it was gone almost as soon as it was read. Timeline in `Journey.jsx` is now measured in viewport heights (`v(vh)`): PER 2.8 vh per stop (was 1.5), train glides 0.8 vh (`GLIDE`) and rests the rest (`HW`); after it stops: window 0 to 0.1, ticket flight 0.12 to 0.55, unfold 0.5 to 0.76, text 0.7 to 1.0, stamp slam 0.85 to 0.93, stamp to strip 0.95 to 1.15, then the card stays up from 1.15 to 2.0 vh (about 700 px of scrolling at 810 px high), then it blows away over 0.4 vh as the train leaves. `LEAD` 1.3, `TAIL` 1.4, journey section is about 26 viewports tall (was 13); `SETTLED` 0.08 for strip clicks. To lengthen or shorten the read time, change the 2.0 (the dwell = PER - GLIDE) via PER, or move the phase numbers. Checked headless 1440x810 and strip-button navigation.
@@ -116,12 +117,13 @@ A. Valley redesign (branch `feat/world-portfolio`): (0) Laksh to review the moti
 <!-- handoff:auto:start -->
 ## Auto: repo state
 
-_Refreshed 16 Oct 2026, 9:46 am IST by `scripts/handoff.mjs` (runs on every commit). Don't edit inside this block._
+_Refreshed 16 Oct 2026, 9:47 am IST by `scripts/handoff.mjs` (runs on every commit). Don't edit inside this block._
 
 Branch: `feat/work-section` · remote: https://github.com/TheRealLaksh/Portfolio-V2.git
 
 ### Last 15 commits
 
+- `bf755eb` 2026-10-16 09:46 Work: focusing a hidden project pill opens the box, and pills get a visible focus ring
 - `4695c2a` 2026-10-16 09:45 Work: crate says 'This side up' and the lid gets tape and a project-count label instead of repeating the heading
 - `3867fc4` 2026-10-16 09:39 Journey: keep the info card up much longer (about 0.85 viewport of scrolling) before the train leaves
 - `11f5ba1` 2026-10-16 09:36 Journey: scroll-scrubbed ticket throw (window opens, ticket spins out, unfolds, stamped, stamp flies to the passport strip); remove the speech bubble
@@ -136,13 +138,13 @@ Branch: `feat/work-section` · remote: https://github.com/TheRealLaksh/Portfolio
 - `4bc6604` 2026-10-16 01:22 Lay the painted valley into the hero: layers, pins, centred headline, night filter
 - `539dcd6` 2026-10-16 01:22 Painted valley art: skies, valley, skyline, clouds, buildings and foliage (WEBP)
 - `d608356` 2026-10-16 01:07 Avatar fixes: off the river, no custom cursor, smoother reactions, livelier idle
-- `21694b9` 2026-10-16 01:00 Avatar as the map traveller and a sidekick that walks the page with him
 
 ### Uncommitted changes at refresh time
 
 ```
 M  HANDOFF.md
 M  src/world/Work.jsx
+M  src/world/data.js
 M  src/world/world3.css
 ```
 <!-- handoff:auto:end -->

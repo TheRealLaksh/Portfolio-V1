@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useLenis } from '@studio-freight/react-lenis';
-import { WORK } from './data';
+import { WORK, WORK_FILTERS } from './data';
 import { clamp, lerp, range, ss, backOut, useTrack, useScrub } from './hooks';
 import Icon from './Icon';
 import Floaters from './Floaters';
@@ -41,9 +41,22 @@ function Case({ w, onClose }) {
           <p className="cs-d">{w.d}</p>
           <ul className="cs-tags">{w.tags.map((t) => <li key={t}>{t}</li>)}</ul>
           <p className="cs-note"><Icon n="star" size={14} />{w.note}</p>
-          <a className="btn-main" href={w.link} target="_blank" rel="noopener noreferrer">{w.link.includes('github.com') ? 'View the code' : 'Open the live site'} <Icon n="ext" size={16} /></a>
+          <div className="cs-links">
+            {w.live && <a className="btn-main" href={w.live} target="_blank" rel="noopener noreferrer">Open the live site <Icon n="ext" size={16} /></a>}
+            {w.code && <a className={w.live ? 'btn-ghost' : 'btn-main'} href={w.code} target="_blank" rel="noopener noreferrer">View the code <Icon n="ext" size={16} /></a>}
+          </div>
         </div>
       </div>
+    </div>
+  );
+}
+
+function Filter({ value, onChange }) {
+  return (
+    <div className="wk-filter" role="group" aria-label="Filter projects">
+      {WORK_FILTERS.map((f) => (
+        <button key={f.id} type="button" aria-pressed={value === f.id} className={value === f.id ? 'on' : ''} onClick={() => onChange(f.id)}>{f.label}</button>
+      ))}
     </div>
   );
 }
@@ -56,7 +69,7 @@ const CW = 206; // card width
 const CH = 280; // card height
 const SUNK = -(CH - BH + 26); // card base when hidden: top just under the rim
 
-function CardBox({ onOpen }) {
+function CardBox({ onOpen, filter, setFilter, keep }) {
   const track = useRef(null);
   const fit = useRef(null);
   const box = useRef(null);
@@ -141,7 +154,7 @@ function CardBox({ onOpen }) {
                     type="button"
                     tabIndex={-1}
                     aria-hidden="true"
-                    className="wk"
+                    className={`wk ${keep(w) ? '' : 'off'}`}
                     ref={(el) => { cards.current[i] = el; }}
                     style={{ ['--x']: `${110 + i * ((BW - 220) / (WORK.length - 1)) - CW / 2}px`, ['--y']: `${BD / 2 + i * 1.5}px`, ['--cc']: w.c, ['--zt']: `${SUNK + CH}px`, opacity: 0 }}
                     onClick={() => onOpen(w)}
@@ -149,7 +162,7 @@ function CardBox({ onOpen }) {
                     onPointerLeave={() => lift(i, false)}
                   >
                     <span className="wk-in">
-                      <span className="wk-top"><b>{String(i + 1).padStart(2, '0')}</b><i>{w.note}</i></span>
+                      <span className="wk-top"><b>{String(i + 1).padStart(2, '0')}</b><i className="st">{w.status}</i></span>
                       <span className="wk-art"><Shot w={w} /></span>
                       <span className="wk-name">{w.n}</span>
                       <span className="wk-kind">{w.k}</span>
@@ -169,7 +182,7 @@ function CardBox({ onOpen }) {
         <div className="box-info" ref={info}>
           <ol className="bi-list">
             {WORK.map((w, i) => (
-              <li key={w.id}>
+              <li key={w.id} className={keep(w) ? '' : 'off'}>
                 <button
                   type="button"
                   style={{ ['--c']: w.c }}
@@ -186,6 +199,7 @@ function CardBox({ onOpen }) {
               </li>
             ))}
           </ol>
+          <Filter value={filter} onChange={setFilter} />
           <p className="box-hint" ref={hint}>pick a card</p>
         </div>
       </div>
@@ -194,7 +208,7 @@ function CardBox({ onOpen }) {
 }
 
 // ---- stacked fallback (phones, reduced motion): a row of cards you swipe ----
-function Deck({ onOpen }) {
+function Deck({ onOpen, filter, setFilter, keep }) {
   const row = useRef(null);
   const scrollBy = (dir) => { const r = row.current; if (r) r.scrollBy({ left: dir * Math.min(r.clientWidth * 0.8, 360), behavior: 'smooth' }); };
   return (
@@ -207,12 +221,13 @@ function Deck({ onOpen }) {
         </div>
       </div>
       <div className="deck">
+        <Filter value={filter} onChange={setFilter} />
         <div className="deck-row" ref={row}>
           {WORK.map((w, i) => (
-            <button key={w.id} type="button" className="wcard" data-rv style={{ ['--cc']: w.c, ['--r']: `${[-2.2, 1.4, -1, 2, -1.6, 1][i % 6]}deg`, transitionDelay: `${i * 0.07}s` }} onClick={() => onOpen(w)} aria-haspopup="dialog">
+            <button key={w.id} type="button" className={`wcard ${keep(w) ? '' : 'off'}`} data-rv style={{ ['--cc']: w.c, ['--r']: `${[-2.2, 1.4, -1, 2, -1.6, 1][i % 6]}deg`, transitionDelay: `${i * 0.07}s` }} onClick={() => onOpen(w)} aria-haspopup="dialog">
               <div className="wc-art"><Shot w={w} /></div>
               <div className="wc-body">
-                <span className="wc-k">{w.k}</span>
+                <span className="wc-k">{w.k}<i className="st">{w.status}</i></span>
                 <b>{w.n}</b>
                 <span className="wc-tags">{w.tags.join(' · ')}</span>
               </div>
@@ -232,11 +247,13 @@ function Deck({ onOpen }) {
 
 export default function Work() {
   const [open, setOpen] = useState(null);
+  const [filter, setFilter] = useState('all');
   const scrub = useScrub();
+  const keep = WORK_FILTERS.find((f) => f.id === filter).test;
   return (
     <section className="work" id="work" aria-label="Selected work">
       {!scrub && <Floaters set="work" />}
-      {scrub ? <CardBox onOpen={setOpen} /> : <Deck onOpen={setOpen} />}
+      {scrub ? <CardBox onOpen={setOpen} filter={filter} setFilter={setFilter} keep={keep} /> : <Deck onOpen={setOpen} filter={filter} setFilter={setFilter} keep={keep} />}
       {open && <Case w={open} onClose={() => setOpen(null)} />}
     </section>
   );
