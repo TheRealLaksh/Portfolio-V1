@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { useLenis } from '@studio-freight/react-lenis';
 import { JOURNEY } from './data';
-import { clamp, range, ss, trackProgress, useScrollFrame, SCRUB_QUERY } from './hooks';
+import { clamp, range, ss, trackProgress, useScrollFrame, prefersReducedMotion, SCRUB_QUERY } from './hooks';
 import { STEP, LOCAL0, stX, FarLayer, MidLayer, NearLayer, ForeLayer, Train, SkyArt } from './trainArt';
 import Icon from './Icon';
 import './train.css';
@@ -84,6 +84,8 @@ export default function Journey() {
   const lay = useRef({});
   const trail = useRef(null);
   const trainBox = useRef(null);
+  const sayEl = useRef(null);
+  const card = useRef(null);
   const live = useRef({ f: 0, size, scrub, i: -1, night: false }); // read by the scroll loop, never rendered
   const lenis = useLenis();
   live.current.size = size;
@@ -137,14 +139,25 @@ export default function Journey() {
     Object.entries(PAR).forEach(([k, p]) => { if (L[k]) L[k].style.transform = `translate(${(g.ax - x * p + LOCAL0).toFixed(1)}px, 0px)`; });
     if (trail.current) trail.current.style.transform = `scaleX(${Math.max(0, x - stX(0)).toFixed(1)})`;
     if (trainBox.current) trainBox.current.style.left = `${(g.ax - 460).toFixed(1)}px`;
+    // Laksh's window (scene x = ax - 3, y = 482) and the speech bubble that sits on the roof above it
+    const toX = (X) => g.s * (g.ax + (X - g.ax) * z);
+    const toY = (Y) => g.s * (g.ay + (Y - g.ay) * z - g.y0);
+    live.current.win = { x: toX(g.ax - 3), y: toY(482) };
+    if (sayEl.current) {
+      const bw = Math.min(300, sz.w - 24);
+      const bx = Math.min(sz.w - bw / 2 - 12, Math.max(bw / 2 + 12, toX(g.ax - 3)));
+      sayEl.current.style.width = `${bw}px`;
+      sayEl.current.style.transform = `translate(${bx.toFixed(1)}px, ${toY(432).toFixed(1)}px) translate(-50%, -100%)`;
+    }
 
     // the train rolls while it moves and rests at a station
     const was = live.current.lastX;
     live.current.lastX = x;
     if (was != null && Math.abs(x - was) > 0.4 && trainBox.current) {
       trainBox.current.dataset.walk = '1';
+      if (sayEl.current) sayEl.current.dataset.walk = '1';
       clearTimeout(live.current.stopT);
-      live.current.stopT = setTimeout(() => { if (trainBox.current) trainBox.current.dataset.walk = '0'; }, sc ? 200 : 1300);
+      live.current.stopT = setTimeout(() => { if (trainBox.current) trainBox.current.dataset.walk = '0'; if (sayEl.current) sayEl.current.dataset.walk = '0'; }, sc ? 260 : 1300);
     }
 
     // time of day
@@ -186,6 +199,22 @@ export default function Journey() {
     if (!scrub) live.current.f = Math.max(0, i);
     draw();
   }, [scrub, size, i]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  // The stop card is a ticket that flies out of Laksh's window each time the train pulls into a station.
+  useEffect(() => {
+    const c = card.current;
+    const fr = frame.current;
+    const win = live.current.win;
+    if (!c) return;
+    c.classList.remove('fly');
+    if (!live.current.scrub || !win || !fr || prefersReducedMotion()) return;
+    const cr = c.getBoundingClientRect();
+    const fr0 = fr.getBoundingClientRect();
+    c.style.setProperty('--fx', `${(win.x - (cr.left - fr0.left + cr.width / 2)).toFixed(0)}px`);
+    c.style.setProperty('--fy', `${(win.y - (cr.top - fr0.top + cr.height / 2)).toFixed(0)}px`);
+    void c.offsetWidth;
+    c.classList.add('fly');
+  }, [i]);
 
   const stop = i >= 0 ? JOURNEY[i] : null;
   const g = size.w ? geom(size.w, size.h, scrub) : null;
@@ -236,19 +265,24 @@ export default function Journey() {
               <div className="j-train" ref={trainBox} data-walk="0" style={{ left: g ? g.ax - 460 : 0 }}><Train /></div>
               <div className="lay" ref={setLay('fore')}><ForeLayer p={PAR.fore} /></div>
             </div>
+            <div className="j-say" ref={sayEl} data-walk="0" aria-hidden="true">
+              <span className="say-dots"><i /><i /><i /></span>
+              <p className="say-t" key={i}>{stop ? stop.say : 'All aboard! Scroll and I will show you the way.'}</p>
+            </div>
           </div>
 
-          <article className="jcard" aria-live="polite">
+          <article className="jcard" aria-live="polite" ref={card}>
             {stop ? (
               <div className="jc-in" key={i}>
-                <div className="jc-top"><span className="jc-yr">{stop.y}</span><span className="jc-ic"><Icon n={stop.icon} size={20} /></span></div>
+                <div className="jc-top"><span className="jc-yr">{stop.y}</span><span className="jc-n">Stop {i + 1} of {N}</span><span className="jc-ic"><Icon n={stop.icon} size={20} /></span></div>
                 <h3>{stop.t}</h3>
                 <p className="jc-role">{stop.r}</p>
                 <p>{stop.p}</p>
+                <p className="jc-from">{i > 0 ? `From ${JOURNEY[i - 1].t}` : 'Start of the line'} <Icon n="arrow" size={13} /> {stop.t}</p>
               </div>
             ) : (
               <div className="jc-in" key="intro">
-                <div className="jc-top"><span className="jc-yr">2019 &rarr; now</span><span className="jc-ic"><Icon n="map" size={20} /></span></div>
+                <div className="jc-top"><span className="jc-yr">2019 &rarr; now</span><span className="jc-n">{N} stops</span><span className="jc-ic"><Icon n="map" size={20} /></span></div>
                 <h3>All aboard.</h3>
                 <p>Nine stations: from a residential school in Coimbatore, through Varanasi, a hotel network and four internships, to a Delhi startup.</p>
               </div>

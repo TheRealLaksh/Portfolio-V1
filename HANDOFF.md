@@ -56,6 +56,7 @@ A. Valley redesign (branch `feat/world-portfolio`): (0) Laksh to review the moti
 - Laksh chose small commits, pushed after each (every push to `main` goes live on Vercel). Session of 8 Oct 2026.
 
 ## Session log (newest first)
+- 2026-10-16 (train journey, making the story seen): visitors watched the train and ignored the side card. Now (1) Laksh narrates from his window: a speech bubble on the roof above it with a one-line `say` per stop (`JOURNEY[].say` in `data.js`, first person, facts from the stop text), bouncing dots while the train moves and the line pops in when it stops (`.j-say`, positioned in `draw()` from the camera maths); (2) the side card is a boarding pass (stop n of 9, dashed perforations, From previous stop to this stop) that flies out of his window to its place each time the stop changes (`.jcard.fly`, `--fx/--fy` measured in an effect on `i`; skipped in the stacked layout and under reduced motion). Checked headless 1440x810 and 390x844. Not checked: real devices.
 - 2026-10-16 (train journey): the Journey page is now a train line, replacing the valley map (Laksh disliked it). `src/world/trainArt.jsx` (hand-built SVG: nine station scenes, platform roundels, parallax layers far/mid/near/fore, the train with Laksh in a window, sky art), `src/world/train.css`, rewritten `src/world/Journey.jsx`. Scroll drives the train (`trainX(f)`, dwell at each station); camera follows it with parallax and a small zoom while stopped; stations build when the train arrives (`.st.built .prop`, spring pop); sky runs dawn to night across the nine stops (`KEYS`), night theme forces a dark sky; passport stamps land in the strip (the old dots, same buttons); the route line fills behind the train. Layers are divs moved with transforms (compositor). Scale fits 720 units tall but keeps the rail above the stamp strip on short screens (`geom`). Phones/reduced motion keep prev/next buttons and a gliding camera. Removed the map controls and the dead map CSS. Checked headless at 1440x810 (day/night, every stop), 853x480, 390x844 (stacked, all stops via Next); fps in headless matches the valley baseline (about 55, software rendering). Not checked: real GPU devices, Safari, scene copy beyond the nine stops. Zoom/recentre buttons are gone (no map to zoom).
 - 2026-10-16 (journey content): Journey stops edited at Laksh's request in `src/world/data.js`: Round Square and the G20 press corps removed (Model UN stays as CHEMUN, IIMUN, TISB; also removed from the About sheet), Class X percentages removed (sheet and stop), the Web Wizards 2nd place removed from the First portfolio stop, Building in public now says Profiley and CaliBridge (Vaultara and Mercatora left the stop but stay in Work and Stack). Build passes. Laksh chose a train-line replacement for the valley map plus four scroll effects (see Next steps A0); not built yet.
 - 2026-10-16 (music + app phone): the "Play some music" pin, the nav pill and the Life desk now play/label That's What I Like by Bruno Mars (Spotify embed, see Decisions; headless check: controller reached "playing", 30 s preview as a logged-out browser; not checked: a signed-in Spotify browser, Safari/iOS autoplay, phones). Pill and desk sleeve show "That's What I Like · Bruno Mars". The "Building the app" phone sprite is now hidden until the ShiftsDeal place is selected (layer `.app-ly.show` in `world.css`, driven by `focusId === 'shiftsdeal'` in `Hero.jsx`; its label is a non-clickable tag); checked in the focused view at 1440x810 that the phone is inside the frame.
@@ -111,12 +112,13 @@ A. Valley redesign (branch `feat/world-portfolio`): (0) Laksh to review the moti
 <!-- handoff:auto:start -->
 ## Auto: repo state
 
-_Refreshed 16 Oct 2026, 2:10 am IST by `scripts/handoff.mjs` (runs on every commit). Don't edit inside this block._
+_Refreshed 16 Oct 2026, 9:24 am IST by `scripts/handoff.mjs` (runs on every commit). Don't edit inside this block._
 
 Branch: `feat/world-portfolio` · remote: https://github.com/TheRealLaksh/Portfolio-V2.git
 
 ### Last 15 commits
 
+- `f8cb299` 2026-10-16 02:10 Remove the old journey map CSS; record the train journey in HANDOFF
 - `07855aa` 2026-10-16 02:10 Journey is now a scroll-driven train line: nine station scenes, parallax camera, dawn-to-night sky, passport stamps
 - `51d87aa` 2026-10-16 01:56 Trim journey stops: drop Round Square, G20 press corps, Class X marks and Web Wizards; Building in public now Profiley and CaliBridge
 - `94c1c9b` 2026-10-16 01:50 Show the ShiftsDeal app phone only while the ShiftsDeal place is selected
@@ -131,12 +133,13 @@ Branch: `feat/world-portfolio` · remote: https://github.com/TheRealLaksh/Portfo
 - `4820e98` 2026-10-16 00:41 Let the hero headline use the width on very wide screens; log the motion pass in HANDOFF
 - `bb24aa7` 2026-10-16 00:40 Journey map comes alive; idle motion and hover polish in every section
 - `09299de` 2026-10-16 00:38 Pointer polish and floating doodles across the page
-- `a0d6154` 2026-10-16 00:34 Bring the valley to life: ticking clock, chimney smoke, walkers, glints, fish, balloon, flocks, fireflies
 
 ### Uncommitted changes at refresh time
 
 ```
-M  src/world/motion.css
-M  src/world/world2.css
+M  HANDOFF.md
+M  src/world/Journey.jsx
+M  src/world/data.js
+M  src/world/train.css
 ```
 <!-- handoff:auto:end -->
