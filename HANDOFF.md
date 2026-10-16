@@ -23,6 +23,8 @@ React, Vite, Tailwind, Framer Motion, React Three Fiber, Lenis, AOS, react-route
 - `public/signature/`: images used in Laksh's Gmail signatures, hosted at https://lakshpradhwani.com/signature/<file>. `icon-linkedin.png`, `icon-github.png`, `icon-instagram.png` (36x36, white Simple Icons glyph on black circle) are the live signature icons. `lp-logo.png` is no longer in the signature but is kept because older sent emails reference it. Do not move or delete these or the signature images break.
 
 ## Status
+**Work section pass on branch `feat/work-section` (cut from `feat/world-portfolio` on 16 Oct 2026, pushed; no PR yet).** Done: crate lid/front relabelled, keyboard focus reveals the box, status badges + All / Live sites / Open source filter, popup with Year / Role / Status, previous / next, Copy link, `#work/<id>` deep links, focus trap and alt text, real screenshots for Vaultara and Mercatora. Code is in `src/world/Work.jsx`, `data.js` (`WORK`, `WORK_FILTERS`) and the end of `world3.css`.
+
 **Valley redesign in progress on branch `feat/world-portfolio` (cut from `main` on 15 Oct 2026, worktree `..\Portfolio-V2-world`, previews on branch pushes; `main` and the live site are untouched).** Laksh's reference is https://www.jameschugh.com/ (an illustrated "valley" you fly into, journey map, work cards, tool box, desk of movable things, guestbook wall, hotkey contact). Decision (15 Oct 2026): recreate its structure and interaction patterns, but every illustration, word and logo is original: hand-built SVG art, Laksh's own copy and facts, no AI images, no invented numbers. The new site lives in `src/world/` and is mounted at `/` in `src/App.jsx` (outside the classic `Layout`); the previous home page is kept at `/classic`, `/hire` is unchanged. **`/book` (15 Oct 2026, Topmate-style booking page, modelled on topmate.io/jameschughh):** `src/world/Book.jsx` + `src/world/book.css`, a centered single column in the valley's paper look with day/night toggle: profile header (photo, name, one-line pitch, LinkedIn/GitHub/Instagram/email icons, booking button), Services (the three packages from `src/data/packages.js` with "from" price, expandable "What is included" and a per-service booking button), How it starts (the same three steps as `/hire`), About, things built. No testimonials, stats or durations are shown because none are real. All booking buttons use `ME.book` when set, otherwise a WhatsApp link that names the service. Not yet verified: real devices, Safari, and performance on low-end phones. Needs Laksh: Vercel storage for the wall/counter (see Next steps), real work screenshots, a booking link.
 
 **Hire page is LIVE at https://lakshpradhwani.com/hire (merged to `main` and deployed 13 Oct 2026, commit `b03f2c5`).** The redesign branch `feat/skyline-world` is still separate and unmerged. `/hire` is a client-facing page: intro with WhatsApp and email actions, the three packages, recent work (Profiley, Helios, Calibridge), a three-step "how it starts", the stack, and a closing call to action. The packages live in one file, `src/data/packages.js` (also holds `CONTACT`, `whatsappLink`, `mailLink`, `featuredWork`, `stack`), and are shown by the shared `src/components/ui/PackageCard.jsx` on both `/hire` and the homepage Services section. Prices are starting prices in rupees: Business Website + CMS 30,000, AI Features + Automation 55,000, Custom Web App 75,000, matching LinkedIn's Services page and the Google Business Profile (starter 15,000, multi-page 30,000, custom 75,000). Keep all four in step. The old `/booking` page was a demo (made-up slots, fake "Booking Confirmed!", dollar prices); it is gone and `/booking` and `/bookings` redirect to `/hire`.
@@ -39,10 +41,12 @@ A. Valley redesign (branch `feat/world-portfolio`): (0) Laksh to review the moti
 2. Optionally replace `public/og-image.jpg` with a designed 1200x630 image (the current one is a cropped screenshot of the hero).
 
 ## Open questions / waiting on
+- Work section: Laksh to confirm ShiftsDeal may be shown with its screenshot (long-open), the 'Solo build' roles in `WORK` (marked confirm in `data.js`), and whether to add Futran, Third Exit, SAGE, Study companion or Monopoly (client work needs permission). The Mercatora screenshot was taken from a local run with dummy Firebase keys: its hero photo (Unsplash) did not load and the directory list is empty, so retake it with real data if he wants a richer card. Vaultara is the app's real landing page (the dashboard needs a login).
 - Location: the footer (every page, including /hire), `index.html`, the hero and the JSON-LD still say Varanasi while /hire says Delhi NCR: a visible mismatch on the page itself. LinkedIn, Google Business Profile and `/hire` now say Delhi NCR, but `index.html` (title, descriptions, JSON-LD address, noscript), the hero and the footer still say Varanasi. Needs Laksh's decision before changing the site-wide text.
 - Mail forwarding is verified: test mails to work@ and me@ showed "Forwarded" in Cloudflare's activity log on 9 Oct 2026.
 
 ## Decisions not to undo
+- Work section (16 Oct 2026): project facts (year, role, status, live, code) come from repo first commits and the vault's project notes only; no invented stats. Cards in the crate stay `aria-hidden` with `tabIndex -1`; the pill list is the keyboard route and focusing it fast-forwards the scroll. The popup footer is sticky and the popup keeps clear of the mobile nav pill.
 - Content rules from Laksh (16 Oct 2026): no scholarship anywhere on the Masters' Union page; ShiftsDeal is "took over a basic first version and built it out", never "80%" or "from scratch", and never mention the database or its plan; tabla is gone everywhere (do not bring it back); shooting is a short past-tense mention only (he has left it); Bestow clients are not named; Solomon Bharat is not shown.
 - Hero art is painted (`public/art`). Do not regenerate or replace it without asking: it cost Figma credits. The old SVG valley still exists behind `PAINTED = false` in `Hero.jsx`.
 - No custom cursor (Laksh asked for it to go, 16 Oct 2026). Keep the native pointer.
@@ -56,6 +60,7 @@ A. Valley redesign (branch `feat/world-portfolio`): (0) Laksh to review the moti
 - Laksh chose small commits, pushed after each (every push to `main` goes live on Vercel). Session of 8 Oct 2026.
 
 ## Session log (newest first)
+- 2026-10-16 (Work, screenshots): added public/work/vaultara.webp (the app's real landing page, served from the local repo's public folder) and mercatora.webp (local run with dummy Firebase keys: hero photo did not load, directory empty). Both 900x675 like the other four; the placeholder mock no longer shows. Temporary servers stopped. Build not run (eslint config is broken in this checkout: ERR_PACKAGE_PATH_NOT_EXPORTED, pre-existing); verified in the dev server with headless Playwright.
 - 2026-10-16 (Work, popup): the project popup now has a Year / Role / Status row, previous and next buttons (ArrowLeft/Right too; they walk the projects the filter keeps lit, or all six when a dimmed one was opened by hand), a Copy link button, and a shareable address: opening a project sets #work/<id> in the address bar (replaceState, no scroll), closing resets to #work, and loading /#work/<id> opens that popup over the work section (headless check: #work/vaultara loads with its popup, only a code button). Tab is trapped inside the dialog, the screenshot has real alt text, and the footer row is sticky and clear of the mobile nav pill (checked at 390 px). Verified with headless Playwright at 1440 and 390.
 - 2026-10-16 (Work, badges + filter): WORK entries now carry live, code, status, year and role (replaces the single link). Cards in the crate and the phone deck show a status badge (Live / Open source); chips All / Live sites / Open source under the pills dim the projects they leave out (grayscale, same state shared by crate, pills and deck). Popup shows a live-site button and/or a code button depending on what exists. Years from repo first commits (Profiley Dec 2025, CaliBridge Oct 2025, Vaultara Dec 2025) and the vault's Past Projects list; roles for the solo builds are marked (confirm) in data.js.
 - 2026-10-16 (Work, keyboard): the project pills under the crate are invisible until the lid is open but could still take focus. Focusing one now jumps the scroll to the open box (Lenis scrollTo immediate), and the pills get a visible focus ring. Checked with headless Playwright: before focus ready=false, after focus ready=true and the list is fully opaque.
@@ -118,12 +123,13 @@ A. Valley redesign (branch `feat/world-portfolio`): (0) Laksh to review the moti
 <!-- handoff:auto:start -->
 ## Auto: repo state
 
-_Refreshed 16 Oct 2026, 9:51 am IST by `scripts/handoff.mjs` (runs on every commit). Don't edit inside this block._
+_Refreshed 16 Oct 2026, 9:53 am IST by `scripts/handoff.mjs` (runs on every commit). Don't edit inside this block._
 
 Branch: `feat/work-section` · remote: https://github.com/TheRealLaksh/Portfolio-V2.git
 
 ### Last 15 commits
 
+- `e223e1a` 2026-10-16 09:51 Work popup: year, role and status, previous and next, copy link, #work/<id> deep link, focus trap and alt text
 - `ac5e444` 2026-10-16 09:47 Work: status badges, All / Live / Open source filter, and separate live and code buttons
 - `bf755eb` 2026-10-16 09:46 Work: focusing a hidden project pill opens the box, and pills get a visible focus ring
 - `4695c2a` 2026-10-16 09:45 Work: crate says 'This side up' and the lid gets tape and a project-count label instead of repeating the heading
@@ -138,13 +144,12 @@ Branch: `feat/work-section` · remote: https://github.com/TheRealLaksh/Portfolio
 - `16b6990` 2026-10-16 01:39 Remove tabla; add laptop on rug, ShiftsDeal app phone and new hero sub-line
 - `457adb9` 2026-10-16 01:39 Update hero place content: no scholarship, ShiftsDeal reframed, Bestow and internships, shooting as a past mention
 - `4bc6604` 2026-10-16 01:22 Lay the painted valley into the hero: layers, pins, centred headline, night filter
-- `539dcd6` 2026-10-16 01:22 Painted valley art: skies, valley, skyline, clouds, buildings and foliage (WEBP)
 
 ### Uncommitted changes at refresh time
 
 ```
 M  HANDOFF.md
-M  src/world/Work.jsx
-M  src/world/world3.css
+A  public/work/mercatora.webp
+A  public/work/vaultara.webp
 ```
 <!-- handoff:auto:end -->
