@@ -23,7 +23,7 @@ React, Vite, Tailwind, Framer Motion, React Three Fiber, Lenis, AOS, react-route
 - `public/signature/`: images used in Laksh's Gmail signatures, hosted at https://lakshpradhwani.com/signature/<file>. `icon-linkedin.png`, `icon-github.png`, `icon-instagram.png` (36x36, white Simple Icons glyph on black circle) are the live signature icons. `lp-logo.png` is no longer in the signature but is kept because older sent emails reference it. Do not move or delete these or the signature images break.
 
 ## Status
-**3D sidekick on branch `feat/avatar-3d` (cut from `feat/work-section` on 16 Oct 2026; Work PR is https://github.com/TheRealLaksh/Portfolio-V2/pull/1).** Laksh chose real 3D (16 Oct 2026). The engine is built and works on a STAND-IN mannequin (`public/avatar/Xbot.glb`, the three.js examples model, originally from Mixamo: licence not verified, replace before launch). Files: `src/world/avatarStage.js` (three.js strip, lazy-loaded), `avatarBrain.js` (behaviour), `avatarLines.js` (what he says), `Sidekick3D.jsx` + `sidekick3d.css` (DOM: hit button, bubble, Zzz, guide menu), `useSection.js`; `Sidekick.jsx` now chooses 3D or the old flat puppet (`Sidekick2D`). Behaviours: walks across the screen to a spot per section (left / right / beside the Work crate), jogs or walks on the spot while the page scrolls and catches his breath after a fast scroll, falls asleep after 20 s idle (Zzz, wakes with a hop), head follows the pointer, high-five when the pointer comes close, click opens a guide menu (Work, Contact, Resume, Hire me, joke), time-of-day / returning-visitor / night-mode lines, phone version (small, no walking). Hidden in the hero and the journey (he is in those scenes already).
+**3D sidekick on branch `feat/avatar-3d` (cut from `feat/work-section` on 16 Oct 2026; Work PR is https://github.com/TheRealLaksh/Portfolio-V2/pull/1).** Laksh chose real 3D (16 Oct 2026). The engine is built and works on a STAND-IN mannequin (`public/avatar/Xbot.glb`, the three.js examples model, originally from Mixamo: licence not verified, replace before launch). Files: `src/world/avatarStage.js` (three.js strip, lazy-loaded), `avatarBrain.js` (behaviour), `avatarLines.js` (what he says), `Sidekick3D.jsx` + `sidekick3d.css` (DOM: hit button, bubble, Zzz, guide menu), `useSection.js`; `Sidekick.jsx` now chooses 3D or the old flat puppet (`Sidekick2D`). Look (16 Oct 2026 second pass, after Laksh said the first version looked fake): toon shading in three flat tones plus an inked outline (inverted hull, 2.4 px), body saffron `0xF5B13D`, joints and outline in the site's ink navy, so he matches the flat illustrated site. Movement is physical: position, velocity and a target; scrolling moves the target in a smooth sweep across the whole screen (one sweep per about 1.5 screens of scroll), he accelerates and brakes, turns through facing the camera (8.5 rad/s), leans into a run, picks walk or run by speed, and the clip speed comes from the measured stride (`strideSpeed` in `avatarStage.js`, 80th percentile of the planted-foot speed) so the feet do not skate; top speed is 1.9x the run clip. Also: strolls a little when idle, falls asleep after 20 s (Zzz, wakes with a hop), head follows the pointer, high-five when the pointer comes close, 'Phew.' and a pant after a run, click opens a guide menu (Work, Contact, Resume, Hire me, joke), time-of-day / returning-visitor / night-mode lines, phone version (small, stays put). He is bigger now (27% of the screen height, 170 to 270 px) and walks in front of the nav pill (z-index 61). Hidden in the hero and the journey (he is in those scenes already).
 
 **Work section pass on branch `feat/work-section` (cut from `feat/world-portfolio` on 16 Oct 2026, pushed; no PR yet).** Done: crate lid/front relabelled, keyboard focus reveals the box, status badges + All / Live sites / Open source filter, popup with Year / Role / Status, previous / next, Copy link, `#work/<id>` deep links, focus trap and alt text, real screenshots for Vaultara and Mercatora. Code is in `src/world/Work.jsx`, `data.js` (`WORK`, `WORK_FILTERS`) and the end of `world3.css`.
 
@@ -64,6 +64,7 @@ A. Valley redesign (branch `feat/world-portfolio`): (0) Laksh to review the moti
 - Laksh chose small commits, pushed after each (every push to `main` goes live on Vercel). Session of 8 Oct 2026.
 
 ## Session log (newest first)
+- 2026-10-16 (3D sidekick, second pass): Laksh said the first version looked fake. Replaced the pink mannequin look with toon shading plus an ink outline in saffron and navy; movement is now position + velocity + target driven by scroll (he walks the way the page goes, runs when you fly, turns through facing the camera, leans into a run, brakes); clip speed locked to the measured stride so feet do not skate; bigger (27% of screen height) and in front of the nav pill. Checked with a headless video (software WebGL, so choppier than a real GPU): runs in from the left, reverses with a turn when the scroll direction flips, settles and idles. Calibration printed walk about 105 and run about 225 px/s before the stride tweak. Still on the stand-in robot; his own model is the last step.
 - 2026-10-16 (3D sidekick, stand-in): built the whole 3D engine on the stand-in Xbot mannequin (see Status). Checked with headless Chromium on software WebGL: desktop walks to the right spot, greeting and section lines show, guide menu opens with five items and the joke works, he falls asleep after 20 s (Zzz) and wakes on pointer move with 'Oh, hi!', phone version (390 px) renders small with the menu on screen. The model was first measured in bind pose and came out 4x too big; it is now measured from the skinned vertices in idle. Build passes, three is a separate lazy chunk. Not done: his own 3D model, hero/journey presence, tuning walk speed to the clip.
 - 2026-10-16 (Work, screenshots): added public/work/vaultara.webp (the app's real landing page, served from the local repo's public folder) and mercatora.webp (local run with dummy Firebase keys: hero photo did not load, directory empty). Both 900x675 like the other four; the placeholder mock no longer shows. Temporary servers stopped. Build not run (eslint config is broken in this checkout: ERR_PACKAGE_PATH_NOT_EXPORTED, pre-existing); verified in the dev server with headless Playwright.
 - 2026-10-16 (Work, popup): the project popup now has a Year / Role / Status row, previous and next buttons (ArrowLeft/Right too; they walk the projects the filter keeps lit, or all six when a dimmed one was opened by hand), a Copy link button, and a shareable address: opening a project sets #work/<id> in the address bar (replaceState, no scroll), closing resets to #work, and loading /#work/<id> opens that popup over the work section (headless check: #work/vaultara loads with its popup, only a code button). Tab is trapped inside the dialog, the screenshot has real alt text, and the footer row is sticky and clear of the mobile nav pill (checked at 390 px). Verified with headless Playwright at 1440 and 390.
@@ -128,12 +129,13 @@ A. Valley redesign (branch `feat/world-portfolio`): (0) Laksh to review the moti
 <!-- handoff:auto:start -->
 ## Auto: repo state
 
-_Refreshed 16 Oct 2026, 10:10 am IST by `scripts/handoff.mjs` (runs on every commit). Don't edit inside this block._
+_Refreshed 16 Oct 2026, 10:19 am IST by `scripts/handoff.mjs` (runs on every commit). Don't edit inside this block._
 
 Branch: `feat/avatar-3d` · remote: https://github.com/TheRealLaksh/Portfolio-V2.git
 
 ### Last 15 commits
 
+- `939223d` 2026-10-16 10:10 Sidekick: 3D version with guide menu, phone mini and a 2D fallback
 - `0361fa3` 2026-10-16 10:10 Sidekick: three.js stage and behaviour brain (walk, scroll jog, sleep, look, high five)
 - `388e600` 2026-10-16 10:10 Sidekick: add a stand-in 3D model, the line bank and a section hook
 - `b672ab2` 2026-10-16 09:53 Work: real screenshots for Vaultara and Mercatora; handoff status for the work section pass
@@ -148,13 +150,14 @@ Branch: `feat/avatar-3d` · remote: https://github.com/TheRealLaksh/Portfolio-V2
 - `07855aa` 2026-10-16 02:10 Journey is now a scroll-driven train line: nine station scenes, parallax camera, dawn-to-night sky, passport stamps
 - `51d87aa` 2026-10-16 01:56 Trim journey stops: drop Round Square, G20 press corps, Class X marks and Web Wizards; Building in public now Profiley and CaliBridge
 - `94c1c9b` 2026-10-16 01:50 Show the ShiftsDeal app phone only while the ShiftsDeal place is selected
-- `785f5bd` 2026-10-16 01:50 Play That's What I Like by Bruno Mars from the music button via Spotify's embedded player
 
 ### Uncommitted changes at refresh time
 
 ```
-M  src/world/Sidekick.jsx
-A  src/world/Sidekick3D.jsx
-A  src/world/sidekick3d.css
+M HANDOFF.md
+ M src/world/Sidekick3D.jsx
+ M src/world/avatarBrain.js
+M  src/world/avatarStage.js
+ M src/world/sidekick3d.css
 ```
 <!-- handoff:auto:end -->
