@@ -23,6 +23,8 @@ React, Vite, Tailwind, Framer Motion, React Three Fiber, Lenis, AOS, react-route
 - `public/signature/`: images used in Laksh's Gmail signatures, hosted at https://lakshpradhwani.com/signature/<file>. `icon-linkedin.png`, `icon-github.png`, `icon-instagram.png` (36x36, white Simple Icons glyph on black circle) are the live signature icons. `lp-logo.png` is no longer in the signature but is kept because older sent emails reference it. Do not move or delete these or the signature images break.
 
 ## Status
+**Painted journey on branch `feat/journey-painted` (cut from `feat/avatar-3d` on 16 Oct 2026, so it stacks on the Work and avatar work).** Laksh asked for the train scenery to be painted with Figma credits. Done: 10 images from Figma's `gemini-3.1-flash-image` (better than the `flash-lite` used for the hero), keyed by `scripts/art/journey.py` into `public/art/journey/` (school, varanasi, hotel, cabin, campus, build, train, wheel, far and mid hill strips mirrored for a seamless tile). `src/world/trainArt.jsx` now draws the nine stations from pictures (reusing `/art/range`, `/art/mu`, `/art/shifts`, `/art/bestow`; they grey out until the train arrives, CSS `.stbuild`), painted hill layers, the painted train (spinning painted wheels behind its skirt, Laksh's avatar in the window, smoke puffs), painted clouds. The window anchor moved: `WIN_Y` is exported from trainArt and used by `Journey.jsx` for the ticket origin. NOT done, because the Figma credits ran out (they reset at 2026-10-17 00:00 UTC, about 05:30 IST): painted ground and rails strip, painted platform strip, trees, foreground grass. Until then the ground is a gradient and the platform a softened vector. Raw sources are in `scripts/art/src/` (gitignored; the Figma links expire after 7 days).
+
 **3D sidekick on branch `feat/avatar-3d` (cut from `feat/work-section` on 16 Oct 2026; Work PR is https://github.com/TheRealLaksh/Portfolio-V2/pull/1).** Laksh chose real 3D (16 Oct 2026). The engine is built and works on a STAND-IN mannequin (`public/avatar/Xbot.glb`, the three.js examples model, originally from Mixamo: licence not verified, replace before launch). Files: `src/world/avatarStage.js` (three.js strip, lazy-loaded), `avatarBrain.js` (behaviour), `avatarLines.js` (what he says), `Sidekick3D.jsx` + `sidekick3d.css` (DOM: hit button, bubble, Zzz, guide menu), `useSection.js`; `Sidekick.jsx` now chooses 3D or the old flat puppet (`Sidekick2D`). Look: toon shading in three flat tones plus an inked outline (inverted hull, 2.4 px), body saffron `0xF5B13D`, joints and outline in the site's ink navy, so he matches the flat illustrated site. Behaviour (third pass, 16 Oct 2026, after Laksh said walking was distracting and he wanted real animations): he does NOT walk or follow the scroll; he holds one spot (bottom left, 120 px; 52 px on phones), pops up from below the screen edge when you leave the hero and waves. The animations are written in code, not clips: `avatarMoves.js` is a move library (wave, point, think, shrug, facepalm, clap, cheer, stretch, yawn, flex, lookAround, flip, spin) that poses named body parts (roles such as `rArm`, `head`, `spine1`, in body-space degrees) over the idle clip; `applyMove` in `avatarStage.js` maps roles to bones by Mixamo-style names (prefix `mixamorig` optional), so the moves should carry over to his own Mixamo-compatible model. Stunts (jump, backflip about his middle, spin, squash and stretch) are physics in `avatarBrain.js`. Triggers: each section's move plays ONCE per visit, after it has held the screen for 1.4 s and never closer than 18 s to another unprompted move (`SECTION_MOVE`: story wave, work point, brand flex, profiley clap, stack stretch, process think, life shrug, notes lookAround, hello cheer), single click waves and opens the menu, double click flips, triple click spins, menu has Do a flip and Surprise me, pointer near him gets a wave, night mode a yawn, daylight a stretch, 20 s idle a yawn then sleep (Zzz, wakes with a hop). Head follows the pointer. Also: guide menu (Work, Contact, Resume, Hire me, flip, surprise, joke), time-of-day / returning-visitor lines, phone version. Tests: `window.__sk = { brain, stage }` in dev; `stage.hold(def, t)` freezes a pose and `stage.step(dt)` drives a frame (stop the loop with `stage.setActive(false)` first), because software WebGL runs at 1 to 13 fps and real-time recordings mislead. Motion quality (tuned after Laksh found shrug, facepalm, clap, flex, cheer, stretch and yawn stiff, wrong-looking and too frequent): moves ease in with overshoot, start with a small anticipation, the head trails the arms (`lag`), and every posed part has a constant small wobble (`WOBBLE` in `avatarStage.js`) so held poses are never frozen; hands for facepalm, think and yawn now cross to the middle of the face (`+z` on the right arm moves the hand inward). Quips are 45 s apart. Dance was offered and Laksh declined it; walking was tried (scroll-linked roaming, run, stride locking) and removed at his request. He is big (27% of the screen height, 170 to 270 px) and sits in front of the nav pill (z-index 61). Hidden in the hero and the journey (he is in those scenes already).
 
 **Work section pass on branch `feat/work-section` (cut from `feat/world-portfolio` on 16 Oct 2026, pushed; no PR yet).** Done: crate lid/front relabelled, keyboard focus reveals the box, status badges + All / Live sites / Open source filter, popup with Year / Role / Status, previous / next, Copy link, `#work/<id>` deep links, focus trap and alt text, real screenshots for Vaultara and Mercatora. Code is in `src/world/Work.jsx`, `data.js` (`WORK`, `WORK_FILTERS`) and the end of `world3.css`.
@@ -49,6 +51,7 @@ A. Valley redesign (branch `feat/world-portfolio`): (0) Laksh to review the moti
 - Mail forwarding is verified: test mails to work@ and me@ showed "Forwarded" in Cloudflare's activity log on 9 Oct 2026.
 
 ## Decisions not to undo
+- Painted journey (16 Oct 2026): painted art from Figma image models is allowed and wanted for scenery (Laksh: 'use figma credits and generate something really good'); generate on flat magenta and key with `scripts/art/journey.py`; hill strips are mirrored end to end so they tile. Keep the train's wheels as separate rotating sprites behind the skirt; keep the window overlay for the avatar. The remaining generations are listed under Status.
 - 3D sidekick (16 Oct 2026): no walking across the screen and no scroll-following (Laksh found it distracting); life comes from the moves. Keep the flat 2D sidekick as the fallback (no WebGL, load failure); reduced-motion visitors get no moving sidekick at all (as before). three loads only through the dynamic import in `Sidekick3D.jsx`, after idle. The canvas strip is pointer-events none; only the button over him takes clicks. No custom cursor (he is not one). Lines must be true statements about the site, no emoji.
 - Work section (16 Oct 2026): project facts (year, role, status, live, code) come from repo first commits and the vault's project notes only; no invented stats. Cards in the crate stay `aria-hidden` with `tabIndex -1`; the pill list is the keyboard route and focusing it fast-forwards the scroll. The popup footer is sticky and the popup keeps clear of the mobile nav pill.
 - Content rules from Laksh (16 Oct 2026): no scholarship anywhere on the Masters' Union page; ShiftsDeal is "took over a basic first version and built it out", never "80%" or "from scratch", and never mention the database or its plan; tabla is gone everywhere (do not bring it back); shooting is a short past-tense mention only (he has left it); Bestow clients are not named; Solomon Bharat is not shown.
@@ -64,6 +67,7 @@ A. Valley redesign (branch `feat/world-portfolio`): (0) Laksh to review the moti
 - Laksh chose small commits, pushed after each (every push to `main` goes live on Vercel). Session of 8 Oct 2026.
 
 ## Session log (newest first)
+- 2026-10-16 (painted journey): generated 10 images with Figma credits (gemini-3.1-flash-image) for the train scenery: 6 new stations, the train, a wheel, far and mid hill strips; keyed to public/art/journey with scripts/art/journey.py. trainArt.jsx now uses them (stations grey until the train arrives, painted hills, painted train with rotating painted wheels and the avatar window, painted clouds); Journey.jsx takes its window anchor from WIN_Y. Checked in headless Chromium at three scroll points (day, dusk, night): no errors, ticket card and passport strip intact. Figma credits ran out before the ground, platform, trees and foreground grass, so those four are pending (reset 17 Oct 00:00 UTC); ground is a gradient and the platform a softened vector meanwhile.
 - 2026-10-16 (3D sidekick, tuning): Laksh named shrug, facepalm, clap, flex, cheer, stretch and yawn as too frequent, stiff and wrong-looking. Moves now ease in with overshoot, start with a small anticipation, the head trails the arms, and a constant wobble keeps held poses alive; facepalm, think and yawn hands now cross to the face (the right arm needed +z); section moves play once per visit, 1.4 s after settling and 18 s apart; quips every 45 s. Checked with stepped frames at 30 fps: facepalm covers the face, clap brings the hands together, flex is a double bicep, cheer jumps with arms up, stretch goes overhead, yawn covers the mouth with the head back. Build passes.
 - 2026-10-16 (3D sidekick, third pass): Laksh said the walking version was distracting and he wanted real animations, so locomotion is gone. Added avatarMoves.js (13 code-written moves over the idle clip, by body role so they port to his own model), a pose engine in avatarStage.js, stunts with squash and stretch (jump, backflip about his middle, spin), a pop-up entrance from below the screen edge, section moves, click combos (click wave, double flip, triple spin), and menu items for flip and surprise. Verified with stepped frames at 30 fps (software WebGL is too slow for real-time recordings): the pose sheet shows every move reading correctly, the backflip rotates about his middle and lands with a squash, and the entrance no longer flashes the bind T-pose (idle starts at full weight and is not restarted). Build passes. His own model is being made by a separate session (avatar-model).
 - 2026-10-16 (3D sidekick, second pass): Laksh said the first version looked fake. Replaced the pink mannequin look with toon shading plus an ink outline in saffron and navy; movement is now position + velocity + target driven by scroll (he walks the way the page goes, runs when you fly, turns through facing the camera, leans into a run, brakes); clip speed locked to the measured stride so feet do not skate; bigger (27% of screen height) and in front of the nav pill. Checked with a headless video (software WebGL, so choppier than a real GPU): runs in from the left, reverses with a turn when the scroll direction flips, settles and idles. Calibration printed walk about 105 and run about 225 px/s before the stride tweak. Still on the stand-in robot; his own model is the last step.
@@ -131,12 +135,13 @@ A. Valley redesign (branch `feat/world-portfolio`): (0) Laksh to review the moti
 <!-- handoff:auto:start -->
 ## Auto: repo state
 
-_Refreshed 16 Oct 2026, 11:44 am IST by `scripts/handoff.mjs` (runs on every commit). Don't edit inside this block._
+_Refreshed 16 Oct 2026, 12:05 pm IST by `scripts/handoff.mjs` (runs on every commit). Don't edit inside this block._
 
-Branch: `feat/avatar-3d` · remote: https://github.com/TheRealLaksh/Portfolio-V2.git
+Branch: `feat/journey-painted` · remote: https://github.com/TheRealLaksh/Portfolio-V2.git
 
 ### Last 15 commits
 
+- `35d3a9e` 2026-10-16 11:44 Sidekick: held-pose wobble, section moves once per visit, calmer quips
 - `7b45d7a` 2026-10-16 11:44 Sidekick moves: overshoot, anticipation, follow-through, corrected hand placement
 - `88c4e74` 2026-10-16 11:20 Sidekick: click combos, flip and surprise menu items, room for flips
 - `58dfdb9` 2026-10-16 11:20 Sidekick: pose engine, stunts and pop-up entrance; no more walking across the screen
@@ -151,12 +156,25 @@ Branch: `feat/avatar-3d` · remote: https://github.com/TheRealLaksh/Portfolio-V2
 - `e223e1a` 2026-10-16 09:51 Work popup: year, role and status, previous and next, copy link, #work/<id> deep link, focus trap and alt text
 - `ac5e444` 2026-10-16 09:47 Work: status badges, All / Live / Open source filter, and separate live and code buttons
 - `bf755eb` 2026-10-16 09:46 Work: focusing a hidden project pill opens the box, and pills get a visible focus ring
-- `4695c2a` 2026-10-16 09:45 Work: crate says 'This side up' and the lid gets tape and a project-count label instead of repeating the heading
 
 ### Uncommitted changes at refresh time
 
 ```
-M  src/world/avatarBrain.js
-M  src/world/avatarStage.js
+M  .gitignore
+ M HANDOFF.md
+A  public/art/journey/build.webp
+A  public/art/journey/cabin.webp
+A  public/art/journey/campus.webp
+A  public/art/journey/far.webp
+A  public/art/journey/hotel.webp
+A  public/art/journey/mid.webp
+A  public/art/journey/school.webp
+A  public/art/journey/train.webp
+A  public/art/journey/varanasi.webp
+A  public/art/journey/wheel.webp
+A  scripts/art/journey.py
+ M src/world/Journey.jsx
+ M src/world/train.css
+ M src/world/trainArt.jsx
 ```
 <!-- handoff:auto:end -->
