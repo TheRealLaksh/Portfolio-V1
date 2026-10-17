@@ -3,7 +3,8 @@ import { triggerHaptic } from '../utils/triggerHaptic';
 
 // ✅ Drop your live backend URL here if you don't want to use environment dashboard inputs
 const DEFAULT_BACKEND = 'https://portfolio-chat-bot-kohl.vercel.app/api/chat'; 
-const API_URL = import.meta.env.VITE_CHAT_API_URL || DEFAULT_BACKEND;
+// Collapse doubled slashes: the VITE_CHAT_API_URL env var on Vercel has one, and a double slash gets a 308 redirect that the browser blocks on a cross-origin POST.
+const API_URL = (import.meta.env.VITE_CHAT_API_URL || DEFAULT_BACKEND).replace(/([^:])\/{2,}/g, '$1/');
 
 export const useChat = () => {
   const [chatMessages, setChatMessages] = useState(() => {
