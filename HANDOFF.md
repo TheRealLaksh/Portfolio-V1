@@ -142,6 +142,7 @@ Branch: `feat/journey-painted` · remote: https://github.com/TheRealLaksh/Portfo
 
 ### Last 15 commits
 
+- `206fd94` 2026-10-18 00:33 Music: play the whole song from a preloaded local file, starts instantly
 - `bf91ad6` 2026-10-18 00:33 Journey: remove stop 5 (First portfolio), now eight stops
 - `2831160` 2026-10-18 00:29 Remove the small sidekick avatar completely (component, 3D engine, moves, lines, stand-in model)
 - `1cd8f93` 2026-10-18 00:07 Hero: calm the water sparkles (14 every 3.4s to 4 every 9s)
@@ -156,18 +157,14 @@ Branch: `feat/journey-painted` · remote: https://github.com/TheRealLaksh/Portfo
 - `d979a54` 2026-10-16 10:19 Sidekick: scroll-driven roaming with easing, turning, lean and run or walk by speed
 - `c2c5a8c` 2026-10-16 10:19 Sidekick: toon shading and ink outline, stride measurement for foot-locked speed
 - `939223d` 2026-10-16 10:10 Sidekick: 3D version with guide menu, phone mini and a 2D fallback
-- `0361fa3` 2026-10-16 10:10 Sidekick: three.js stage and behaviour brain (walk, scroll jog, sleep, look, high five)
 
 ### Uncommitted changes at refresh time
 
 ```
-A  public/audio/sunroof.mp3
- M public/me.webp
+M public/me.webp
  M src/world/Hello.jsx
  M src/world/Life.jsx
- M src/world/Work.jsx
-M  src/world/World.jsx
-M  src/world/audio.js
+M  src/world/Work.jsx
  M src/world/data.js
 ?? public/me-full.webp
 ```

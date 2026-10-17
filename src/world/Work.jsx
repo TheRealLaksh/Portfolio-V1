@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { createPortal } from 'react-dom';
 import { useLenis } from '@studio-freight/react-lenis';
 import { WORK, WORK_FILTERS } from './data';
 import { clamp, lerp, range, ss, backOut, useTrack, useScrub, scrubMode } from './hooks';
@@ -316,6 +317,13 @@ export default function Work() {
     setOpen(list[(i + dir + list.length) % list.length]);
   }, [open, list]);
 
+  // the page behind the popup stays still while it is open
+  useEffect(() => {
+    if (!open || !lenis) return undefined;
+    lenis.stop();
+    return () => lenis.start();
+  }, [!!open, lenis]); // eslint-disable-line react-hooks/exhaustive-deps
+
   // the address bar follows the open project, so the link can be shared
   useEffect(() => {
     if (!open) return;
@@ -345,7 +353,7 @@ export default function Work() {
     <section className="work" id="work" aria-label="Selected work">
       {!scrub && <Floaters set="work" />}
       {scrub ? <CardBox onOpen={setOpen} filter={filter} setFilter={setFilter} keep={keep} /> : <Deck onOpen={setOpen} filter={filter} setFilter={setFilter} keep={keep} />}
-      {open && <Case w={open} list={list} onNav={onNav} onClose={close} />}
+      {open && portalTo(<Case w={open} list={list} onNav={onNav} onClose={close} />)}
     </section>
   );
 }
