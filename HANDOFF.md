@@ -144,6 +144,7 @@ Branch: `feat/journey-painted` · remote: https://github.com/TheRealLaksh/Portfo
 
 ### Last 15 commits
 
+- `e76e4e2` 2026-10-18 00:46 Board: drop tabla (standing rule), tighter face crop for the round photo
 - `9a9a613` 2026-10-18 00:44 Work popup: lock native page scroll while open (wheel no longer scrolls the page behind it)
 - `b92121e` 2026-10-18 00:40 Photo: tighter face crop for the round avatars, cropped board polaroid
 - `043356f` 2026-10-18 00:39 Work: keep the open box lid from covering the heading (heading above, box lower and smaller)
@@ -158,14 +159,10 @@ Branch: `feat/journey-painted` · remote: https://github.com/TheRealLaksh/Portfo
 - `d545dc7` 2026-10-16 12:05 Journey art: ten painted pieces (stations, train, wheel, hill strips) and the script that keys them
 - `35d3a9e` 2026-10-16 11:44 Sidekick: held-pose wobble, section moves once per visit, calmer quips
 - `7b45d7a` 2026-10-16 11:44 Sidekick moves: overshoot, anticipation, follow-through, corrected hand placement
-- `88c4e74` 2026-10-16 11:20 Sidekick: click combos, flip and surprise menu items, room for flips
 
 ### Uncommitted changes at refresh time
 
 ```
-M HANDOFF.md
-M  public/me.webp
-M  src/world/Life.jsx
-M  src/world/data.js
+M  HANDOFF.md
 ```
 <!-- handoff:auto:end -->
