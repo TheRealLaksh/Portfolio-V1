@@ -1,6 +1,6 @@
 // "Music on the hill": a small generative piece made live with the Web Audio API.
-// The page's music. The main track is Bruno Mars - That's What I Like (see "The song" at the bottom).
-// Fallback: a tanpura-style drone and sparse pentatonic plucks (Bhoopali: C D E G A), no percussion
+// The page's music. The main track is Nicky Youre & dazy - Sunroof, served from /audio/sunroof.mp3 (see "The song"
+// at the bottom). Fallback: a tanpura-style drone and sparse pentatonic plucks (Bhoopali: C D E G A), no percussion
 // (the tabla beats were removed on 16 Oct 2026), made live with Web Audio from nothing sampled.
 
 let ctx = null;
@@ -134,83 +134,47 @@ function stopAmbient() {
 }
 
 // ---- The song ----------------------------------------------------------------------------------
-// "Play some music" plays Bruno Mars - That's What I Like through Spotify's official embedded player
-// (nothing is copied or hosted here). Visitors signed in to Spotify in their browser hear the whole
-// track; everyone else hears Spotify's 30-second preview. Afterwards, or if Spotify cannot load,
-// the generative piece above keeps playing so the button always does something.
-// Tried first: YouTube embeds. The official video and every re-upload tested on 16 Oct 2026 return
-// error 150 (embedding disabled by the owner), so that route is closed.
-export const SONG = { uri: 'spotify:track:0KKkJNfGyhkQ5aFogxQAPU', title: 'That’s What I Like', artist: 'Bruno Mars' };
+// "Play some music" plays the whole of Nicky Youre & dazy - Sunroof from /audio/sunroof.mp3 (Laksh supplied the
+// file and chose to host it). The <audio> element is created and preloaded as soon as the page mounts, so a click
+// starts the track at once. It loops when it ends. If the file cannot load or play, the generative piece above
+// keeps going so the button always does something. (Spotify's embed was replaced on 18 Oct 2026: it gave anyone
+// not signed in to Spotify only a 30 s preview and took seconds to start; YouTube embeds are blocked, error 150.)
+export const SONG = { src: '/audio/sunroof.mp3', title: 'Sunroof', artist: 'Nicky Youre & dazy' };
 
-let ctrl = null;
-let apiPromise = null;
+let el = null;
 let wantSong = false;
 let songOn = false;
 
-function loadSpotifyApi() {
-  if (window.__spotifyIFrameAPI) return Promise.resolve(window.__spotifyIFrameAPI);
-  if (apiPromise) return apiPromise;
-  apiPromise = new Promise((resolve, reject) => {
-    window.onSpotifyIframeApiReady = (api) => { window.__spotifyIFrameAPI = api; resolve(api); };
-    const s = document.createElement('script');
-    s.src = 'https://open.spotify.com/embed/iframe-api/v1';
-    s.async = true;
-    s.onerror = () => { apiPromise = null; reject(new Error('spotify api')); };
-    document.head.appendChild(s);
-    setTimeout(() => { if (!window.__spotifyIFrameAPI) { apiPromise = null; reject(new Error('spotify timeout')); } }, 8000);
-  });
-  return apiPromise;
-}
-
-function songEnded() {
+function fallback() {
   songOn = false;
   if (wantSong) startAmbient();
 }
 
-function playSong() {
-  loadSpotifyApi().then((api) => {
-    if (!wantSong) return;
-    if (ctrl) { ctrl.resume(); return; }
-    let host = document.getElementById('w-sp-host');
-    if (!host) {
-      host = document.createElement('div');
-      host.id = 'w-sp-host';
-      host.setAttribute('aria-hidden', 'true');
-      host.style.cssText = 'position:fixed;left:0;bottom:0;width:300px;height:80px;opacity:.01;pointer-events:none;z-index:-1;overflow:hidden';
-      host.appendChild(document.createElement('div'));
-      document.body.appendChild(host);
-    }
-    api.createController(host.firstChild, { uri: SONG.uri, width: 300, height: 80 }, (c) => {
-      ctrl = c;
-      c.addListener('ready', () => { if (wantSong) c.play(); });
-      c.addListener('playback_update', (e) => {
-        const d = e.data || {};
-        host.dataset.state = d.isPaused ? 'paused' : (d.isBuffering ? 'buffering' : 'playing');
-        host.dataset.pos = String(d.position || 0);
-        host.dataset.dur = String(d.duration || 0);
-        // The track (or its 30 s preview) reached the end.
-        if (d.isPaused && d.duration && d.position >= d.duration - 400 && wantSong && songOn) songEnded();
-      });
-    });
-  }).catch((err) => {
-    console.warn('[music] could not start the song, using the fallback', err);
-    songOn = false;
-    if (wantSong) startAmbient();
-  });
+export function preloadSong() {
+  if (el || typeof Audio === 'undefined') return;
+  el = new Audio(SONG.src);
+  el.preload = 'auto';
+  el.loop = true;
+  el.volume = 0.85;
+  el.addEventListener('error', fallback);
+  el.load();
 }
 
 export function startMusic() {
   if (wantSong) return true;
   wantSong = true;
   songOn = true;
-  playSong();
+  preloadSong();
+  if (!el) { fallback(); return true; }
+  const p = el.play();
+  if (p && p.catch) p.catch((err) => { console.warn('[music] could not play the song, using the fallback', err); fallback(); });
   return true;
 }
 
 export function stopMusic() {
   wantSong = false;
   songOn = false;
-  try { ctrl && ctrl.pause(); } catch { /* ignore */ }
+  try { el && el.pause(); } catch { /* ignore */ }
   stopAmbient();
 }
 

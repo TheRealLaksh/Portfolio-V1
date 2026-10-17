@@ -142,6 +142,7 @@ Branch: `feat/journey-painted` · remote: https://github.com/TheRealLaksh/Portfo
 
 ### Last 15 commits
 
+- `bf91ad6` 2026-10-18 00:33 Journey: remove stop 5 (First portfolio), now eight stops
 - `2831160` 2026-10-18 00:29 Remove the small sidekick avatar completely (component, 3D engine, moves, lines, stand-in model)
 - `1cd8f93` 2026-10-18 00:07 Hero: calm the water sparkles (14 every 3.4s to 4 every 9s)
 - `6c836ad` 2026-10-16 12:05 Journey: paint the stations, hills, train and clouds
@@ -156,23 +157,18 @@ Branch: `feat/journey-painted` · remote: https://github.com/TheRealLaksh/Portfo
 - `c2c5a8c` 2026-10-16 10:19 Sidekick: toon shading and ink outline, stride measurement for foot-locked speed
 - `939223d` 2026-10-16 10:10 Sidekick: 3D version with guide menu, phone mini and a 2D fallback
 - `0361fa3` 2026-10-16 10:10 Sidekick: three.js stage and behaviour brain (walk, scroll jog, sleep, look, high five)
-- `388e600` 2026-10-16 10:10 Sidekick: add a stand-in 3D model, the line bank and a section hook
 
 ### Uncommitted changes at refresh time
 
 ```
-M HANDOFF.md
-D  public/art/journey/cabin.webp
+A  public/audio/sunroof.mp3
  M public/me.webp
  M src/world/Hello.jsx
-M  src/world/Journey.jsx
  M src/world/Life.jsx
  M src/world/Work.jsx
- M src/world/World.jsx
- M src/world/audio.js
+M  src/world/World.jsx
+M  src/world/audio.js
  M src/world/data.js
-M  src/world/trainArt.jsx
-?? public/audio/
 ?? public/me-full.webp
 ```
 <!-- handoff:auto:end -->

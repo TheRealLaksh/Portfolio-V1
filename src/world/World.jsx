@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useReveal, useTheme, useScrubMode, ScrubCtx } from './hooks';
 import { useMotionKit } from './motion';
-import { startMusic, stopMusic } from './audio';
+import { startMusic, stopMusic, preloadSong } from './audio';
 import { countVisit } from './api';
 import Bar from './Bar';
 import Hero from './Hero';
@@ -35,6 +35,7 @@ export default function World() {
     // The classic site hides horizontal overflow on html/body, which turns them into scroll
     // containers and breaks position: sticky. This page clips instead.
     document.documentElement.classList.add('world-on');
+    preloadSong();
     countVisit().then(setVisitors);
     return () => { stopMusic(); document.documentElement.classList.remove('world-on'); };
   }, []);
