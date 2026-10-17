@@ -30,8 +30,8 @@
 .w-root .lg2 { animation-delay: -.36s; }
 @keyframes legSwing { from { transform: rotate(-28deg); } to { transform: rotate(28deg); } }
 
-.w-root .glint { fill: #fff; opacity: 0; scale: .2; transform-box: fill-box; transform-origin: center; animation: glintA 3.4s ease-in-out infinite; }
-@keyframes glintA { 0%, 100% { opacity: 0; scale: .2; } 50% { opacity: .95; scale: 1; } }
+.w-root .glint { fill: #fff; opacity: 0; scale: .2; transform-box: fill-box; transform-origin: center; animation: glintA 9s ease-in-out infinite; }
+@keyframes glintA { 0%, 30%, 100% { opacity: 0; scale: .2; } 15% { opacity: .7; scale: .8; } }
 .w-root .fish { opacity: 0; transform-box: fill-box; transform-origin: center; animation: fishJump 7.5s ease-in-out infinite; }
 @keyframes fishJump {
   0%, 26% { opacity: 0; transform: translate(-8px, 10px) rotate(-60deg); }

@@ -130,7 +130,7 @@ function Walker({ x, y, dx, dy, c, dur, delay, s = 1 }) {
   );
 }
 
-const GLINTS = [[330, 640], [470, 600], [640, 590], [800, 640], [980, 720], [1130, 700], [1250, 760], [1400, 740], [700, 700], [560, 690], [900, 800], [1180, 830], [760, 520], [840, 560]];
+const GLINTS = [[470, 600], [800, 640], [1130, 700], [900, 800]];
 const FISH = [[620, 640, 0], [1280, 790, 3.2]];
 const DIYAS = [[500, 690], [760, 720], [1010, 780], [1320, 770], [880, 840]];
 
@@ -138,7 +138,7 @@ export function PaintedLife() {
   return (
     <svg className="art" viewBox="0 0 1600 900" preserveAspectRatio="none" aria-hidden="true" focusable="false">
       {GLINTS.map(([x, y], i) => (
-        <path key={i} className="glint" d="M0 -9 L2 -2 L9 0 L2 2 L0 9 L-2 2 L-9 0 L-2 -2Z" transform={`translate(${x} ${y})`} style={{ animationDelay: `${(i * 0.73) % 3.4}s` }} />
+        <path key={i} className="glint" d="M0 -9 L2 -2 L9 0 L2 2 L0 9 L-2 2 L-9 0 L-2 -2Z" transform={`translate(${x} ${y})`} style={{ animationDelay: `${i * 2.3}s` }} />
       ))}
       {FISH.map(([x, y, dl], i) => (
         <g key={i} transform={`translate(${x} ${y})`}>

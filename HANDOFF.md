@@ -67,6 +67,7 @@ A. Valley redesign (branch `feat/world-portfolio`): (0) Laksh to review the moti
 - Laksh chose small commits, pushed after each (every push to `main` goes live on Vercel). Session of 8 Oct 2026.
 
 ## Session log (newest first)
+- 2026-10-18 (hero stars): Laksh said a lot of stars were moving in the hero. The culprits were 14 white four-point sparkles (`GLINTS` in `Painted.jsx`, `glintA` in `motion.css`) all popping every 3.4 s over the water and steps. Now 4 sparkles, one every 9 s, dimmer (peak opacity .7, scale .8). Checked in the dev server: 4 `.glint` elements, 9 s duration. The shooting stars (two, every 11 s and 17 s, night only) and the static painted sky stars are unchanged.
 - 2026-10-16 (painted journey): generated 10 images with Figma credits (gemini-3.1-flash-image) for the train scenery: 6 new stations, the train, a wheel, far and mid hill strips; keyed to public/art/journey with scripts/art/journey.py. trainArt.jsx now uses them (stations grey until the train arrives, painted hills, painted train with rotating painted wheels and the avatar window, painted clouds); Journey.jsx takes its window anchor from WIN_Y. Checked in headless Chromium at three scroll points (day, dusk, night): no errors, ticket card and passport strip intact. Figma credits ran out before the ground, platform, trees and foreground grass, so those four are pending (reset 17 Oct 00:00 UTC); ground is a gradient and the platform a softened vector meanwhile.
 - 2026-10-16 (3D sidekick, tuning): Laksh named shrug, facepalm, clap, flex, cheer, stretch and yawn as too frequent, stiff and wrong-looking. Moves now ease in with overshoot, start with a small anticipation, the head trails the arms, and a constant wobble keeps held poses alive; facepalm, think and yawn hands now cross to the face (the right arm needed +z); section moves play once per visit, 1.4 s after settling and 18 s apart; quips every 45 s. Checked with stepped frames at 30 fps: facepalm covers the face, clap brings the hands together, flex is a double bicep, cheer jumps with arms up, stretch goes overhead, yawn covers the mouth with the head back. Build passes.
 - 2026-10-16 (3D sidekick, third pass): Laksh said the walking version was distracting and he wanted real animations, so locomotion is gone. Added avatarMoves.js (13 code-written moves over the idle clip, by body role so they port to his own model), a pose engine in avatarStage.js, stunts with squash and stretch (jump, backflip about his middle, spin), a pop-up entrance from below the screen edge, section moves, click combos (click wave, double flip, triple spin), and menu items for flip and surprise. Verified with stepped frames at 30 fps (software WebGL is too slow for real-time recordings): the pose sheet shows every move reading correctly, the backflip rotates about his middle and lands with a squash, and the entrance no longer flashes the bind T-pose (idle starts at full weight and is not restarted). Build passes. His own model is being made by a separate session (avatar-model).
@@ -135,12 +136,13 @@ A. Valley redesign (branch `feat/world-portfolio`): (0) Laksh to review the moti
 <!-- handoff:auto:start -->
 ## Auto: repo state
 
-_Refreshed 16 Oct 2026, 12:05 pm IST by `scripts/handoff.mjs` (runs on every commit). Don't edit inside this block._
+_Refreshed 18 Oct 2026, 12:07 am IST by `scripts/handoff.mjs` (runs on every commit). Don't edit inside this block._
 
 Branch: `feat/journey-painted` · remote: https://github.com/TheRealLaksh/Portfolio-V2.git
 
 ### Last 15 commits
 
+- `6c836ad` 2026-10-16 12:05 Journey: paint the stations, hills, train and clouds
 - `d545dc7` 2026-10-16 12:05 Journey art: ten painted pieces (stations, train, wheel, hill strips) and the script that keys them
 - `35d3a9e` 2026-10-16 11:44 Sidekick: held-pose wobble, section moves once per visit, calmer quips
 - `7b45d7a` 2026-10-16 11:44 Sidekick moves: overshoot, anticipation, follow-through, corrected hand placement
@@ -155,13 +157,12 @@ Branch: `feat/journey-painted` · remote: https://github.com/TheRealLaksh/Portfo
 - `388e600` 2026-10-16 10:10 Sidekick: add a stand-in 3D model, the line bank and a section hook
 - `b672ab2` 2026-10-16 09:53 Work: real screenshots for Vaultara and Mercatora; handoff status for the work section pass
 - `e223e1a` 2026-10-16 09:51 Work popup: year, role and status, previous and next, copy link, #work/<id> deep link, focus trap and alt text
-- `ac5e444` 2026-10-16 09:47 Work: status badges, All / Live / Open source filter, and separate live and code buttons
 
 ### Uncommitted changes at refresh time
 
 ```
-M  src/world/Journey.jsx
-M  src/world/train.css
-M  src/world/trainArt.jsx
+M  HANDOFF.md
+M  src/world/Painted.jsx
+M  src/world/motion.css
 ```
 <!-- handoff:auto:end -->
