@@ -35,13 +35,13 @@
 .w-root.w-scrub .work { padding: 0; background: var(--paper); }
 .w-root .box-track { position: relative; height: 250vh; }
 .w-root .box-stage { position: sticky; top: 0; height: 100vh; height: 100svh; display: grid; grid-template-rows: auto 1fr auto; padding: 78px 0 92px; box-sizing: border-box; overflow: hidden; }
-.w-root .box-head { text-align: center; justify-self: center; padding-inline: 20px; }
+.w-root .box-head { position: relative; z-index: 6; text-align: center; justify-self: center; padding-inline: 20px; }
 .w-root .box-head h2 { font-size: clamp(28px, 3.4vw, 46px); margin-inline: auto; }
 .w-root .box-head > p:not(.kicker) { margin: 8px auto 0; font-size: 16px; }
 .w-root .box-head .kicker { margin-bottom: 8px; }
 .w-root .box-zone { position: relative; perspective: 2600px; min-height: 0; }
 .w-root .box-fit, .w-root .box-tilt, .w-root .box3 { transform-style: preserve-3d; }
-.w-root .box-fit { position: absolute; left: 50%; top: 64%; width: 700px; height: 250px; will-change: transform; transform: translate3d(-50%, -50%, 0) scale(.5); opacity: 0; }
+.w-root .box-fit { position: absolute; left: 50%; top: 70%; width: 700px; height: 250px; will-change: transform; transform: translate3d(-50%, -50%, 0) scale(.5); opacity: 0; }
 .w-root .box-tilt { position: absolute; inset: 0; transition: transform .5s var(--ease); }
 .w-root .box3 { position: absolute; left: 0; top: 0; will-change: transform; }
 .w-root .box3 > * { position: absolute; left: 0; top: 0; transform-origin: 0 0; }

@@ -136,7 +136,7 @@ function CardBox({ onOpen, filter, setFilter, keep }) {
     const f = fit.current;
     if (!f || !box.current) return;
     const vw = window.innerWidth;
-    const room = Math.min((vw - 120) / 790, (vh - Math.max(250, 410 - Math.max(0, 720 - vh) * 0.75)) / 500, 1.05);
+    const room = Math.min((vw - 120) / 790, (vh - Math.max(250, 410 - Math.max(0, 720 - vh) * 0.75)) / 500, 1.05) * 0.93;
     f.style.transform = `translate3d(-50%,-50%,0) scale(${(room * (0.5 + 0.5 * spin)).toFixed(4)})`;
     f.style.opacity = String(clamp(spin * 2.2));
     box.current.style.transform = `rotateX(${lerp(78, 56, spin).toFixed(2)}deg) rotateZ(${lerp(-78, 26, spin).toFixed(2)}deg)`;

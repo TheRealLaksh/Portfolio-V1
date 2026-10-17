@@ -136,12 +136,13 @@ A. Valley redesign (branch `feat/world-portfolio`): (0) Laksh to review the moti
 <!-- handoff:auto:start -->
 ## Auto: repo state
 
-_Refreshed 18 Oct 2026, 12:35 am IST by `scripts/handoff.mjs` (runs on every commit). Don't edit inside this block._
+_Refreshed 18 Oct 2026, 12:39 am IST by `scripts/handoff.mjs` (runs on every commit). Don't edit inside this block._
 
 Branch: `feat/journey-painted` · remote: https://github.com/TheRealLaksh/Portfolio-V2.git
 
 ### Last 15 commits
 
+- `74364d7` 2026-10-18 00:35 Work: define portalTo (popup crashed the page) and force the deep-link scroll while scroll is locked
 - `cfedb0c` 2026-10-18 00:33 Board, photo, contact: new real board items, new profile photo, Instagram caption, no client names
 - `2ec99ae` 2026-10-18 00:33 Work: render the case popup outside the clipped section and lock scroll while open
 - `206fd94` 2026-10-18 00:33 Music: play the whole song from a preloaded local file, starts instantly
@@ -156,11 +157,14 @@ Branch: `feat/journey-painted` · remote: https://github.com/TheRealLaksh/Portfo
 - `58dfdb9` 2026-10-16 11:20 Sidekick: pose engine, stunts and pop-up entrance; no more walking across the screen
 - `b8a0e5d` 2026-10-16 11:20 Sidekick: code-written move library (wave, point, think, shrug, clap, cheer, stretch, yawn, flex, flip, spin)
 - `82c3953` 2026-10-16 10:19 Sidekick: bigger, in front of the nav pill, calibrates on load
-- `d979a54` 2026-10-16 10:19 Sidekick: scroll-driven roaming with easing, turning, lean and run or walk by speed
 
 ### Uncommitted changes at refresh time
 
 ```
+M public/me-full.webp
+ M public/me.webp
 M  src/world/Work.jsx
+ M src/world/world2.css
+M  src/world/world3.css
 ```
 <!-- handoff:auto:end -->
