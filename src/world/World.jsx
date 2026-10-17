@@ -15,7 +15,6 @@ import Process from './Process';
 import Life from './Life';
 import Wall from './Wall';
 import Hello from './Hello';
-import Sidekick from './Sidekick';
 import './world.css';
 import './world2.css';
 import './world3.css';
@@ -65,7 +64,6 @@ export default function World() {
         <Wall />
         <Hello />
       </main>
-        <Sidekick />
       </ScrubCtx.Provider>
     </div>
   );

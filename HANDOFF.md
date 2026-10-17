@@ -136,12 +136,13 @@ A. Valley redesign (branch `feat/world-portfolio`): (0) Laksh to review the moti
 <!-- handoff:auto:start -->
 ## Auto: repo state
 
-_Refreshed 18 Oct 2026, 12:07 am IST by `scripts/handoff.mjs` (runs on every commit). Don't edit inside this block._
+_Refreshed 18 Oct 2026, 12:29 am IST by `scripts/handoff.mjs` (runs on every commit). Don't edit inside this block._
 
 Branch: `feat/journey-painted` · remote: https://github.com/TheRealLaksh/Portfolio-V2.git
 
 ### Last 15 commits
 
+- `1cd8f93` 2026-10-18 00:07 Hero: calm the water sparkles (14 every 3.4s to 4 every 9s)
 - `6c836ad` 2026-10-16 12:05 Journey: paint the stations, hills, train and clouds
 - `d545dc7` 2026-10-16 12:05 Journey art: ten painted pieces (stations, train, wheel, hill strips) and the script that keys them
 - `35d3a9e` 2026-10-16 11:44 Sidekick: held-pose wobble, section moves once per visit, calmer quips
@@ -156,13 +157,20 @@ Branch: `feat/journey-painted` · remote: https://github.com/TheRealLaksh/Portfo
 - `0361fa3` 2026-10-16 10:10 Sidekick: three.js stage and behaviour brain (walk, scroll jog, sleep, look, high five)
 - `388e600` 2026-10-16 10:10 Sidekick: add a stand-in 3D model, the line bank and a section hook
 - `b672ab2` 2026-10-16 09:53 Work: real screenshots for Vaultara and Mercatora; handoff status for the work section pass
-- `e223e1a` 2026-10-16 09:51 Work popup: year, role and status, previous and next, copy link, #work/<id> deep link, focus trap and alt text
 
 ### Uncommitted changes at refresh time
 
 ```
-M  HANDOFF.md
-M  src/world/Painted.jsx
-M  src/world/motion.css
+D  public/avatar/Xbot.glb
+D  src/world/Sidekick.jsx
+D  src/world/Sidekick3D.jsx
+M  src/world/World.jsx
+M  src/world/avatar3d.css
+D  src/world/avatarBrain.js
+D  src/world/avatarLines.js
+D  src/world/avatarMoves.js
+D  src/world/avatarStage.js
+D  src/world/sidekick3d.css
+D  src/world/useSection.js
 ```
 <!-- handoff:auto:end -->
