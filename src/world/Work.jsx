@@ -177,7 +177,7 @@ function CardBox({ onOpen, filter, setFilter, keep }) {
     const t = track.current;
     if (!t || t.classList.contains('ready')) return;
     const y = t.getBoundingClientRect().top + window.scrollY + (t.offsetHeight - window.innerHeight) * 0.9;
-    if (lenis) lenis.scrollTo(y, { immediate: true }); else window.scrollTo(0, y);
+    if (lenis) lenis.scrollTo(y, { immediate: true, force: true }); else window.scrollTo(0, y);
   };
 
   return (
@@ -295,6 +295,14 @@ function Deck({ onOpen, filter, setFilter, keep }) {
   );
 }
 
+// The popup is fixed to the screen, but the work section is clipped (torn edge) and pinned, which clips or moves a
+// fixed child with it, so the next section painted over the popup. Rendering it under .w-root keeps the theme CSS
+// and frees it from the section.
+const portalTo = (node) => {
+  const host = document.querySelector('.w-root');
+  return host ? createPortal(node, host) : node;
+};
+
 const HASH = /^#work\/([\w-]+)$/;
 
 export default function Work() {
@@ -341,7 +349,7 @@ export default function Work() {
         const sec = document.getElementById('work');
         if (!sec) return;
         const y = sec.getBoundingClientRect().top + window.scrollY + (scrubMode() ? Math.max(0, sec.offsetHeight - window.innerHeight) * 0.95 : 0);
-        if (lenis) lenis.scrollTo(y, { immediate: true }); else window.scrollTo(0, y);
+        if (lenis) lenis.scrollTo(y, { immediate: true, force: true }); else window.scrollTo(0, y);
       }, 500);
     };
     read();
