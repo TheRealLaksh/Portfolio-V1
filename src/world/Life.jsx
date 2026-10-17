@@ -119,7 +119,7 @@ export default function Life({ music, onMusic }) {
           </Polaroid>
 
           <div className="item note taped p17" style={{ ['--sc']: '#D9CCFF', ['--r']: '-4deg' }}>
-            108 Surya Namaskars, done.<small>Yoga, and a tabla I keep notes for.</small>
+            108 Surya Namaskars, done.<small>Yoga, for the calm hands.</small>
           </div>
 
           <div className="item ticket pinned p7" style={{ ['--r']: '3deg', ['--pc']: '#E8505B' }}>

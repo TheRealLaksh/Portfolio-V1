@@ -185,7 +185,7 @@ export const PROCESS = {
 };
 
 export const OFF_CLOCK = {
-  list1: ['Reading about business', 'Badminton, district level, still playing', 'Tabla, and shooting in the past'],
+  list1: ['Reading about business', 'Badminton, district level, still playing', 'Shooting, in the past'],
   list2: ['Building with Claude Code every day', 'Editing videos in DaVinci Resolve and CapCut', 'Asking "how does that work?" about everything'],
 };
 
