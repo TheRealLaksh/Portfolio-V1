@@ -53,7 +53,6 @@ const PAINT = [
   [{ src: `${ART}varanasi.webp`, w: 640, h: 381 }], // Varanasi
   [{ src: '/art/range.webp', w: 640, h: 370 }], // the range
   [{ src: `${ART}hotel.webp`, w: 490, h: 422 }], // Hotel Kavana
-  [{ src: `${ART}cabin.webp`, w: 480, h: 369 }], // first portfolio
   [{ src: `${ART}campus.webp`, w: 620, h: 410 }], // internship season
   [{ src: `${ART}build.webp`, w: 320, h: 441 }], // building in public
   [{ src: '/art/mu.webp', w: 444, h: 420 }], // Masters' Union
@@ -94,7 +93,7 @@ export const MidLayer = memo(function MidLayer({ p }) {
   return strip(`${ART}mid.webp`, W, 300, 300);
 });
 
-// Nine stations, the ground and the rails. `i` is the current stop: stations up to it are built.
+// The stations, the ground and the rails. `i` is the current stop: stations up to it are built.
 export const NearLayer = memo(function NearLayer({ i, years }) {
   const sleepers = useMemo(() => {
     let d = '';

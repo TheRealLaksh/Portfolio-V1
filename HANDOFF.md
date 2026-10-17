@@ -46,7 +46,7 @@ A. Valley redesign (branch `feat/world-portfolio`): (0) Laksh to review the moti
 
 ## Open questions / waiting on
 - 3D sidekick: Laksh's own model. Plan: make a rigged full-body GLB from his photo (MetaPerson Creator was the candidate: claims one photo to rigged GLB, first avatar free; claims unverified) and drop it in `public/avatar/`, then point `createStage` at it. He asked Claude to do this with Claude in Chrome, but the extension was not connected on 16 Oct 2026; uploading his photo to a third-party site is his call, and any sign-up, captcha or payment step is his to do. The model needs clips named (case-insensitive) `idle`, `walk`, `run`, `agree`, `sad_pose`; missing ones fall back to `idle`. Mixamo clips on a different rig often need retargeting (bone names, rest pose).
-- Work section: Laksh to confirm ShiftsDeal may be shown with its screenshot (long-open), the 'Solo build' roles in `WORK` (marked confirm in `data.js`), and whether to add Futran, Third Exit, SAGE, Study companion or Monopoly (client work needs permission). The Mercatora screenshot was taken from a local run with dummy Firebase keys: its hero photo (Unsplash) did not load and the directory list is empty, so retake it with real data if he wants a richer card. Vaultara is the app's real landing page (the dashboard needs a login).
+- Work section: Laksh to confirm ShiftsDeal may be shown with its screenshot (long-open), the 'Solo build' roles in `WORK` (marked confirm in `data.js`), and whether to add Third Exit, SAGE, Study companion or Monopoly (client work needs permission). The Mercatora screenshot was taken from a local run with dummy Firebase keys: its hero photo (Unsplash) did not load and the directory list is empty, so retake it with real data if he wants a richer card. Vaultara is the app's real landing page (the dashboard needs a login).
 - Location: the footer (every page, including /hire), `index.html`, the hero and the JSON-LD still say Varanasi while /hire says Delhi NCR: a visible mismatch on the page itself. LinkedIn, Google Business Profile and `/hire` now say Delhi NCR, but `index.html` (title, descriptions, JSON-LD address, noscript), the hero and the footer still say Varanasi. Needs Laksh's decision before changing the site-wide text.
 - Mail forwarding is verified: test mails to work@ and me@ showed "Forwarded" in Cloudflare's activity log on 9 Oct 2026.
 
@@ -136,12 +136,13 @@ A. Valley redesign (branch `feat/world-portfolio`): (0) Laksh to review the moti
 <!-- handoff:auto:start -->
 ## Auto: repo state
 
-_Refreshed 18 Oct 2026, 12:29 am IST by `scripts/handoff.mjs` (runs on every commit). Don't edit inside this block._
+_Refreshed 18 Oct 2026, 12:33 am IST by `scripts/handoff.mjs` (runs on every commit). Don't edit inside this block._
 
 Branch: `feat/journey-painted` · remote: https://github.com/TheRealLaksh/Portfolio-V2.git
 
 ### Last 15 commits
 
+- `2831160` 2026-10-18 00:29 Remove the small sidekick avatar completely (component, 3D engine, moves, lines, stand-in model)
 - `1cd8f93` 2026-10-18 00:07 Hero: calm the water sparkles (14 every 3.4s to 4 every 9s)
 - `6c836ad` 2026-10-16 12:05 Journey: paint the stations, hills, train and clouds
 - `d545dc7` 2026-10-16 12:05 Journey art: ten painted pieces (stations, train, wheel, hill strips) and the script that keys them
@@ -156,21 +157,22 @@ Branch: `feat/journey-painted` · remote: https://github.com/TheRealLaksh/Portfo
 - `939223d` 2026-10-16 10:10 Sidekick: 3D version with guide menu, phone mini and a 2D fallback
 - `0361fa3` 2026-10-16 10:10 Sidekick: three.js stage and behaviour brain (walk, scroll jog, sleep, look, high five)
 - `388e600` 2026-10-16 10:10 Sidekick: add a stand-in 3D model, the line bank and a section hook
-- `b672ab2` 2026-10-16 09:53 Work: real screenshots for Vaultara and Mercatora; handoff status for the work section pass
 
 ### Uncommitted changes at refresh time
 
 ```
-D  public/avatar/Xbot.glb
-D  src/world/Sidekick.jsx
-D  src/world/Sidekick3D.jsx
-M  src/world/World.jsx
-M  src/world/avatar3d.css
-D  src/world/avatarBrain.js
-D  src/world/avatarLines.js
-D  src/world/avatarMoves.js
-D  src/world/avatarStage.js
-D  src/world/sidekick3d.css
-D  src/world/useSection.js
+M HANDOFF.md
+D  public/art/journey/cabin.webp
+ M public/me.webp
+ M src/world/Hello.jsx
+M  src/world/Journey.jsx
+ M src/world/Life.jsx
+ M src/world/Work.jsx
+ M src/world/World.jsx
+ M src/world/audio.js
+ M src/world/data.js
+M  src/world/trainArt.jsx
+?? public/audio/
+?? public/me-full.webp
 ```
 <!-- handoff:auto:end -->

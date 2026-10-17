@@ -76,7 +76,7 @@ function geom(w, h, scrub) {
 // Phones and visitors who ask for less motion get the stacked layout with buttons instead.
 const canScrub = () => typeof window !== 'undefined' && window.matchMedia(SCRUB_QUERY).matches;
 
-const STAMP = ['#E8505B', '#1FA6A0', '#F2A93B', '#8E7CFF', '#7FB866', '#E8505B', '#1FA6A0', '#F2A93B', '#8E7CFF'];
+const STAMP = ['#E8505B', '#1FA6A0', '#F2A93B', '#8E7CFF', '#E8505B', '#1FA6A0', '#F2A93B', '#8E7CFF'];
 const rotOf = (n) => ((n * 37) % 23) - 11;
 const STAMP_PX = 54;
 const SLOT_PX = 26;
@@ -421,7 +421,7 @@ export default function Journey() {
               <div className="jc-in" key="intro">
                 <div className="jc-top"><span className="jc-yr">2019 &rarr; now</span><span className="jc-n">{N} stops</span><span className="jc-ic"><Icon n="map" size={20} /></span></div>
                 <h3>All aboard.</h3>
-                <p>Nine stations: from a residential school in Coimbatore, through Varanasi, a hotel network and four internships, to a Delhi startup.</p>
+                <p>Eight stations: from a residential school in Coimbatore, through Varanasi, a hotel network and four internships, to a Delhi startup.</p>
               </div>
             )}
           </article>
