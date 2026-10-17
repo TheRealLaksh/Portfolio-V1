@@ -327,9 +327,13 @@ export default function Work() {
 
   // the page behind the popup stays still while it is open
   useEffect(() => {
-    if (!open || !lenis) return undefined;
-    lenis.stop();
-    return () => lenis.start();
+    if (!open) return undefined;
+    const html = document.documentElement;
+    // Lenis lets wheel events inside the popup through, so lock native scrolling too ('important' beats the
+    // `html.world-on { overflow-y: visible !important }` rule in world.css)
+    html.style.setProperty('overflow-y', 'hidden', 'important');
+    lenis?.stop();
+    return () => { html.style.removeProperty('overflow-y'); lenis?.start(); };
   }, [!!open, lenis]); // eslint-disable-line react-hooks/exhaustive-deps
 
   // the address bar follows the open project, so the link can be shared

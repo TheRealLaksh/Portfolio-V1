@@ -136,12 +136,13 @@ A. Valley redesign (branch `feat/world-portfolio`): (0) Laksh to review the moti
 <!-- handoff:auto:start -->
 ## Auto: repo state
 
-_Refreshed 18 Oct 2026, 12:40 am IST by `scripts/handoff.mjs` (runs on every commit). Don't edit inside this block._
+_Refreshed 18 Oct 2026, 12:44 am IST by `scripts/handoff.mjs` (runs on every commit). Don't edit inside this block._
 
 Branch: `feat/journey-painted` · remote: https://github.com/TheRealLaksh/Portfolio-V2.git
 
 ### Last 15 commits
 
+- `b92121e` 2026-10-18 00:40 Photo: tighter face crop for the round avatars, cropped board polaroid
 - `043356f` 2026-10-18 00:39 Work: keep the open box lid from covering the heading (heading above, box lower and smaller)
 - `74364d7` 2026-10-18 00:35 Work: define portalTo (popup crashed the page) and force the deep-link scroll while scroll is locked
 - `cfedb0c` 2026-10-18 00:33 Board, photo, contact: new real board items, new profile photo, Instagram caption, no client names
@@ -156,13 +157,10 @@ Branch: `feat/journey-painted` · remote: https://github.com/TheRealLaksh/Portfo
 - `7b45d7a` 2026-10-16 11:44 Sidekick moves: overshoot, anticipation, follow-through, corrected hand placement
 - `88c4e74` 2026-10-16 11:20 Sidekick: click combos, flip and surprise menu items, room for flips
 - `58dfdb9` 2026-10-16 11:20 Sidekick: pose engine, stunts and pop-up entrance; no more walking across the screen
-- `b8a0e5d` 2026-10-16 11:20 Sidekick: code-written move library (wave, point, think, shrug, clap, cheer, stretch, yawn, flex, flip, spin)
 
 ### Uncommitted changes at refresh time
 
 ```
-M  public/me-full.webp
-M  public/me.webp
-M  src/world/world2.css
+M  src/world/Work.jsx
 ```
 <!-- handoff:auto:end -->
