@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { triggerHaptic } from '../utils/triggerHaptic';
 
 // ✅ Drop your live backend URL here if you don't want to use environment dashboard inputs
-const DEFAULT_BACKEND = 'https://portfolio-chat-bot-kohl.vercel.app//api/chat'; 
+const DEFAULT_BACKEND = 'https://portfolio-chat-bot-kohl.vercel.app/api/chat'; 
 const API_URL = import.meta.env.VITE_CHAT_API_URL || DEFAULT_BACKEND;
 
 export const useChat = () => {
