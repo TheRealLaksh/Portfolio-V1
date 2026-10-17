@@ -30,7 +30,7 @@ export const PLACES = {
     ],
     nums: [['1 Aug', 'joined, 2026'], ['Daily', 'feature shipping'], ['App', 'in progress']],
     links: [['Visit ShiftsDeal', 'https://www.shiftsdeal.com']],
-    journey: 8,
+    journey: 7,
   },
   mu: {
     c: '#8E7CFF', side: 'right', tag: 'Term 1 · 2026', t: "Masters' Union", r: 'UG, Data Science & AI',
@@ -41,7 +41,7 @@ export const PLACES = {
     ],
     nums: [['UG', 'Data Science & AI'], ['2030', 'class of'], ['Term 1', 'right now']],
     links: [],
-    journey: 7,
+    journey: 6,
   },
   bestow: {
     c: '#1FA6A0', side: 'left', tag: 'Intern + freelance · 2026', t: 'Bestow', r: 'Intern and freelance developer',
@@ -54,7 +54,7 @@ export const PLACES = {
     ],
     nums: [['2009', 'agency founded'], ['Site + CMS', 'per project'], ['Zip + live', 'handover']],
     links: [['See services', '/hire']],
-    journey: 8,
+    journey: 7,
   },
   interns: {
     c: '#F2A93B', side: 'left', tag: '2025 – now', t: 'Internships', r: 'Six teams since 2025',
@@ -66,7 +66,7 @@ export const PLACES = {
     ],
     nums: [['2', 'current roles'], ['4', 'apps shipped at Unified Mentor'], ['8 wk', 'IIT Madras programme']],
     links: [['Read the timeline', '#journey']],
-    journey: 5,
+    journey: 4,
   },
   range: {
     c: '#E88A1F', side: 'right', tag: 'Past · 2024 – 25', t: 'The range', r: 'Past: national-level shooter',
@@ -101,11 +101,11 @@ export const PLACES = {
     ],
     nums: [['18', 'years old'], ['50+', 'GitHub repos, public and private']],
     links: [['Resume', 'https://profiley.lakshpradhwani.com/laksh'], ['GitHub', 'https://github.com/TheRealLaksh']],
-    journey: 8,
+    journey: 7,
   },
 };
 
-// The nine stops on the journey map, 2019 to now.
+// The eight stops on the journey map, 2019 to now.
 export const JOURNEY = [
   { y: '2019', t: 'Coimbatore', r: 'Chinmaya International Residential School', icon: 'cap',
     p: 'Five years in a residential school: House Captain and Model UNs from CHEMUN to IIMUN and TISB.' },
@@ -116,8 +116,6 @@ export const JOURNEY = [
     p: 'Early mornings on the range led to the U-17 nationals: state rank 34 and all-India rank 54. I have left shooting for now.' },
   { y: 'Jun 2025', t: 'Hotel Kavana', r: 'IT infrastructure intern', icon: 'bed',
     p: 'Twenty days on site: hotel management systems, POS integrations, networks and a little workflow automation.' },
-  { y: 'Jul 2025', t: 'First portfolio', r: 'GitHub opens, Portfolio V1 ships', icon: 'code',
-    p: 'Opened my GitHub and shipped Portfolio V1.' },
   { y: 'Aug 2025', t: 'Internship season', r: 'MoreYeahs, IIT Madras, Unified Mentor', icon: 'gear',
     p: 'A Django gig platform, an eight-week AI programme with IIT Madras, then four production apps at Unified Mentor.' },
   { y: 'Dec 2025', t: 'Building in public', r: 'Profiley, CaliBridge', icon: 'bulb',
@@ -156,7 +154,7 @@ export const WORK_FILTERS = [
 // Tools, with what Laksh actually does with each. (confirm) the list.
 export const STACK = [
   { n: 'React', c: '#1FA6A0', cat: 'Frontend', p: 'This site, Profiley and most client builds. Hooks, routing, state.' },
-  { n: 'Next.js', c: '#13233A', cat: 'Frontend', p: 'Client sites and the Futran build. Server components and SEO.' },
+  { n: 'Next.js', c: '#13233A', cat: 'Frontend', p: 'Client sites. Server components and SEO.' },
   { n: 'TypeScript', c: '#3B82F6', cat: 'Language', p: 'Strict mode on anything that has to last, like CaliBridge.' },
   { n: 'JavaScript', c: '#F2A93B', cat: 'Language', p: 'Helios and Mercatora are plain vanilla, no frameworks.' },
   { n: 'Python', c: '#4F9E4A', cat: 'Language', p: 'Automation, data work and the scripts that run my own vault.' },
@@ -187,8 +185,8 @@ export const PROCESS = {
 };
 
 export const OFF_CLOCK = {
-  list1: ['Reading about business', 'Model UN and debate', 'Badminton, and shooting in the past'],
-  list2: ['Building with Claude Code every day', 'Asking "how does that work?" about everything'],
+  list1: ['Reading about business', 'Badminton, district level, still playing', 'Tabla, and shooting in the past'],
+  list2: ['Building with Claude Code every day', 'Editing videos in DaVinci Resolve and CapCut', 'Asking "how does that work?" about everything'],
 };
 
 export const NOTE_STICKIES = [

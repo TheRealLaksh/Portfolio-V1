@@ -9,7 +9,7 @@ const bookHref = ME.book || waLink("Hi Laksh, I'd like to book a quick call.");
 
 const KEYS = [
   { k: 'm', ic: 'mail', c: '#EA4335', d: '#A92A20', href: mailto, label: 'Email me', note: 'Roles, projects, or just hi.', dn: true, mail: true },
-  { k: 'i', ic: 'insta', c: '#DD2A7B', d: '#8A1E57', href: ME.instagram, label: 'Instagram', note: 'Where I share the build.', dn: false, bg: 'linear-gradient(40deg,#F9A13A,#EE2A7B 45%,#8134AF 80%,#515BD4)' },
+  { k: 'i', ic: 'insta', c: '#DD2A7B', d: '#8A1E57', href: ME.instagram, label: 'Instagram', note: 'Say hi, my DMs are open.', dn: false, bg: 'linear-gradient(40deg,#F9A13A,#EE2A7B 45%,#8134AF 80%,#515BD4)' },
   { k: 'l', ic: 'linkedin', c: '#0A66C2', d: '#063F7A', href: ME.linkedin, label: 'LinkedIn', note: 'The work, and what I learned doing it.', dn: true },
   { k: 't', ic: 'call', c: '#25A55F', d: '#177A43', href: bookHref, label: ME.book ? 'Book a call' : 'Message on WhatsApp', note: ME.book ? 'Book a 30-minute call.' : 'Fastest way to reach me.', dn: false },
   { k: 'r', ic: 'file', c: '#FFC93C', d: '#C99A0E', fg: '#1B1F3B', href: ME.resume, label: 'Resume', note: 'My resume, one click away.', dn: true },

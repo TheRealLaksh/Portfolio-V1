@@ -142,6 +142,7 @@ Branch: `feat/journey-painted` · remote: https://github.com/TheRealLaksh/Portfo
 
 ### Last 15 commits
 
+- `2ec99ae` 2026-10-18 00:33 Work: render the case popup outside the clipped section and lock scroll while open
 - `206fd94` 2026-10-18 00:33 Music: play the whole song from a preloaded local file, starts instantly
 - `bf91ad6` 2026-10-18 00:33 Journey: remove stop 5 (First portfolio), now eight stops
 - `2831160` 2026-10-18 00:29 Remove the small sidekick avatar completely (component, 3D engine, moves, lines, stand-in model)
@@ -156,16 +157,14 @@ Branch: `feat/journey-painted` · remote: https://github.com/TheRealLaksh/Portfo
 - `82c3953` 2026-10-16 10:19 Sidekick: bigger, in front of the nav pill, calibrates on load
 - `d979a54` 2026-10-16 10:19 Sidekick: scroll-driven roaming with easing, turning, lean and run or walk by speed
 - `c2c5a8c` 2026-10-16 10:19 Sidekick: toon shading and ink outline, stride measurement for foot-locked speed
-- `939223d` 2026-10-16 10:10 Sidekick: 3D version with guide menu, phone mini and a 2D fallback
 
 ### Uncommitted changes at refresh time
 
 ```
-M public/me.webp
- M src/world/Hello.jsx
- M src/world/Life.jsx
-M  src/world/Work.jsx
- M src/world/data.js
-?? public/me-full.webp
+A  public/me-full.webp
+M  public/me.webp
+M  src/world/Hello.jsx
+M  src/world/Life.jsx
+M  src/world/data.js
 ```
 <!-- handoff:auto:end -->

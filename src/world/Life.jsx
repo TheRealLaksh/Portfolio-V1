@@ -83,8 +83,8 @@ export default function Life({ music, onMusic }) {
         </div>
 
         <div className="desk" ref={desk} {...(scrub ? {} : { 'data-rv': '' })}>
-          <Polaroid cls="p1" cap="me, mid-smile" style={{ ['--r']: '-5deg', ['--pc']: '#E8505B' }}>
-            <img src="/me.webp" alt="Laksh smiling in a black kurta, under a leafy tree" loading="lazy" />
+          <Polaroid cls="p1" cap="me, night, rocks, speaker" style={{ ['--r']: '-5deg', ['--pc']: '#E8505B' }}>
+            <img src="/me-full.webp" alt="Laksh sitting on rocks at night by the sea in a palm-print shirt, a glowing speaker on his shoulder, making a shaka sign" loading="lazy" />
           </Polaroid>
 
           <div className="item about pinned p2" style={{ ['--r']: '1.5deg', ['--pc']: '#1FA6A0' }}>
@@ -100,8 +100,8 @@ export default function Life({ music, onMusic }) {
             <svg viewBox="0 0 120 90" aria-hidden="true"><rect width="120" height="90" fill="var(--paper2)" /><circle cx="60" cy="45" r="34" fill="#FFF8E7" stroke="var(--ink)" strokeWidth="2" /><circle cx="60" cy="45" r="25" fill="#E8505B" /><circle cx="60" cy="45" r="16" fill="#FFF8E7" /><circle cx="60" cy="45" r="8" fill="#E8505B" /><circle cx="68" cy="40" r="2.4" fill="var(--ink)" /><circle cx="55" cy="49" r="2.4" fill="var(--ink)" /></svg>
           </Polaroid>
 
-          <Polaroid cls="pol-sm pc2" cap="Model UN" style={{ ['--r']: '-3deg', ['--pc']: '#8E7CFF' }}>
-            <svg viewBox="0 0 120 90" aria-hidden="true"><rect width="120" height="90" fill="#E9E4FF" /><circle cx="60" cy="46" r="28" fill="none" stroke="var(--ink)" strokeWidth="2" /><path d="M32 46h56M60 18c-14 14-14 42 0 56M60 18c14 14 14 42 0 56M38 32h44M38 60h44" stroke="var(--ink)" strokeWidth="2" fill="none" /></svg>
+          <Polaroid cls="pol-sm pc2" cap="space quiz, ISRO invite" style={{ ['--r']: '-3deg', ['--pc']: '#8E7CFF' }}>
+            <svg viewBox="0 0 120 90" aria-hidden="true"><rect width="120" height="90" fill="#E9E4FF" /><path d="M60 14c10 10 14 24 12 40H48c-2-16 2-30 12-40z" fill="#fff" stroke="var(--ink)" strokeWidth="2.4" strokeLinejoin="round" /><circle cx="60" cy="36" r="6" fill="#8E7CFF" stroke="var(--ink)" strokeWidth="2" /><path d="M48 46l-10 14 12-3zM72 46l10 14-12-3z" fill="#E8505B" stroke="var(--ink)" strokeWidth="2" strokeLinejoin="round" /><path d="M54 58c0 8 2 14 6 18 4-4 6-10 6-18" fill="#F2A93B" stroke="var(--ink)" strokeWidth="2" /><path d="M20 22l2 5 5 2-5 2-2 5-2-5-5-2 5-2zM98 62l1.5 4 4 1.5-4 1.5-1.5 4-1.5-4-4-1.5 4-1.5z" fill="var(--ink)" /></svg>
           </Polaroid>
 
           <Polaroid cls="pol-sm pc3" cap="badminton" style={{ ['--r']: '5deg', ['--pc']: '#1FA6A0' }}>
@@ -119,7 +119,7 @@ export default function Life({ music, onMusic }) {
           </Polaroid>
 
           <div className="item note taped p17" style={{ ['--sc']: '#D9CCFF', ['--r']: '-4deg' }}>
-            Hindi and English.<small>I switch to Hindi when I am relaxed.</small>
+            108 Surya Namaskars, done.<small>Yoga, and a tabla I keep notes for.</small>
           </div>
 
           <div className="item ticket pinned p7" style={{ ['--r']: '3deg', ['--pc']: '#E8505B' }}>
