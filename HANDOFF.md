@@ -141,12 +141,13 @@ A. Valley redesign (branch `feat/world-portfolio`): (0) Laksh to review the moti
 <!-- handoff:auto:start -->
 ## Auto: repo state
 
-_Refreshed 18 Oct 2026, 10:34 am IST by `scripts/handoff.mjs` (runs on every commit). Don't edit inside this block._
+_Refreshed 18 Oct 2026, 11:01 am IST by `scripts/handoff.mjs` (runs on every commit). Don't edit inside this block._
 
-Branch: `feat/journey-painted` · remote: https://github.com/TheRealLaksh/Portfolio-V2.git
+Branch: `feat/chat-polish` · remote: https://github.com/TheRealLaksh/Portfolio-V2.git
 
 ### Last 15 commits
 
+- `e5f08e2` 2026-10-18 10:34 HANDOFF: keep the chat bot's knowledge in step with the portfolio
 - `618952c` 2026-10-18 10:20 HANDOFF: Tech Head sticky text
 - `2c187db` 2026-10-18 10:20 Board: Tech Head sticky without the ShiftsDeal line
 - `22366f7` 2026-10-18 10:18 HANDOFF: board second pass
@@ -161,11 +162,22 @@ Branch: `feat/journey-painted` · remote: https://github.com/TheRealLaksh/Portfo
 - `cfedb0c` 2026-10-18 00:33 Board, photo, contact: new real board items, new profile photo, Instagram caption, no client names
 - `2ec99ae` 2026-10-18 00:33 Work: render the case popup outside the clipped section and lock scroll while open
 - `206fd94` 2026-10-18 00:33 Music: play the whole song from a preloaded local file, starts instantly
-- `bf91ad6` 2026-10-18 00:33 Journey: remove stop 5 (First portfolio), now eight stops
 
 ### Uncommitted changes at refresh time
 
 ```
-M  HANDOFF.md
+A  src/chat/Cards.jsx
+A  src/chat/Chat.jsx
+A  src/chat/Message.jsx
+A  src/chat/api.js
+A  src/chat/chat.css
+A  src/chat/useAsk.js
+ D src/components/chat/ChatCards.jsx
+ D src/components/chat/ChatUI.jsx
+ D src/components/chat/ChatWidget.jsx
+ M src/components/layout/Layout.jsx
+ D src/hooks/useChat.js
+M  src/world/Icon.jsx
+ M src/world/World.jsx
 ```
 <!-- handoff:auto:end -->
