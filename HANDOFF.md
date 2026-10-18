@@ -40,11 +40,13 @@ Migrating off the expired lakshp.live. URLs (meta tags, `/resume` redirect, resu
 - Mail forwarding is verified: test mails to work@ and me@ showed "Forwarded" in Cloudflare's activity log on 9 Oct 2026.
 
 ## Decisions not to undo
+- The chat assistant's knowledge lives in `..\Portfolio-Chat_Bototknowledge.js`, not in this repo. After any content change here (projects, roles, prices, links, contact details, or merging the redesign branch to `main`), Claude updates it there too, runs its tests and pushes (see that repo's HANDOFF, Next steps item 1). Public facts only.
 - Domain is lakshpradhwani.com (Hostinger, bought 8 Oct 2026). Do not reintroduce lakshp.live.
 - Public contact address is `work@lakshpradhwani.com`; `me@` is for personal use.
 - Laksh chose small commits, pushed after each (every push to `main` goes live on Vercel). Session of 8 Oct 2026.
 
 ## Session log (newest first)
+- 2026-10-18: added the rule above: the chat bot's knowledge must follow content changes made here.
 - 2026-10-18: chat UI showed empty bubbles and the Contacts chip threw: `useChat` saved `{text, sender:'user'|'bot'}` but `ChatBubble` reads `{content, sender:'You'|'AI Laksh', type}`, and `addMessage` was not returned by the hook. Hook now uses the widget's shape, converts old saved chats on load, returns `addMessage`, and guards localStorage.
 - 2026-10-18: chatbot was down. Backend (`Portfolio-Chat_Bot`) only called retired Gemini models, fixed there. Here, the double slash in `.../vercel.app//api/chat` (308 redirect, blocked by the browser) comes from the Vercel env var `VITE_CHAT_API_URL` (sensitive, prod + preview), which overrides `DEFAULT_BACKEND`. `useChat.js` now collapses doubled slashes, so the app works either way; the env var itself should still be corrected or deleted in the Vercel dashboard (Claude was not allowed to edit it).
 - 2026-10-14: About section terminal card now says Freelance Full-Stack Developer and adds the Masters' Union line; the location radar says Delhi NCR (Delhi coordinates). Footer, Contact, hero, `index.html`, `routeMeta.js` and JSON-LD still say Varanasi: site-wide change still waiting on Laksh.
@@ -86,12 +88,13 @@ Migrating off the expired lakshp.live. URLs (meta tags, `/resume` redirect, resu
 <!-- handoff:auto:start -->
 ## Auto: repo state
 
-_Refreshed 18 Oct 2026, 10:13 am IST by `scripts/handoff.mjs` (runs on every commit). Don't edit inside this block._
+_Refreshed 18 Oct 2026, 10:34 am IST by `scripts/handoff.mjs` (runs on every commit). Don't edit inside this block._
 
 Branch: `main` · remote: https://github.com/TheRealLaksh/Portfolio-V2.git
 
 ### Last 15 commits
 
+- `6c2f557` 2026-10-18 10:13 Fix empty chat bubbles and the Contacts chip
 - `5f73d0a` 2026-10-18 00:57 Collapse doubled slashes in the chat API URL
 - `902a679` 2026-10-18 00:39 Fix double slash in the chat API URL
 - `09358a8` 2026-10-14 12:14 Show current role, study and Delhi NCR in the About cards
@@ -106,12 +109,10 @@ Branch: `main` · remote: https://github.com/TheRealLaksh/Portfolio-V2.git
 - `f4e9e1e` 2026-10-14 10:04 Keep the Hire me icon visible in the mobile nav and name the icon links
 - `a46055f` 2026-10-14 10:02 Make section links work from /hire and on direct #links
 - `ac238ef` 2026-10-14 09:56 Give /hire its own title, canonical and link-preview tags
-- `8c6f3cf` 2026-10-13 19:32 Record that the Hire page is live
 
 ### Uncommitted changes at refresh time
 
 ```
 M  HANDOFF.md
-M  src/hooks/useChat.js
 ```
 <!-- handoff:auto:end -->
