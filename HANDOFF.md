@@ -18,11 +18,14 @@ React, Vite, Tailwind, Framer Motion, React Three Fiber, Lenis, AOS, react-route
 - `index.html`: meta, og/twitter tags
 - `src/components/sections/`: numbered page sections (`01-Hero.jsx`, `06-Resume.jsx`, `08-Contact.jsx` ...)
 - `src/components/layout/`: `Footer.jsx`, `SocialSidebar.jsx`
-- `src/components/chat/`: chat UI (`ChatCards.jsx`)
+- `src/chat/`: the AI Laksh chat (`Chat.jsx` launcher + panel, `useAsk.js` state, `api.js` client, `Message.jsx`, `Cards.jsx`, `chat.css`). Scoped under `.ask`; take care that valley CSS has element rules such as `.w-root section:not(.valley)`, so use `div`s inside the chat
 - `public/`: icons, manifest, `sw.js`, `me.webp`
 - `public/signature/`: images used in Laksh's Gmail signatures, hosted at https://lakshpradhwani.com/signature/<file>. `icon-linkedin.png`, `icon-github.png`, `icon-instagram.png` (36x36, white Simple Icons glyph on black circle) are the live signature icons. `lp-logo.png` is no longer in the signature but is kept because older sent emails reference it. Do not move or delete these or the signature images break.
 
 ## Status
+**Chat rebuilt on branch `feat/chat-polish` (18 Oct 2026, cut from `feat/journey-painted`, local commits only, not pushed).** The valley homepage had no chatbot (the old widget only lived in the classic Layout, so `/` had none). New self-contained `src/chat/` is mounted lazily on the valley site (inside `.w-root`, so it follows day/night) and on `/hire`/`/classic` (Layout). Warm-paper panel, avatar launcher with a `/` shortcut, empty state with starter questions, safe markdown, cards (contact, pricing, project, links) drawn from the bot's data, follow-up chips, copy and thumbs, retry on error, 429 message with a contact card, browser-held history sent with each question, 300-character input with counter, bottom sheet on phones, focus/Esc/aria-live. Removed the old widget (fake "neural uplink" boot screen, dead card types, stale GitHub repo list, Spotify card), `useChat.js` and the sky-blue gradients. Needs the chat backend's `feat/chat-v3` deployed to show cards and chips; against the old backend it still works as plain text. Verified in headless Chromium (desktop, night, phone, /hire; error, retry, 429, feedback, reload, reset, limits) and `vite build`. `npm run lint` is broken in the repo (eslint 8 vs flat config), so lint was not run.
+
+(Earlier status:)
 **Painted journey on branch `feat/journey-painted` (cut from `feat/avatar-3d` on 16 Oct 2026, so it stacks on the Work and avatar work).** Laksh asked for the train scenery to be painted with Figma credits. Done: 10 images from Figma's `gemini-3.1-flash-image` (better than the `flash-lite` used for the hero), keyed by `scripts/art/journey.py` into `public/art/journey/` (school, varanasi, hotel, cabin, campus, build, train, wheel, far and mid hill strips mirrored for a seamless tile). `src/world/trainArt.jsx` now draws the nine stations from pictures (reusing `/art/range`, `/art/mu`, `/art/shifts`, `/art/bestow`; they grey out until the train arrives, CSS `.stbuild`), painted hill layers, the painted train (spinning painted wheels behind its skirt, Laksh's avatar in the window, smoke puffs), painted clouds. The window anchor moved: `WIN_Y` is exported from trainArt and used by `Journey.jsx` for the ticket origin. NOT done, because the Figma credits ran out (they reset at 2026-10-17 00:00 UTC, about 05:30 IST): painted ground and rails strip, painted platform strip, trees, foreground grass. Until then the ground is a gradient and the platform a softened vector. Raw sources are in `scripts/art/src/` (gitignored; the Figma links expire after 7 days).
 
 **Branch `feat/journey-painted` after Laksh's 18 Oct 2026 feedback pass (all pushed, preview only; nothing merged to `main`, he said stop at the branch).** Done: the small sidekick avatar is gone from the code (Sidekick, 3D engine, moves, lines, stand-in model; the hero's own standing avatar and the train-window avatar stay). Journey has eight stops (stop 5 'First portfolio' and its cabin art removed; `journey:` pointers in `data.js` shifted). Music: 'Play some music' now plays the whole of Nicky Youre & dazy 'Sunroof' from `public/audio/sunroof.mp3` (Laksh supplied the file and chose to host it; his call on licensing), preloaded on page mount so it starts at once, loops; the generative piece is the fallback if the file fails. Work popup renders through a portal under `.w-root` (it was clipped by the pinned section and the next section painted over it), locks page scroll while open, and the open box lid no longer covers the heading. Board: Model UN polaroid and Hindi/English note removed, 'Model UN and debate' bullet removed, new items from the vault and Laksh's notes (a 'vibe coding, daily' polaroid, a 'Tech Head at 18' sticky (no small text under it, 18 Oct), DaVinci/CapCut editing; he removed the space quiz, the Surya Namaskars and the district-badminton bullet on 18 Oct). The vinyl is draggable: a button on the board counts as a drag after 6 px, and the click after a drag is swallowed so the music does not toggle. The board photo caption is 'me, by the sea, at night' (the photo itself still shows the speaker; editing it out needs an image edit, ask first). Profile photo: `public/me.webp` (square face crop) and `public/me-full.webp` (board polaroid) are now Laksh's new beach photo everywhere the photo was used; `me-avatar.webp` is the illustrated figure, not a photo. Instagram caption is 'Say hi, my DMs are open.' Whole-branch smoke test (`e2e.mjs`, five viewports) passes except music start time, which varied 117-507 ms in headless runs. Known and left: `/classic` logs a Last.fm 500 on local dev (no API route); ESLint config is broken (`eslint/config` export error), pre-existing.
@@ -69,6 +72,7 @@ A. Valley redesign (branch `feat/world-portfolio`): (0) Laksh to review the moti
 - Laksh chose small commits, pushed after each (every push to `main` goes live on Vercel). Session of 8 Oct 2026.
 
 ## Session log (newest first)
+- 2026-10-18: chat rebuilt on `feat/chat-polish` (see Status). Needs the backend branch `feat/chat-v3` deployed first. The `VITE_CHAT_API_KEY` in `.env` is not read anywhere in the code; remove it from Vercel env vars (it would be public in the bundle anyway). `VITE_CHAT_API_URL` may be the bare address or the full `/api/chat` URL; `api.js` normalises stray slashes.
 - 2026-10-18: added the rule above: the chat bot's knowledge must follow content changes made here.
 - 2026-10-18 (board, second pass): vinyl is now draggable (it is a button, and the drag code skipped buttons); replaced the space quiz polaroid with 'vibe coding, daily', the Surya Namaskars sticky with 'Tech Head at 18.', dropped the badminton bullet for a vibe-coding line, caption 'me, by the sea, at night'. Playwright check: vinyl drags 129 px, plain click still toggles music, drag does not, other polaroids still drag. Note: the dev server stopped by itself twice during the session; started it with node directly (`node node_modulesiteinite.js --host 127.0.0.1 --port 5199`).
 - 2026-10-18 (feedback pass): removed the sidekick, removed journey stop 5, replaced the Spotify embed with a preloaded full-length local track, fixed the Work popup (portal, scroll lock, lid over heading; first version crashed the page because `portalTo` was missing, caught by the browser test), rebuilt the board with real items, new profile photo everywhere, Instagram caption, scrubbed a client name from HANDOFF. Smoke test over 1440, 1280, 1024, 768 and 390 px: no errors, no horizontal overflow, popup full-screen and locked, music plays.
@@ -147,6 +151,7 @@ Branch: `feat/chat-polish` · remote: https://github.com/TheRealLaksh/Portfolio-
 
 ### Last 15 commits
 
+- `b83e615` 2026-10-18 11:01 Mount the new chat on the valley site and /hire; remove the old one
 - `3941dec` 2026-10-18 11:01 Add the new AI Laksh chat (not mounted yet)
 - `e5f08e2` 2026-10-18 10:34 HANDOFF: keep the chat bot's knowledge in step with the portfolio
 - `618952c` 2026-10-18 10:20 HANDOFF: Tech Head sticky text
@@ -161,16 +166,10 @@ Branch: `feat/chat-polish` · remote: https://github.com/TheRealLaksh/Portfolio-
 - `043356f` 2026-10-18 00:39 Work: keep the open box lid from covering the heading (heading above, box lower and smaller)
 - `74364d7` 2026-10-18 00:35 Work: define portalTo (popup crashed the page) and force the deep-link scroll while scroll is locked
 - `cfedb0c` 2026-10-18 00:33 Board, photo, contact: new real board items, new profile photo, Instagram caption, no client names
-- `2ec99ae` 2026-10-18 00:33 Work: render the case popup outside the clipped section and lock scroll while open
 
 ### Uncommitted changes at refresh time
 
 ```
-D  src/components/chat/ChatCards.jsx
-D  src/components/chat/ChatUI.jsx
-D  src/components/chat/ChatWidget.jsx
-M  src/components/layout/Layout.jsx
-D  src/hooks/useChat.js
-M  src/world/World.jsx
+M  HANDOFF.md
 ```
 <!-- handoff:auto:end -->
