@@ -73,7 +73,7 @@ Migrating off the expired lakshp.live. URLs (meta tags, `/resume` redirect, resu
 
 ## Session log (newest first)
 - 2026-10-18 (merge for go-live): merged v2/main (new chat, README media, repo swap) into feat/journey-painted, pushed to v2 main so the journey, board, Work popup and ShiftsDeal intern path go live. Only HANDOFF.md conflicted.
-- 2026-10-18 (ShiftsDeal intern path): the ShiftsDeal Work popup now shows a small "Built after joining as an intern" two-step path (Intern, 1 Aug 2026, then Tech Head, built this out) via `origin` on its `WORK` entry in `data.js`; the narrow-screen card shows the same badge (the crate cards stay as they were, too small). Styles at the end of `world3.css`. Checked in the dev server at desktop and 375 px: fits, no horizontal overflow. Public facts only, same as the board and journey copy, so the chat bot knowledge needed no change.
+- 2026-10-18 (ShiftsDeal intern path): the ShiftsDeal Work popup now shows a small "Built after joining as an intern" two-step path (a single Intern, 1 Aug 2026 box; the Tech Head box was removed at Laksh's request, 18 Oct) via `origin` on its `WORK` entry in `data.js`; the narrow-screen card shows the same badge (the crate cards stay as they were, too small). Styles at the end of `world3.css`. Checked in the dev server at desktop and 375 px: fits, no horizontal overflow. Public facts only, same as the board and journey copy, so the chat bot knowledge needed no change.
 - 2026-10-18: new README with animated SVGs (banner, facts, stack, architecture, chat flow, dividers, footer), real screen recordings (hero, journey, work, chat) and stills in `docs/readme/`. The SVGs come from `scripts/readme/build-assets.mjs` (needs a base64 jpeg of the valley for the banner; see its header). Repo description and topics set on GitHub. Nothing pushed yet at the time of writing.
 - 2026-10-18: swap done: verified V1 repo, Netlify site and DNS were deleted, renamed the classic repo Portfolio-V2 to Portfolio-V1, created private Portfolio-V2 and pushed this branch as its main (git remote `v2`; `origin` now points at Portfolio-V1).
 - 2026-10-18: started the V1/V2 swap (see Next steps 00): archived the GitHub repo Portfolio-V1, removed it from `useGitHub.js`. Rename and new repo wait for Laksh to delete V1 (repo, Netlify site, DNS record).
@@ -150,73 +150,32 @@ Migrating off the expired lakshp.live. URLs (meta tags, `/resume` redirect, resu
 <!-- handoff:auto:start -->
 ## Auto: repo state
 
-_Refreshed 18 Oct 2026, 4:17 pm IST by `scripts/handoff.mjs` (runs on every commit). Don't edit inside this block._
+_Refreshed 18 Oct 2026, 4:51 pm IST by `scripts/handoff.mjs` (runs on every commit). Don't edit inside this block._
 
 Branch: `feat/journey-painted` · remote: https://github.com/TheRealLaksh/Portfolio-V1.git
 
 ### Last 15 commits
 
+- `9d69fd4` 2026-10-18 16:17 Merge v2/main into feat/journey-painted
 - `33faabe` 2026-10-18 16:15 Work: show ShiftsDeal as built after joining as an intern
+- `26763b6` 2026-10-18 11:58 Rewrite the README as a project page
+- `91007f9` 2026-10-18 11:58 Add README media: animated SVGs, recordings, screenshots
+- `9ffe73d` 2026-10-18 11:31 Stop tracking .env
+- `11caa05` 2026-10-18 11:29 HANDOFF: repo swap done
+- `58c479d` 2026-10-18 11:18 HANDOFF: Portfolio V1/V2 swap plan and progress
+- `7023d60` 2026-10-18 11:18 Drop Portfolio-V1 from the project list (repo is being removed)
+- `60e461e` 2026-10-18 11:01 HANDOFF: chat rebuild status and code map
+- `b83e615` 2026-10-18 11:01 Mount the new chat on the valley site and /hire; remove the old one
+- `3941dec` 2026-10-18 11:01 Add the new AI Laksh chat (not mounted yet)
 - `e5f08e2` 2026-10-18 10:34 HANDOFF: keep the chat bot's knowledge in step with the portfolio
 - `618952c` 2026-10-18 10:20 HANDOFF: Tech Head sticky text
 - `2c187db` 2026-10-18 10:20 Board: Tech Head sticky without the ShiftsDeal line
 - `22366f7` 2026-10-18 10:18 HANDOFF: board second pass
-- `18c9a7c` 2026-10-18 10:18 Board: new items (vibe coding polaroid, Tech Head sticky), caption by the sea, drop badminton bullet
-- `ff3e7c5` 2026-10-18 10:18 Board: vinyl can be dragged (click after a drag is ignored)
-- `5e4b4a7` 2026-10-18 00:46 HANDOFF: 18 Oct feedback pass, sidekick removed, client-name and music rules
-- `e76e4e2` 2026-10-18 00:46 Board: drop tabla (standing rule), tighter face crop for the round photo
-- `9a9a613` 2026-10-18 00:44 Work popup: lock native page scroll while open (wheel no longer scrolls the page behind it)
-- `b92121e` 2026-10-18 00:40 Photo: tighter face crop for the round avatars, cropped board polaroid
-- `043356f` 2026-10-18 00:39 Work: keep the open box lid from covering the heading (heading above, box lower and smaller)
-- `74364d7` 2026-10-18 00:35 Work: define portalTo (popup crashed the page) and force the deep-link scroll while scroll is locked
-- `cfedb0c` 2026-10-18 00:33 Board, photo, contact: new real board items, new profile photo, Instagram caption, no client names
-- `2ec99ae` 2026-10-18 00:33 Work: render the case popup outside the clipped section and lock scroll while open
 
 ### Uncommitted changes at refresh time
 
 ```
-D  .env
-M  .gitignore
 M  HANDOFF.md
-M  README.md
-A  docs/readme/architecture.svg
-A  docs/readme/banner.svg
-A  docs/readme/chat-flow.svg
-A  docs/readme/chat-followup.jpg
-A  docs/readme/chat-pricing.jpg
-A  docs/readme/chat.gif
-A  docs/readme/divider.svg
-A  docs/readme/facts.svg
-A  docs/readme/footer.svg
-A  docs/readme/hello.jpg
-A  docs/readme/hero-day.jpg
-A  docs/readme/hero-night.jpg
-A  docs/readme/hero.gif
-A  docs/readme/journey-b.jpg
-A  docs/readme/journey.gif
-A  docs/readme/life.jpg
-A  docs/readme/mobile-chat.jpg
-A  docs/readme/mobile-hero.jpg
-A  docs/readme/process.jpg
-A  docs/readme/stack.jpg
-A  docs/readme/stack.svg
-A  docs/readme/status.svg
-A  docs/readme/work-popup.jpg
-A  docs/readme/work.gif
-A  scripts/readme/build-assets.mjs
-A  src/chat/Cards.jsx
-A  src/chat/Chat.jsx
-A  src/chat/Message.jsx
-A  src/chat/api.js
-A  src/chat/chat.css
-A  src/chat/useAsk.js
-D  src/components/chat/ChatCards.jsx
-D  src/components/chat/ChatUI.jsx
-D  src/components/chat/ChatWidget.jsx
-M  src/components/layout/Layout.jsx
-D  src/hooks/useChat.js
-M  src/hooks/useGitHub.js
-M  src/world/Icon.jsx
-M  src/world/World.jsx
+M  src/world/data.js
 ```
 <!-- handoff:auto:end -->
