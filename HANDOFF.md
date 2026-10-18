@@ -154,6 +154,7 @@ Branch: `feat/chat-polish` · remote: https://github.com/TheRealLaksh/Portfolio-
 
 ### Last 15 commits
 
+- `91007f9` 2026-10-18 11:58 Add README media: animated SVGs, recordings, screenshots
 - `9ffe73d` 2026-10-18 11:31 Stop tracking .env
 - `11caa05` 2026-10-18 11:29 HANDOFF: repo swap done
 - `58c479d` 2026-10-18 11:18 HANDOFF: Portfolio V1/V2 swap plan and progress
@@ -168,37 +169,10 @@ Branch: `feat/chat-polish` · remote: https://github.com/TheRealLaksh/Portfolio-
 - `18c9a7c` 2026-10-18 10:18 Board: new items (vibe coding polaroid, Tech Head sticky), caption by the sea, drop badminton bullet
 - `ff3e7c5` 2026-10-18 10:18 Board: vinyl can be dragged (click after a drag is ignored)
 - `5e4b4a7` 2026-10-18 00:46 HANDOFF: 18 Oct feedback pass, sidekick removed, client-name and music rules
-- `e76e4e2` 2026-10-18 00:46 Board: drop tabla (standing rule), tighter face crop for the round photo
 
 ### Uncommitted changes at refresh time
 
 ```
-M HANDOFF.md
- M README.md
-A  docs/readme/architecture.svg
-A  docs/readme/banner.svg
-A  docs/readme/chat-flow.svg
-A  docs/readme/chat-followup.jpg
-A  docs/readme/chat-pricing.jpg
-A  docs/readme/chat.gif
-A  docs/readme/divider.svg
-A  docs/readme/facts.svg
-A  docs/readme/footer.svg
-A  docs/readme/hello.jpg
-A  docs/readme/hero-day.jpg
-A  docs/readme/hero-night.jpg
-A  docs/readme/hero.gif
-A  docs/readme/journey-b.jpg
-A  docs/readme/journey.gif
-A  docs/readme/life.jpg
-A  docs/readme/mobile-chat.jpg
-A  docs/readme/mobile-hero.jpg
-A  docs/readme/process.jpg
-A  docs/readme/stack.jpg
-A  docs/readme/stack.svg
-A  docs/readme/status.svg
-A  docs/readme/work-popup.jpg
-A  docs/readme/work.gif
-A  scripts/readme/build-assets.mjs
+M  README.md
 ```
 <!-- handoff:auto:end -->
