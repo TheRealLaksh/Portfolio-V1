@@ -50,6 +50,7 @@ A. Valley redesign (branch `feat/world-portfolio`): (0) Laksh to review the moti
 - Mail forwarding is verified: test mails to work@ and me@ showed "Forwarded" in Cloudflare's activity log on 9 Oct 2026.
 
 ## Decisions not to undo
+- The chat assistant's knowledge lives in `..\Portfolio-Chat_Bototknowledge.js`, not in this repo. After any content change here (projects, roles, prices, links, contact details, or merging the redesign branch to `main`), Claude updates it there too, runs its tests and pushes (see that repo's HANDOFF, Next steps item 1). Public facts only.
 - Painted journey (16 Oct 2026): painted art from Figma image models is allowed and wanted for scenery (Laksh: 'use figma credits and generate something really good'); generate on flat magenta and key with `scripts/art/journey.py`; hill strips are mirrored end to end so they tile. Keep the train's wheels as separate rotating sprites behind the skirt; keep the window overlay for the avatar. The remaining generations are listed under Status.
 - Sidekick removed (18 Oct 2026, Laksh: 'remove it completely from the code, will add him later if needed'). Do not bring back a roaming avatar unless he asks; git history before commit 2831160 has the whole engine.
 - Work section (16 Oct 2026): project facts (year, role, status, live, code) come from repo first commits and the vault's project notes only; no invented stats. Cards in the crate stay `aria-hidden` with `tabIndex -1`; the pill list is the keyboard route and focusing it fast-forwards the scroll. The popup footer is sticky and the popup keeps clear of the mobile nav pill.
@@ -68,6 +69,7 @@ A. Valley redesign (branch `feat/world-portfolio`): (0) Laksh to review the moti
 - Laksh chose small commits, pushed after each (every push to `main` goes live on Vercel). Session of 8 Oct 2026.
 
 ## Session log (newest first)
+- 2026-10-18: added the rule above: the chat bot's knowledge must follow content changes made here.
 - 2026-10-18 (board, second pass): vinyl is now draggable (it is a button, and the drag code skipped buttons); replaced the space quiz polaroid with 'vibe coding, daily', the Surya Namaskars sticky with 'Tech Head at 18.', dropped the badminton bullet for a vibe-coding line, caption 'me, by the sea, at night'. Playwright check: vinyl drags 129 px, plain click still toggles music, drag does not, other polaroids still drag. Note: the dev server stopped by itself twice during the session; started it with node directly (`node node_modulesiteinite.js --host 127.0.0.1 --port 5199`).
 - 2026-10-18 (feedback pass): removed the sidekick, removed journey stop 5, replaced the Spotify embed with a preloaded full-length local track, fixed the Work popup (portal, scroll lock, lid over heading; first version crashed the page because `portalTo` was missing, caught by the browser test), rebuilt the board with real items, new profile photo everywhere, Instagram caption, scrubbed a client name from HANDOFF. Smoke test over 1440, 1280, 1024, 768 and 390 px: no errors, no horizontal overflow, popup full-screen and locked, music plays.
 - 2026-10-18 (hero stars): Laksh said a lot of stars were moving in the hero. The culprits were 14 white four-point sparkles (`GLINTS` in `Painted.jsx`, `glintA` in `motion.css`) all popping every 3.4 s over the water and steps. Now 4 sparkles, one every 9 s, dimmer (peak opacity .7, scale .8). Checked in the dev server: 4 `.glint` elements, 9 s duration. The shooting stars (two, every 11 s and 17 s, night only) and the static painted sky stars are unchanged.
@@ -139,12 +141,13 @@ A. Valley redesign (branch `feat/world-portfolio`): (0) Laksh to review the moti
 <!-- handoff:auto:start -->
 ## Auto: repo state
 
-_Refreshed 18 Oct 2026, 10:20 am IST by `scripts/handoff.mjs` (runs on every commit). Don't edit inside this block._
+_Refreshed 18 Oct 2026, 10:34 am IST by `scripts/handoff.mjs` (runs on every commit). Don't edit inside this block._
 
 Branch: `feat/journey-painted` · remote: https://github.com/TheRealLaksh/Portfolio-V2.git
 
 ### Last 15 commits
 
+- `618952c` 2026-10-18 10:20 HANDOFF: Tech Head sticky text
 - `2c187db` 2026-10-18 10:20 Board: Tech Head sticky without the ShiftsDeal line
 - `22366f7` 2026-10-18 10:18 HANDOFF: board second pass
 - `18c9a7c` 2026-10-18 10:18 Board: new items (vibe coding polaroid, Tech Head sticky), caption by the sea, drop badminton bullet
@@ -159,7 +162,6 @@ Branch: `feat/journey-painted` · remote: https://github.com/TheRealLaksh/Portfo
 - `2ec99ae` 2026-10-18 00:33 Work: render the case popup outside the clipped section and lock scroll while open
 - `206fd94` 2026-10-18 00:33 Music: play the whole song from a preloaded local file, starts instantly
 - `bf91ad6` 2026-10-18 00:33 Journey: remove stop 5 (First portfolio), now eight stops
-- `2831160` 2026-10-18 00:29 Remove the small sidekick avatar completely (component, 3D engine, moves, lines, stand-in model)
 
 ### Uncommitted changes at refresh time
 
