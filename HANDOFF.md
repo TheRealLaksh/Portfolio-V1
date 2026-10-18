@@ -147,12 +147,13 @@ Migrating off the expired lakshp.live. URLs (meta tags, `/resume` redirect, resu
 <!-- handoff:auto:start -->
 ## Auto: repo state
 
-_Refreshed 18 Oct 2026, 11:29 am IST by `scripts/handoff.mjs` (runs on every commit). Don't edit inside this block._
+_Refreshed 18 Oct 2026, 11:31 am IST by `scripts/handoff.mjs` (runs on every commit). Don't edit inside this block._
 
 Branch: `feat/chat-polish` · remote: https://github.com/TheRealLaksh/Portfolio-V1.git
 
 ### Last 15 commits
 
+- `11caa05` 2026-10-18 11:29 HANDOFF: repo swap done
 - `58c479d` 2026-10-18 11:18 HANDOFF: Portfolio V1/V2 swap plan and progress
 - `7023d60` 2026-10-18 11:18 Drop Portfolio-V1 from the project list (repo is being removed)
 - `60e461e` 2026-10-18 11:01 HANDOFF: chat rebuild status and code map
@@ -167,11 +168,11 @@ Branch: `feat/chat-polish` · remote: https://github.com/TheRealLaksh/Portfolio-
 - `5e4b4a7` 2026-10-18 00:46 HANDOFF: 18 Oct feedback pass, sidekick removed, client-name and music rules
 - `e76e4e2` 2026-10-18 00:46 Board: drop tabla (standing rule), tighter face crop for the round photo
 - `9a9a613` 2026-10-18 00:44 Work popup: lock native page scroll while open (wheel no longer scrolls the page behind it)
-- `b92121e` 2026-10-18 00:40 Photo: tighter face crop for the round avatars, cropped board polaroid
 
 ### Uncommitted changes at refresh time
 
 ```
-M  HANDOFF.md
+D  .env
+M  .gitignore
 ```
 <!-- handoff:auto:end -->
