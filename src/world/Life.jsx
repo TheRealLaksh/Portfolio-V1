@@ -141,7 +141,7 @@ export default function Life({ music, onMusic }) {
           </Polaroid>
 
           <div className="item note taped p17" style={{ ['--sc']: '#D9CCFF', ['--r']: '-4deg' }}>
-            Tech Head at 18.<small>ShiftsDeal, since Aug 2026.</small>
+            Tech Head at 18.
           </div>
 
           <div className="item ticket pinned p7" style={{ ['--r']: '3deg', ['--pc']: '#E8505B' }}>
