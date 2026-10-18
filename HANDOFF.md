@@ -145,6 +145,7 @@ Branch: `feat/journey-painted` · remote: https://github.com/TheRealLaksh/Portfo
 
 ### Last 15 commits
 
+- `18c9a7c` 2026-10-18 10:18 Board: new items (vibe coding polaroid, Tech Head sticky), caption by the sea, drop badminton bullet
 - `ff3e7c5` 2026-10-18 10:18 Board: vinyl can be dragged (click after a drag is ignored)
 - `5e4b4a7` 2026-10-18 00:46 HANDOFF: 18 Oct feedback pass, sidekick removed, client-name and music rules
 - `e76e4e2` 2026-10-18 00:46 Board: drop tabla (standing rule), tighter face crop for the round photo
@@ -159,11 +160,10 @@ Branch: `feat/journey-painted` · remote: https://github.com/TheRealLaksh/Portfo
 - `2831160` 2026-10-18 00:29 Remove the small sidekick avatar completely (component, 3D engine, moves, lines, stand-in model)
 - `1cd8f93` 2026-10-18 00:07 Hero: calm the water sparkles (14 every 3.4s to 4 every 9s)
 - `6c836ad` 2026-10-16 12:05 Journey: paint the stations, hills, train and clouds
-- `d545dc7` 2026-10-16 12:05 Journey art: ten painted pieces (stations, train, wheel, hill strips) and the script that keys them
 
 ### Uncommitted changes at refresh time
 
 ```
-M  src/world/data.js
+M  HANDOFF.md
 ```
 <!-- handoff:auto:end -->
