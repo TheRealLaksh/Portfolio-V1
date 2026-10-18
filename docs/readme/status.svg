@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="54" viewBox="0 0 1280 54" role="img">
+<defs></defs>
+<style>@keyframes up{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}@keyframes ping{0%{r:4;opacity:.9}100%{r:13;opacity:0}}@keyframes shine{from{transform:translateX(-120px)}to{transform:translateX(400px)}}.b0{animation:up .6s ease-out 0s both}.b1{animation:up .6s ease-out 0.1s both}.b2{animation:up .6s ease-out 0.2s both}.b3{animation:up .6s ease-out 0.30000000000000004s both}.b4{animation:up .6s ease-out 0.4s both}
+@media (prefers-reduced-motion: reduce){*{animation:none!important}}</style>
+<g transform="translate(184.5 7)"><g class="b0"><rect width="280" height="40" rx="20" fill="#FFFCF3" stroke="#FF8A1F" stroke-width="1.8"/>
+<circle cx="24" cy="20" r="4.5" fill="#FF8A1F"/><circle cx="24" cy="20" r="4" fill="none" stroke="#FF8A1F" stroke-width="2" style="animation:ping 1.8s ease-out infinite"/>
+<text x="40" y="25.5" font-family="'Segoe UI','Helvetica Neue',Arial,sans-serif" font-size="14" font-weight="700" fill="#1B1F3B" textLength="218" lengthAdjust="spacingAndGlyphs">Private repo, preview only</text></g></g><g transform="translate(476.5 7)"><g class="b1"><rect width="129" height="40" rx="20" fill="#FFFCF3" stroke="#1FA6A0" stroke-width="1.8"/>
+<circle cx="24" cy="20" r="4.5" fill="#1FA6A0"/>
+<text x="40" y="25.5" font-family="'Segoe UI','Helvetica Neue',Arial,sans-serif" font-size="14" font-weight="700" fill="#1B1F3B" textLength="67" lengthAdjust="spacingAndGlyphs">React 18</text></g></g><g transform="translate(617.5 7)"><g class="b2"><rect width="112" height="40" rx="20" fill="#FFFCF3" stroke="#8E7CFF" stroke-width="1.8"/>
+<circle cx="24" cy="20" r="4.5" fill="#8E7CFF"/>
+<text x="40" y="25.5" font-family="'Segoe UI','Helvetica Neue',Arial,sans-serif" font-size="14" font-weight="700" fill="#1B1F3B" textLength="50" lengthAdjust="spacingAndGlyphs">Vite 5</text></g></g><g transform="translate(741.5 7)"><g class="b3"><rect width="171" height="40" rx="20" fill="#FFFCF3" stroke="#FFC93C" stroke-width="1.8"/>
+<circle cx="24" cy="20" r="4.5" fill="#FFC93C"/>
+<text x="40" y="25.5" font-family="'Segoe UI','Helvetica Neue',Arial,sans-serif" font-size="14" font-weight="700" fill="#1B1F3B" textLength="109" lengthAdjust="spacingAndGlyphs">Day and night</text></g></g><g transform="translate(924.5 7)"><g class="b4"><rect width="171" height="40" rx="20" fill="#FFFCF3" stroke="#E8505B" stroke-width="1.8"/>
+<circle cx="24" cy="20" r="4.5" fill="#E8505B"/>
+<text x="40" y="25.5" font-family="'Segoe UI','Helvetica Neue',Arial,sans-serif" font-size="14" font-weight="700" fill="#1B1F3B" textLength="109" lengthAdjust="spacingAndGlyphs">AI Laksh chat</text></g></g>
+</svg>

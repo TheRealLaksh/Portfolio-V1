@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="150" viewBox="0 0 1280 150" role="img">
+<defs><clipPath id="fc"><rect width="1280" height="150" rx="22"/></clipPath></defs>
+<style>@keyframes wave{from{transform:translateX(0)}to{transform:translateX(-640px)}}@keyframes tw{0%,100%{opacity:.3}50%{opacity:1}}.w1{animation:wave 14s linear infinite}.w2{animation:wave 22s linear infinite reverse}
+@media (prefers-reduced-motion: reduce){*{animation:none!important}}</style>
+<rect width="1280" height="150" rx="22" fill="#FFFCF3" stroke="#E9D9B8" stroke-width="1.5"/>
+<g clip-path="url(#fc)"><g class="w2" opacity=".5"><path d="M0 112 q160 -26 320 0 t320 0 q160 -26 320 0 t320 0 q160 -26 320 0 t320 0 q160 -26 320 0 t320 0 q160 -26 320 0 t320 0 q160 -26 320 0 t320 0" stroke="#8E7CFF" stroke-width="2.4" fill="none"/></g><g class="w1"><path d="M0 122 q160 -20 320 0 t320 0 q160 -20 320 0 t320 0 q160 -20 320 0 t320 0 q160 -20 320 0 t320 0 q160 -20 320 0 t320 0 q160 -20 320 0 t320 0" stroke="#FF8A1F" stroke-width="2.4" fill="none"/></g></g>
+<text x="640" y="62" font-family="'Segoe UI','Helvetica Neue',Arial,sans-serif" font-size="30" font-weight="800" fill="#1B1F3B" text-anchor="middle" letter-spacing="-.5">Let's build something people use.</text>
+<text x="640" y="90" font-family="'Segoe UI','Helvetica Neue',Arial,sans-serif" font-size="15" fill="#565A7A" text-anchor="middle">work@lakshpradhwani.com  /  lakshpradhwani.com</text>
+
+</svg>
