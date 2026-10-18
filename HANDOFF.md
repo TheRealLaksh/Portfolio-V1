@@ -147,6 +147,7 @@ Branch: `feat/chat-polish` · remote: https://github.com/TheRealLaksh/Portfolio-
 
 ### Last 15 commits
 
+- `3941dec` 2026-10-18 11:01 Add the new AI Laksh chat (not mounted yet)
 - `e5f08e2` 2026-10-18 10:34 HANDOFF: keep the chat bot's knowledge in step with the portfolio
 - `618952c` 2026-10-18 10:20 HANDOFF: Tech Head sticky text
 - `2c187db` 2026-10-18 10:20 Board: Tech Head sticky without the ShiftsDeal line
@@ -161,23 +162,15 @@ Branch: `feat/chat-polish` · remote: https://github.com/TheRealLaksh/Portfolio-
 - `74364d7` 2026-10-18 00:35 Work: define portalTo (popup crashed the page) and force the deep-link scroll while scroll is locked
 - `cfedb0c` 2026-10-18 00:33 Board, photo, contact: new real board items, new profile photo, Instagram caption, no client names
 - `2ec99ae` 2026-10-18 00:33 Work: render the case popup outside the clipped section and lock scroll while open
-- `206fd94` 2026-10-18 00:33 Music: play the whole song from a preloaded local file, starts instantly
 
 ### Uncommitted changes at refresh time
 
 ```
-A  src/chat/Cards.jsx
-A  src/chat/Chat.jsx
-A  src/chat/Message.jsx
-A  src/chat/api.js
-A  src/chat/chat.css
-A  src/chat/useAsk.js
- D src/components/chat/ChatCards.jsx
- D src/components/chat/ChatUI.jsx
- D src/components/chat/ChatWidget.jsx
- M src/components/layout/Layout.jsx
- D src/hooks/useChat.js
-M  src/world/Icon.jsx
- M src/world/World.jsx
+D  src/components/chat/ChatCards.jsx
+D  src/components/chat/ChatUI.jsx
+D  src/components/chat/ChatWidget.jsx
+M  src/components/layout/Layout.jsx
+D  src/hooks/useChat.js
+M  src/world/World.jsx
 ```
 <!-- handoff:auto:end -->

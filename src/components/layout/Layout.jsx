@@ -9,7 +9,7 @@ import Footer from './Footer';
 
 // LAZY LOAD HEAVY COMPONENTS
 const Background = React.lazy(() => import('../3d/Background'));
-const ChatWidget = React.lazy(() => import('../chat/ChatWidget'));
+const Chat = React.lazy(() => import('../../chat/Chat'));
 
 // --- LIGHTWEIGHT SPINNER FALLBACK ---
 const LoadingSpinner = () => (
@@ -84,8 +84,8 @@ const Layout = ({ children }) => {
 
           <Footer />
           
-          <Suspense fallback={<div className="fixed bottom-6 right-6 z-50"><LoadingSpinner /></div>}>
-            <ChatWidget />
+          <Suspense fallback={null}>
+            <Chat />
           </Suspense>
         </>
       )}

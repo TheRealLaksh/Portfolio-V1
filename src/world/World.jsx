@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { Suspense, lazy, useCallback, useEffect, useRef, useState } from 'react';
 import { useReveal, useTheme, useScrubMode, ScrubCtx } from './hooks';
 import { useMotionKit } from './motion';
 import { startMusic, stopMusic, preloadSong } from './audio';
@@ -15,6 +15,8 @@ import Process from './Process';
 import Life from './Life';
 import Wall from './Wall';
 import Hello from './Hello';
+
+const Chat = lazy(() => import('../chat/Chat'));
 import './world.css';
 import './world2.css';
 import './world3.css';
@@ -66,6 +68,7 @@ export default function World() {
         <Hello />
       </main>
       </ScrubCtx.Provider>
+      <Suspense fallback={null}><Chat /></Suspense>
     </div>
   );
 }
