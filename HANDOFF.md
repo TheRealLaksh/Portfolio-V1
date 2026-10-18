@@ -5,7 +5,7 @@ Laksh Pradhwani's personal developer portfolio (v2): React + Vite single-page ap
 
 ## Links
 - Live: https://lakshpradhwani.com (www redirects here). Old domain lakshp.live is expired and dead.
-- Repo: https://github.com/TheRealLaksh/Portfolio-V2 (push to `main` auto-deploys on Vercel, project `portfolio-v2-llp`)
+- Repo: https://github.com/TheRealLaksh/Portfolio-V2 (private, new valley design, not deployed yet; the live classic site is the repo Portfolio-V1)
 - Local: `C:\Users\laksh\OneDrive\Documents\Personal Projects\Portfolio-V2`
 - Chatbot backend: `..\Portfolio-Chat_Bot` (separate repo and Vercel project)
 - Obsidian: `02 Projects\Personal\Portfolio V2.md`, domain audit `05 Resources\lakshp.live Usage Audit.md`, domains `05 Resources\Domains.md`
@@ -41,8 +41,7 @@ React, Vite, Tailwind, Framer Motion, React Three Fiber, Lenis, AOS, react-route
 Migrating off the expired lakshp.live. URLs (meta tags, `/resume` redirect, resume link) now use lakshpradhwani.com. The contact address is now `work@lakshpradhwani.com` (Cloudflare Email Routing forwards it to Laksh's Gmail). Remaining: the resume PDF. `npm run build` was not run: `node_modules` is not installed in this folder (run `npm ci` first).
 
 ## Next steps
-00. **Repo swap in progress (Laksh, 18 Oct 2026):** Portfolio-V1 is gone, today's Portfolio-V2 becomes "Portfolio-V1", and the new valley design (feat/journey-painted + feat/chat-polish) becomes a fresh "Portfolio-V2". Done: GitHub repo Portfolio-V1 archived, its entry removed from `useGitHub.js`, vault notes updated. Laksh still has to delete the archived repo, the Netlify site `v1-laksh` and the Cloudflare CNAME `v1.lakshpradhwani.com` (the name Portfolio-V1 stays taken until then). Then: rename GitHub repo Portfolio-V2 to Portfolio-V1 (Vercel project `portfolio-v2-llp` keeps serving lakshpradhwani.com from it; check its Git connection afterwards), create the new repo Portfolio-V2 and push the new design as its main, and give it its own Vercel project. The new design is NOT live: Laksh said keep it on the branch, no merge to main.
-A. Valley redesign (branch `feat/world-portfolio`): (0) Laksh to review the motion pass at http://127.0.0.1:5199 (dev server from the worktree: `npx vite --port 5199 --host 127.0.0.1`) or the branch preview, then decide on painted (AI) art via Figma credits. (1) give the wall and visitor counter a store: add an Upstash Redis integration to the `portfolio-v2-llp` Vercel project (env `UPSTASH_REDIS_REST_URL` + `UPSTASH_REDIS_REST_TOKEN`, or `KV_REST_API_URL` + `KV_REST_API_TOKEN`) and a `WALL_ADMIN_TOKEN` to delete notes; until then `/api/wall` and `/api/visit` return 503 and the page hides the counter and shows "the wall is warming up". (2) Capture real screenshots of the live work sites into `public/work/<id>.webp` (cards fall back to a placeholder if missing). (3) Confirm the items marked "(confirm)" in `src/world/data.js` (tool list, boarding-pass route; the nationals year is settled: 2024-25 season). (4) Real booking link: create a Google Calendar appointment schedule and paste its URL into `ME.book` in `src/world/data.js` (the one place; `/book`, the valley's Brand and contact sections all switch from WhatsApp to "Book a call" by themselves). (5) Test on a real phone and Safari; run axe on `/book` too. (6) Merge to `main` only on Laksh's say-so; then update sitemap/meta for `/` and `/book` (add `/book` to `public/sitemap.xml`; `/book` has no static prerendered head like `/hire`, its title/description are set at run time by `usePageMeta(BOOK_META)`, so link previews show the home tags until it gets a `vite.config.js` plugin entry like `hire-static-html`; add a `/book` rewrite in `vercel.json` only if that is done), and decide Varanasi vs Delhi NCR wording. (7) `/book` has no testimonials on purpose (none exist); when a client agrees to be quoted add a "Kind words" section where the comment in `Book.jsx` says. Add real service durations only if Laksh states them.
+00. **Repo swap done (18 Oct 2026).** The old 3D Portfolio-V1 (repo, Netlify site, DNS record) is deleted. The classic site's repo, formerly Portfolio-V2, is now https://github.com/TheRealLaksh/Portfolio-V1 (public; Vercel project `portfolio-v2-llp` still serves lakshpradhwani.com from it; Laksh to confirm its Git connection shows the new name). THIS repo, https://github.com/TheRealLaksh/Portfolio-V2, is the new valley design + AI chat, created **private** because the old history contains one client-name mention (see Decisions), with this branch pushed as `main`. Not live. To go live: connect this repo to a Vercel project (or move lakshpradhwani.com), set `VITE_CHAT_API_URL`, merge the chat backend first, then decide public vs private (rewrite history first if public).
 00. After the 14 Oct fixes: in Search Console use URL Inspection on `https://lakshpradhwani.com/hire` and Request indexing (it was canonicalised to the home page until today); re-run the Rich Results Test on it; refresh the LinkedIn preview with the Post Inspector (https://www.linkedin.com/post-inspector/) and re-share the link in WhatsApp to see the new card. Optionally give `/hire` its own 1200x630 OG image (`og-image.jpg` is the home hero crop).
 0. Hire page: add a real booking link once Laksh creates a Google Calendar appointment schedule (put it in `CONTACT` and add a "Book a call" button on `/hire`); add two case studies. When `feat/skyline-world` is merged later, expect conflicts in `src/App.jsx` (routes), `src/components/sections/07-Services.jsx`, `Navbar.jsx`, `MobileNavbar.jsx`, `index.html` and `vercel.json`: keep the Hire page, the `/hire` route and the shared `packages.js` data.
 1. Regenerate `src/assets/resume/laksh.pradhwani.resume.pdf`: it contains the link `https://www.lakshp.live/` (export again from Profiley once its default portfolio link is updated).
@@ -73,6 +72,7 @@ A. Valley redesign (branch `feat/world-portfolio`): (0) Laksh to review the moti
 - Laksh chose small commits, pushed after each (every push to `main` goes live on Vercel). Session of 8 Oct 2026.
 
 ## Session log (newest first)
+- 2026-10-18: swap done: verified V1 repo, Netlify site and DNS were deleted, renamed the classic repo Portfolio-V2 to Portfolio-V1, created private Portfolio-V2 and pushed this branch as its main (git remote `v2`; `origin` now points at Portfolio-V1).
 - 2026-10-18: started the V1/V2 swap (see Next steps 00): archived the GitHub repo Portfolio-V1, removed it from `useGitHub.js`. Rename and new repo wait for Laksh to delete V1 (repo, Netlify site, DNS record).
 - 2026-10-18: chat rebuilt on `feat/chat-polish` (see Status). Needs the backend branch `feat/chat-v3` deployed first. The `VITE_CHAT_API_KEY` in `.env` is not read anywhere in the code; remove it from Vercel env vars (it would be public in the bundle anyway). `VITE_CHAT_API_URL` may be the bare address or the full `/api/chat` URL; `api.js` normalises stray slashes.
 - 2026-10-18: added the rule above: the chat bot's knowledge must follow content changes made here.
@@ -147,12 +147,13 @@ A. Valley redesign (branch `feat/world-portfolio`): (0) Laksh to review the moti
 <!-- handoff:auto:start -->
 ## Auto: repo state
 
-_Refreshed 18 Oct 2026, 11:18 am IST by `scripts/handoff.mjs` (runs on every commit). Don't edit inside this block._
+_Refreshed 18 Oct 2026, 11:29 am IST by `scripts/handoff.mjs` (runs on every commit). Don't edit inside this block._
 
-Branch: `feat/chat-polish` · remote: https://github.com/TheRealLaksh/Portfolio-V2.git
+Branch: `feat/chat-polish` · remote: https://github.com/TheRealLaksh/Portfolio-V1.git
 
 ### Last 15 commits
 
+- `58c479d` 2026-10-18 11:18 HANDOFF: Portfolio V1/V2 swap plan and progress
 - `7023d60` 2026-10-18 11:18 Drop Portfolio-V1 from the project list (repo is being removed)
 - `60e461e` 2026-10-18 11:01 HANDOFF: chat rebuild status and code map
 - `b83e615` 2026-10-18 11:01 Mount the new chat on the valley site and /hire; remove the old one
@@ -167,7 +168,6 @@ Branch: `feat/chat-polish` · remote: https://github.com/TheRealLaksh/Portfolio-
 - `e76e4e2` 2026-10-18 00:46 Board: drop tabla (standing rule), tighter face crop for the round photo
 - `9a9a613` 2026-10-18 00:44 Work popup: lock native page scroll while open (wheel no longer scrolls the page behind it)
 - `b92121e` 2026-10-18 00:40 Photo: tighter face crop for the round avatars, cropped board polaroid
-- `043356f` 2026-10-18 00:39 Work: keep the open box lid from covering the heading (heading above, box lower and smaller)
 
 ### Uncommitted changes at refresh time
 
