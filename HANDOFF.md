@@ -95,6 +95,7 @@ Branch: `docs/readme-v1` · remote: https://github.com/TheRealLaksh/Portfolio-V1
 
 ### Last 15 commits
 
+- `6ba8e71` 2026-10-18 11:58 Add README media: animated SVGs, recording, screenshots
 - `f95c0bb` 2026-10-18 10:34 HANDOFF: keep the chat bot's knowledge in step with the portfolio
 - `6c2f557` 2026-10-18 10:13 Fix empty chat bubbles and the Contacts chip
 - `5f73d0a` 2026-10-18 00:57 Collapse doubled slashes in the chat API URL
@@ -109,24 +110,10 @@ Branch: `docs/readme-v1` · remote: https://github.com/TheRealLaksh/Portfolio-V1
 - `4d038d4` 2026-10-14 10:05 Hide the social sidebar where it overlaps the page content
 - `7ac7e03` 2026-10-14 10:04 Stop the chat teaser from covering the page on phones
 - `f4e9e1e` 2026-10-14 10:04 Keep the Hire me icon visible in the mobile nav and name the icon links
-- `a46055f` 2026-10-14 10:02 Make section links work from /hire and on direct #links
 
 ### Uncommitted changes at refresh time
 
 ```
-M HANDOFF.md
- M README.md
-A  docs/readme/architecture.svg
-A  docs/readme/banner.svg
-A  docs/readme/chat-empty.jpg
-A  docs/readme/divider.svg
-A  docs/readme/facts.svg
-A  docs/readme/footer.svg
-A  docs/readme/hero.jpg
-A  docs/readme/home.gif
-A  docs/readme/skills.jpg
-A  docs/readme/stack.svg
-A  docs/readme/status.svg
-A  scripts/readme/build-assets.mjs
+M  README.md
 ```
 <!-- handoff:auto:end -->

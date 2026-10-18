@@ -1,292 +1,160 @@
-<!-- ===================================================================================== -->
-<!--                         LAKSH PORTFOLIO — REACT EDITION (CINEMATIC)                   -->
-<!-- ===================================================================================== -->
+<div align="center">
 
-<p align="center">
-  <img src="https://capsule-render.vercel.app/api?type=waving&amp;height=180&amp;color=1a1a1a&amp;text=Laksh%20Portfolio%20—%20Developer%20Edition&amp;fontSize=42&amp;fontColor=E50914&amp;fontAlignY=35&amp;desc=Crafted%20with%20React%2C%20Vite%20and%20Tailwind&amp;descAlignY=53&amp;descSize=18" />
-</p>
+<img src="docs/readme/banner.svg" alt="Laksh Pradhwani, Portfolio V1: classic edition" width="100%">
 
 <br>
 
-<p align="center">
-  <img src="https://img.shields.io/badge/Status-Active-E50914?style=for-the-badge" />
-  <img src="https://img.shields.io/badge/Built%20With-React%20%7C%20Tailwind%20%7C%20Vite-black?style=for-the-badge&amp;logo=react" />
-  <img src="https://img.shields.io/github/last-commit/TheRealLaksh/portfolio-react?style=for-the-badge&amp;color=E50914" />
-  <img src="https://img.shields.io/github/repo-size/TheRealLaksh/portfolio-react?style=for-the-badge&amp;color=red" />
-</p>
+<img src="docs/readme/status.svg" alt="Live at lakshpradhwani.com, React 18, Vite 5, Tailwind 3, Three.js" width="100%">
 
-<br><br>
+<br>
 
-<p align="center">
-  <img src="https://img.shields.io/badge/Welcome%20to%20Laksh%27s%20Universe-Dark%20Red%20Pulse-E50914?style=for-the-badge&amp;logo=netflix" />
-</p>
+[Live site](https://lakshpradhwani.com) &nbsp;/&nbsp; [Hire page](https://lakshpradhwani.com/hire) &nbsp;/&nbsp; [The tour](#the-tour) &nbsp;/&nbsp; [Architecture](#architecture) &nbsp;/&nbsp; [Run it](#run-it-locally) &nbsp;/&nbsp; [Structure](#project-structure)
 
-<p align="center">
-  <img src="https://img.shields.io/badge/Frontend%20Engineer-Developer%20Portfolio-E50914?style=flat-square" />
-</p>
-
-<br><br>
-
-<div align="center">
-<table><tr><td>
-
-### 🚀 **Laksh Portfolio — React Cinematic Developer Edition**
-
-A fully modern, highly animated, production-ready developer portfolio built using **React, Vite, and Tailwind CSS**.  
-This project fuses **cinematic UI motion**, **scroll-driven animations**, **advanced custom hooks**, a built-in **AI chat assistant**, and **3D components** into a single, cohesive developer brand platform.
-
-It is designed not just as a website — but as a **personal digital product** for showcasing:
-
-- Skills  
-- Experience  
-- Projects  
-- Resume  
-- Live activity  
-- Real-time interactions  
-
-</td></tr></table>
-</div>
-
-<br><br>
-
-# 🎯 Experience Philosophy
-
-This portfolio is designed to:
-
-- Feel cinematic, not static  
-- React to user movement, scrolling, and interactions  
-- Behave like a product UI  
-- Present technical depth through architecture, motion, and precision  
-- Serve as a career-grade showcase system  
-
-<br><br>
-
-# 🔥 Feature System (Deep Breakdown)
-
-<div align="center">
-<table>
-<tr>
-
-<td width="33%">
-
-### 🎨 Cinematic UI/UX System
-- Dark red pulse theme  
-- Neon accent highlights  
-- Animated hero typography  
-- Soft parallax motion engine  
-- Spotlight reveal effects  
-- Netflix-style transitions  
-- Scroll-triggered fade and blur  
-- Motion-depth layering  
-
-</td>
-
-<td width="33%">
-
-### ⚛️ Scalable React Architecture
-- Clean folder segmentation  
-- Presentation vs logic separation  
-- Context-based global state  
-- Data-driven rendering  
-- Prop isolation per section  
-- Component reusability  
-- Central animation orchestration  
-
-</td>
-
-<td width="33%">
-
-### ⚡ Advanced Custom Hook Engine
-- useScrollSpy → live navigation tracking  
-- useScramble → glitch text animation  
-- useGitHub → live repository statistics  
-- useSpotify → real-time music activity  
-- Animation lifecycle management  
-- Section visibility detection  
-
-</td>
-
-</tr>
-</table>
 </div>
 
 <br>
 
-<div align="center">
+A dark, cinematic developer portfolio that feels like a product rather than a page: a star field you drift through, a typed headline, a floating pill navigation, live repository cards, a priced **/hire** page for clients and **AI Laksh**, a chat assistant that answers from real facts about Laksh.
+
+This is the site that [lakshpradhwani.com](https://lakshpradhwani.com) serves today. The next version, an illustrated valley you fly into by scrolling, lives in [Portfolio-V2](https://github.com/TheRealLaksh/Portfolio-V2).
+
+<br>
+
+<img src="docs/readme/home.gif" alt="Scrolling the portfolio from the hero through the sections to the contact form" width="100%">
+
+<p align="center"><sub>Real screen recording of the live site: hero, about, skills, projects and contact.</sub></p>
+
+<br>
+
+<img src="docs/readme/facts.svg" alt="8 sections, 3 service packages, installable PWA, built-in AI chat" width="100%">
+
+<br>
+
+<img src="docs/readme/divider.svg" alt="" width="100%">
+
+## The tour
+
 <table>
 <tr>
-
-<td width="33%">
-
-### 🧠 AI Chat System
-- Dedicated chat component system  
-- Floating assistant widget  
-- Live Q&amp;A system  
-- Portfolio-aware responses  
-- Expandable LLM integration  
-- Optimized message rendering  
-
-</td>
-
-<td width="33%">
-
-### 🎬 UI Animation and Motion System
-- Reveal animations  
-- Scroll-depth parallax  
-- Text scrambling  
-- Spotlight tracking  
-- Preloader sequences  
-- Warp-trigger transitions  
-
-</td>
-
-<td width="33%">
-
-### 📱 Responsive Layout Engine
-- Tailwind grid system  
-- Fluid typography scaling  
-- Mobile-first layouts  
-- Multi-resolution icon handling  
-- Touch-optimized interactions  
-
-</td>
-
+<td width="50%"><img src="docs/readme/hero.jpg" alt="The hero: Laksh Pradhwani in large monospace, a typed role line and two buttons over a star field"></td>
+<td width="50%"><img src="docs/readme/skills.jpg" alt="The Technical Arsenal section with icon cards for Python, Django and JavaScript"></td>
+</tr>
+<tr>
+<td align="center"><sub>Hero: typed roles cycle through "a Web Developer", "an Aspiring AI/ML Engineer" and "a Passionate Learner"</sub></td>
+<td align="center"><sub>Skills: the "Technical Arsenal"</sub></td>
 </tr>
 </table>
-</div>
 
-<br><br>
+| Section | What is in it |
+|---|---|
+| **Home** | Preloader intro (skipped for reduced motion and on other pages), typed headline, social links, a Three.js star field that reacts as you scroll |
+| **About** | A character-card style intro with a playful "system check" panel |
+| **Experience** | Internships and roles from a single data file (`timelineData.js`) |
+| **Skills** | The Technical Arsenal: tool cards with brand colours from `skillsData.js` |
+| **Projects** | Repository cards fetched live from the GitHub API and cached for an hour, with live-site and code buttons |
+| **Resume** | Resume download |
+| **Services** | The three packages, shared with the /hire page through one file, `packages.js` |
+| **Contact** | Contact details and a form |
 
-# 🧩 Core Application Sections
+Navigation is a floating pill on desktop and a bottom dock on phones, both driven by the same scroll-spy hook. Section links work from any page, including `/#hash` deep links.
 
-- Hero — Animated intro with cinematic text and CTA  
-- About — Developer narrative and identity  
-- Skills — Tech stack rendered from structured data  
-- Experience — Timeline-driven professional history  
-- Projects — Interactive project cards with motion  
-- Resume — Inline PDF preview and download  
-- Contact — Social links, email, quick actions  
-- AI Chat — Built-in portfolio assistant  
-- 3D Section — Hardware-accelerated visual elements  
+<img src="docs/readme/divider.svg" alt="" width="100%">
 
-<br><br>
+## The /hire page
 
-# 📁 Project Structure
+A page for clients, not recruiters: a short intro with WhatsApp and email actions, three priced packages, recent work, the stack, and a three-step "how it starts". It has its own title, description, canonical URL and structured data, written into `dist/hire/index.html` at build time by a small Vite plugin, so search engines and link previews see /hire as its own page instead of a copy of the home page.
 
-```bash
-laksh-portfolio/
-│── public/
-│     ├── favicon.png
-│     ├── manifest.json
-│     ├── sw.js
-│     └── vite.svg
-│
-│── src/
-│     ├── assets/
-│     │     ├── images/
-│     │     └── resume/
-│     │
-│     ├── components/
-│     │     ├── 3d/
-│     │     ├── chat/
-│     │     ├── layout/
-│     │     ├── sections/
-│     │     └── ui/
-│     │
-│     ├── context/
-│     ├── data/
-│     ├── hooks/
-│     ├── utils/
-│
-│     ├── App.jsx
-│     ├── App.css
-│     ├── index.css
-│     └── main.jsx
-│
-│── package.json
-│── tailwind.config.js
-│── vite.config.js
-│── postcss.config.js
-│── README.md
-```
+| Package | From |
+|---|---|
+| Business Website + CMS | Rs 30,000 |
+| AI Features + Automation | Rs 55,000 |
+| Custom Web App | Rs 75,000 |
 
-<br><br>
+<img src="docs/readme/divider.svg" alt="" width="100%">
 
-# ⚡ Performance and Optimization Stack
+## AI Laksh, the chat
 
-- Vite-powered fast builds  
-- Optimized asset chunking  
-- Controlled animation triggering  
-- GPU-accelerated transforms  
-- Component-level lazy rendering  
-- Minimal global re-renders  
-- Semantic HTML for SEO  
+A floating assistant that answers questions about Laksh and his work from a fixed set of facts. It has quick actions for projects, services, contacts and the resume, a contact card, a Reset button and a message history kept in the browser. The brain is a separate Express service on its own Vercel project, so no AI key ever ships in this site.
 
-<br><br>
+<p align="center"><img src="docs/readme/chat-empty.jpg" alt="The chat window in its empty state with four quick actions" width="62%"></p>
 
-# 🛠 Tech Stack
+<img src="docs/readme/divider.svg" alt="" width="100%">
 
-<p align="center">
-  <img src="https://skillicons.dev/icons?i=react,vite,tailwind,js,html,css,git,github&amp;theme=dark" />
-</p>
+## Architecture
 
-<br><br>
+<img src="docs/readme/architecture.svg" alt="Visitor browser, Vercel static hosting, GitHub REST API, Last.fm API and the chat backend" width="100%">
 
-# 🚀 Installation
+The site is a static Vite build on Vercel. Everything dynamic happens in the browser against public APIs: the GitHub REST API for the project cards, the Last.fm API for a "now playing" chip in the footer (shown only while a track is playing), and the chat backend for AI Laksh.
+
+## Tech stack
+
+<img src="docs/readme/stack.svg" alt="React 18, Vite 5, Tailwind CSS 3, Framer Motion, Three.js, React Three Fiber, Axios and more" width="100%">
+
+## Details that took care
+
+- **SEO that is honest per page.** Own head tags and JSON-LD for `/hire`, a `sitemap.xml`, `robots.txt`, canonical and social tags, and a no-JavaScript fallback.
+- **Installable.** A web manifest and a service worker; the home page registers it and caches the shell for offline use.
+- **Keyboard and screen readers.** A skip link that is the first tab stop, real buttons instead of clickable divs, and landmark roles. A Playwright and axe-core pass was run on the live site in October 2026.
+- **Motion that respects people.** Reduced-motion visitors skip the preloader and get calmer animation; the chat teaser appears once per session and goes away by itself so it never sits on top of content.
+- **Haptics.** Small vibration taps on touch devices for chat actions.
+
+## Run it locally
 
 ```bash
-git clone https://github.com/TheRealLaksh/portfolio-react
-cd portfolio-react
+git clone https://github.com/TheRealLaksh/Portfolio-V1.git
+cd Portfolio-V1
 npm install
 npm run dev
 ```
 
-Then open:
+Vite prints the address (usually `http://localhost:5173`). Use `npm run build` for a production build and `npm run preview` to serve it.
 
-```
-http://localhost:5173/
-```
-
-<br><br>
-
-# 🧬 Expansion-Ready Architecture
-
-- Real LLM API integrations  
-- WebGL and Three.js scenes  
-- Live analytics  
-- Admin CMS dashboard  
-- Multi-language support  
-- Offline PWA enhancements  
-
-<br><br>
-
-# 🎯 Use Cases
-
-- Personal branding system  
-- Internship and job applications  
-- Product-grade portfolio  
-- Freelancer showcase  
-- Technical community presence  
-
-<br><br>
-
-# 🔗 Connect
-
-<p align="center">
-  <a href="https://github.com/TheRealLaksh">
-    <img src="https://img.shields.io/badge/GitHub-TheRealLaksh-24292F?style=for-the-badge&amp;logo=github">
-  </a>
-  <a href="mailto:laksh.pradhwani@gmail.com">
-    <img src="https://img.shields.io/badge/Email-Contact-E50914?style=for-the-badge&amp;logo=gmail">
-  </a>
-  <a href="https://linkedin.com/in/laksh-pradhwani">
-    <img src="https://img.shields.io/badge/LinkedIn-Connect-0A66C2?style=for-the-badge&amp;logo=linkedin">
-  </a>
-</p>
+<details>
+<summary><b>Environment variables</b></summary>
 
 <br>
 
-<p align="center">
-  <img src="https://capsule-render.vercel.app/api?type=wave&amp;height=140&amp;color=1a1a1a&amp;section=footer&amp;text=Engineered%20for%20Impact.&amp;fontColor=E50914&amp;fontSize=26" />
-</p>
+| Variable | What it does |
+|---|---|
+| `VITE_CHAT_API_URL` | Address of the chat backend. Optional: the code falls back to the deployed one. Accepts the bare address or the full `/api/chat` URL. |
+| `VITE_LASTFM_USERNAME`, `VITE_LASTFM_API_KEY` | Last.fm account and a read-only key for the footer's "now playing" chip. |
 
+Put local values in `.env` (ignored by git). Anything prefixed `VITE_` ends up in the browser bundle, so never put a secret in one.
+
+</details>
+
+## Project structure
+
+```text
+.
+├── public/                 icons, manifest, service worker, sitemap, robots, link-preview image
+├── scripts/readme/         regenerates the animated SVGs in this README
+├── src/
+│   ├── components/
+│   │   ├── sections/       01-Hero ... 08-Contact
+│   │   ├── layout/         Navbar, MobileNavbar, Footer, SocialSidebar, ScrollManager
+│   │   ├── 3d/             the Three.js star field
+│   │   ├── chat/           the AI Laksh window
+│   │   └── ui/             Preloader, Reveal, Spotlight, PackageCard, TextReveal ...
+│   ├── pages/              Home, Hire
+│   ├── data/               packages, skills, timeline, section list, per-route metadata
+│   ├── hooks/              GitHub repos, Last.fm, scroll spy, section navigation, page meta
+│   └── utils/              haptics, class names, warp effect
+├── docs/readme/            images and recordings used here
+├── vercel.json             short links (/resume, /github, /linkedin ...) and SPA rewrites
+└── vite.config.js          also writes dist/hire/index.html with /hire's own head
+```
+
+## Where it goes next
+
+The valley redesign was first built on branches of this repository and now has its own home in [Portfolio-V2](https://github.com/TheRealLaksh/Portfolio-V2). This repository stays as the live classic site until that one launches.
+
+## Credits and rights
+
+Designed, written and built by [Laksh Pradhwani](https://lakshpradhwani.com). No open-source licence is attached to this repository, so please ask before reusing the code.
+
+<br>
+
+<img src="docs/readme/footer.svg" alt="Thanks for stopping by. work@lakshpradhwani.com" width="100%">
+
+<sub>The animated graphics above are generated by <code>scripts/readme/build-assets.mjs</code>. The recording and screenshots are captured from the live site.</sub>
