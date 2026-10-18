@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="54" viewBox="0 0 1280 54" role="img">
+<defs></defs>
+<style>@keyframes up{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}@keyframes ping{0%{r:4;opacity:.9}100%{r:13;opacity:0}}@keyframes shine{from{transform:translateX(-120px)}to{transform:translateX(400px)}}.b0{animation:up .6s ease-out 0s both}.b1{animation:up .6s ease-out 0.1s both}.b2{animation:up .6s ease-out 0.2s both}.b3{animation:up .6s ease-out 0.30000000000000004s both}.b4{animation:up .6s ease-out 0.4s both}
+@media (prefers-reduced-motion: reduce){*{animation:none!important}}</style>
+<g transform="translate(218 7)"><g class="b0"><rect width="280" height="40" rx="20" fill="#0b111b" stroke="#34d399" stroke-width="1.8"/>
+<circle cx="24" cy="20" r="4.5" fill="#34d399"/><circle cx="24" cy="20" r="4" fill="none" stroke="#34d399" stroke-width="2" style="animation:ping 1.8s ease-out infinite"/>
+<text x="40" y="25.5" font-family="'JetBrains Mono','SFMono-Regular',Consolas,'Liberation Mono',monospace" font-size="14" font-weight="700" fill="#e8eef7" textLength="218" lengthAdjust="spacingAndGlyphs">Live at lakshpradhwani.com</text></g></g><g transform="translate(510 7)"><g class="b1"><rect width="129" height="40" rx="20" fill="#0b111b" stroke="#38bdf8" stroke-width="1.8"/>
+<circle cx="24" cy="20" r="4.5" fill="#38bdf8"/>
+<text x="40" y="25.5" font-family="'JetBrains Mono','SFMono-Regular',Consolas,'Liberation Mono',monospace" font-size="14" font-weight="700" fill="#e8eef7" textLength="67" lengthAdjust="spacingAndGlyphs">React 18</text></g></g><g transform="translate(651 7)"><g class="b2"><rect width="112" height="40" rx="20" fill="#0b111b" stroke="#a855f7" stroke-width="1.8"/>
+<circle cx="24" cy="20" r="4.5" fill="#a855f7"/>
+<text x="40" y="25.5" font-family="'JetBrains Mono','SFMono-Regular',Consolas,'Liberation Mono',monospace" font-size="14" font-weight="700" fill="#e8eef7" textLength="50" lengthAdjust="spacingAndGlyphs">Vite 5</text></g></g><g transform="translate(775 7)"><g class="b3"><rect width="146" height="40" rx="20" fill="#0b111b" stroke="#38bdf8" stroke-width="1.8"/>
+<circle cx="24" cy="20" r="4.5" fill="#38bdf8"/>
+<text x="40" y="25.5" font-family="'JetBrains Mono','SFMono-Regular',Consolas,'Liberation Mono',monospace" font-size="14" font-weight="700" fill="#e8eef7" textLength="84" lengthAdjust="spacingAndGlyphs">Tailwind 3</text></g></g><g transform="translate(933 7)"><g class="b4"><rect width="129" height="40" rx="20" fill="#0b111b" stroke="#facc15" stroke-width="1.8"/>
+<circle cx="24" cy="20" r="4.5" fill="#facc15"/>
+<text x="40" y="25.5" font-family="'JetBrains Mono','SFMono-Regular',Consolas,'Liberation Mono',monospace" font-size="14" font-weight="700" fill="#e8eef7" textLength="67" lengthAdjust="spacingAndGlyphs">Three.js</text></g></g>
+</svg>

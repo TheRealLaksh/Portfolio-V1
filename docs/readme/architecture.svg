@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="440" viewBox="0 0 1280 440" role="img">
+<defs></defs>
+<style>@keyframes flow{to{stroke-dashoffset:-32}}@keyframes pop{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}.n1{animation:pop .7s ease-out .1s both}.n2{animation:pop .7s ease-out .3s both}.n3{animation:pop .7s ease-out .5s both}.n4{animation:pop .7s ease-out .7s both}.n5{animation:pop .7s ease-out .9s both}
+@media (prefers-reduced-motion: reduce){*{animation:none!important}}</style>
+<rect width="1280" height="440" rx="22" fill="#05070c" stroke="#1f2a3a"/>
+<g class="n1"><rect x="40" y="130" width="310" height="130" rx="16" fill="#0b111b" stroke="#38bdf8" stroke-width="2"/>
+<rect x="40" y="130" width="310" height="8" rx="4" fill="#38bdf8" opacity=".9"/>
+<text x="58" y="164" font-family="'JetBrains Mono','SFMono-Regular',Consolas,'Liberation Mono',monospace" font-size="16" font-weight="800" fill="#e8eef7">Visitor browser</text>
+<text x="58" y="188" font-family="'JetBrains Mono','SFMono-Regular',Consolas,'Liberation Mono',monospace" font-size="13" fill="#8d9db3">React 18 + Vite single-page app</text><text x="58" y="208" font-family="'JetBrains Mono','SFMono-Regular',Consolas,'Liberation Mono',monospace" font-size="13" fill="#8d9db3">Three.js star field, Framer Motion</text><text x="58" y="228" font-family="'JetBrains Mono','SFMono-Regular',Consolas,'Liberation Mono',monospace" font-size="13" fill="#8d9db3">Lenis smooth scroll, service worker</text></g>
+<g class="n2"><rect x="500" y="26" width="290" height="118" rx="16" fill="#0b111b" stroke="#34d399" stroke-width="2"/>
+<rect x="500" y="26" width="290" height="8" rx="4" fill="#34d399" opacity=".9"/>
+<text x="518" y="60" font-family="'JetBrains Mono','SFMono-Regular',Consolas,'Liberation Mono',monospace" font-size="16" font-weight="800" fill="#e8eef7">Vercel (static)</text>
+<text x="518" y="84" font-family="'JetBrains Mono','SFMono-Regular',Consolas,'Liberation Mono',monospace" font-size="13" fill="#8d9db3">dist/ from vite build</text><text x="518" y="104" font-family="'JetBrains Mono','SFMono-Regular',Consolas,'Liberation Mono',monospace" font-size="13" fill="#8d9db3">own head for /hire (prerendered)</text><text x="518" y="124" font-family="'JetBrains Mono','SFMono-Regular',Consolas,'Liberation Mono',monospace" font-size="13" fill="#8d9db3">short links in vercel.json</text></g>
+<g class="n3"><rect x="500" y="156" width="290" height="92" rx="16" fill="#0b111b" stroke="#a855f7" stroke-width="2"/>
+<rect x="500" y="156" width="290" height="8" rx="4" fill="#a855f7" opacity=".9"/>
+<text x="518" y="190" font-family="'JetBrains Mono','SFMono-Regular',Consolas,'Liberation Mono',monospace" font-size="16" font-weight="800" fill="#e8eef7">GitHub REST API</text>
+<text x="518" y="214" font-family="'JetBrains Mono','SFMono-Regular',Consolas,'Liberation Mono',monospace" font-size="13" fill="#8d9db3">repo cards on the Projects section</text><text x="518" y="234" font-family="'JetBrains Mono','SFMono-Regular',Consolas,'Liberation Mono',monospace" font-size="13" fill="#8d9db3">cached in the browser for 1 hour</text></g>
+<g class="n4"><rect x="500" y="260" width="290" height="86" rx="16" fill="#0b111b" stroke="#facc15" stroke-width="2"/>
+<rect x="500" y="260" width="290" height="8" rx="4" fill="#facc15" opacity=".9"/>
+<text x="518" y="294" font-family="'JetBrains Mono','SFMono-Regular',Consolas,'Liberation Mono',monospace" font-size="16" font-weight="800" fill="#e8eef7">Last.fm API</text>
+<text x="518" y="318" font-family="'JetBrains Mono','SFMono-Regular',Consolas,'Liberation Mono',monospace" font-size="13" fill="#8d9db3">recently played track (footer chip)</text></g>
+<g class="n5"><rect x="930" y="130" width="310" height="130" rx="16" fill="#0b111b" stroke="#38bdf8" stroke-width="2"/>
+<rect x="930" y="130" width="310" height="8" rx="4" fill="#38bdf8" opacity=".9"/>
+<text x="948" y="164" font-family="'JetBrains Mono','SFMono-Regular',Consolas,'Liberation Mono',monospace" font-size="16" font-weight="800" fill="#e8eef7">AI Laksh chat backend</text>
+<text x="948" y="188" font-family="'JetBrains Mono','SFMono-Regular',Consolas,'Liberation Mono',monospace" font-size="13" fill="#8d9db3">Express on its own Vercel project</text><text x="948" y="208" font-family="'JetBrains Mono','SFMono-Regular',Consolas,'Liberation Mono',monospace" font-size="13" fill="#8d9db3">Gemini, with a guard in front</text><text x="948" y="228" font-family="'JetBrains Mono','SFMono-Regular',Consolas,'Liberation Mono',monospace" font-size="13" fill="#8d9db3">answers only about Laksh</text></g>
+<path id="e1" d="M350 175 C 420 175, 430 88, 500 88" fill="none" stroke="#34d399" stroke-opacity=".5" stroke-width="2" stroke-dasharray="8 8" style="animation:flow 1.6s linear infinite"/>
+<circle r="5" fill="#34d399"><animateMotion dur="3.2s" repeatCount="indefinite" path="M350 175 C 420 175, 430 88, 500 88"/></circle>
+<text x="425" y="112" font-family="'JetBrains Mono','SFMono-Regular',Consolas,'Liberation Mono',monospace" font-size="12" font-weight="700" fill="#8d9db3" text-anchor="middle">pages and assets</text>
+<path id="e2" d="M350 195 C 420 195, 430 202, 500 202" fill="none" stroke="#a855f7" stroke-opacity=".5" stroke-width="2" stroke-dasharray="8 8" style="animation:flow 1.6s linear infinite"/>
+<circle r="5" fill="#a855f7"><animateMotion dur="3.6s" repeatCount="indefinite" path="M350 195 C 420 195, 430 202, 500 202"/></circle>
+<text x="425" y="192" font-family="'JetBrains Mono','SFMono-Regular',Consolas,'Liberation Mono',monospace" font-size="12" font-weight="700" fill="#8d9db3" text-anchor="middle">repos</text>
+<path id="e3" d="M350 215 C 420 215, 430 303, 500 303" fill="none" stroke="#facc15" stroke-opacity=".5" stroke-width="2" stroke-dasharray="8 8" style="animation:flow 1.6s linear infinite"/>
+<circle r="5" fill="#facc15"><animateMotion dur="4s" repeatCount="indefinite" path="M350 215 C 420 215, 430 303, 500 303"/></circle>
+<text x="425" y="296" font-family="'JetBrains Mono','SFMono-Regular',Consolas,'Liberation Mono',monospace" font-size="12" font-weight="700" fill="#8d9db3" text-anchor="middle">now playing</text>
+<path id="e4" d="M200 260 C 200 430, 1085 430, 1085 262" fill="none" stroke="#38bdf8" stroke-opacity=".5" stroke-width="2" stroke-dasharray="8 8" style="animation:flow 1.6s linear infinite"/>
+<circle r="5" fill="#38bdf8"><animateMotion dur="5s" repeatCount="indefinite" path="M200 260 C 200 430, 1085 430, 1085 262"/></circle>
+<text x="640" y="420" font-family="'JetBrains Mono','SFMono-Regular',Consolas,'Liberation Mono',monospace" font-size="12" font-weight="700" fill="#8d9db3" text-anchor="middle">POST /api/chat</text>
+</svg>

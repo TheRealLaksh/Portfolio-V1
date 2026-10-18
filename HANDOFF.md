@@ -46,6 +46,7 @@ Migrating off the expired lakshp.live. URLs (meta tags, `/resume` redirect, resu
 - Laksh chose small commits, pushed after each (every push to `main` goes live on Vercel). Session of 8 Oct 2026.
 
 ## Session log (newest first)
+- 2026-10-18: new README with animated SVGs, a real screen recording and stills of the live site in `docs/readme/` (generator: `scripts/readme/build-assets.mjs`). GitHub description and topics updated. Work is on branch `docs/readme-v1`, not yet on main. Note: `src/hooks/useSpotify.js` keeps a Last.fm API key as a hard-coded fallback in this public repo; remove the fallback and rotate the key.
 - 2026-10-18: added the rule above: the chat bot's knowledge must follow content changes made here.
 - 2026-10-18: chat UI showed empty bubbles and the Contacts chip threw: `useChat` saved `{text, sender:'user'|'bot'}` but `ChatBubble` reads `{content, sender:'You'|'AI Laksh', type}`, and `addMessage` was not returned by the hook. Hook now uses the widget's shape, converts old saved chats on load, returns `addMessage`, and guards localStorage.
 - 2026-10-18: chatbot was down. Backend (`Portfolio-Chat_Bot`) only called retired Gemini models, fixed there. Here, the double slash in `.../vercel.app//api/chat` (308 redirect, blocked by the browser) comes from the Vercel env var `VITE_CHAT_API_URL` (sensitive, prod + preview), which overrides `DEFAULT_BACKEND`. `useChat.js` now collapses doubled slashes, so the app works either way; the env var itself should still be corrected or deleted in the Vercel dashboard (Claude was not allowed to edit it).
@@ -88,12 +89,13 @@ Migrating off the expired lakshp.live. URLs (meta tags, `/resume` redirect, resu
 <!-- handoff:auto:start -->
 ## Auto: repo state
 
-_Refreshed 18 Oct 2026, 10:34 am IST by `scripts/handoff.mjs` (runs on every commit). Don't edit inside this block._
+_Refreshed 18 Oct 2026, 11:58 am IST by `scripts/handoff.mjs` (runs on every commit). Don't edit inside this block._
 
-Branch: `main` · remote: https://github.com/TheRealLaksh/Portfolio-V2.git
+Branch: `docs/readme-v1` · remote: https://github.com/TheRealLaksh/Portfolio-V1.git
 
 ### Last 15 commits
 
+- `f95c0bb` 2026-10-18 10:34 HANDOFF: keep the chat bot's knowledge in step with the portfolio
 - `6c2f557` 2026-10-18 10:13 Fix empty chat bubbles and the Contacts chip
 - `5f73d0a` 2026-10-18 00:57 Collapse doubled slashes in the chat API URL
 - `902a679` 2026-10-18 00:39 Fix double slash in the chat API URL
@@ -108,11 +110,23 @@ Branch: `main` · remote: https://github.com/TheRealLaksh/Portfolio-V2.git
 - `7ac7e03` 2026-10-14 10:04 Stop the chat teaser from covering the page on phones
 - `f4e9e1e` 2026-10-14 10:04 Keep the Hire me icon visible in the mobile nav and name the icon links
 - `a46055f` 2026-10-14 10:02 Make section links work from /hire and on direct #links
-- `ac238ef` 2026-10-14 09:56 Give /hire its own title, canonical and link-preview tags
 
 ### Uncommitted changes at refresh time
 
 ```
-M  HANDOFF.md
+M HANDOFF.md
+ M README.md
+A  docs/readme/architecture.svg
+A  docs/readme/banner.svg
+A  docs/readme/chat-empty.jpg
+A  docs/readme/divider.svg
+A  docs/readme/facts.svg
+A  docs/readme/footer.svg
+A  docs/readme/hero.jpg
+A  docs/readme/home.gif
+A  docs/readme/skills.jpg
+A  docs/readme/stack.svg
+A  docs/readme/status.svg
+A  scripts/readme/build-assets.mjs
 ```
 <!-- handoff:auto:end -->
