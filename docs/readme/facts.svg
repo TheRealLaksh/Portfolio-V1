@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="168" viewBox="0 0 1280 168" role="img">
+<defs></defs>
+<style>@keyframes pop{from{opacity:0;transform:translateY(18px) scale(.97)}to{opacity:1;transform:none}}@keyframes under{from{transform:scaleX(0)}to{transform:scaleX(1)}}@keyframes pulse{0%,100%{opacity:.5}50%{opacity:1}}.c0{animation:pop .7s cubic-bezier(.22,1,.36,1) 0.15s both}.u0{transform-box:fill-box;transform-origin:left;animation:under .8s ease-out 0.5s both}.c1{animation:pop .7s cubic-bezier(.22,1,.36,1) 0.29000000000000004s both}.u1{transform-box:fill-box;transform-origin:left;animation:under .8s ease-out 0.64s both}.c2{animation:pop .7s cubic-bezier(.22,1,.36,1) 0.43000000000000005s both}.u2{transform-box:fill-box;transform-origin:left;animation:under .8s ease-out 0.78s both}.c3{animation:pop .7s cubic-bezier(.22,1,.36,1) 0.5700000000000001s both}.u3{transform-box:fill-box;transform-origin:left;animation:under .8s ease-out 0.92s both}
+@media (prefers-reduced-motion: reduce){*{animation:none!important}}</style>
+<g transform="translate(0 0)"><g class="c0">
+<rect width="305" height="168" rx="20" fill="#FFFCF3" stroke="#E9D9B8" stroke-width="1.5"/>
+<circle cx="271" cy="34" r="6" fill="#FF8A1F" style="animation:pulse 2.6s ease-in-out 0s infinite"/>
+<text x="28" y="86" font-family="'Segoe UI','Helvetica Neue',Arial,sans-serif" font-size="56" font-weight="800" fill="#1B1F3B" letter-spacing="-1.5">6</text>
+<rect class="u0" x="28" y="100" width="46" height="5" rx="2.5" fill="#FF8A1F"/>
+<text x="28" y="130" font-family="'Segoe UI','Helvetica Neue',Arial,sans-serif" font-size="16" font-weight="700" fill="#1B1F3B">Projects in the work crate</text>
+<text x="28" y="152" font-family="'Segoe UI','Helvetica Neue',Arial,sans-serif" font-size="13" fill="#565A7A">live sites and open source</text></g></g><g transform="translate(325 0)"><g class="c1">
+<rect width="305" height="168" rx="20" fill="#FFFCF3" stroke="#E9D9B8" stroke-width="1.5"/>
+<circle cx="271" cy="34" r="6" fill="#1FA6A0" style="animation:pulse 2.6s ease-in-out 0.4s infinite"/>
+<text x="28" y="86" font-family="'Segoe UI','Helvetica Neue',Arial,sans-serif" font-size="56" font-weight="800" fill="#1B1F3B" letter-spacing="-1.5">8</text>
+<rect class="u1" x="28" y="100" width="46" height="5" rx="2.5" fill="#1FA6A0"/>
+<text x="28" y="130" font-family="'Segoe UI','Helvetica Neue',Arial,sans-serif" font-size="16" font-weight="700" fill="#1B1F3B">Stops on the journey train</text>
+<text x="28" y="152" font-family="'Segoe UI','Helvetica Neue',Arial,sans-serif" font-size="13" fill="#565A7A">scroll-scrubbed</text></g></g><g transform="translate(650 0)"><g class="c2">
+<rect width="305" height="168" rx="20" fill="#FFFCF3" stroke="#E9D9B8" stroke-width="1.5"/>
+<circle cx="271" cy="34" r="6" fill="#8E7CFF" style="animation:pulse 2.6s ease-in-out 0.8s infinite"/>
+<text x="28" y="86" font-family="'Segoe UI','Helvetica Neue',Arial,sans-serif" font-size="56" font-weight="800" fill="#1B1F3B" letter-spacing="-1.5">17</text>
+<rect class="u2" x="28" y="100" width="46" height="5" rx="2.5" fill="#8E7CFF"/>
+<text x="28" y="130" font-family="'Segoe UI','Helvetica Neue',Arial,sans-serif" font-size="16" font-weight="700" fill="#1B1F3B">Tools in the stack gift</text>
+<text x="28" y="152" font-family="'Segoe UI','Helvetica Neue',Arial,sans-serif" font-size="13" fill="#565A7A">unwrapped on scroll</text></g></g><g transform="translate(975 0)"><g class="c3">
+<rect width="305" height="168" rx="20" fill="#FFFCF3" stroke="#E9D9B8" stroke-width="1.5"/>
+<circle cx="271" cy="34" r="6" fill="#E8505B" style="animation:pulse 2.6s ease-in-out 1.2000000000000002s infinite"/>
+<text x="28" y="86" font-family="'Segoe UI','Helvetica Neue',Arial,sans-serif" font-size="56" font-weight="800" fill="#1B1F3B" letter-spacing="-1.5">2</text>
+<rect class="u3" x="28" y="100" width="46" height="5" rx="2.5" fill="#E8505B"/>
+<text x="28" y="130" font-family="'Segoe UI','Helvetica Neue',Arial,sans-serif" font-size="16" font-weight="700" fill="#1B1F3B">Themes, day and night</text>
+<text x="28" y="152" font-family="'Segoe UI','Helvetica Neue',Arial,sans-serif" font-size="13" fill="#565A7A">one switch, whole valley</text></g></g>
+</svg>

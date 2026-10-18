@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="384" viewBox="0 0 1280 384" role="img">
+<defs></defs>
+<style>@keyframes up{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}.pill{animation:up .6s cubic-bezier(.22,1,.36,1) both}.bob{animation:bob 4s ease-in-out infinite}
+@media (prefers-reduced-motion: reduce){*{animation:none!important}}</style>
+<text x="4" y="26" font-family="'Segoe UI','Helvetica Neue',Arial,sans-serif" font-size="13" font-weight="700" letter-spacing="3" fill="#565A7A">FRONT END</text><g transform="translate(4 38)"><g class="pill" style="animation-delay:0.00s"><g class="bob" style="animation-delay:-0s">
+<rect width="113" height="40" rx="20" fill="#FFFCF3" stroke="#E9D9B8" stroke-width="1.5"/>
+<circle cx="22" cy="20" r="5" fill="#FF8A1F"/>
+<text x="36" y="25.5" font-family="'Segoe UI','Helvetica Neue',Arial,sans-serif" font-size="14.5" font-weight="650" fill="#1B1F3B" textLength="69" lengthAdjust="spacingAndGlyphs">React 18</text></g></g></g><g transform="translate(129 38)"><g class="pill" style="animation-delay:0.04s"><g class="bob" style="animation-delay:-0.6s">
+<rect width="96" height="40" rx="20" fill="#FFFCF3" stroke="#E9D9B8" stroke-width="1.5"/>
+<circle cx="22" cy="20" r="5" fill="#FF8A1F"/>
+<text x="36" y="25.5" font-family="'Segoe UI','Helvetica Neue',Arial,sans-serif" font-size="14.5" font-weight="650" fill="#1B1F3B" textLength="52" lengthAdjust="spacingAndGlyphs">Vite 5</text></g></g></g><g transform="translate(237 38)"><g class="pill" style="animation-delay:0.09s"><g class="bob" style="animation-delay:-1.2s">
+<rect width="164" height="40" rx="20" fill="#FFFCF3" stroke="#E9D9B8" stroke-width="1.5"/>
+<circle cx="22" cy="20" r="5" fill="#FF8A1F"/>
+<text x="36" y="25.5" font-family="'Segoe UI','Helvetica Neue',Arial,sans-serif" font-size="14.5" font-weight="650" fill="#1B1F3B" textLength="120" lengthAdjust="spacingAndGlyphs">Tailwind CSS 3</text></g></g></g><g transform="translate(413 38)"><g class="pill" style="animation-delay:0.14s"><g class="bob" style="animation-delay:-1.7999999999999998s">
+<rect width="156" height="40" rx="20" fill="#FFFCF3" stroke="#E9D9B8" stroke-width="1.5"/>
+<circle cx="22" cy="20" r="5" fill="#FF8A1F"/>
+<text x="36" y="25.5" font-family="'Segoe UI','Helvetica Neue',Arial,sans-serif" font-size="14.5" font-weight="650" fill="#1B1F3B" textLength="112" lengthAdjust="spacingAndGlyphs">Framer Motion</text></g></g></g><g transform="translate(581 38)"><g class="pill" style="animation-delay:0.18s"><g class="bob" style="animation-delay:-2.4s">
+<rect width="164" height="40" rx="20" fill="#FFFCF3" stroke="#E9D9B8" stroke-width="1.5"/>
+<circle cx="22" cy="20" r="5" fill="#FF8A1F"/>
+<text x="36" y="25.5" font-family="'Segoe UI','Helvetica Neue',Arial,sans-serif" font-size="14.5" font-weight="650" fill="#1B1F3B" textLength="120" lengthAdjust="spacingAndGlyphs">React Router 6</text></g></g></g><g transform="translate(757 38)"><g class="pill" style="animation-delay:0.22s"><g class="bob" style="animation-delay:-3s">
+<rect width="87" height="40" rx="20" fill="#FFFCF3" stroke="#E9D9B8" stroke-width="1.5"/>
+<circle cx="22" cy="20" r="5" fill="#FF8A1F"/>
+<text x="36" y="25.5" font-family="'Segoe UI','Helvetica Neue',Arial,sans-serif" font-size="14.5" font-weight="650" fill="#1B1F3B" textLength="43" lengthAdjust="spacingAndGlyphs">Lenis</text></g></g></g><g transform="translate(856 38)"><g class="pill" style="animation-delay:0.27s"><g class="bob" style="animation-delay:-3.5999999999999996s">
+<rect width="164" height="40" rx="20" fill="#FFFCF3" stroke="#E9D9B8" stroke-width="1.5"/>
+<circle cx="22" cy="20" r="5" fill="#FF8A1F"/>
+<text x="36" y="25.5" font-family="'Segoe UI','Helvetica Neue',Arial,sans-serif" font-size="14.5" font-weight="650" fill="#1B1F3B" textLength="120" lengthAdjust="spacingAndGlyphs">React Markdown</text></g></g></g><text x="4" y="120" font-family="'Segoe UI','Helvetica Neue',Arial,sans-serif" font-size="13" font-weight="700" letter-spacing="3" fill="#565A7A">SCENES AND SOUND</text><g transform="translate(4 132)"><g class="pill" style="animation-delay:0.32s"><g class="bob" style="animation-delay:-0s">
+<rect width="173" height="40" rx="20" fill="#FFFCF3" stroke="#E9D9B8" stroke-width="1.5"/>
+<circle cx="22" cy="20" r="5" fill="#8E7CFF"/>
+<text x="36" y="25.5" font-family="'Segoe UI','Helvetica Neue',Arial,sans-serif" font-size="14.5" font-weight="650" fill="#1B1F3B" textLength="129" lengthAdjust="spacingAndGlyphs">Three.js avatar</text></g></g></g><g transform="translate(189 132)"><g class="pill" style="animation-delay:0.36s"><g class="bob" style="animation-delay:-0.6s">
+<rect width="216" height="40" rx="20" fill="#FFFCF3" stroke="#E9D9B8" stroke-width="1.5"/>
+<circle cx="22" cy="20" r="5" fill="#8E7CFF"/>
+<text x="36" y="25.5" font-family="'Segoe UI','Helvetica Neue',Arial,sans-serif" font-size="14.5" font-weight="650" fill="#1B1F3B" textLength="172" lengthAdjust="spacingAndGlyphs">painted .webp scenes</text></g></g></g><g transform="translate(417 132)"><g class="pill" style="animation-delay:0.40s"><g class="bob" style="animation-delay:-1.2s">
+<rect width="216" height="40" rx="20" fill="#FFFCF3" stroke="#E9D9B8" stroke-width="1.5"/>
+<circle cx="22" cy="20" r="5" fill="#8E7CFF"/>
+<text x="36" y="25.5" font-family="'Segoe UI','Helvetica Neue',Arial,sans-serif" font-size="14.5" font-weight="650" fill="#1B1F3B" textLength="172" lengthAdjust="spacingAndGlyphs">CSS scroll scrubbing</text></g></g></g><g transform="translate(645 132)"><g class="pill" style="animation-delay:0.45s"><g class="bob" style="animation-delay:-1.7999999999999998s">
+<rect width="199" height="40" rx="20" fill="#FFFCF3" stroke="#E9D9B8" stroke-width="1.5"/>
+<circle cx="22" cy="20" r="5" fill="#8E7CFF"/>
+<text x="36" y="25.5" font-family="'Segoe UI','Helvetica Neue',Arial,sans-serif" font-size="14.5" font-weight="650" fill="#1B1F3B" textLength="155" lengthAdjust="spacingAndGlyphs">Web Audio fallback</text></g></g></g><text x="4" y="214" font-family="'Segoe UI','Helvetica Neue',Arial,sans-serif" font-size="13" font-weight="700" letter-spacing="3" fill="#565A7A">SERVERLESS</text><g transform="translate(4 226)"><g class="pill" style="animation-delay:0.49s"><g class="bob" style="animation-delay:-2.4s">
+<rect width="182" height="40" rx="20" fill="#FFFCF3" stroke="#E9D9B8" stroke-width="1.5"/>
+<circle cx="22" cy="20" r="5" fill="#1FA6A0"/>
+<text x="36" y="25.5" font-family="'Segoe UI','Helvetica Neue',Arial,sans-serif" font-size="14.5" font-weight="650" fill="#1B1F3B" textLength="138" lengthAdjust="spacingAndGlyphs">Vercel Functions</text></g></g></g><g transform="translate(198 226)"><g class="pill" style="animation-delay:0.54s"><g class="bob" style="animation-delay:-3s">
+<rect width="156" height="40" rx="20" fill="#FFFCF3" stroke="#E9D9B8" stroke-width="1.5"/>
+<circle cx="22" cy="20" r="5" fill="#1FA6A0"/>
+<text x="36" y="25.5" font-family="'Segoe UI','Helvetica Neue',Arial,sans-serif" font-size="14.5" font-weight="650" fill="#1B1F3B" textLength="112" lengthAdjust="spacingAndGlyphs">Upstash Redis</text></g></g></g><g transform="translate(366 226)"><g class="pill" style="animation-delay:0.58s"><g class="bob" style="animation-delay:-3.5999999999999996s">
+<rect width="216" height="40" rx="20" fill="#FFFCF3" stroke="#E9D9B8" stroke-width="1.5"/>
+<circle cx="22" cy="20" r="5" fill="#1FA6A0"/>
+<text x="36" y="25.5" font-family="'Segoe UI','Helvetica Neue',Arial,sans-serif" font-size="14.5" font-weight="650" fill="#1B1F3B" textLength="172" lengthAdjust="spacingAndGlyphs">Express chat backend</text></g></g></g><g transform="translate(594 226)"><g class="pill" style="animation-delay:0.63s"><g class="bob" style="animation-delay:-0s">
+<rect width="156" height="40" rx="20" fill="#FFFCF3" stroke="#E9D9B8" stroke-width="1.5"/>
+<circle cx="22" cy="20" r="5" fill="#1FA6A0"/>
+<text x="36" y="25.5" font-family="'Segoe UI','Helvetica Neue',Arial,sans-serif" font-size="14.5" font-weight="650" fill="#1B1F3B" textLength="112" lengthAdjust="spacingAndGlyphs">Google Gemini</text></g></g></g><text x="4" y="308" font-family="'Segoe UI','Helvetica Neue',Arial,sans-serif" font-size="13" font-weight="700" letter-spacing="3" fill="#565A7A">QUALITY</text><g transform="translate(4 320)"><g class="pill" style="animation-delay:0.67s"><g class="bob" style="animation-delay:-0.6s">
+<rect width="130" height="40" rx="20" fill="#FFFCF3" stroke="#E9D9B8" stroke-width="1.5"/>
+<circle cx="22" cy="20" r="5" fill="#E8505B"/>
+<text x="36" y="25.5" font-family="'Segoe UI','Helvetica Neue',Arial,sans-serif" font-size="14.5" font-weight="650" fill="#1B1F3B" textLength="86" lengthAdjust="spacingAndGlyphs">Playwright</text></g></g></g><g transform="translate(146 320)"><g class="pill" style="animation-delay:0.72s"><g class="bob" style="animation-delay:-1.2s">
+<rect width="113" height="40" rx="20" fill="#FFFCF3" stroke="#E9D9B8" stroke-width="1.5"/>
+<circle cx="22" cy="20" r="5" fill="#E8505B"/>
+<text x="36" y="25.5" font-family="'Segoe UI','Helvetica Neue',Arial,sans-serif" font-size="14.5" font-weight="650" fill="#1B1F3B" textLength="69" lengthAdjust="spacingAndGlyphs">axe-core</text></g></g></g><g transform="translate(271 320)"><g class="pill" style="animation-delay:0.77s"><g class="bob" style="animation-delay:-1.7999999999999998s">
+<rect width="233" height="40" rx="20" fill="#FFFCF3" stroke="#E9D9B8" stroke-width="1.5"/>
+<circle cx="22" cy="20" r="5" fill="#E8505B"/>
+<text x="36" y="25.5" font-family="'Segoe UI','Helvetica Neue',Arial,sans-serif" font-size="14.5" font-weight="650" fill="#1B1F3B" textLength="189" lengthAdjust="spacingAndGlyphs">reduced-motion support</text></g></g></g><g transform="translate(516 320)"><g class="pill" style="animation-delay:0.81s"><g class="bob" style="animation-delay:-2.4s">
+<rect width="319" height="40" rx="20" fill="#FFFCF3" stroke="#E9D9B8" stroke-width="1.5"/>
+<circle cx="22" cy="20" r="5" fill="#E8505B"/>
+<text x="36" y="25.5" font-family="'Segoe UI','Helvetica Neue',Arial,sans-serif" font-size="14.5" font-weight="650" fill="#1B1F3B" textLength="275" lengthAdjust="spacingAndGlyphs">keyboard and screen reader paths</text></g></g></g>
+</svg>

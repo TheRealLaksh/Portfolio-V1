@@ -72,6 +72,7 @@ Migrating off the expired lakshp.live. URLs (meta tags, `/resume` redirect, resu
 - Laksh chose small commits, pushed after each (every push to `main` goes live on Vercel). Session of 8 Oct 2026.
 
 ## Session log (newest first)
+- 2026-10-18: new README with animated SVGs (banner, facts, stack, architecture, chat flow, dividers, footer), real screen recordings (hero, journey, work, chat) and stills in `docs/readme/`. The SVGs come from `scripts/readme/build-assets.mjs` (needs a base64 jpeg of the valley for the banner; see its header). Repo description and topics set on GitHub. Nothing pushed yet at the time of writing.
 - 2026-10-18: swap done: verified V1 repo, Netlify site and DNS were deleted, renamed the classic repo Portfolio-V2 to Portfolio-V1, created private Portfolio-V2 and pushed this branch as its main (git remote `v2`; `origin` now points at Portfolio-V1).
 - 2026-10-18: started the V1/V2 swap (see Next steps 00): archived the GitHub repo Portfolio-V1, removed it from `useGitHub.js`. Rename and new repo wait for Laksh to delete V1 (repo, Netlify site, DNS record).
 - 2026-10-18: chat rebuilt on `feat/chat-polish` (see Status). Needs the backend branch `feat/chat-v3` deployed first. The `VITE_CHAT_API_KEY` in `.env` is not read anywhere in the code; remove it from Vercel env vars (it would be public in the bundle anyway). `VITE_CHAT_API_URL` may be the bare address or the full `/api/chat` URL; `api.js` normalises stray slashes.
@@ -147,12 +148,13 @@ Migrating off the expired lakshp.live. URLs (meta tags, `/resume` redirect, resu
 <!-- handoff:auto:start -->
 ## Auto: repo state
 
-_Refreshed 18 Oct 2026, 11:31 am IST by `scripts/handoff.mjs` (runs on every commit). Don't edit inside this block._
+_Refreshed 18 Oct 2026, 11:58 am IST by `scripts/handoff.mjs` (runs on every commit). Don't edit inside this block._
 
 Branch: `feat/chat-polish` · remote: https://github.com/TheRealLaksh/Portfolio-V1.git
 
 ### Last 15 commits
 
+- `9ffe73d` 2026-10-18 11:31 Stop tracking .env
 - `11caa05` 2026-10-18 11:29 HANDOFF: repo swap done
 - `58c479d` 2026-10-18 11:18 HANDOFF: Portfolio V1/V2 swap plan and progress
 - `7023d60` 2026-10-18 11:18 Drop Portfolio-V1 from the project list (repo is being removed)
@@ -167,12 +169,36 @@ Branch: `feat/chat-polish` · remote: https://github.com/TheRealLaksh/Portfolio-
 - `ff3e7c5` 2026-10-18 10:18 Board: vinyl can be dragged (click after a drag is ignored)
 - `5e4b4a7` 2026-10-18 00:46 HANDOFF: 18 Oct feedback pass, sidekick removed, client-name and music rules
 - `e76e4e2` 2026-10-18 00:46 Board: drop tabla (standing rule), tighter face crop for the round photo
-- `9a9a613` 2026-10-18 00:44 Work popup: lock native page scroll while open (wheel no longer scrolls the page behind it)
 
 ### Uncommitted changes at refresh time
 
 ```
-D  .env
-M  .gitignore
+M HANDOFF.md
+ M README.md
+A  docs/readme/architecture.svg
+A  docs/readme/banner.svg
+A  docs/readme/chat-flow.svg
+A  docs/readme/chat-followup.jpg
+A  docs/readme/chat-pricing.jpg
+A  docs/readme/chat.gif
+A  docs/readme/divider.svg
+A  docs/readme/facts.svg
+A  docs/readme/footer.svg
+A  docs/readme/hello.jpg
+A  docs/readme/hero-day.jpg
+A  docs/readme/hero-night.jpg
+A  docs/readme/hero.gif
+A  docs/readme/journey-b.jpg
+A  docs/readme/journey.gif
+A  docs/readme/life.jpg
+A  docs/readme/mobile-chat.jpg
+A  docs/readme/mobile-hero.jpg
+A  docs/readme/process.jpg
+A  docs/readme/stack.jpg
+A  docs/readme/stack.svg
+A  docs/readme/status.svg
+A  docs/readme/work-popup.jpg
+A  docs/readme/work.gif
+A  scripts/readme/build-assets.mjs
 ```
 <!-- handoff:auto:end -->
