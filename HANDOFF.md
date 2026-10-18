@@ -45,6 +45,7 @@ Migrating off the expired lakshp.live. URLs (meta tags, `/resume` redirect, resu
 - Laksh chose small commits, pushed after each (every push to `main` goes live on Vercel). Session of 8 Oct 2026.
 
 ## Session log (newest first)
+- 2026-10-18: chat UI showed empty bubbles and the Contacts chip threw: `useChat` saved `{text, sender:'user'|'bot'}` but `ChatBubble` reads `{content, sender:'You'|'AI Laksh', type}`, and `addMessage` was not returned by the hook. Hook now uses the widget's shape, converts old saved chats on load, returns `addMessage`, and guards localStorage.
 - 2026-10-18: chatbot was down. Backend (`Portfolio-Chat_Bot`) only called retired Gemini models, fixed there. Here, the double slash in `.../vercel.app//api/chat` (308 redirect, blocked by the browser) comes from the Vercel env var `VITE_CHAT_API_URL` (sensitive, prod + preview), which overrides `DEFAULT_BACKEND`. `useChat.js` now collapses doubled slashes, so the app works either way; the env var itself should still be corrected or deleted in the Vercel dashboard (Claude was not allowed to edit it).
 - 2026-10-14: About section terminal card now says Freelance Full-Stack Developer and adds the Masters' Union line; the location radar says Delhi NCR (Delhi coordinates). Footer, Contact, hero, `index.html`, `routeMeta.js` and JSON-LD still say Varanasi: site-wide change still waiting on Laksh.
 - 2026-10-14: About section bio (`02-About.jsx`) rewritten with current facts: freelance full-stack developer in Delhi NCR, B.Tech Data Science & AI at Masters' Union, four production apps at Unified Mentor (Helios, Calibridge), link to `/hire`; 'high school student' and 'seeking' wording removed. ShiftsDeal left out of the text on purpose (same call as the LinkedIn About). Plaksha/Outskill kept from the original text (not in the vault, confirm).
@@ -85,12 +86,13 @@ Migrating off the expired lakshp.live. URLs (meta tags, `/resume` redirect, resu
 <!-- handoff:auto:start -->
 ## Auto: repo state
 
-_Refreshed 18 Oct 2026, 12:57 am IST by `scripts/handoff.mjs` (runs on every commit). Don't edit inside this block._
+_Refreshed 18 Oct 2026, 10:13 am IST by `scripts/handoff.mjs` (runs on every commit). Don't edit inside this block._
 
 Branch: `main` · remote: https://github.com/TheRealLaksh/Portfolio-V2.git
 
 ### Last 15 commits
 
+- `5f73d0a` 2026-10-18 00:57 Collapse doubled slashes in the chat API URL
 - `902a679` 2026-10-18 00:39 Fix double slash in the chat API URL
 - `09358a8` 2026-10-14 12:14 Show current role, study and Delhi NCR in the About cards
 - `8d1b7b9` 2026-10-14 12:13 Update the About bio with current role, study and freelance work
@@ -105,7 +107,6 @@ Branch: `main` · remote: https://github.com/TheRealLaksh/Portfolio-V2.git
 - `a46055f` 2026-10-14 10:02 Make section links work from /hire and on direct #links
 - `ac238ef` 2026-10-14 09:56 Give /hire its own title, canonical and link-preview tags
 - `8c6f3cf` 2026-10-13 19:32 Record that the Hire page is live
-- `b03f2c5` 2026-10-13 19:27 Add a Hire me link to the desktop and mobile navigation
 
 ### Uncommitted changes at refresh time
 

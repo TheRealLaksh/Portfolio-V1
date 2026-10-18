@@ -6,11 +6,24 @@ const DEFAULT_BACKEND = 'https://portfolio-chat-bot-kohl.vercel.app/api/chat';
 // Collapse doubled slashes: the VITE_CHAT_API_URL env var on Vercel has one, and a double slash gets a 308 redirect that the browser blocks on a cross-origin POST.
 const API_URL = (import.meta.env.VITE_CHAT_API_URL || DEFAULT_BACKEND).replace(/([^:])\/{2,}/g, '$1/');
 
+// ChatBubble reads { sender: 'You' | 'AI Laksh', content, type }. Older saved chats used
+// { sender: 'user' | 'bot', text }, which rendered as empty bubbles, so convert them on load.
+const normalise = (m) => {
+  if (!m || typeof m !== 'object') return null;
+  if (m.type && m.type !== 'text' && m.type !== 'mdx') return m;
+  const content = m.content ?? m.text;
+  if (typeof content !== 'string' || !content.trim()) return null;
+  const isUser = m.sender === 'You' || m.sender === 'user';
+  return isUser
+    ? { sender: 'You', content, type: 'text' }
+    : { sender: 'AI Laksh', content, type: 'mdx' };
+};
+
 export const useChat = () => {
   const [chatMessages, setChatMessages] = useState(() => {
     try {
-      const stored = localStorage.getItem('AI-LakshChatMessages');
-      return stored ? JSON.parse(stored) : [];
+      const stored = JSON.parse(localStorage.getItem('AI-LakshChatMessages') || '[]');
+      return Array.isArray(stored) ? stored.map(normalise).filter(Boolean) : [];
     } catch { return []; }
   });
 
@@ -24,12 +37,12 @@ export const useChat = () => {
     if (!userId) {
       const newId = 'user-' + Date.now();
       setUserId(newId);
-      localStorage.setItem('AI-LakshUserId', newId);
+      try { localStorage.setItem('AI-LakshUserId', newId); } catch { /* storage blocked */ }
     }
   }, [userId]);
 
   useEffect(() => {
-    localStorage.setItem('AI-LakshChatMessages', JSON.stringify(chatMessages));
+    try { localStorage.setItem('AI-LakshChatMessages', JSON.stringify(chatMessages)); } catch { /* storage blocked */ }
   }, [chatMessages]);
 
   const addMessage = (msg) => {
@@ -38,7 +51,7 @@ export const useChat = () => {
 
   const clearChat = () => {
     setChatMessages([]);
-    localStorage.removeItem('AI-LakshChatMessages');
+    try { localStorage.removeItem('AI-LakshChatMessages'); } catch { /* storage blocked */ }
     triggerHaptic();
   };
 
@@ -46,7 +59,7 @@ export const useChat = () => {
     if (!text.trim()) return;
 
     triggerHaptic();
-    addMessage({ text, sender: 'user' });
+    addMessage({ sender: 'You', content: text, type: 'text' });
     setIsLoading(true);
 
     try {
@@ -68,13 +81,15 @@ export const useChat = () => {
 
       const data = await response.json();
       
-      addMessage({ text: data.reply, sender: 'bot' });
+      if (typeof data.reply !== 'string' || !data.reply.trim()) throw new Error('Empty reply');
+      addMessage({ sender: 'AI Laksh', content: data.reply, type: 'mdx' });
       triggerHaptic();
     } catch (error) {
       console.error("Chat Error:", error);
-      addMessage({ 
-        text: "I'm running into connectivity issues right now. Let's try again in a bit!", 
-        sender: 'bot' 
+      addMessage({
+        sender: 'AI Laksh',
+        content: "I'm running into connectivity issues right now. Let's try again in a bit!",
+        type: 'text',
       });
     } finally {
       setIsLoading(false);
@@ -85,6 +100,7 @@ export const useChat = () => {
     chatMessages,
     isLoading,
     sendMessage,
-    clearChat
+    clearChat,
+    addMessage
   };
 };
