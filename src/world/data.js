@@ -131,7 +131,9 @@ export const JOURNEY = [
 // is Sneha's, so it has no code link. (confirm) the "Solo build" roles and which others he wants featured.
 export const WORK = [
   { id: 'shiftsdeal', n: 'ShiftsDeal', k: 'Venue-booking marketplace', c: '#E8505B', d: 'Took a basic first version and built it into the live platform: bookings, Razorpay payments, owner dashboard, admin panel and AI search. The app is next.',
-    tags: ['Next.js', 'Razorpay', 'AI search'], live: 'https://www.shiftsdeal.com', code: null, note: 'App in progress', status: 'Live', year: '2026', role: 'Tech Head' },
+    tags: ['Next.js', 'Razorpay', 'AI search'], live: 'https://www.shiftsdeal.com', code: null, note: 'App in progress', status: 'Live', year: '2026', role: 'Tech Head',
+    // Popup: a two-step path; card: a small badge. He joined as an intern, then built the site out.
+    origin: { badge: 'Built after joining as an intern', steps: [['Intern', '1 Aug 2026'], ['Tech Head', 'built this out']] } },
   { id: 'profiley', n: 'Profiley', k: 'Resume builder', c: '#1FA6A0', d: "Live-preview resume editor with ten-plus themes and one-click PDF export. This site's resume page is rendered by it.",
     tags: ['React 19', 'Vite', 'Firebase'], live: 'https://profiley.lakshpradhwani.com', code: 'https://github.com/TheRealLaksh/Profiley-Resume-Builder', note: 'Free to use', status: 'Live', year: '2025', role: 'Solo build' },
   { id: 'helios', n: 'Helios', k: 'Web music player', c: '#8E7CFF', d: 'Adaptive cover colour, five ambiences, a waveform seekbar, three visualisers, a queue and a 3-band equaliser. No frameworks.',

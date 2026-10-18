@@ -72,6 +72,14 @@ function Case({ w, list, onNav, onClose }) {
           <p className="cs-k">{w.k}</p>
           <h3>{w.n}</h3>
           <p className="cs-d">{w.d}</p>
+          {w.origin && (
+            <div className="cs-path" role="group" aria-label={w.origin.badge}>
+              <span className="cs-path-k">{w.origin.badge}</span>
+              <ol>
+                {w.origin.steps.map(([a, b]) => <li key={a}><b>{a}</b><small>{b}</small></li>)}
+              </ol>
+            </div>
+          )}
           <dl className="cs-facts">
             <div><dt>Year</dt><dd>{w.year}</dd></div>
             <div><dt>Role</dt><dd>{w.role}</dd></div>
@@ -280,6 +288,7 @@ function Deck({ onOpen, filter, setFilter, keep }) {
                 <span className="wc-k">{w.k}<i className="st">{w.status}</i></span>
                 <b>{w.n}</b>
                 <span className="wc-tags">{w.tags.join(' · ')}</span>
+                {w.origin && <span className="wc-origin">{w.origin.badge}</span>}
               </div>
               <span className="wc-go" aria-hidden="true"><Icon n="arrow" size={16} /></span>
             </button>

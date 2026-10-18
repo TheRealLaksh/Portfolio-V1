@@ -69,6 +69,7 @@ A. Valley redesign (branch `feat/world-portfolio`): (0) Laksh to review the moti
 - Laksh chose small commits, pushed after each (every push to `main` goes live on Vercel). Session of 8 Oct 2026.
 
 ## Session log (newest first)
+- 2026-10-18 (ShiftsDeal intern path): the ShiftsDeal Work popup now shows a small "Built after joining as an intern" two-step path (Intern, 1 Aug 2026, then Tech Head, built this out) via `origin` on its `WORK` entry in `data.js`; the narrow-screen card shows the same badge (the crate cards stay as they were, too small). Styles at the end of `world3.css`. Checked in the dev server at desktop and 375 px: fits, no horizontal overflow. Public facts only, same as the board and journey copy, so the chat bot knowledge needed no change.
 - 2026-10-18: added the rule above: the chat bot's knowledge must follow content changes made here.
 - 2026-10-18 (board, second pass): vinyl is now draggable (it is a button, and the drag code skipped buttons); replaced the space quiz polaroid with 'vibe coding, daily', the Surya Namaskars sticky with 'Tech Head at 18.', dropped the badminton bullet for a vibe-coding line, caption 'me, by the sea, at night'. Playwright check: vinyl drags 129 px, plain click still toggles music, drag does not, other polaroids still drag. Note: the dev server stopped by itself twice during the session; started it with node directly (`node node_modulesiteinite.js --host 127.0.0.1 --port 5199`).
 - 2026-10-18 (feedback pass): removed the sidekick, removed journey stop 5, replaced the Spotify embed with a preloaded full-length local track, fixed the Work popup (portal, scroll lock, lid over heading; first version crashed the page because `portalTo` was missing, caught by the browser test), rebuilt the board with real items, new profile photo everywhere, Instagram caption, scrubbed a client name from HANDOFF. Smoke test over 1440, 1280, 1024, 768 and 390 px: no errors, no horizontal overflow, popup full-screen and locked, music plays.
@@ -141,12 +142,13 @@ A. Valley redesign (branch `feat/world-portfolio`): (0) Laksh to review the moti
 <!-- handoff:auto:start -->
 ## Auto: repo state
 
-_Refreshed 18 Oct 2026, 10:34 am IST by `scripts/handoff.mjs` (runs on every commit). Don't edit inside this block._
+_Refreshed 18 Oct 2026, 4:15 pm IST by `scripts/handoff.mjs` (runs on every commit). Don't edit inside this block._
 
-Branch: `feat/journey-painted` · remote: https://github.com/TheRealLaksh/Portfolio-V2.git
+Branch: `feat/journey-painted` · remote: https://github.com/TheRealLaksh/Portfolio-V1.git
 
 ### Last 15 commits
 
+- `e5f08e2` 2026-10-18 10:34 HANDOFF: keep the chat bot's knowledge in step with the portfolio
 - `618952c` 2026-10-18 10:20 HANDOFF: Tech Head sticky text
 - `2c187db` 2026-10-18 10:20 Board: Tech Head sticky without the ShiftsDeal line
 - `22366f7` 2026-10-18 10:18 HANDOFF: board second pass
@@ -161,11 +163,13 @@ Branch: `feat/journey-painted` · remote: https://github.com/TheRealLaksh/Portfo
 - `cfedb0c` 2026-10-18 00:33 Board, photo, contact: new real board items, new profile photo, Instagram caption, no client names
 - `2ec99ae` 2026-10-18 00:33 Work: render the case popup outside the clipped section and lock scroll while open
 - `206fd94` 2026-10-18 00:33 Music: play the whole song from a preloaded local file, starts instantly
-- `bf91ad6` 2026-10-18 00:33 Journey: remove stop 5 (First portfolio), now eight stops
 
 ### Uncommitted changes at refresh time
 
 ```
 M  HANDOFF.md
+M  src/world/Work.jsx
+M  src/world/data.js
+M  src/world/world3.css
 ```
 <!-- handoff:auto:end -->
