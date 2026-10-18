@@ -12,32 +12,54 @@ function useDrag(deskRef) {
     if (!desk) return undefined;
     let cur = null;
     let z = 20;
+    let swallow = false;
+    // A button on the board (the vinyl) is both a control and a thing you can move: it only counts as a drag once the
+    // pointer has travelled a few pixels, and the click that follows a drag is swallowed so it does not toggle the music.
+    const begin = (c, e) => {
+      c.started = true;
+      c.it.classList.add('drag');
+      c.it.style.zIndex = String(++z);
+      c.it.setPointerCapture?.(e.pointerId);
+    };
     const down = (e) => {
       const it = e.target.closest('.item');
-      if (!it || e.target.closest('a, button')) return;
+      if (!it) return;
+      const isButton = it.matches('button');
+      if (!isButton && e.target.closest('a, button')) return;
       if (window.innerWidth < 720) return;
       const r = it.getBoundingClientRect();
-      cur = { it, dx: e.clientX - r.left, dy: e.clientY - r.top, base: desk.getBoundingClientRect() };
-      it.classList.add('drag');
-      it.style.zIndex = String(++z);
-      it.setPointerCapture?.(e.pointerId);
-      e.preventDefault();
+      cur = { it, dx: e.clientX - r.left, dy: e.clientY - r.top, base: desk.getBoundingClientRect(), x0: e.clientX, y0: e.clientY, started: false };
+      if (!isButton) { begin(cur, e); e.preventDefault(); }
     };
     const move = (e) => {
       if (!cur) return;
+      if (!cur.started) {
+        if (Math.hypot(e.clientX - cur.x0, e.clientY - cur.y0) < 6) return;
+        begin(cur, e);
+      }
       const { it, dx, dy, base } = cur;
       const x = e.clientX - base.left - dx;
       const y = e.clientY - base.top - dy;
       it.style.left = `${Math.max(-10, Math.min(base.width - 60, x))}px`;
       it.style.top = `${Math.max(-10, Math.min(base.height - 40, y))}px`;
     };
-    const up = () => { if (cur) { cur.it.classList.remove('drag'); cur = null; } };
+    const up = () => {
+      if (!cur) return;
+      if (cur.started) {
+        cur.it.classList.remove('drag');
+        if (cur.it.matches('button')) { swallow = true; window.setTimeout(() => { swallow = false; }, 0); }
+      }
+      cur = null;
+    };
+    const click = (e) => { if (swallow) { e.stopPropagation(); e.preventDefault(); swallow = false; } };
+    desk.addEventListener('click', click, true);
     desk.addEventListener('pointerdown', down);
     window.addEventListener('pointermove', move);
     window.addEventListener('pointerup', up);
     window.addEventListener('pointercancel', up);
     return () => {
       desk.removeEventListener('pointerdown', down);
+      desk.removeEventListener('click', click, true);
       window.removeEventListener('pointermove', move);
       window.removeEventListener('pointerup', up);
       window.removeEventListener('pointercancel', up);
@@ -83,7 +105,7 @@ export default function Life({ music, onMusic }) {
         </div>
 
         <div className="desk" ref={desk} {...(scrub ? {} : { 'data-rv': '' })}>
-          <Polaroid cls="p1" cap="me, night, rocks, speaker" style={{ ['--r']: '-5deg', ['--pc']: '#E8505B' }}>
+          <Polaroid cls="p1" cap="me, by the sea, at night" style={{ ['--r']: '-5deg', ['--pc']: '#E8505B' }}>
             <img src="/me-full.webp" alt="Laksh sitting on rocks at night by the sea in a palm-print shirt, a glowing speaker on his shoulder, making a shaka sign" loading="lazy" />
           </Polaroid>
 
@@ -100,8 +122,8 @@ export default function Life({ music, onMusic }) {
             <svg viewBox="0 0 120 90" aria-hidden="true"><rect width="120" height="90" fill="var(--paper2)" /><circle cx="60" cy="45" r="34" fill="#FFF8E7" stroke="var(--ink)" strokeWidth="2" /><circle cx="60" cy="45" r="25" fill="#E8505B" /><circle cx="60" cy="45" r="16" fill="#FFF8E7" /><circle cx="60" cy="45" r="8" fill="#E8505B" /><circle cx="68" cy="40" r="2.4" fill="var(--ink)" /><circle cx="55" cy="49" r="2.4" fill="var(--ink)" /></svg>
           </Polaroid>
 
-          <Polaroid cls="pol-sm pc2" cap="space quiz, ISRO invite" style={{ ['--r']: '-3deg', ['--pc']: '#8E7CFF' }}>
-            <svg viewBox="0 0 120 90" aria-hidden="true"><rect width="120" height="90" fill="#E9E4FF" /><path d="M60 14c10 10 14 24 12 40H48c-2-16 2-30 12-40z" fill="#fff" stroke="var(--ink)" strokeWidth="2.4" strokeLinejoin="round" /><circle cx="60" cy="36" r="6" fill="#8E7CFF" stroke="var(--ink)" strokeWidth="2" /><path d="M48 46l-10 14 12-3zM72 46l10 14-12-3z" fill="#E8505B" stroke="var(--ink)" strokeWidth="2" strokeLinejoin="round" /><path d="M54 58c0 8 2 14 6 18 4-4 6-10 6-18" fill="#F2A93B" stroke="var(--ink)" strokeWidth="2" /><path d="M20 22l2 5 5 2-5 2-2 5-2-5-5-2 5-2zM98 62l1.5 4 4 1.5-4 1.5-1.5 4-1.5-4-4-1.5 4-1.5z" fill="var(--ink)" /></svg>
+          <Polaroid cls="pol-sm pc2" cap="vibe coding, daily" style={{ ['--r']: '-3deg', ['--pc']: '#8E7CFF' }}>
+            <svg viewBox="0 0 120 90" aria-hidden="true"><rect width="120" height="90" fill="#1B1F3B" /><circle cx="14" cy="12" r="3" fill="#E8505B" /><circle cx="25" cy="12" r="3" fill="#F2A93B" /><circle cx="36" cy="12" r="3" fill="#7FB866" /><path d="M16 34l10 8-10 8" fill="none" stroke="#FFC93C" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" /><path d="M34 52h22" stroke="#8E7CFF" strokeWidth="4" strokeLinecap="round" /><path d="M16 66h46M16 76h30" stroke="#6E7396" strokeWidth="3" strokeLinecap="round" /><path d="M92 28l3 8 8 3-8 3-3 8-3-8-8-3 8-3zM100 58l2 5 5 2-5 2-2 5-2-5-5-2 5-2z" fill="#FFC93C" /></svg>
           </Polaroid>
 
           <Polaroid cls="pol-sm pc3" cap="badminton" style={{ ['--r']: '5deg', ['--pc']: '#1FA6A0' }}>
@@ -119,7 +141,7 @@ export default function Life({ music, onMusic }) {
           </Polaroid>
 
           <div className="item note taped p17" style={{ ['--sc']: '#D9CCFF', ['--r']: '-4deg' }}>
-            108 Surya Namaskars, done.<small>Yoga, for the calm hands.</small>
+            Tech Head at 18.<small>ShiftsDeal, since Aug 2026.</small>
           </div>
 
           <div className="item ticket pinned p7" style={{ ['--r']: '3deg', ['--pc']: '#E8505B' }}>
