@@ -145,6 +145,7 @@ Branch: `feat/journey-painted` · remote: https://github.com/TheRealLaksh/Portfo
 
 ### Last 15 commits
 
+- `2c187db` 2026-10-18 10:20 Board: Tech Head sticky without the ShiftsDeal line
 - `22366f7` 2026-10-18 10:18 HANDOFF: board second pass
 - `18c9a7c` 2026-10-18 10:18 Board: new items (vibe coding polaroid, Tech Head sticky), caption by the sea, drop badminton bullet
 - `ff3e7c5` 2026-10-18 10:18 Board: vinyl can be dragged (click after a drag is ignored)
@@ -159,12 +160,10 @@ Branch: `feat/journey-painted` · remote: https://github.com/TheRealLaksh/Portfo
 - `206fd94` 2026-10-18 00:33 Music: play the whole song from a preloaded local file, starts instantly
 - `bf91ad6` 2026-10-18 00:33 Journey: remove stop 5 (First portfolio), now eight stops
 - `2831160` 2026-10-18 00:29 Remove the small sidekick avatar completely (component, 3D engine, moves, lines, stand-in model)
-- `1cd8f93` 2026-10-18 00:07 Hero: calm the water sparkles (14 every 3.4s to 4 every 9s)
 
 ### Uncommitted changes at refresh time
 
 ```
-M HANDOFF.md
-M  src/world/Life.jsx
+M  HANDOFF.md
 ```
 <!-- handoff:auto:end -->
